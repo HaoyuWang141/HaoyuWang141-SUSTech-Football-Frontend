@@ -1,0 +1,8 @@
+<!--components/team-card-big/team.wxml-->
+<view class="container">
+  <image src="{{img}}" mode="scaleToFill" class="image"/>
+  <view class="sub-container">
+    <text class="name">{{name}}</text>
+    <text class="number">{{number}} 名球员</text>
+  </view>
+</view>

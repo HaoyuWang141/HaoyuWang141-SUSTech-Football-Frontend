@@ -1,0 +1,36 @@
+/* components/team-card-big/team.wxss */
+.container {
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.image {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 20rpx;
+  padding: 10rpx 20rpx 10rpx 10rpx;
+  border-right: solid 5rpx rgba(0, 0, 0, 0.3);
+}
+
+.sub-container {
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.number {
+  font-size: small;
+  color: #666;
+  margin-top: 30rpx;
+}

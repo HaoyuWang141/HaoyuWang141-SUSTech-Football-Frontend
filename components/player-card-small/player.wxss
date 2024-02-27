@@ -1,0 +1,29 @@
+/* components/palyer-card-small/player.wxss */
+.player-card {
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx 0;
+  display: inline-block;
+  width: 200rpx;
+  text-align: center;
+}
+
+.img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 40rpx;
+}
+
+.name {
+  margin-top: 10rpx;
+  font-size: x-small;
+  color: #666;
+  white-space: nowrap; /* 确保文本不会换行 */
+  overflow: hidden; /* 隐藏超出容器部分的文本 */
+  text-overflow: ellipsis; /* 使用省略号表示被截断的文本 */
+  width: 100%; /* 或者指定一个具体的宽度 */
+  display: block; /* 或使用inline-block，确保text-overflow生效 */
+  text-align: center;
+}

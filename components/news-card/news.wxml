@@ -1,0 +1,4 @@
+<view class="news-card">
+  <image src="{{img}}" mode="widthFix" class="image"/>
+  <text class="text-box">{{title}}</text>
+</view>

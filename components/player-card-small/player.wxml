@@ -1,0 +1,4 @@
+<view class="player-card">
+  <image src="{{img}}" mode="scaleToFill" class="img"/>
+  <text class="name">{{name}}</text>
+</view>

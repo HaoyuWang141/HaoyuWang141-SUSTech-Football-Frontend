@@ -1,0 +1,68 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/profile_player/profile_player",
+    "pages/profile_player/profile_coach/profile_coach",
+    "pages/profile_player/profile_coach_edit/profile_coach_edit",
+    "pages/profile_player/profile_player_edit/profile_player_edit",
+    "pages/profile_player/profile_referee/profile_referee",
+    "pages/profile_player/profile_referee_edit/profile_referee_edit",
+    "pages/management/management",
+    "pages/management/team_edit/team_edit",
+    "pages/management/team_new/team_new",
+    "pages/management/match_edit/match_edit",
+    "pages/management/match_new/match_new",
+    "pages/management/event_edit/event_edit",
+    "pages/management/event_new/event_new",
+    "pages/mine/mine",
+    "pages/pub/match/match",
+    "pages/pub/player/player",
+    "pages/pub/event/event",
+    "pages/pub/team/team",
+    "pages/pub/matches/matches",
+    "pages/pub/players/players",
+    "pages/pub/events/events",
+    "pages/pub/teams/teams",
+    "pages/example/example",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#f6eee9"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/home/home"
+      },
+      {
+        "text": "球员",
+        "pagePath": "pages/profile_player/profile_player"
+      },
+      {
+        "text": "管理",
+        "pagePath": "pages/management/management"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/mine/mine"
+      }
+    ]
+  },
+  "usingComponents": {
+    "event-card-big": "/components/event-card-big/event",
+    "match-card-big": "/components/match-card-big/match",
+    "match-card-small": "/components/match-card-small/match",
+    "news-card": "/components/news-card/news",
+    "player-card-big": "/components/player-card-big/player",
+    "player-card-small": "/components/player-card-small/player",
+    "team-card-big": "/components/team-card-big/team",
+    "team-card-small": "/components/team-card-small/team"
+  }
+}

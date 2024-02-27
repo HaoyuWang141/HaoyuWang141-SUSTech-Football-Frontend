@@ -1,0 +1,39 @@
+<view class="container">
+  <view style="width: 90%;">
+    <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
+    <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
+
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+    </scroll-view>
+
+    <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg"></news-card>
+
+    <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="中后卫、右边后卫" goals="0" assists="0"></player-card-big>
+    <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="后卫" goals="0" assists="0"></player-card-big>
+    <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="中后卫、右边后卫中后卫、右边后卫" goals="0" assists="0"></player-card-big>
+
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+      <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+      <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+      <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+      <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+      <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+    </scroll-view>
+
+    <team-card-big name="南方科技大学男子足球队" img="/assets/barca1.png" number="25"></team-card-big>
+
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+      <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+      <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+      <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+      <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+      <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+    </scroll-view>
+
+  </view>
+</view>

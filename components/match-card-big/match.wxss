@@ -1,0 +1,57 @@
+/* components/match-card-big/match.wxss */
+.match-card {
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx 0;
+}
+
+.name {
+  display: block;
+  padding-left: 20rpx;
+  color: #666;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 30rpx 60rpx 0 60rpx;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.group {
+  font-size: small;
+}
+
+.score {
+  font-size: larger;
+}
+
+.penalty {
+  font-size: small;
+  /* color: #FF4500; */
+}
+
+.not-begin {
+  background-color: rgba(237,108,0, 0.3);
+  padding: 20rpx;
+  border-radius: 15rpx;
+}
