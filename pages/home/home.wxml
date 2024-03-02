@@ -1,3 +1,71 @@
 <!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<!-- <text>pages/home/home.wxml</text> -->
 <button bind:tap="gotoExample">gotoExample</button>
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view class="search-container">
+      <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
+      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
+    </view>
+
+    <view class="news-container">
+        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg"></news-card>
+    </view>
+
+    <view class="match-container">
+      <view class="more-bar">
+        <label class="more-label">关注的比赛</label>
+        <button class="more-button" bindtap="gotoMatches">更多 ></button>
+      </view>
+      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+    </scroll-view>
+    </view>
+
+    <view class="player-container">
+      <view class="more-bar">
+        <label class="more-label">关注的球员</label>
+        <button class="more-button" bindtap="gotoPlayers">更多 ></button>
+      </view>
+      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+      </scroll-view>
+    </view>
+
+    <view class="team-container">
+      <view class="more-bar">
+        <label class="more-label">关注的球队</label>
+        <button class="more-button" bindtap="gotoTeams">更多 ></button>
+      </view>
+      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
+      </scroll-view>
+    </view>
+
+    <view class="event-container">
+      <view class="more-bar">
+        <label class="more-label">关注的赛事</label>
+        <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
+      </view>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
+    </view>
+
+  </view>
+</view>
