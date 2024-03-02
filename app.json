@@ -35,23 +35,38 @@
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
+  "networkTimeout": {
+    "request": 3000
+  },
   "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#ed6c00",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
     "list": [
       {
         "text": "首页",
-        "pagePath": "pages/home/home"
+        "pagePath": "pages/home/home",
+        "iconPath": "/assets/home.png",
+        "selectedIconPath": "/assets/home_selected.png"
       },
       {
         "text": "球员",
-        "pagePath": "pages/profile_player/profile_player"
+        "pagePath": "pages/profile_player/profile_player",
+        "iconPath": "/assets/football.png",
+        "selectedIconPath": "/assets/football_selected.png"
       },
       {
         "text": "管理",
-        "pagePath": "pages/management/management"
+        "pagePath": "pages/management/management",
+        "iconPath": "/assets/order.png",
+        "selectedIconPath": "/assets/order_selected.png"
       },
       {
         "text": "我的",
-        "pagePath": "pages/mine/mine"
+        "pagePath": "pages/mine/mine",
+        "iconPath": "/assets/mine.png",
+        "selectedIconPath": "/assets/mine_selected.png"
       }
     ]
   },
