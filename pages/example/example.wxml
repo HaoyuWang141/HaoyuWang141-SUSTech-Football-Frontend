@@ -1,5 +1,7 @@
 <view class="container">
   <view style="width: 90%;">
+    <button bind:tap="goBilibili">goBilibili</button>
+
     <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
    
     <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/shude.png" icon2="/assets/shuren.png" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
