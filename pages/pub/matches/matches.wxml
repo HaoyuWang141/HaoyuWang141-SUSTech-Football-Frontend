@@ -1,2 +1,21 @@
 <!--pages/pub/matches/matches.wxml-->
-<text>pages/pub/matches/matches.wxml</text>
+<!-- <text>pages/pub/matches/matches.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view class="search-container">
+      <input class="search-input" type="text" placeholder="搜索比赛" bindinput="bindInput" value="{{ searchText }}"></input>
+      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
+    </view>
+
+    <view class="match-container">
+      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
+      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
+      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
+      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
+    </view>
+
+
+  </view>
+</view>
