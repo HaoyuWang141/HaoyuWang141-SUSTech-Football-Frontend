@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    badgeSrc: '',     // 队徽图片地址
+    teamname: '',     // 队名
   },
 
   /**
@@ -62,5 +63,38 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  /**
+   * 上传队徽图片
+  */ 
+  uploadBadge: function () {
+    wx.chooseImage({
+      count: 1,
+      success: res => {
+        const tempFilePaths = res.tempFilePaths;
+        this.setData({
+          badgeSrc: tempFilePaths[0]
+        });
+      }
+    });
+  },
+
+  /**
+   * 输入队名
+   */
+  inputTeamname: function (e) {
+    this.setData({
+      teamname: e.detail.value
+    });
+  },
+
+  /**
+   * 邀请队员
+   */
+  inviteNewPlayer: function () {
+    // 实现邀请新队员的逻辑
+    
   }
+
 })

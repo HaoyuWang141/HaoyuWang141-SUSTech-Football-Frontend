@@ -1,0 +1,21 @@
+<!--pages/management/match_more/match_more.wxml-->
+<!-- <text>pages/management/match_more/match_more.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view style="text-align: center;">管理的比赛</view>
+
+    <scroll-view scroll-y enable-flex>
+      <!-- 使用wx:for循环遍历比赛数据，并展示每场比赛的信息 -->
+      <view wx:for="{{matchesData}}" wx:key="index">
+        <match-card-big name="{{item.name}}" group="{{item.group}}" team1="{{item.team1}}" team2="{{item.team2}}" icon1="{{item.icon1}}" icon2="{{item.icon2}}" score1="{{item.score1}}" score2="{{item.score2}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch"></match-card-big>
+      </view>
+
+      <view>
+        <match-card-big name="发起新比赛" group="友谊赛" team1="team1" team2="team2" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" score1="0" score2="0" time="2024-2-1 15:00" hasBegun="true" bindtap="createNewMatch"></match-card-big>
+      </view>
+
+    </scroll-view>
+  </view>
+</view>

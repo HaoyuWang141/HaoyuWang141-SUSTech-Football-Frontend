@@ -62,5 +62,41 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+///////////////////////////////////////////////////////////////////////////////
+// 页面跳转
+
+gotoMatches() {
+  wx.navigateTo({
+    url: '/pages/management/match_more/match_more',
+  })
+},
+
+
+gotoTeams() {
+  wx.navigateTo({
+    url: '/pages/management/team_more/team_more',
+  })
+},
+
+gotoEditTeam() {
+  wx.navigateTo({
+    url: '/pages/management/team_edit/team_edit',
+  })
+},
+
+gotoEditMatch() {
+  wx.navigateTo({
+    url: '/pages/management/match_edit/match_edit',
+  })
+},
+
+gotoEditEvent() {
+  wx.navigateTo({
+    url: '/pages/management/event_edit/event_edit',
+  })
+},
+
 })
+

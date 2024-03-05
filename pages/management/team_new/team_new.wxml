@@ -1,2 +1,30 @@
 <!--pages/management/team_new/team_new.wxml-->
-<text>pages/management/team_new/team_new.wxml</text>
+<!-- <text>pages/management/team_new/team_new.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+
+  <!-- 队徽上传 -->
+  <view class="avatar-container"> 
+    <view class="text">队徽</view>
+    <view class="image-container">
+      <image src="{{badgeSrc ? badgeSrc : '/assets/barca1.png'}}" class="image" bindtap="uploadBadge"/>
+    </view>
+  </view>
+
+  <!-- 新队名输入 -->
+  <view class="teamname-container">
+    <view class="text">队名</view>
+    <input class="teamname" bindinput="inputTeamname" placeholder="请输入队名" style="flex: 1; text-align: right;"></input>
+  </view>
+
+  <!-- 邀请队员 -->
+  <view class="teammate-container">
+    <view class="text">队员</view>
+    <scroll-view scroll-y enable-flex >
+      <player-card-small name="邀请新队员" img="/assets/newplayer.png" bindtap="inviteNewPlayer"></player-card-small>
+    </scroll-view>
+  </view>
+
+  </view>
+</view>
