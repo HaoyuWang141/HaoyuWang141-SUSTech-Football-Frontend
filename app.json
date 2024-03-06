@@ -24,7 +24,8 @@
     "pages/pub/events/events",
     "pages/pub/teams/teams",
     "pages/example/example",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/pub/live/live"
   ],
   "window": {
     "navigationBarTextStyle": "black",

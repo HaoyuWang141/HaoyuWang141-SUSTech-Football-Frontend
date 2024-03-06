@@ -1,6 +1,12 @@
 <view class="container">
   <view style="width: 90%;">
-    <button bind:tap="goBilibili">goBilibili</button>
+    <button bind:tap="goBilibili" style="margin-bottom: 100rpx;">goBilibili</button>
+
+    <button bind:tap="goLive" style="margin-bottom: 100rpx;">gotoLive</button>
+
+    <button bind:tap="goBilibili_useLive" style="margin-bottom: 100rpx;">goBilibili_useLive</button>    
+    
+    <button bind:tap="goAliyunpan" style="margin-bottom: 100rpx;">goAliyunpan</button>
 
     <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
    

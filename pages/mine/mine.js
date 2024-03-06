@@ -1,18 +1,27 @@
 // pages/mine/mine.js
+
+const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const appInstance = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    avatarUrl: defaultAvatarUrl,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    const avatarUrl = appInstance.globalData.avatarUrl
+    if (avatarUrl) {
+      this.setData({
+        avatarUrl: appInstance.globalData.avatarUrl
+      })
+    }
   },
 
   /**
@@ -62,5 +71,27 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  onChooseAvatar(e) {
+    const {
+      avatarUrl
+    } = e.detail
+    this.setData({
+      avatarUrl: avatarUrl,
+    })
+    appInstance.globalData.avatarUrl = avatarUrl
+    // 或者使用异步方式保存
+    wx.setStorage({
+      key: 'avatarUrl',
+      data: avatarUrl,
+      success: function () {
+        console.log('用户头像URL已保存到本地存储');
+      },
+      fail: function (e) {
+        console.error('保存用户头像URL到本地存储失败', e);
+      }
+    });
+  },
+
 })

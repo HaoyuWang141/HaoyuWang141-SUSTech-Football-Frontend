@@ -1,2 +1,9 @@
-<!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<!--index.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view style="text-align: center;">
+    <image class="avatar" class="avatar" src="{{avatarUrl}}"></image>
+  </view>
+  <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    换头
+  </button>
+</scroll-view>
