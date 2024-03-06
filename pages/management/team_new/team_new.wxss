@@ -1,1 +1,42 @@
 /* pages/management/team_new/team_new.wxss */
+
+.avatar-container {
+  display: flex; /* 使用 Flexbox 布局 */
+  justify-content: space-around; /* 水平对齐，元素间距会自动填充 */
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx;
+  width: 90%;
+}
+
+.teamname-container {
+  display: flex; /* 使用 Flexbox 布局 */
+  justify-content: space-around; /* 水平对齐，元素间距会自动填充 */
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx;
+  width: 90%;
+}
+
+.teammate-container {
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx;
+  width: 90%;
+}
+
+.text {
+  margin-right: auto;
+}
+
+.image {
+  margin-left: auto;
+  width: 120rpx;
+  height: 120rpx;
+}

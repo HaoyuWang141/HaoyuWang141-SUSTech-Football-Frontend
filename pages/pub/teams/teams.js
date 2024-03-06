@@ -62,5 +62,23 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+    /**
+   * 监听搜索框文本
+   */
+  bindInput: function(e) {
+    this.setData({
+      searchText: e.detail.value // 更新data中的searchText值为用户输入的内容
+    });
+    // 这里可以添加你的搜索逻辑，比如根据用户输入的内容进行实时搜索
+  },
+
+  /**
+   * 监听搜索按钮
+   */
+  search: function() {
+    // 这里添加搜索逻辑，比如发起网络请求或其他操作
+    console.log('搜索内容:', this.data.searchText);
   }
 })

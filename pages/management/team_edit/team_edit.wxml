@@ -1,2 +1,52 @@
 <!--pages/management/team_edit/team_edit.wxml-->
-<text>pages/management/team_edit/team_edit.wxml</text>
+<!-- <text>pages/management/team_edit/team_edit.wxml</text> -->
+
+<view class="container">
+  <view style="width: 100%;">
+
+    <view style="text-align: center;">球队管理</view>
+    
+    <!-- 管理队徽 -->
+    <view class="avatar-container">
+      <view class="text">队徽</view>
+      <view class="image-container">
+        <image src="{{badgeSrc ? badgeSrc : '/assets/barca1.png'}}" class="image" bindtap="changeBadge"/>
+      </view>
+    </view>
+
+    <!-- 管理队名 -->
+    <view class="teamname-container" bindtap="showTeamnameModal">
+      <view class="text">队名</view>
+      <view class="teamname" >{{teamname}}</view>
+    </view>
+
+    <!-- 管理队名 -->
+    <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname" bindcancel="cancelChangeTeamname">
+      <view class="modal-content">
+        <text>请输入新队名：</text>
+        <input placeholder="新队名" value="{{newTeamname}}" bindinput="changeTeamname"/>
+      </view>
+    </modal>
+
+    <view class="teammate-container">
+      <view class="text">队员</view>
+      <scroll-view scroll-y enable-flex >
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+        <player-card-small name="邀请新队员" img="/assets/newplayer.png" bindtap="inviteNewPlayer"></player-card-small>
+      </scroll-view>
+    </view>
+
+
+  </view>
+</view>

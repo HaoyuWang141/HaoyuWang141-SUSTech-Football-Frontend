@@ -1,0 +1,20 @@
+<!--pages/management/team_more/team_more.wxml-->
+<!-- <text>pages/management/team_more/team_more.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+    
+    <view style="text-align: center;">管理的球队</view>
+
+    <scroll-view scroll-y enable-flex >
+      <view wx:for="{{teamsData}}" wx:key="index">
+        <team-card-big name="{{item.name}}" img="{{item.img}}" number="{{item.number}}" bindtap="gotoEditTeam"></team-card-big>
+      </view>
+
+      <view>
+        <team-card-big name="创建新球队" img="/assets/newplayer.png" number="0" bindtap="createNewTeam"></team-card-big>
+      </view>
+    </scroll-view>
+
+  </view>
+</view>

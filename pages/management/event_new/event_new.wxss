@@ -1,1 +1,43 @@
 /* pages/management/event_new/event_new.wxss */
+.basicInfo-container {
+  display: flex;
+  flex-direction: row;
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.4);
+  padding: 20rpx 0;
+}
+
+.image-container {
+  width: 120rpx;
+  height: 120rpx;
+  margin-left: 20rpx;
+  flex-shrink: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.text-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  overflow: hidden;
+}
+
+.text {
+  font-size: smaller;
+}
+
+.team-container {
+  margin: 10rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx;
+}

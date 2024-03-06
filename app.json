@@ -10,8 +10,10 @@
     "pages/management/management",
     "pages/management/team_edit/team_edit",
     "pages/management/team_new/team_new",
+    "pages/management/team_more/team_more",
     "pages/management/match_edit/match_edit",
     "pages/management/match_new/match_new",
+    "pages/management/match_more/match_more",
     "pages/management/event_edit/event_edit",
     "pages/management/event_new/event_new",
     "pages/mine/mine",
@@ -80,5 +82,9 @@
     "player-card-small": "/components/player-card-small/player",
     "team-card-big": "/components/team-card-big/team",
     "team-card-small": "/components/team-card-small/team"
+  },
+  
+  "useExtendedLib": {
+    "weui": true
   }
 }

@@ -1,2 +1,69 @@
 <!--pages/management/match_new/match_new.wxml-->
-<text>pages/management/match_new/match_new.wxml</text>
+<!-- <text>pages/management/match_new/match_new.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view style="text-align: center;">比赛创建</view>
+
+    <!-- 比赛信息卡片 -->
+    <view class="match-card-container">
+      <view class="match-card">
+        <text class="time">{{date}}{{" "}}{{time}}</text>
+        <text class="name">{{name}} {{group}}</text>
+        <view class="info-container">
+          <view class="team" bindtap="inviteTeam1">
+            <image class="icon" src="{{icon1}}"></image>
+            <text>{{team1}}</text>
+          </view>
+          <view class="middle">
+            <block wx:if="{{hasBegun}}">
+              <text class="score">{{score1}} - {{score2}}</text>
+              <text class="penalty" wx:if="{{score1 === score2}}">({{penalty1}} - {{penalty2}})</text>
+            </block>
+            <text class="not-begin" wx:else>未开始</text>
+          </view>
+          <view class="team" bindtap="inviteTeam2">
+            <image class="icon" src="{{icon2}}"></image>
+            <text>{{team2}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 修改信息区域 -->
+    <view class="manage-info">
+      <!-- 比赛日期 -->
+      <picker class="changeInfo-container" mode="date" value="{{date}}" start="2024-01-01"  bindchange="bindDateChange">
+        <text>比赛日期：</text>
+        <text>{{date}}</text>
+      </picker>
+
+      <!-- 比赛时间 -->
+      <picker class="changeInfo-container" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+        <text>比赛时间：</text>
+        <text>{{time}}</text>
+      </picker>
+
+      <!-- 比赛名称 -->
+      <view class="changeInfo-container" bindtap="showNameInput">
+        <text>比赛名称：</text>
+        <text>{{name}}</text>
+      </view>
+
+      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname"       bindcancel="cancelChangeTeamname">
+        <view class="modal-content">
+          <text>请输入比赛名称：</text>
+          <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
+        </view>
+      </modal>
+
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="btn-container">
+      <button class="confirm" bindtap="confirmEdit">确认创建</button>
+    </view>
+    
+  </view>
+</view>
