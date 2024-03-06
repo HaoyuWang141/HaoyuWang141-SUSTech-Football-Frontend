@@ -69,12 +69,14 @@ Page({
 
   },
 
+  // 跳转到编辑比赛页面
   gotoEditMatch() {
     wx.navigateTo({
       url: '/pages/management/match_edit/match_edit',
     })
   },
 
+  // 跳转到创建比赛页面
   createNewMatch() {
     wx.navigateTo({
       url: '/pages/management/match_new/match_new',

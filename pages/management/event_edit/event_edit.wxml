@@ -1,2 +1,30 @@
 <!--pages/management/event_edit/event_edit.wxml-->
-<text>pages/management/event_edit/event_edit.wxml</text>
+<!-- <text>pages/management/event_edit/event_edit.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view class="basicInfo-container">
+
+      <view class="image-container">
+        <image src="{{icon}}" mode="scaleToFill" class="image"></image>
+      </view>
+      <view class="text-container" bindtap="showNameInput">
+        <text class="text">{{name}}</text>
+      </view>
+
+      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
+        <view class="modal-content">
+          <text>请输入赛事名称：</text>
+          <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
+        </view>
+      </modal>
+
+    </view> 
+    
+    <view>
+      
+    </view>
+
+  </view>
+</view>

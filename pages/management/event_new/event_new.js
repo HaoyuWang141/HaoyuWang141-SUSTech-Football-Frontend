@@ -5,7 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
+    icon: '/assets/cup.svg',
+    name: '创建新赛事名称',
+    modalHidden: true, // 控制模态框显示隐藏
 
+    teamsData : [
+      { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
+      { name: '南科大足球队', img: '/assets/barca1.png', number: '22'},
+      { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
+      { name: '南科大足球队', img: '/assets/barca1.png', number: '22'},
+      { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
+      { name: '南科大足球队', img: '/assets/barca1.png', number: '22'},
+    ]
   },
 
   /**
@@ -62,5 +73,40 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  // 显示赛事名称输入弹窗
+  showNameInput: function () {
+    this.setData({
+      modalHidden: false
+    });
+  },
+
+  changename: function (e) {
+    this.setData({
+      newname: e.detail.value
+    });
+  },
+
+  // 确认更改队名时触发的事件
+  confirmChangeEventname: function () {
+    // 这里可以添加逻辑，如检查输入是否合法等
+    this.setData({
+      name: this.data.newname,
+      modalHidden: true
+    });
+  },
+
+  // 取消更改队名时触发的事件
+  cancelChangeEventname: function () {
+    this.setData({
+      modalHidden: true
+    });
+  },
+
+  // 邀请参赛球队
+  inviteNewTeam() {
+
+  },
+
 })

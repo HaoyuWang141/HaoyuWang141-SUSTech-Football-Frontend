@@ -1,2 +1,38 @@
 <!--pages/management/event_new/event_new.wxml-->
-<text>pages/management/event_new/event_new.wxml</text>
+<!-- <text>pages/management/event_new/event_new.wxml</text> -->
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view class="basicInfo-container">
+      <view class="image-container">
+        <image src="{{icon}}" mode="scaleToFill" class="image"></image>
+      </view>
+      <view class="text-container" bindtap="showNameInput">
+        <text class="text">{{name}}</text>
+      </view>
+
+      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
+        <view class="modal-content">
+          <text>请输入赛事名称：</text>
+          <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
+        </view>
+      </modal>
+
+    </view> 
+
+    <!-- 邀请球队 -->
+    <view class="team-container">
+      <view class="text">参赛球队</view>
+      <scroll-view scroll-y enable-flex >
+        <team-card-small name="邀请参赛球队" img="/assets/newplayer.png" bindtap="inviteNewTeam"></team-card-small>
+        <!-- 使用wx:for循环遍历比赛数据，并展示每场比赛的信息 -->
+        <view wx:for="{{teamsData}}" wx:key="index">
+          <team-card-big name="{{item.name}}" img="{{item.img}}" number="{{item.number}}"></team-card-big>
+        </view>
+
+      </scroll-view>
+    </view>
+
+  </view>
+</view>

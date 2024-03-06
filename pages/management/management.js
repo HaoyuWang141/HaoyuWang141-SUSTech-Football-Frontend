@@ -98,5 +98,11 @@ gotoEditEvent() {
   })
 },
 
+gotoCreateEvent() {
+  wx.navigateTo({
+    url: '/pages/management/event_new/event_new',
+  })
+},
+
 })
 
