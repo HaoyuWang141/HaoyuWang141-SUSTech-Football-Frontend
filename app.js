@@ -44,8 +44,8 @@ App({
     this.globalData.avatarUrl = wx.getStorageSync('avatarUrl')
   },
   globalData: {
-    // SERVER: 'https://haoyu-wang141.top:8085',
-    SERVER: 'https://localhost:8085',
+    SERVER: 'https://haoyu-wang141.top:8085',
+    // SERVER: 'https://localhost:8085',
     openid: null,
     session_key: null,
     userId: null,
