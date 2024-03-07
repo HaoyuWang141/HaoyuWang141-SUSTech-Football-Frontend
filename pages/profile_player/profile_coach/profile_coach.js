@@ -62,5 +62,36 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+///////////////////////////////////////////////////////////////////////////////// 页面跳转
+  edit_information() {
+    wx.navigateTo({
+      url: '/pages/profile_player/profile_coach_edit/profile_coach_edit',
+    })
+  },
+
+  gotoTeams() {
+    wx.navigateTo({
+      url: '/pages/pub/teams/teams',
+    })
+  },
+
+  gotoTeam() {
+    wx.navigateTo({
+      url: '/pages/pub/team/team',
+    })
+  },
+
+  gotoMatches() {
+    wx.navigateTo({
+      url: '/pages/pub/matches/matches',
+    })
+  },
+
+  gotoMatch() {
+    wx.navigateTo({
+      url: '/pages/pub/match/match',
+    })
+  },
 })

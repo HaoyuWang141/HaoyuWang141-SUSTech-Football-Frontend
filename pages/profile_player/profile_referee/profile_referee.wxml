@@ -1,2 +1,42 @@
 <!--pages/profile_player/profile_referee/profile_referee.wxml-->
-<text>pages/profile_player/profile_referee/profile_referee.wxml</text>
+<!--<text>pages/profile_player/profile_referee/profile_referee.wxml</text>-->
+
+<view class="container">
+  <view style="width: 90%;">
+
+    <view class="personal-information-container">
+      <view class="more-bar">
+        <label class="more-label">裁判信息</label>
+        <button class="more-button" bindtap="edit_information">编辑 ></button>
+      </view>
+      <view class="profile_information">
+        <image class="profile_picture" src="/assets/busquets.jpg"></image>
+        <text class="profile_name_and_age">王浩羽/23岁</text>
+      </view>
+    </view>
+    
+    <view class="my-match-container">
+      <view class="more-bar">
+        <label class="more-label">执法比赛</label>
+        <button class="more-button" bindtap="gotoMatches">更多 ></button>
+      </view>
+      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
+      </scroll-view>
+    </view>
+
+    <view class="my-event-container">
+      <view class="more-bar">
+        <label class="more-label">执法赛事</label>
+        <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
+      </view>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
+      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
+    </view>
+
+  </view>
+</view>
