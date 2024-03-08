@@ -21,6 +21,11 @@
     line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */
 }
 
+/* news */
+.news-swiper {
+    height: 600rpx;
+}
+
 /* match */
 .match-container {
     margin-top: 30rpx;
