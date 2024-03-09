@@ -9,5 +9,8 @@
 }
 
 page {
-  background-color: #eee;
+  /* background-color: #666666; */
+  /* background-color: #CCCCCC; */
+  /* background-color: #E0E0E0; */
+  background-color: #F2F2F2;
 }

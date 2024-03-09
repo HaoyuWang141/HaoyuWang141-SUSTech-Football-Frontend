@@ -61,7 +61,7 @@
         <label class="more-label">关注的赛事</label>
         <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
       </view>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
+      <event-card-big eventId="1" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="gotoEvent" data-id="1"></event-card-big>
       <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
       <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
       <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>

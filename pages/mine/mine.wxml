@@ -2,8 +2,10 @@
 <scroll-view class="scrollarea" scroll-y type="list">
   <view style="text-align: center;">
     <image class="avatar" class="avatar" src="{{avatarUrl}}"></image>
+    <view>nickName: {{nickName}}</view>
   </view>
   <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
     换头
   </button>
+
 </scroll-view>

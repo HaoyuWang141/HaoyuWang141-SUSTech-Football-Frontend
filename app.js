@@ -22,11 +22,12 @@ App({
               appInstance.globalData.openid = res.data.openid
               appInstance.globalData.session_key = res.data.session_key
               wx.request({
-                url: appInstance.globalData.SERVER + '/user/login?openid=' + res.data.openid + '&session_key=' + res.data.session_key,
+                url: appInstance.globalData.URL + '/user/login?openid=' + res.data.openid + '&session_key=' + res.data.session_key,
                 method: "POST",
                 success(res) {
                   console.log(res.data)
                   appInstance.globalData.userId = res.data.userId
+                  appInstance.globalData.nickName = res.data.nickName
                 },
                 fail(err) {
                   console.log(err)
@@ -44,11 +45,13 @@ App({
     this.globalData.avatarUrl = wx.getStorageSync('avatarUrl')
   },
   globalData: {
+    URL: 'https://haoyu-wang141.top:8085',
     SERVER: 'https://haoyu-wang141.top:8085',
-    // SERVER: 'https://localhost:8085',
+    LOCAL: 'https://localhost:8085',
     openid: null,
     session_key: null,
     userId: null,
+    nickName: null,
     avatarUrl: null
   }
 })

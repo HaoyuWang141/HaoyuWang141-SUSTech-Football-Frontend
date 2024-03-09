@@ -6,7 +6,8 @@ Component({
    */
   properties: {
     name: String,
-    group: String,
+    stage: String,
+    tag: String,
     team1: String,
     team2: String,
     icon1: String,
@@ -16,14 +17,23 @@ Component({
     penalty1: Number,
     penalty2: Number,
     time: String,
-    hasBegun: Boolean
   },
 
   /**
    * 组件的初始数据
    */
   data: {
+    hasBegun: Boolean,
+  },
 
+  lifetimes: {
+    attached: function () {
+      const date = new Date(this.properties.time)
+      const hasBegun = new Date() > date
+      this.setData({
+        hasBegun: hasBegun,
+      })
+    }
   },
 
   /**

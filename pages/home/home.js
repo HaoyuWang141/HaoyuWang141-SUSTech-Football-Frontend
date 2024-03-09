@@ -110,6 +110,14 @@ Page({
   search: function() {
     // 这里添加搜索逻辑，比如发起网络请求或其他操作
     console.log('搜索内容:', this.data.searchText);
-  }
+  },
 
+  // 跳转至event详情页，需要的参数为event的id 
+  gotoEvent: function(e) {
+    const dataset = e.currentTarget.dataset
+    const event_id = dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/event/event?id=' + event_id,
+    })
+  }
 })

@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "team-card-small": "/components/team-card-small/team",
+    "match-card-small": "/components/match-card-small/match",
+    "match-card-big": "/components/match-card-big/match"
+  }
 }
