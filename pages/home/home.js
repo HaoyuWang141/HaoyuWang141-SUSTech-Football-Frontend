@@ -5,7 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    searchText: '' // 初始化搜索框内容为空
+    userId: 0,
+    searchText: '', // 初始化搜索框内容为空
+    newsIdList: [],
+    matchIdList: [],
+    playerIdList: [],
+    teamIdList: [],
+    eventIdList: [],
   },
 
   /**
@@ -73,19 +79,53 @@ Page({
     })
   },
 
-  gotoMatches() {
+//   gotoSearch() {
+//     wx.navigateTo({
+//       url: '/pages/pub/search/search',
+//     //   url: '/pages/pub/search/search?' + 'searchText=' + encodeURIComponent(this.data.searchText),
+//     })
+//   },
+
+  gotoSearch() {
+    wx.navigateTo({
+    //   url: '/pages/pub/search/search',
+      url: '/pages/pub/search/search?' + 'searchText=' + encodeURIComponent(this.data.searchText),
+    })
+  },
+
+  gotoTheNews() {
+      // TODO
+  },
+
+  gotoTheMatch() {
+      // TODO
+  },
+
+  gotoThePlayer() {
+      // TODO
+  },
+
+  gotoTheTeam() {
+      // TODO
+  },
+
+  gotoTheEvent() {
+      // TODO
+  },
+
+  gotoMoreMatches() {
     wx.navigateTo({
       url: '/pages/pub/matches/matches',
     })
   },
 
-  gotoPlayers() {
+  gotoMorePlayers() {
     wx.navigateTo({
         url: '/pages/pub/players/players',
       })
   },
 
-  gotoTeams() {
+  gotoMoreTeams() {
     wx.navigateTo({
         url: '/pages/pub/teams/teams',
       })
@@ -110,6 +150,7 @@ Page({
   search: function() {
     // 这里添加搜索逻辑，比如发起网络请求或其他操作
     console.log('搜索内容:', this.data.searchText);
+    this.gotoSearch();
   },
 
   // 跳转至event详情页，需要的参数为event的id 
