@@ -12,12 +12,7 @@
         <button class="more-button" bindtap="gotoTeams">更多 ></button>
       </view>
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoEditTeam"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoEditTeam"></team-card-small>
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoEditTeam"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoEditTeam"></team-card-small>
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoEditTeam"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoEditTeam"></team-card-small>
+        <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.img}}" number="{{item.number}}" bindtap="gotoEditTeam"></team-card-small>
       </scroll-view>
     </view>
 
@@ -27,9 +22,7 @@
         <button class="more-button" bindtap="gotoMatches">更多 ></button>
       </view>
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoEditMatch"></match-card-small>
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoEditMatch"></match-card-small>
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoEditMatch"></match-card-small>
+        <match-card-small wx:for="{{matches}}" wx:key="index" name="{{item.name}}" group="{{item.group}}" team1="{{item.team1}}" team2="{{item.team2}}" icon1="{{item.icon1}}" icon2="{{item.icon2}}" score1="{{item.score1}}" score2="{{item.score2}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch"></match-card-small>
       </scroll-view>
     </view>
 
@@ -38,11 +31,8 @@
         <label class="more-label">管理的赛事</label>
         <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
       </view>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEditEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEditEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEditEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEditEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="创建新赛事" bind:tap="handleTap" bindtap="gotoCreateEvent"></event-card-big>
+      <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
+      <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.id}}" icon="{{item.icon}}" name="{{item.name}}" bindtap="gotoEditEvent"></event-card-big>
     </view>
 
   </view>

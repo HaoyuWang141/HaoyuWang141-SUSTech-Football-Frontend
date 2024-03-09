@@ -12,8 +12,6 @@ Page({
       { name: '南科大校队', img: '/assets/barca1.png', number: 22 },
       { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
       { name: '南科大校队', img: '/assets/barca1.png', number: 22 },
-      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
-      { name: '南科大校队', img: '/assets/barca1.png', number: 22 }
     ]
   },
   

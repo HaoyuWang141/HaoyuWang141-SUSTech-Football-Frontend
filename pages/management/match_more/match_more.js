@@ -10,7 +10,20 @@ Page({
       { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
       { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
       { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-    ]
+    ],
+
+    newMatch: {
+      name: '发起新比赛',
+      group: '友谊赛',
+      team1: 'team1',
+      team2: 'team2',
+      icon1: '/assets/newplayer.png',
+      icon2: '/assets/newplayer.png',
+      score1: 0,
+      score2: 0,
+      time: '2024-2-1 15:00',
+      hasBegun: true
+    }
   },
 
   /**
