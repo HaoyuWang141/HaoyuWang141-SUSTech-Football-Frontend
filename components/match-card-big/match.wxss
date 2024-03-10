@@ -43,13 +43,13 @@
 }
 
 .score {
-  font-size: larger;
+  font-size: x-large;
   font-weight: bold;
   color: rgb(237, 108, 0);
 }
 
 .penalty {
-  font-size: small;
+  font-size: normal;
   color: rgb(237, 108, 0);
 }
 

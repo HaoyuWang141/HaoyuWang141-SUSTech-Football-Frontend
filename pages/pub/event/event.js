@@ -1,5 +1,6 @@
 // pages/pub/event/event.js
 const appInstance = getApp()
+const URL = appInstance.globalData.URL
 
 Page({
 
@@ -66,7 +67,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: appInstance.globalData.URL + '/event/get',
+      url: URL + '/event/get',
       data: {
         id: id
       },
@@ -154,24 +155,21 @@ Page({
     this.loadTabData(tabIndex);
   },
 
-  // loadTabData: function (tabIndex) {
-  //   // 这里是示例逻辑
-  //   // 实际应用中，你可能需要根据tabIndex做不同的数据请求或处理
-  //   console.log('加载Tab数据，当前Tab索引：', tabIndex);
-  //   switch (tabIndex) {
-  //     case 0:
-  //       // 加载主页数据
-  //       break;
-  //     case 1:
-  //       // 加载赛程数据
-  //       break;
-  //     case 2:
-  //       // 加载积分榜数据
-  //       break;
-  //     default:
-  //       console.log('未知的Tab');
-  //   }
-  // },
+  loadTabData: function (tabIndex) {
+    // 这里是示例逻辑
+    // 实际应用中，你可能需要根据tabIndex做不同的数据请求或处理
+    switch (tabIndex) {
+      case 0:
+        // 加载主页数据
+        break;
+      case 1:
+        // 加载赛程数据
+        break;
+      case 2:
+        // 加载积分榜数据
+        break;
+    }
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -226,6 +224,14 @@ Page({
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: '/pages/pub/team/team?id=' + id,
+    })
+  },
+
+  gotoMatchPage: function (e) {
+    const id = e.currentTarget.dataset.id
+    const event = e.currentTarget.dataset.event
+    wx.navigateTo({
+      url: '/pages/pub/match/match?id=' + id + '&event=' + event,
     })
   },
 
