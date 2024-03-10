@@ -5,7 +5,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    teams: [
+      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
+      { name: '南科大足球队南科大足球队南科大足球队', img: '/assets/barca1.png', number: 25 },
+      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
+      { name: '南科大足球队南科大足球队南科大足球队', img: '/assets/barca1.png', number: 25 },
+      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
+      { name: '南科大足球队南科大足球队南科大足球队', img: '/assets/barca1.png', number: 25 }
+    ],
+    matches: [
+      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
+      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
+      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true }
+    ],
+    events: [
+      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' },
+      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' },
+      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' },
+      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' }
+    ],
+    newEvent: { id: 'id', icon: '/assets/newplayer.png', name: '创建赛事'},
   },
 
   /**
@@ -98,7 +117,7 @@ gotoEditEvent() {
   })
 },
 
-gotoCreateEvent() {
+gotoNewEvent() {
   wx.navigateTo({
     url: '/pages/management/event_new/event_new',
   })

@@ -8,7 +8,17 @@ Page({
     badgeSrc: '',     // 队徽图片地址
     modalHidden: true, // 控制模态框显示隐藏
     newTeamname: '',   // 用于存放用户输入的新队名
-    teamname: "南方科技大学校队"
+    teamname: "南方科技大学校队",
+    invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
+    teammates: [
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+      { name: '王浩羽', img: '/assets/busquets.jpg' },
+    ],
   },
 
   /**
@@ -116,10 +126,14 @@ Page({
     });
   },
 
-  /**
-   * 邀请新队员
-   */
-  inviteNewPlayer() {
+  
+  // 邀请新队员
+  invitePlayer() {
+
+  },
+
+  // 管理队员
+  managePlayer() {
 
   },
   
