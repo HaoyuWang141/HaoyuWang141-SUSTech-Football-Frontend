@@ -1,1 +1,182 @@
 /* pages/pub/event/event.wxss */
+
+.title-card {
+  background-color: #ffffff; /* 卡片背景色 */
+  border-radius:30rpx; /* 卡片圆角 */
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
+  padding: 40rpx 20rpx; /* 卡片内边距 */
+  margin: 20rpx 10rpx; /* 外边距，根据需要调整 */
+  display: flex; /* 使用Flex布局 */
+  flex-direction: row; /* 子项垂直排列 */
+  align-items: center; /* 子项在交叉轴上居中对齐 */
+}
+
+.cup {
+  flex: 0 0 auto;
+  width: 120rpx; /* 图片宽度 */
+  height: 120rpx; /* 图片高度，根据实际图片调整 */
+  margin-right: 30rpx; /* 与下方内容的间距 */
+}
+
+.title {
+  font-size: large; /* 标题字号 */
+  font-weight: bold; /* 字体加粗 */
+  color: #333; /* 标题颜色 */
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  padding: 10px 0;
+}
+
+.tab {
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  color: #333;
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.2);
+}
+
+.tab-content {
+  margin-top: 0;
+  padding: 0;
+}
+
+/* 激活状态的tab样式 */
+.active {
+  color: rgb(237,108,0);
+  border-bottom: 2px solid rgb(237,108,0);
+}
+
+/* Block */
+/* Styles for the container */
+.block-container {
+  padding: 30rpx;
+  border: 1rpx solid #cccccc; /* Light grey border */
+  background-color: white; /* Light grey background */
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+/* Styles for the top section */
+.block-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Adds some space between the top and the main content */
+}
+
+/* Styles for the title */
+.block-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333; /* Dark grey color for the text */
+}
+
+/* Optional: If you want the "More" text but it's empty in the example */
+.block-more {
+  padding: 10rpx 0;
+  font-size: 14px;
+  color: #666; /* Medium grey color */
+}
+
+/* Styles for the main content area */
+.block-main {
+  font-size: 14px;
+  color: #666; /* Medium grey color for the text */
+  padding: 5px 0; /* Padding on top and bottom */
+}
+
+.stageAndTag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #666666;
+  background-color: #fff;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.icon-down {
+  height: 50rpx;
+  width: 50rpx;
+}
+
+/* 积分榜 - 表格 */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.row {
+  display: table-row;
+}
+
+.cell {
+  display: table-cell;
+  padding: 8px;
+  text-align: center;
+}
+
+.cell-team {
+  display: flex;
+  justify-items: center;
+}
+
+.cell-team-icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 10rpx;
+}
+
+.header {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* 主页 - 统计数据的卡片 */
+.statistic-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.statistic-card {
+  width: 35%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.statistic-card-content {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+}
+
+.statistic-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+
+.statistic-count {
+  font-weight: bold;
+  font-size: large;
+}
+
+.statistic-title {
+  color: #666666;
+  font-size: small;
+}

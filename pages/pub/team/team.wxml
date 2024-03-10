@@ -1,2 +1,3 @@
 <!--pages/pub/team/team.wxml-->
 <text>pages/pub/team/team.wxml</text>
+<view>球队详情页，球队id：{{id}} </view>

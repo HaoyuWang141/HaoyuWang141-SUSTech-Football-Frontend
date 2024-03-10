@@ -1,12 +1,13 @@
 /* components/match-card-small/match.wxss */
 .match-card {
+  flex: 0 1 auto;
   display: inline-block;
   margin: 10rpx;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 20rpx 20rpx;
-  width: 350rpx;
+  width: 400rpx;
 }
 
 .name {
@@ -20,11 +21,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 
 .team {
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   font-size: small;
 }
 
@@ -37,15 +41,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
+  padding: 10rpx auto;
+  margin: 0 10rpx;
+  border-radius: 10rpx;
 }
 
 .score {
-  font-size: small;
+  font-size: large;
+  font-weight: bold;
+  color: rgb(237, 108, 0);
 }
 
 .penalty {
-  font-size: x-small;
+  font-size: small;
+  color: rgb(237, 108, 0);
+}
+
+.not-begin {
+  font-weight: bold;
+  color: rgb(237, 108, 0);
 }
 
 .time {
@@ -53,4 +67,5 @@
   text-align: center;
   color: #666;
   font-size: small;
+  margin-bottom: 20rpx;
 }

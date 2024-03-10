@@ -10,18 +10,17 @@ Page({
    */
   data: {
     avatarUrl: defaultAvatarUrl,
+    nickName: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const avatarUrl = appInstance.globalData.avatarUrl
-    if (avatarUrl) {
-      this.setData({
-        avatarUrl: appInstance.globalData.avatarUrl
-      })
-    }
+    this.setData({
+      avatarUrl: appInstance.globalData.avatarUrl ?? defaultAvatarUrl,
+      nickName: appInstance.globalData.nickName ?? ''
+    })
   },
 
   /**

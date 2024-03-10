@@ -4,7 +4,7 @@
 
     <button bind:tap="goLive" style="margin-bottom: 100rpx;">gotoLive</button>
 
-    <button bind:tap="goBilibili_useLive" style="margin-bottom: 100rpx;">goBilibili_useLive</button>    
+    <button bind:tap="goBilibili_useLive" style="margin-bottom: 100rpx;">goBilibili_useLive</button>
     
     <button bind:tap="goAliyunpan" style="margin-bottom: 100rpx;">goAliyunpan</button>
 

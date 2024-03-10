@@ -1,2 +1,113 @@
-<!--pages/pub/event/event.wxml-->
-<text>pages/pub/event/event.wxml</text>
+<view class="title-card">
+  <image src="/assets/cup.svg" mode="scaleToFill" class="cup"></image>
+  <view class="title-container">
+    <text class="title">{{name}}</text>
+    <text class="description">{{description}}</text>
+  </view>
+</view>
+
+<view class="tabs">
+  <view class="tab,{{activeIndex==0?'active':''}}" data-index="0" bindtap="switchTab">主页</view>
+  <view class="tab,{{activeIndex==1?'active':''}}" data-index="1" bindtap="switchTab">比赛</view>
+  <view class="tab,{{activeIndex==2?'active':''}}" data-index="2" bindtap="switchTab">积分榜</view>
+</view>
+<view class="tab-content">
+  <view wx:if="{{activeIndex == 0}}">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">赛事统计</text>
+        <text class="block-more"></text>
+      </view>
+      <view class="block-main">
+        <view class="statistic-container">
+          <!-- 球队数量卡片 -->
+          <view wx:for="{{statisticData}}" class="statistic-card" wx:key="index">
+            <view class="statistic-card-content">
+              <image class="statistic-icon" src="{{item.icon}}" mode="scaleToFill" />
+              <view class="statistic-count">{{item.count}}</view>
+            </view>
+            <view class="statistic-title">{{item.title}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">参赛球队</text>
+        <text class="block-more">查看更多</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <team-card-small wx:for="{{teamList}}" wx:key="id" name="{{item.name}}" img="{{item.logo}}" bind:tap="gotoTeamPage" data-id="{{item.id}}"></team-card-small>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">比赛赛程</text>
+        <text class="block-more">查看更多</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-small>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeIndex == 1}}">
+    <picker mode="multiSelector" bindchange="stageAndTagChange" bindcolumnchange="stageAndTagColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+      <view class="stageAndTag">{{stageAndTag}}
+        <image src="/assets/down.png" class="icon-down" bindtap="toggleDropdown"></image>
+      </view>
+    </picker>
+    <match-card-big wx:for="{{matchesOfCurrentTag}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-big>
+  </view>
+
+  <view wx:if="{{activeIndex == 2}}">
+    <block wx:for="{{groupList}}" wx:key="mame">
+      <view class="block-container">
+        <view class="block-top">
+          <text class="block-title">{{item.name}}</text>
+        </view>
+        <view class="block-main">
+          <view class="table">
+            <!-- 表头 -->
+            <view class="row header">
+              <view class="cell">球队</view>
+              <view class="cell">胜</view>
+              <view class="cell">平</view>
+              <view class="cell">负</view>
+              <view class="cell">进/失</view>
+              <view class="cell">积分</view>
+            </view>
+            <!-- 表内容 -->
+            <view class="row" wx:for="{{item.teamList}}" wx:for-item="teamInfo" wx:key="index">
+              <view class="cell">
+                <view class="cell-team ">
+                  <image class="cell-team-icon" src="{{teamInfo.team.logo}}" mode="scaleToFill" />{{teamInfo.team.name}}
+                </view>
+              </view>
+              <view class="cell">{{teamInfo.numWins}}</view>
+              <view class="cell">{{teamInfo.numDraws}}</view>
+              <view class="cell">{{teamInfo.numLosses}}</view>
+              <view class="cell">{{teamInfo.numGoalsFor}}/{{teamInfo.numGoalsAgainst}}</view>
+              <view class="cell">{{teamInfo.score}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<!--
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title"></text>
+    <text class="block-more">查看更多</text>
+  </view>
+  <view class="block-main"></view>
+</view>
+-->

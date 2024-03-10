@@ -146,6 +146,21 @@ Page({
     // 这里添加搜索逻辑，比如发起网络请求或其他操作
     console.log('搜索内容:', this.data.searchText);
     this.gotoSearch();
-  }
+  },
 
+  // 跳转至event详情页，需要的参数为event的id 
+  gotoEvent: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/event/event?id=' + dataset.id,
+    })
+  },
+
+  // 跳转至match详情页，需要的参数为match的id
+  gotoMatch: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/match/match?id=' + dataset.id,
+    })
+  }
 })
