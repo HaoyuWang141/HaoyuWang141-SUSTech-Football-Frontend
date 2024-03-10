@@ -1,6 +1,6 @@
 // pages/pub/match/match.js
 const appInstance = getApp()
-const URL = appInstance.globalData.LOCAL
+const URL = appInstance.globalData.URL
 
 Page({
   data: {
@@ -26,7 +26,8 @@ Page({
     awayTeamPlayerList: [],
     awayTeamScore: 0,
     awayTeamPenalty: 0,
-    time: null,
+    time: new Date(),
+    hasBegun: false,
     strTime: String,
     matchPlayerActionList: Array,
     refereeList: Array,
@@ -71,6 +72,7 @@ Page({
 
         var date = new Date(res.data.time)
         let strTime = that.format(date)
+        let hasBegun = new Date() > date
         that.setData({
           homeTeam: res.data.homeTeam,
           homeTeamScore: res.data.homeTeamScore,
@@ -79,6 +81,7 @@ Page({
           awayTeamScore: res.data.awayTeamScore,
           awayTeamPenalty: res.data.awayTeamPenalty,
           time: res.data.time,
+          hasBegun: hasBegun,
           strTime: strTime,
           matchPlayerActionList: res.data.matchPlayerActionList,
           refereeList: res.data.refereeList,

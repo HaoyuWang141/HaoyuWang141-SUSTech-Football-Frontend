@@ -2,7 +2,7 @@
   <view style="background-color: white;">
     <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
   </view>
-  <match team1="{{homeTeam.name}}" team2="{{awayTeam.name}}" icon1="{{homeTeam.logoUrl}}" icon2="{{awayTeam.logoUrl}}" score1="{{homeTeamScore}}" score2="{{awayTeamScore}}" penalty1="{{homeTeamPenalty}}" penalty2="{{awayTeamPenalty}}" time="{{time}}"></match>
+  <match team1="{{homeTeam.name}}" team2="{{awayTeam.name}}" icon1="{{homeTeam.logoUrl}}" icon2="{{awayTeam.logoUrl}}" score1="{{homeTeamScore}}" score2="{{awayTeamScore}}" penalty1="{{homeTeamPenalty}}" penalty2="{{awayTeamPenalty}}" time="{{time}}" hasBegun="{{hasBegun}}"></match>
 </view>
 
 <view class="tabs">
