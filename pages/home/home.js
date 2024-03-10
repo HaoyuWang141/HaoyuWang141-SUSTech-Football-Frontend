@@ -79,17 +79,9 @@ Page({
     })
   },
 
-//   gotoSearch() {
-//     wx.navigateTo({
-//       url: '/pages/pub/search/search',
-//     //   url: '/pages/pub/search/search?' + 'searchText=' + encodeURIComponent(this.data.searchText),
-//     })
-//   },
-
   gotoSearch() {
     wx.navigateTo({
-    //   url: '/pages/pub/search/search',
-      url: '/pages/pub/search/search?' + 'searchText=' + encodeURIComponent(this.data.searchText),
+      url: '/pages/home/search/search?' + 'searchText=' + encodeURIComponent(this.data.searchText),
     })
   },
 
@@ -98,7 +90,10 @@ Page({
   },
 
   gotoTheMatch() {
-      // TODO
+    console.log("11111");
+    wx.navigateTo({
+      url: '/pages/pub/match/match?' + 'matchId=' + encodeURIComponent('123'),
+    });
   },
 
   gotoThePlayer() {

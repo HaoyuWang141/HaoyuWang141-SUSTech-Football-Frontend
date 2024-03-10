@@ -1,4 +1,4 @@
-/* pages/pub/search/search.wxss */
+/* pages/home/search/search.wxss */
 
 .search-container {
     display: flex;

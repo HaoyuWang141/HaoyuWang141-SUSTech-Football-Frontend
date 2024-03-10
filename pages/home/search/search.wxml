@@ -1,13 +1,13 @@
 <!--pages/home/home.wxml-->
-<!-- <text>pages/pub/search/search.wxml</text> -->
+<!-- <text>pages/home/search/search.wxml</text> -->
 
 <view class="container">
   <view style="width: 90%;">
 
     <view class="search-container">
       <input class="search-input" type="text" placeholder="搜索" bindinput="bindInput" value="{{ searchText }}"></input>
-      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
-      <button class="filter-button" wx:if="{{ searchText }}" bindtap="filter">{{ filterButtonText }}</button>
+      <button class="search-button" bindtap="search">搜索</button>
+      <button class="filter-button" bindtap="filter">{{ filterButtonText }}</button>
     </view>
 
     <view class="filter-container" wx:if="{{showFilter}}">

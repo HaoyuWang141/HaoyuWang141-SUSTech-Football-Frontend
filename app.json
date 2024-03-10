@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/home/search/search",
     "pages/profile_player/profile_player",
     "pages/profile_player/profile_coach/profile_coach",
     "pages/profile_player/profile_coach_edit/profile_coach_edit",
@@ -25,7 +26,6 @@
     "pages/pub/players/players",
     "pages/pub/events/events",
     "pages/pub/teams/teams",
-    "pages/pub/search/search",
     "pages/example/example",
     "pages/logs/logs",
     "pages/pub/live/live"
