@@ -15,13 +15,13 @@
       <swiper class="news-swiper" autoplay interval="5000" duration="500">
         <block>
           <swiper-item>
-            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoTheNews"></news-card>
+            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
           </swiper-item>
           <swiper-item>
-            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoTheNews"></news-card>
+            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
           </swiper-item>
           <swiper-item>
-            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoTheNews"></news-card>
+            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
           </swiper-item>
         </block>
       </swiper>
