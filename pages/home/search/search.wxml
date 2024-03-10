@@ -7,17 +7,23 @@
     <view class="search-container">
       <input class="search-input" type="text" placeholder="搜索" bindinput="bindInput" value="{{ searchText }}"></input>
       <button class="search-button" bindtap="search">搜索</button>
-      <button class="filter-button" bindtap="filter">{{ filterButtonText }}</button>
+      <button class="filter-button" bindtap="filter">
+        <image class="icon" src="/assets/filter.svg"></image>
+      </button>
     </view>
 
     <view class="filter-container" wx:if="{{showFilter}}">
-      <picker class="picker-card" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
-        <text>结果类型: </text>
+      <picker wx:if="true" class="picker-card" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+        <text>类型：</text>
         <text>{{type}}</text>
       </picker>
-      <picker class="picker-card" bindchange="bindRankChange" range="{{filterRanks}}" mode="selector">
-        <text>结果顺序: </text>
-        <text>{{rank}}</text>
+      <picker wx:if="false" class="picker-card" bindchange="bindSortingChange" range="{{filterSortings}}" mode="selector">
+        <text>排序：</text>
+        <text>{{sorting}}</text>
+      </picker>
+      <picker wx:if="false" class="picker-card" bindchange="bindFavorChange" range="{{filterFavors}}" mode="selector">
+        <text>筛选：</text>
+        <text>{{favor}}</text>
       </picker>
       <!-- <checkbox-group class="checkbox-group" bindchange="checkboxChange">
         <label wx:for="{{checkboxItems}}" wx:key="{{index}}">
