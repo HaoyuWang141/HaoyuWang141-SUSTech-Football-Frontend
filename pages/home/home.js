@@ -89,13 +89,6 @@ Page({
       // TODO
   },
 
-  gotoTheMatch() {
-    console.log("11111");
-    wx.navigateTo({
-      url: '/pages/pub/match/match?' + 'matchId=' + encodeURIComponent('123'),
-    });
-  },
-
   gotoThePlayer() {
       // TODO
   },

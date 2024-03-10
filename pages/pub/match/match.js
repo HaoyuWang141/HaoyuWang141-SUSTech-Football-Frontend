@@ -3,31 +3,7 @@ const appInstance = getApp()
 const URL = appInstance.globalData.LOCAL
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-// <<<<<<< HEAD
-    
-    matchId: "",
-    event: '书院杯',
-    group: 'A组',
-    team1: '树德书院',
-    team2: '树仁书院',
-    icon1: "/assets/shude.png",
-    icon2: "/assets/shuren.png",
-    score1: '1',
-    score2: '1',
-    penalty1: '-',
-    penalty2: '-',
-    time: "2024-2-1 15:00",
-    hasBegun: true,
-    description: "今日举行了XX比赛，描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述。\n\n描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述。",
-    descriptionTime: '2024-2-1 19:00',
-    matchEvents: [{name: 'event1'}, {name: 'event2'}],
-
-// =======
     activeIndex: 0,
     id: -1,
     event: '友谊赛',
@@ -57,18 +33,16 @@ Page({
 
     liveList: [],
     videoList: [],
-// >>>>>>> 1cc132dada632cabf065e5965abad0e13abee33d
+
+    description: "",
+
+    matchEvents: [{name: 'event1'}, {name: 'event2'}],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-// <<<<<<< HEAD
-    this.setData({
-        matchId: decodeURIComponent(options.matchId)
-    });
-// =======
     this.setData({
       id: options.id,
       event: options.event,
@@ -118,7 +92,6 @@ Page({
         wx.hideLoading(); // 关闭加载提示框
       }
     })
-// >>>>>>> 1cc132dada632cabf065e5965abad0e13abee33d
   },
 
   /**
