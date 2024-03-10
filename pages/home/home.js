@@ -85,29 +85,6 @@ Page({
     })
   },
 
-  gotoTheNews() {
-      // TODO
-  },
-
-  gotoTheMatch() {
-    console.log("11111");
-    wx.navigateTo({
-      url: '/pages/pub/match/match?' + 'matchId=' + encodeURIComponent('123'),
-    });
-  },
-
-  gotoThePlayer() {
-      // TODO
-  },
-
-  gotoTheTeam() {
-      // TODO
-  },
-
-  gotoTheEvent() {
-      // TODO
-  },
-
   gotoMoreMatches() {
     wx.navigateTo({
       url: '/pages/pub/matches/matches',
@@ -156,6 +133,14 @@ Page({
     })
   },
 
+  // 跳转至news详情页，需要的参数为news的id
+  gotoNews: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/news/news?id=' + dataset.id,
+    })
+  },
+
   // 跳转至match详情页，需要的参数为match的id
   gotoMatch: function(e) {
     const dataset = e.currentTarget.dataset
@@ -163,4 +148,5 @@ Page({
       url: '/pages/pub/match/match?id=' + dataset.id,
     })
   }
+
 })

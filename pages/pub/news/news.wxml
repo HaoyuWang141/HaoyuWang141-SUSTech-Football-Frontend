@@ -1,0 +1,67 @@
+<text>aiwoabwobiawob</text>
+
+<view class="section-header">
+  <view style="background-color: white;">
+    <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
+  </view>
+  <match team1="{{homeTeam.name}}" team2="{{awayTeam.name}}" icon1="{{homeTeam.logoUrl}}" icon2="{{awayTeam.logoUrl}}" score1="{{homeTeamScore}}" score2="{{awayTeamScore}}" penalty1="{{homeTeamPenalty}}" penalty2="{{awayTeamPenalty}}" time="{{time}}"></match>
+</view>
+
+<view class="tabs">
+  <view class="tab,{{activeIndex==0?'active':''}}" data-index="0" bindtap="switchTab">基本信息</view>
+  <view class="tab,{{activeIndex==1?'active':''}}" data-index="1" bindtap="switchTab">直播/回放</view>
+  <view class="tab,{{activeIndex==2?'active':''}}" data-index="2" bindtap="switchTab">比赛赛况</view>
+</view>
+
+<view class="tab-content">
+  <view wx:if="{{activeIndex == 0}}">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">赛事</text>
+        <text class="block-more"></text>
+      </view>
+      <view class="block-main">
+        {{event}}
+      </view>
+      <block wx:if="{{!event === '友谊赛'}}">
+        <view class="block-top" style="margin-top: 20rpx;">
+          <text class="block-title">比赛阶段</text>
+          <text class="block-more"></text>
+        </view>
+        <view class="block-main">
+          {{stage}} - {{tag}}
+        </view>
+      </block>
+    </view>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">比赛时间</text>
+        <text class="block-more"></text>
+      </view>
+      <view class="block-main">
+        {{strTime}}
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeIndex == 1}}">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">直播源</text>
+        <text class="block-more"></text>
+      </view>
+      <view class="block-main">
+        <button class="videoOrLive" wx:for="{{liveList}}" bind:tap="goToLiveOrVideo" data-url="{{item.liveUrl}}" wx:key="index">{{item.liveName}}</button>
+      </view>
+    </view>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">回放源</text>
+        <text class="block-more"></text>
+      </view>
+      <view class="block-main">
+        <button class="videoOrLive" wx:for="{{videoList}}" bind:tap="goToLiveOrVideo" data-url="{{item.videoUrl}}" wx:key="index">{{item.videoName}}</button>
+      </view>
+    </view>
+  </view>
+</view>
