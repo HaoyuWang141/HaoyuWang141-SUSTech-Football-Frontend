@@ -31,9 +31,14 @@
     "pages/pub/live/live"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#f6eee9"
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "SUSTech Football",
+    "navigationBarBackgroundColor": "#ed6c00",
+    "enablePullDownRefresh": true,
+    "homeButton": true,
+    "backgroundColor": "#ed6c00",
+    "backgroundTextStyle": "light",
+    "restartStrategy": "homePageAndLatestPage"
   },
   "style": "v2",
   "componentFramework": "glass-easel",

@@ -53,29 +53,30 @@ Page({
     this.setData({
       id: options.id
     })
+    this.fetchData(options.id);
+  },
 
+  fetchData: function (id) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
       mask: true // 创建一个蒙层，防止用户操作
     });
 
-    // 执行网络请求
-    this.fetchData(options.id);
-  },
-
-  fetchData: function (id) {
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: appInstance.globalData.URL + '/event/getDetail',
+      url: appInstance.globalData.URL + '/event/get',
       data: {
         id: id
       },
       success(res) {
         console.log("event->")
-        console.log(res.data);
-
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
         // 基本数据
         that.setData({
           name: res.data.name,
@@ -153,24 +154,24 @@ Page({
     this.loadTabData(tabIndex);
   },
 
-  loadTabData: function (tabIndex) {
-    // 这里是示例逻辑
-    // 实际应用中，你可能需要根据tabIndex做不同的数据请求或处理
-    console.log('加载Tab数据，当前Tab索引：', tabIndex);
-    switch (tabIndex) {
-      case 0:
-        // 加载主页数据
-        break;
-      case 1:
-        // 加载赛程数据
-        break;
-      case 2:
-        // 加载积分榜数据
-        break;
-      default:
-        console.log('未知的Tab');
-    }
-  },
+  // loadTabData: function (tabIndex) {
+  //   // 这里是示例逻辑
+  //   // 实际应用中，你可能需要根据tabIndex做不同的数据请求或处理
+  //   console.log('加载Tab数据，当前Tab索引：', tabIndex);
+  //   switch (tabIndex) {
+  //     case 0:
+  //       // 加载主页数据
+  //       break;
+  //     case 1:
+  //       // 加载赛程数据
+  //       break;
+  //     case 2:
+  //       // 加载积分榜数据
+  //       break;
+  //     default:
+  //       console.log('未知的Tab');
+  //   }
+  // },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

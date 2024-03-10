@@ -50,6 +50,7 @@
   border-bottom: 2px solid rgb(237,108,0);
 }
 
+/* Block */
 /* Styles for the container */
 .block-container {
   padding: 30rpx;

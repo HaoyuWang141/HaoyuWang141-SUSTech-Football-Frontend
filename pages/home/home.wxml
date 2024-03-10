@@ -40,7 +40,7 @@
         <button class="more-button" bindtap="gotoMoreMatches">更多 ></button>
       </view>
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
+        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bind:tap="gotoMatch" data-id="1"></match-card-small>
         <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
         <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
     </scroll-view>
