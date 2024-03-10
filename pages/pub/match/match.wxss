@@ -1,7 +1,4 @@
 /* pages/pub/match/match.wxss */
-
-/* <<<<<<< HEAD */
-
 /* title */
 .title-card {
   margin: 10rpx;
@@ -84,12 +81,10 @@
   max-width: 300rpx;
 }
 
-/* >>>>>>> 1cc132dada632cabf065e5965abad0e13abee33d */
 .icon {
   width: 120rpx;
   height: 120rpx;
 }
-/* <<<<<<< HEAD */
 .middle {
   display: flex;
   flex-direction: column;
@@ -215,5 +210,4 @@
   font-size: medium;
   padding: 20rpx;
   margin-bottom: 20rpx;
-/* >>>>>>> 1cc132dada632cabf065e5965abad0e13abee33d */
 }
