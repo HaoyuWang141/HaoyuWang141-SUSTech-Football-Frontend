@@ -1,6 +1,7 @@
 // pages/pub/event/event.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const {formatTime} = require("../../../utils/timeFormatter")
 
 Page({
 
@@ -235,14 +236,6 @@ Page({
     })
   },
 
-  format(time) {
-    console.log(1111111111)
-    var date = new Date(time)
-    console.log(date)
-    return "sdfsdf"
-    // return timeFormmater(time)
-  },
-
   stageAndTagChange: function (e) {
     console.log("stageAndTagChange")
     var stageName = this.data.multiArray[0][e.detail.value[0]]
@@ -256,6 +249,9 @@ Page({
           }
         }
       }
+    }
+    for (let match of matches) {
+      match.strTime = formatTime(new Date(match.time))
     }
     this.setData({
       multiIndex: e.detail.value,

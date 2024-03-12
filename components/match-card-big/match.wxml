@@ -1,5 +1,6 @@
 <view class="match-card">
-  <text class="name">{{name}}</text>
+  <view class="time">{{time}}</view>
+  <view class="name">{{name}}</view>
   <view class="info-container">
     <view class="team">
       <image class="icon" src="{{icon1}}"></image>

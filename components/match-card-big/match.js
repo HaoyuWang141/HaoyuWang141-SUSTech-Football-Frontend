@@ -20,6 +20,10 @@ Component({
     hasBegun: Boolean,
   },
 
+  computed: {
+
+  },
+
   /**
    * 组件的初始数据
    */

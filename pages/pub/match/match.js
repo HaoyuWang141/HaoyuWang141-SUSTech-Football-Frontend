@@ -1,6 +1,7 @@
 // pages/pub/match/match.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const {formatTime} = require("../../../utils/timeFormatter")
 
 Page({
   data: {
@@ -71,7 +72,7 @@ Page({
         console.log(res.data)
 
         var date = new Date(res.data.time)
-        let strTime = that.format(date)
+        let strTime = formatTime(date)
         let hasBegun = new Date() > date
         that.setData({
           homeTeam: res.data.homeTeam,
@@ -154,25 +155,6 @@ Page({
     this.setData({
       activeIndex: tabIndex
     })
-  },
-
-  format: function (date) {
-    // 将时间格式化为"yyyy-mm-dd hh:mm"的形式
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1; // 月份是从0开始的，所以要加1
-    var day = date.getDate();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-
-    // 补零操作
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    hour = hour < 10 ? '0' + hour : hour;
-    minute = minute < 10 ? '0' + minute : minute;
-
-    // 拼接时间字符串
-    const strTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
-    return strTime
   },
 
   loadTabData: function (tabIndex) {
