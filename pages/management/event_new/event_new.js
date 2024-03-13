@@ -7,7 +7,9 @@ Page({
   data: {
     icon: '/assets/cup.svg',
     name: '创建新赛事名称',
-    modalHidden: true, // 控制模态框显示隐藏
+    description: '编辑赛事简介',
+    modalHiddenEname: true, // 控制模态框显示隐藏
+    modalHiddenEdes: true,
 
     teamsData : [
       { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
@@ -78,7 +80,7 @@ Page({
   // 显示赛事名称输入弹窗
   showNameInput: function () {
     this.setData({
-      modalHidden: false
+      modalHiddenEname: false
     });
   },
 
@@ -93,14 +95,42 @@ Page({
     // 这里可以添加逻辑，如检查输入是否合法等
     this.setData({
       name: this.data.newname,
-      modalHidden: true
+      modalHiddenEname: true
     });
   },
 
   // 取消更改队名时触发的事件
   cancelChangeEventname: function () {
     this.setData({
-      modalHidden: true
+      modalHiddenEname: true
+    });
+  },
+
+  showDesInput: function () {
+    this.setData({
+      modalHiddenEdes: false
+    });
+  },
+
+  changedes: function (e) {
+    this.setData({
+      newdes: e.detail.value
+    });
+  },
+
+  // 确认更改队名时触发的事件
+  confirmChangeEventdes: function () {
+    // 这里可以添加逻辑，如检查输入是否合法等
+    this.setData({
+      description: this.data.newdes,
+      modalHiddenEdes: true
+    });
+  },
+
+  // 取消更改队名时触发的事件
+  cancelChangeEventdes: function () {
+    this.setData({
+      modalHiddenEdes: true
     });
   },
 

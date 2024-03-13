@@ -31,7 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    
   },
 
   /**
@@ -86,36 +86,42 @@ Page({
 ///////////////////////////////////////////////////////////////////////////////
 // 页面跳转
 
-gotoMatches() {
+gotoMatches: function(e) {
+  const dataset = e.currentTarget.dataset
   wx.navigateTo({
-    url: '/pages/management/match_more/match_more',
+    url: '/pages/management/match_more/match_more?id=' + dataset.id,
   })
 },
 
 
-gotoTeams() {
+gotoTeams: function(e) {
+  const dataset = e.currentTarget.dataset
   wx.navigateTo({
-    url: '/pages/management/team_more/team_more',
+    url: '/pages/management/team_more/team_more?id=' + dataset.id,
   })
 },
 
-gotoEditTeam() {
+gotoEditTeam: function(e) {
+  const dataset = e.currentTarget.dataset
   wx.navigateTo({
-    url: '/pages/management/team_edit/team_edit',
+    url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
   })
 },
 
-gotoEditMatch() {
+gotoEditMatch: function(e) {
+  const dataset = e.currentTarget.dataset
   wx.navigateTo({
-    url: '/pages/management/match_edit/match_edit',
+    url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
   })
 },
 
-gotoEditEvent() {
+gotoEditEvent: function(e) {
+  const dataset = e.currentTarget.dataset
   wx.navigateTo({
-    url: '/pages/management/event_edit/event_edit',
+    url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
   })
 },
+
 
 gotoNewEvent() {
   wx.navigateTo({

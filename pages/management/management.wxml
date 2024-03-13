@@ -9,20 +9,20 @@
     <view class="managed-team-container">
       <view class="more-bar">
         <label class="more-label">管理的球队</label>
-        <button class="more-button" bindtap="gotoTeams">更多 ></button>
+        <button class="more-button" bindtap="gotoTeams" data-id="5">更多 ></button>
       </view>
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.img}}" number="{{item.number}}" bindtap="gotoEditTeam"></team-card-small>
+        <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.img}}" number="{{item.number}}" bindtap="gotoEditTeam" data-id="1"></team-card-small>
       </scroll-view>
     </view>
 
     <view class="managed-match-container">
       <view class="more-bar">
         <label class="more-label">管理的比赛</label>
-        <button class="more-button" bindtap="gotoMatches">更多 ></button>
+        <button class="more-button" bindtap="gotoMatches" data-id="5">更多 ></button>
       </view>
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small wx:for="{{matches}}" wx:key="index" name="{{item.name}}" group="{{item.group}}" team1="{{item.team1}}" team2="{{item.team2}}" icon1="{{item.icon1}}" icon2="{{item.icon2}}" score1="{{item.score1}}" score2="{{item.score2}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch"></match-card-small>
+        <match-card-small wx:for="{{matches}}" wx:key="index" name="{{item.name}}" group="{{item.group}}" team1="{{item.team1}}" team2="{{item.team2}}" icon1="{{item.icon1}}" icon2="{{item.icon2}}" score1="{{item.score1}}" score2="{{item.score2}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="2"></match-card-small>
       </scroll-view>
     </view>
 
@@ -32,7 +32,7 @@
         <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
       </view>
       <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
-      <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.id}}" icon="{{item.icon}}" name="{{item.name}}" bindtap="gotoEditEvent"></event-card-big>
+      <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.id}}" icon="{{item.icon}}" name="{{item.name}}" bindtap="gotoEditEvent" data-id="1"></event-card-big>
     </view>
 
   </view>

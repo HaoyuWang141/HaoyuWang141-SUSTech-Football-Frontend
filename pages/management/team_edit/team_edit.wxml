@@ -10,21 +10,21 @@
     <view class="avatar-container">
       <view class="text">队徽</view>
       <view class="image-container">
-        <image src="{{badgeSrc ? badgeSrc : '/assets/barca1.png'}}" class="image" bindtap="changeBadge"/>
+        <image src="{{logoUrl ? logoUrl : '/assets/barca1.png'}}" class="image" bindtap="changeLogo"/>
       </view>
     </view>
 
     <!-- 管理队名 -->
-    <view class="teamname-container" bindtap="showTeamnameModal">
+    <view class="teamname-container" bindtap="showNameModal">
       <view class="text">队名</view>
-      <view class="teamname" >{{teamname}}</view>
+      <view class="teamname" >{{name}}</view>
     </view>
 
     <!-- 管理队名 -->
-    <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname" bindcancel="cancelChangeTeamname">
+    <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
       <view class="modal-content">
         <text>请输入新队名：</text>
-        <input placeholder="新队名" value="{{newTeamname}}" bindinput="changeTeamname"/>
+        <input placeholder="新队名" value="{{newName}}" bindinput="changeName"/>
       </view>
     </modal>
 

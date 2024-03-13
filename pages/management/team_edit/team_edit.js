@@ -1,31 +1,69 @@
 // pages/management/team_edit/team_edit.js
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    badgeSrc: '',     // 队徽图片地址
+    logoUrl: '',     // 队徽图片地址
     modalHidden: true, // 控制模态框显示隐藏
-    newTeamname: '',   // 用于存放用户输入的新队名
-    teamname: "南方科技大学校队",
+    newName: String,   // 用于存放用户输入的新队名
+    name: String,
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
-    teammates: [
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-      { name: '王浩羽', img: '/assets/busquets.jpg' },
-    ],
+    playerList: Array,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log(options.id)
+    this.setData({
+      id: options.id
+    })
+    this.fetchData(options.id);
+  },
 
+  fetchData: function (id) {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
+
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/team/get',
+      data: {
+        id: id
+      },
+      success(res) {
+        console.log("team->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        // 基本数据
+        that.setData({
+          name: res.data.name,
+          logoUrl: res.data.logoUrl,
+        });
+
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   },
 
   /**
@@ -80,13 +118,13 @@ Page({
   /**
    * 修改队徽
    */
-  changeBadge: function () {
+  changeLogo: function () {
     wx.chooseImage({
       count: 1,
       success: res => {
         const tempFilePaths = res.tempFilePaths;
         this.setData({
-          badgeSrc: tempFilePaths[0]
+          logoUrl: tempFilePaths[0]
         });
       }
     });
@@ -97,30 +135,30 @@ Page({
    * 修改队名
    */
   // 点击队名触发的事件，显示模态框
-  showTeamnameModal: function () {
+  showNameModal: function () {
     this.setData({
       modalHidden: false
     });
   },
 
   // 输入框内容改变时触发的事件
-  changeTeamname: function (e) {
+  changeName: function (e) {
     this.setData({
-      newTeamname: e.detail.value
+      newName: e.detail.value
     });
   },
 
   // 确认更改队名时触发的事件
-  confirmChangeTeamname: function () {
+  confirmChangeName: function () {
     // 这里可以添加逻辑，如检查输入是否合法等
     this.setData({
-      teamname: this.data.newTeamname,
+      name: this.data.newName,
       modalHidden: true
     });
   },
 
   // 取消更改队名时触发的事件
-  cancelChangeTeamname: function () {
+  cancelChangeName: function () {
     this.setData({
       modalHidden: true
     });

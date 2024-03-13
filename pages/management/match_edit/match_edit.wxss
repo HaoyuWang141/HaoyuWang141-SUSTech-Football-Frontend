@@ -1,6 +1,15 @@
 /* pages/management/match_edit/match_edit.wxss */
+.section-header {
+  text-align: center;
+}
+
+.motto {
+  width: 80%;
+  height: 200rpx;
+}
 
 .match-card-container {
+  margin-top: 10rpx;
   text-align: center;
 }
 

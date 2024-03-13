@@ -4,28 +4,32 @@
 <view class="container">
   <view style="width: 90%;">
 
-    <view style="text-align: center;">比赛管理</view>
+  <view class="section-header">
+    <view style="background-color: white;">
+      <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
+    </view>
+  </view>
 
     <!-- 比赛信息卡片 -->
     <view class="match-card-container">
       <view class="match-card">
-        <text class="time">{{date}}{{" "}}{{time}}</text>
-        <text class="name">{{name}} {{group}}</text>
+        <text class="time">{{strTimeInfo}}</text>
+        <text class="name">{{name}}</text>
         <view class="info-container">
           <view class="team">
-            <image class="icon" src="{{icon1}}"></image>
-            <text>{{team1}}</text>
+            <image class="icon" src="{{homeTeam.logoUrl}}"></image>
+            <text>{{homeTeam.name}}</text>
           </view>
           <view class="middle">
             <block wx:if="{{hasBegun}}">
-              <text class="score">{{score1}} - {{score2}}</text>
-              <text class="penalty" wx:if="{{score1 === score2}}">({{penalty1}} - {{penalty2}})</text>
+              <text class="score">{{homeTeamScore}} - {{awayTeamScore}}</text>
+              <text class="penalty" wx:if="{{homeTeamScore === awayTeamScore}}">({{homeTeamPenalty}} - {{awayTeamPenalty}})</text>
             </block>
             <text class="not-begin" wx:else>未开始</text>
           </view>
           <view class="team">
-            <image class="icon" src="{{icon2}}"></image>
-            <text>{{team2}}</text>
+            <image class="icon" src="{{awayTeam.logoUrl}}"></image>
+            <text>{{awayTeam.name}}</text>
           </view>
         </view>
       </view>
@@ -34,15 +38,15 @@
     <!-- 修改信息区域 -->
     <view class="manage-info">
       <!-- 比赛日期 -->
-      <picker class="changeInfo-container" mode="date" value="{{date}}" start="2024-01-01"  bindchange="bindDateChange">
+      <picker class="changeInfo-container" mode="date" value="{{strDate}}" start="2024-01-01"  bindchange="bindDateChange">
         <text>比赛日期：</text>
-        <text>{{date}}</text>
+        <text>{{strDate}}</text>
       </picker>
 
       <!-- 比赛时间 -->
-      <picker class="changeInfo-container" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+      <picker class="changeInfo-container" mode="time" value="{{strTime}}" start="00:00" end="23:59" bindchange="bindTimeChange">
         <text>比赛时间：</text>
-        <text>{{time}}</text>
+        <text>{{strTime}}</text>
       </picker>
 
       <!-- 比赛名称 -->
@@ -51,10 +55,10 @@
         <text>{{name}}</text>
       </view>
 
-      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname"       bindcancel="cancelChangeTeamname">
+      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName"       bindcancel="cancelChangeName">
         <view class="modal-content">
           <text>请输入新名称：</text>
-          <input placeholder="新名称" value="{{newTeamname}}" bindinput="changename"/>
+          <input placeholder="新名称" value="{{newName}}" bindinput="changeName"/>
         </view>
       </modal>
 
@@ -62,17 +66,17 @@
         <!-- 比分 -->
         <picker class="changeInfo-container" bindchange="bindPickerChangeScore" range="{{array}}" mode="multiSelector">
           <text>比分：</text>
-          <text>{{score1}}</text>
+          <text>{{homeTeamScore}}</text>
           <text> - </text>
-          <text>{{score2}}</text>
+          <text>{{awayTeamScore}}</text>
         </picker>
-        <block wx:if="{{score1 === score2}}">
+        <block wx:if="{{homeTeamScore === awayTeamScore}}">
           <!-- 点球比分 -->
           <picker class="changeInfo-container" bindchange="bindPickerChangePenalty" range="{{array}}" mode="multiSelector">
             <text>点球比分：</text>
-            <text>{{penalty1}}</text>
+            <text>{{homeTeamPenalty}}</text>
             <text> - </text>
-            <text>{{penalty2}}</text>
+            <text>{{awayTeamPenalty}}</text>
           </picker>
         </block>
       </block>
