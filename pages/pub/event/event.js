@@ -58,6 +58,7 @@ Page({
     this.fetchData(options.id);
   },
 
+  // 网络请求，本页面一次性获取全部数据
   fetchData: function (id) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
@@ -147,6 +148,7 @@ Page({
     });
   },
 
+  // 更换tab时调用
   switchTab: function (e) {
     const tabIndex = e.currentTarget.dataset.index;
     this.setData({
@@ -155,6 +157,7 @@ Page({
     this.loadTabData(tabIndex);
   },
 
+  // 更换tab时抓取数据，本页面该方法无实际内容
   loadTabData: function (tabIndex) {
     // 这里是示例逻辑
     // 实际应用中，你可能需要根据tabIndex做不同的数据请求或处理
@@ -203,7 +206,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id)
   },
 
   /**
@@ -220,6 +223,8 @@ Page({
 
   },
 
+  // 页面跳转方法
+
   gotoTeamPage: function (e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
@@ -234,6 +239,24 @@ Page({
       url: '/pages/pub/match/match?id=' + id + '&event=' + event,
     })
   },
+
+  gotoTeamsPage: function (e) {
+    let teamIdList = this.data.teamList.map(function(item, index) {return item.id});
+    wx.navigateTo({
+      url: '../teams/teams?teamIdList=' + teamIdList,
+    })
+  },
+
+  gotoMatchesPage: function (e) {
+    let matchIdList = this.data.matchList.map(function(item, index) {return item.matchId})
+    console.log("event page: gotoMatchesPage() ->")
+    console.log("matchIdList: " + matchIdList)
+    wx.navigateTo({
+      url: '../matches/matches?matchIdList=' + matchIdList,
+    })
+  },
+
+  // "选择比赛阶段和轮次" picker 相关方法
 
   stageAndTagChange: function (e) {
     console.log("stageAndTagChange")

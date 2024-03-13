@@ -5,14 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    teamIdList: Array,
+    teamList: Array,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.setData({
+      teamIdList: options.teamIdList,
+    })
+    this.fetchData(options.teamIdList)
   },
 
   /**
@@ -80,5 +84,9 @@ Page({
   search: function() {
     // 这里添加搜索逻辑，比如发起网络请求或其他操作
     console.log('搜索内容:', this.data.searchText);
+  },
+
+  fetchData: function(teamIdList) {
+    console.log("teams page: fetchData()")
   }
 })

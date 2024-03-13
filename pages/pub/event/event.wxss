@@ -89,6 +89,7 @@
   padding: 5px 0; /* Padding on top and bottom */
 }
 
+/* 比赛tab下，“选择比赛及轮次” picker */
 .stageAndTag {
   display: flex;
   flex-direction: row;
@@ -97,7 +98,7 @@
   color: #666666;
   background-color: #fff;
   padding-top: 20rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 30rpx;
 }
 
 .icon-down {

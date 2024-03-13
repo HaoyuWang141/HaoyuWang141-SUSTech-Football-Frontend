@@ -19,12 +19,17 @@ Page({
     // 比赛列表
     allMatches: [],
     favorMatches: [],
+
+    matchIdList: Array,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.setData({
+      matchIdList: options.matchIdList,
+    })
     this.fetchData(options.id);
   },
 

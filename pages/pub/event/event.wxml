@@ -35,7 +35,7 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">参赛球队</text>
-        <text class="block-more">查看更多</text>
+        <text class="block-more" bind:tap="gotoTeamsPage">查看更多</text>
       </view>
       <view class="block-main">
         <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
@@ -46,7 +46,7 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">比赛赛程</text>
-        <text class="block-more">查看更多</text>
+        <text class="block-more" bind:tap="gotoMatchesPage">查看更多</text>
       </view>
       <view class="block-main">
         <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
