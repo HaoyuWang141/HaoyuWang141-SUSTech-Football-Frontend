@@ -66,7 +66,6 @@ Page({
     });
 
     var that = this;
-    // 模拟网络请求
     wx.request({
       url: URL + '/event/get',
       data: {
@@ -251,7 +250,9 @@ Page({
       }
     }
     for (let match of matches) {
-      match.strTime = formatTime(new Date(match.time))
+      let date = new Date(match.time)
+      match.strTime = formatTime(date)
+      match.hasBegun = new Date() > date
     }
     this.setData({
       multiIndex: e.detail.value,
