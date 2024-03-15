@@ -1,29 +1,18 @@
 // pages/management/management.js
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    teams: [
-      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
-      { name: '南科大足球队南科大足球队南科大足球队', img: '/assets/barca1.png', number: 25 },
-      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
-      { name: '南科大足球队南科大足球队南科大足球队', img: '/assets/barca1.png', number: 25 },
-      { name: '南科大足球队', img: '/assets/barca1.png', number: 25 },
-      { name: '南科大足球队南科大足球队南科大足球队', img: '/assets/barca1.png', number: 25 }
-    ],
-    matches: [
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true }
-    ],
-    events: [
-      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' },
-      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' },
-      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' },
-      { id: 'id1', icon: '/assets/cup.svg', name: '2024年南方科技大学书院杯足球赛事' }
-    ],
+    id: -1,
+    teams: Array,
+    matches: Array,
+    events: Array,
     newEvent: { id: 'id', icon: '/assets/newplayer.png', name: '创建赛事'},
   },
 
@@ -31,7 +20,100 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    this.fetchData(userId);
+  },
+
+  fetchData: function (userId) {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
+
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/user/getUserManageTeam',
+      data: {
+        userId: userId
+      },
+      success(res) {
+        console.log("team->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+       
+        // 基本数据
+        that.setData({
+          teams: res.data,
+        });
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
+
+    wx.request({
+      url: URL + '/user/getUserManageMatch',
+      data: {
+        userId: userId
+      },
+      success(res) {
+        console.log("match->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        // 基本数据
+        that.setData({
+          matches: res.data,
+        });
+
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
+
+    wx.request({
+      url: URL + '/user/getUserManageEvent',
+      data: {
+        userId: userId
+      },
+      success(res) {
+        console.log("event->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        // 基本数据
+        that.setData({
+          events: res.data,
+        });
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   },
 
   /**

@@ -10,13 +10,17 @@ Page({
   data: {
     icon: '/assets/cup.svg',    
     edit: '编辑',
-    name: String,
-    description: String,
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
-    id: -1,
+
+    eventId: Number,
+    name: String,
+    description: String,
     teamList: Array,
     matchList: Array,
+    groupList: Array,
+    managerList: Array,
+    stageList: Array,
   },
 
   /**
@@ -53,11 +57,14 @@ Page({
         }
         // 基本数据
         that.setData({
+          eventId: res.data.eventId,
           name: res.data.name,
           description: res.data.description,
-          managerList: res.data.managerList,
           teamList: res.data.teamList,
           matchList: res.data.matchList,
+          groupList: res.data.groupList,
+          managerList: res.data.managerList,
+          stageList: res.data.stageList,
         });
       },
       fail(err) {
@@ -183,6 +190,38 @@ Page({
 
   createNewMatch() {
     
+  },
+
+  // 处理提交信息修改
+  confirmEdit() {
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      eventId: this.data.eventId,
+      name: this.data.name,
+      description: this.data.description,
+      teamList: this.data.teamList,
+      matchList: this.data.matchList,
+      groupList: this.data.groupList,
+      managerList: this.data.managerList,
+      stageList: this.data.stageList,
+    };
+  
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/event/update', // 后端接口地址
+      method: 'PUT', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        // 请求成功的处理逻辑
+        console.log('比赛信息更新成功', res.data);
+        // 可以根据后端返回的数据更新页面状态或进行其他操作
+      },
+      fail: err => {
+        // 请求失败的处理逻辑
+        console.error('比赛信息更新失败', err);
+        // 可以显示失败的提示信息或进行其他操作
+      }
+    });
   },
 
   gotoTeamPage: function(e) {

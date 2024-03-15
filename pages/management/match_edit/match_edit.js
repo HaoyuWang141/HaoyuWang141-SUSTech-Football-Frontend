@@ -9,21 +9,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-    matchId: -1,
-    timeInfo: new Date(),
     hasBegun: false,
     strTimeInfo: String,
     strDate: String,
     strTime: String,
     name: '友谊赛',
-    homeTeamId: -1,
-    awayTeamId: -1,
-    homeTeamScore: -1,
-    awayTeamScore: -1,
-    homeTeamPenalty: -1,
-    awayTeamPenalty: -1,
+
+    matchId: Number,
+    time: String,
     homeTeam: Array,
     awayTeam: Array,
+    homeTeamId: Number,
+    awayTeamId: Number,
+    homeTeamScore: Number,
+    awayTeamScore: Number,
+    homeTeamPenalty: Number,
+    awayTeamPenalty: Number,
+    matchPlayerActionList: Array,
+    refereeList: Array,
     // refereeList: Array,
     // matchPlayerActionList: Array,
     modalHidden: true, // 控制模态框显示隐藏
@@ -70,12 +73,13 @@ Page({
         let { strDate, strTime } = splitDateTime(strTimeInfo) 
         // 基本数据
         that.setData({
-          matchId: res.data.matchId,
-          timeInfo: res.data.time,
           hasBegun: hasBegun,
           strTimeInfo: strTimeInfo,
           strDate: strDate,
           strTime: strTime,
+
+          matchId: res.data.matchId,
+          time: res.data.time,
           homeTeamId: res.data.homeTeamId,
           awayTeamId: res.data.awayTeamId,
           homeTeamScore: res.data.homeTeamScore,
@@ -84,10 +88,9 @@ Page({
           awayTeamPenalty: res.data.awayTeamPenalty,
           homeTeam: res.data.homeTeam,
           awayTeam: res.data.awayTeam,
-          // refereeList: refereeList,
-          // matchPlayerActionList: matchPlayerActionList,
+          refereeList: res.data.refereeList,
+          matchPlayerActionList: res.data.matchPlayerActionList,
         });
-
       },
       fail(err) {
         console.log('请求失败', err);
@@ -215,8 +218,55 @@ Page({
   },
 
   // 处理提交信息修改
-  confirmEdit(){
+  confirmEdit() {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
+    var that = this;
+    let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+00:00"; // 转换为 ISO 
+    that.setData({
+      time: sqlTimestamp,
+    });
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      matchId: this.data.matchId,
+      time: this.data.time,
+      homeTeam: this.data.homeTeam,
+      awayTeam: this.data.awayTeam,
+      homeTeamId: this.data.homeTeamId,
+      awayTeamId: this.data.awayTeamId,
+      homeTeamScore: this.data.homeTeamScore,
+      awayTeamScore: this.data.awayTeamScore,
+      homeTeamPenalty: this.data.homeTeamPenalty,
+      awayTeamPenalty: this.data.awayTeamPenalty,
+      refereeList: this.data.refereeList,
+      matchPlayerActionList: this.data.matchPlayerActionList,
 
+    };
+    console.log(dataToUpdate);
+    // 发送请求到后端接口
+    wx.request({
+
+      url: URL + '/match/update', // 后端接口地址
+      method: 'PUT', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log('比赛信息更新成功', res.data);
+      },
+      fail: err => {
+        console.error('比赛信息更新失败', err);
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   }
 
 })

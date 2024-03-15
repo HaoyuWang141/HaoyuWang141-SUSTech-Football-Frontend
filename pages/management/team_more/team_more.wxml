@@ -13,7 +13,7 @@
       </view>
 
       <view wx:for="{{teamList}}" wx:key="teamId">
-        <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoEditTeam"></team-card-big>
+        <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.number}}" bindtap="gotoEditTeam" data-id="{{item.teamId}}"></team-card-big>
       </view>
 
     </scroll-view>

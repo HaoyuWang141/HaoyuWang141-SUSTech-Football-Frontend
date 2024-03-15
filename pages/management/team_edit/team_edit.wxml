@@ -17,7 +17,8 @@
     <!-- 管理队名 -->
     <view class="teamname-container" bindtap="showNameModal">
       <view class="text">队名</view>
-      <view class="teamname" >{{name}}</view>
+      <text class="teamname" >{{name}}</text>
+      <text class="name-edit" >{{edit}}</text>
     </view>
 
     <!-- 管理队名 -->
@@ -27,15 +28,34 @@
         <input placeholder="新队名" value="{{newName}}" bindinput="changeName"/>
       </view>
     </modal>
+    
+    <!-- 管理队员 -->
+    <view class="team-container">
 
-    <view class="teammate-container">
-      <view class="text">队员</view>
-      <scroll-view scroll-y enable-flex>
-        <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="invitePlayer"></player-card-small>
-        <player-card-small wx:for="{{teammates}}" wx:key="index" name="{{item.name}}" img="{{item.img}}" bindtap="managePlayer"></player-card-small>
-      </scroll-view>
+      <view class="important-person" style="display: flex; flex-direction: row;">
+        <view class="captain-container" style="flex: 1;">
+          <view class="text">队长</view>
+          <player-card-small name="" img="" bindtap=""></player-card-small>
+        </view>
+        <view class="coach-container" style="flex: 1;">
+          <view class="text">教练</view>
+          <player-card-small name="" img="" bindtap=""></player-card-small>
+        </view>
+      </view>
+
+      <view class="teammate-container">
+        <view class="text">队员</view>
+        <scroll-view scroll-y enable-flex>
+          <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="invitePlayer"></player-card-small>
+          <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.img}}" bindtap="managePlayer"></player-card-small>
+        </scroll-view>
+      </view>
     </view>
 
+    <!-- 提交按钮 -->
+    <view class="btn-container">
+      <button class="confirm" bindtap="confirmEdit">确认修改</button>
+    </view>
 
   </view>
 </view>

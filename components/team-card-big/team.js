@@ -6,7 +6,6 @@ Component({
     number: Number, // 球员数量
   },
   data: {
-
   },
   methods: {
 

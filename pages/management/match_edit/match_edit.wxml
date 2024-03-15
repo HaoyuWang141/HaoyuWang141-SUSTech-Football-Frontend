@@ -13,7 +13,7 @@
     <!-- 比赛信息卡片 -->
     <view class="match-card-container">
       <view class="match-card">
-        <text class="time">{{strTimeInfo}}</text>
+        <text class="time">{{strDate + ' ' + strTime}}</text>
         <text class="name">{{name}}</text>
         <view class="info-container">
           <view class="team">

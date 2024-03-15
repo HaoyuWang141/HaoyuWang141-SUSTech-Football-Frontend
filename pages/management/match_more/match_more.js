@@ -10,18 +10,16 @@ Page({
   data: {
     id: -1,
     matchList: Array,
-
     newMatch: {
       name: '发起新比赛',
-      group: '友谊赛',
-      team1: 'team1',
-      team2: 'team2',
+      team1: '主队',
+      team2: '客队',
       icon1: '/assets/newplayer.png',
       icon2: '/assets/newplayer.png',
       score1: 0,
       score2: 0,
-      time: '2024-2-1 15:00',
-      hasBegun: true
+      hasBegun: true,
+      time: "2024-03-14 23:54"
     }
   },
 
@@ -57,11 +55,12 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+
         // 基本数据
         that.setData({
           matchList: res.data,
         });
-
+        
       },
       fail(err) {
         console.log('请求失败', err);
@@ -124,9 +123,10 @@ Page({
   },
 
   // 跳转到编辑比赛页面
-  gotoEditMatch() {
+  gotoEditMatch: function(e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/match_edit/match_edit',
+      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
     })
   },
 

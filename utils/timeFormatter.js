@@ -35,5 +35,5 @@ const splitDateTime = strTimeInfo => {
 
 module.exports = {
   formatTime,
-  splitDateTime
+  splitDateTime,
 }

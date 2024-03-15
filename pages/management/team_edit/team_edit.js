@@ -8,12 +8,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    logoUrl: '',     // 队徽图片地址
     modalHidden: true, // 控制模态框显示隐藏
     newName: String,   // 用于存放用户输入的新队名
-    name: String,
+    edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
+
+    teamId: String,
+    name: String,
+    logoUrl: '',
     playerList: Array,
+    captainId: Number,
+    coachList: Array,
+    eventList: Array,
+    managerList: Array,
+    matchList: Array,
   },
 
   /**
@@ -50,8 +58,15 @@ Page({
         }
         // 基本数据
         that.setData({
+          teamId: res.data.teamId,
           name: res.data.name,
           logoUrl: res.data.logoUrl,
+          playerList: res.data.playerList,
+          captainId: res.data.captainId,
+          coachList: res.data.coachList,
+          eventList: res.data.eventList,
+          managerList: res.data.managerList,
+          matchList: res.data.matchList,
         });
 
       },
@@ -174,5 +189,37 @@ Page({
   managePlayer() {
 
   },
+
+  confirmEdit() {
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      teamId: this.data.teamId,
+      name: this.data.name,
+      logoUrl: this.data.logoUrl,
+      playerList: this.data.playerList,
+      captainId: this.data.captainId,
+      coachList: this.data.coachList,
+      eventList: this.data.eventList,
+      managerList: this.data.managerList,
+      matchList: this.data.matchList,
+    };
+  
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/team/update', // 后端接口地址
+      method: 'PUT', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        // 请求成功的处理逻辑
+        console.log('比赛信息更新成功', res.data);
+        // 可以根据后端返回的数据更新页面状态或进行其他操作
+      },
+      fail: err => {
+        // 请求失败的处理逻辑
+        console.error('比赛信息更新失败', err);
+        // 可以显示失败的提示信息或进行其他操作
+      }
+    });
+  }
   
 })
