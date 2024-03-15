@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    requiredMatches: [],
+    matchIdList: [],
     matches: [],
     favorMatches: [],  // 暂时不用
   },
@@ -18,7 +18,7 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      requiredMatches: options.matches || [],
+      matchIdList: options.matchIdList || [],
     })
     this.fetchData(options.id);
   },
@@ -72,25 +72,6 @@ Page({
 
   },
 
-
-  /**
-   * 监听搜索框文本
-   */
-  bindInput: function (e) {
-    this.setData({
-      searchText: e.detail.value // 更新data中的searchText值为用户输入的内容
-    });
-    // 这里可以添加你的搜索逻辑，比如根据用户输入的内容进行实时搜索
-  },
-
-  /**
-   * 监听搜索按钮
-   */
-  search: function () {
-    // 这里添加搜索逻辑，比如发起网络请求或其他操作
-    console.log('搜索内容:', this.data.searchText);
-  },
-
   ////////////////////////////////////////////////////////////////
   // HTTP 请求
 
@@ -115,10 +96,10 @@ Page({
         }
 
         var matches = []
-        var requiredMatches = that.data.requiredMatches
+        var matchIdList = that.data.matchIdList
         for (let match of res.data) {
-          console.log(requiredMatches.length, match.matchId)
-          if (requiredMatches.length === 0 || requiredMatches.includes(match.matchId)) {
+          console.log(matchIdList.length, match.matchId)
+          if (matchIdList.length === 0 || matchIdList.includes(match.matchId)) {
             matches.push(match)
           }
         }
@@ -133,7 +114,6 @@ Page({
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
-        console.log('matches:', that.data.matches)
       }
     });
   },

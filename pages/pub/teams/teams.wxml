@@ -3,19 +3,10 @@
 
 <view class="container">
   <view style="width: 90%;">
-    
-    <view class="search-container">
-      <input class="search-input" type="text" placeholder="搜索球队" bindinput="bindInput" value="{{ searchText }}"></input>
-      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
+
+    <view class="team-container">
+      <team-card-big wx:for="{{teams}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerList.length}}" bind:tap="gotoTeam" data-id="{{item.teamId}}"> </team-card-big>
     </view>
 
-    <team-card-big name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-big>
-    <team-card-big name="南科大校队" img="/assets/barca1.png" number="22"></team-card-big>
-    <team-card-big name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-big>
-    <team-card-big name="南科大校队" img="/assets/barca1.png" number="22"></team-card-big>
-    <team-card-big name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-big>
-    <team-card-big name="南科大校队" img="/assets/barca1.png" number="22"></team-card-big>
-    <team-card-big name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-big>
-    <team-card-big name="南科大校队" img="/assets/barca1.png" number="22"></team-card-big>
   </view>
 </view>
