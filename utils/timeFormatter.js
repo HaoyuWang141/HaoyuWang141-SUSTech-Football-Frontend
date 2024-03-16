@@ -22,6 +22,18 @@ const formatTime = date => {
   return strTime
 }
 
+const splitDateTime = strTimeInfo => {
+  // 按空格拆分日期和时间
+  const [datePart, timePart] = strTimeInfo.split(' ');
+
+  // 返回拆分后的日期和时间
+  return {
+      strDate: datePart,
+      strTime: timePart
+  };
+}
+
 module.exports = {
-  formatTime
+  formatTime,
+  splitDateTime,
 }

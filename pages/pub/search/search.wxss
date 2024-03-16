@@ -1,0 +1,59 @@
+/* pages/pub/search/search.wxss */
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100rpx; /* 调整容器的高度 */
+    margin-bottom: 20rpx; /* 可以添加其他样式调整容器的上下间距 */
+}
+.search-container .search-input {
+    flex: 1; /* 让搜索框占据剩余空间 */
+    height: 100%; /* 让搜索框与容器高度一致 */
+}
+.search-container .search-button {
+    height: 80%; /* 让按钮与容器高度一致 */
+    width: 20%;
+    font-size: 60%; /* 设置按钮文本的大小 */
+    margin-left: 10rpx; /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
+    padding: 0 10rpx; /* 设置按钮的左右内边距 */
+    line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */
+}
+.search-container .filter-button {
+    height: 80%; /* 让按钮与容器高度一致 */
+    width: 10%;
+    font-size: 60%; /* 设置按钮文本的大小 */
+    margin-left: 10rpx; /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
+    padding: 0 10rpx; /* 设置按钮的左右内边距 */
+    line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */
+}
+
+.filter-container {
+    display: block;
+    flex-direction: row;
+    align-items: center;
+    height: 280rpx; /* 调整容器的高度 */
+    margin-bottom: 20rpx; /* 可以添加其他样式调整容器的上下间距 */
+}
+.picker-card {
+    margin: 10rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+    padding: 20rpx;
+    width: 90%;
+}
+
+/* 
+.checkbox-group label {
+    display: block;  // 将 label 元素设置为块级元素
+    margin-bottom: 10px;  // 设置选项之间的间距
+}
+.checkbox-group label checkbox {
+    margin-right: 5px;  // 设置复选框与文字之间的间距
+}
+.checkbox-group {
+    display: flex;  // 设置为 flex 布局
+    flex-wrap: wrap;  // 当一行放不下时换行显示
+} */
+

@@ -1,12 +1,14 @@
 /* pages/management/event_new/event_new.wxss */
-.basicInfo-container {
-  display: flex;
-  flex-direction: row;
-  margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.4);
-  padding: 20rpx 0;
+.title-container {
+  background-color: #ffffff; /* 卡片背景色 */
+  border-radius:30rpx; /* 卡片圆角 */
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
+  padding: 40rpx 20rpx; /* 卡片内边距 */
+  margin: 10rpx; /* 外边距，根据需要调整 */
+  display: flex; /* 使用Flex布局 */
+  flex-direction: row; /* 子项垂直排列 */
+  align-items: center; /* 子项在交叉轴上居中对齐 */
+  width: 90%;
 }
 
 .image-container {
@@ -32,6 +34,8 @@
 
 .text {
   font-size: smaller;
+  white-space: normal; /* 允许文本换行 */
+  word-wrap: break-word; /* 单词换行 */
 }
 
 .team-container {
@@ -40,4 +44,35 @@
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 20rpx;
+  width: 90%;
+}
+
+.discription-container {
+  background-color: #ffffff; /* 卡片背景色 */
+  border-radius:30rpx; /* 卡片圆角 */
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
+  padding: 40rpx 20rpx; /* 卡片内边距 */
+  margin: 10rpx; /* 外边距，根据需要调整 */
+  flex-direction: row; /* 子项垂直排列 */
+  align-items: center; /* 子项在交叉轴上居中对齐 */
+  width: 90%;
+  display: block;
+}
+
+.description-content {
+  padding: 3%;
+}
+
+.description {
+  font-size: small;
+  white-space: normal; /* 允许文本换行 */
+  word-wrap: break-word; /* 单词换行 */
+}
+
+.description-edit {
+  display: inline-block;
+  font-size: small;
+  color: gray;
+  border-bottom: 1px solid gray;
+  margin-left: 3%;
 }

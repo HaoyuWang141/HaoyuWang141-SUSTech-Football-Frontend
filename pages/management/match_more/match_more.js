@@ -1,28 +1,25 @@
 // pages/management/match_more/match_more.js
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    matchesData : [
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-      { name: '书院杯', group: 'A组', team1: 'team1', team2: 'team2', icon1: '/assets/team.svg', icon2: '/assets/team.svg', score1: 1, score2: 1, time: '2024-2-1 15:00', hasBegun: true },
-    ],
-
+    id: -1,
+    matchList: Array,
     newMatch: {
       name: '发起新比赛',
-      group: '友谊赛',
-      team1: 'team1',
-      team2: 'team2',
+      team1: '主队',
+      team2: '客队',
       icon1: '/assets/newplayer.png',
       icon2: '/assets/newplayer.png',
       score1: 0,
       score2: 0,
-      time: '2024-2-1 15:00',
-      hasBegun: true
+      hasBegun: true,
+      time: "2024-03-14 23:54"
     }
   },
 
@@ -30,7 +27,50 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log(options.id)
+    this.setData({
+      id: options.id
+    })
+    this.fetchData(options.id);
+  },
 
+  fetchData: function (id) {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
+
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/user/getUserManageMatch',
+      data: {
+        userId: id
+      },
+      success(res) {
+        console.log("match->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+
+        // 基本数据
+        that.setData({
+          matchList: res.data,
+        });
+        
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   },
 
   /**
@@ -83,9 +123,10 @@ Page({
   },
 
   // 跳转到编辑比赛页面
-  gotoEditMatch() {
+  gotoEditMatch: function(e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/match_edit/match_edit',
+      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
     })
   },
 

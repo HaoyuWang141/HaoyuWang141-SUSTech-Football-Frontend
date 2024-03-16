@@ -1,34 +1,106 @@
 // pages/management/match_edit/match_edit.js
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
+const {formatTime, splitDateTime} = require("../../../utils/timeFormatter")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    date: '2024-02-01',
-    time: '15:00', 
-    name: '书院杯',
-    gruop: 'A组',
-    score1: '1',
-    score2: '1',
-    penalty1: '',
-    penalty2: '',
-    team1: 'team1',
-    team2: 'team2',
-    icon1: '/assets/team.svg',
-    icon2: '/assets/team.svg',
-    hasBegun: true,
+    hasBegun: false,
+    strTimeInfo: String,
+    strDate: String,
+    strTime: String,
+    name: '友谊赛',
+
+    matchId: Number,
+    time: String,
+    homeTeam: Array,
+    awayTeam: Array,
+    homeTeamId: Number,
+    awayTeamId: Number,
+    homeTeamScore: Number,
+    awayTeamScore: Number,
+    homeTeamPenalty: Number,
+    awayTeamPenalty: Number,
+    matchPlayerActionList: Array,
+    refereeList: Array,
+    // refereeList: Array,
+    // matchPlayerActionList: Array,
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    ]
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
   },
+  
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log(options.id)
+    this.setData({
+      id: options.id
+    })
+    this.fetchData(options.id);
+  },
 
+  fetchData: function (id) {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
+
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/match/get',
+      data: {
+        id: id
+      },
+      success(res) {
+        console.log("match->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        var date = new Date(res.data.time)
+        let strTimeInfo = formatTime(date)
+        let hasBegun = new Date() > date
+        let { strDate, strTime } = splitDateTime(strTimeInfo) 
+        // 基本数据
+        that.setData({
+          hasBegun: hasBegun,
+          strTimeInfo: strTimeInfo,
+          strDate: strDate,
+          strTime: strTime,
+
+          matchId: res.data.matchId,
+          time: res.data.time,
+          homeTeamId: res.data.homeTeamId,
+          awayTeamId: res.data.awayTeamId,
+          homeTeamScore: res.data.homeTeamScore,
+          awayTeamScore: res.data.awayTeamScore,
+          homeTeamPenalty: res.data.homeTeamPenalty,
+          awayTeamPenalty: res.data.awayTeamPenalty,
+          homeTeam: res.data.homeTeam,
+          awayTeam: res.data.awayTeam,
+          refereeList: res.data.refereeList,
+          matchPlayerActionList: res.data.matchPlayerActionList,
+        });
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   },
 
   /**
@@ -84,7 +156,7 @@ Page({
   bindDateChange: function (e) {
     // 更新页面上的日期显示
     this.setData({
-      date: e.detail.value
+      strDate: e.detail.value
     });
   },
 
@@ -92,7 +164,7 @@ Page({
   bindTimeChange: function (e) {
     // 更新页面上的时间显示
     this.setData({
-      time: e.detail.value
+      strTime: e.detail.value
     });
   },
 
@@ -103,14 +175,14 @@ Page({
     });
   },
 
-  changename: function (e) {
+  changeName: function (e) {
     this.setData({
       newname: e.detail.value
     });
   },
 
-  // 确认更改队名时触发的事件
-  confirmChangeTeamname: function () {
+  // 确认更改比赛名时触发的事件
+  confirmChangeName: function () {
     // 这里可以添加逻辑，如检查输入是否合法等
     this.setData({
       name: this.data.newname,
@@ -118,8 +190,8 @@ Page({
     });
   },
 
-  // 取消更改队名时触发的事件
-  cancelChangeTeamname: function () {
+  // 取消更改比赛名时触发的事件
+  cancelChangeName: function () {
     this.setData({
       modalHidden: true
     });
@@ -130,8 +202,8 @@ Page({
     const value = e.detail.value;
     // 更新页面上的比分显示
     this.setData({
-      score1: this.data.array[0][value[0]],
-      score2: this.data.array[0][value[1]]
+      homeTeamScore: this.data.array[0][value[0]],
+      awayTeamScore: this.data.array[0][value[1]]
     });
   },
 
@@ -140,14 +212,61 @@ Page({
     const value = e.detail.value;
     // 更新页面上的点球比分显示
     this.setData({
-      penalty1: this.data.array[0][value[0]],
-      penalty2: this.data.array[0][value[1]]
+      homeTeamPenalty: this.data.array[0][value[0]],
+      awayTeamPenalty: this.data.array[0][value[1]]
     });
   },
 
   // 处理提交信息修改
-  confirmEdit(){
+  confirmEdit() {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
+    var that = this;
+    let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+00:00"; // 转换为 ISO 
+    that.setData({
+      time: sqlTimestamp,
+    });
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      matchId: this.data.matchId,
+      time: this.data.time,
+      homeTeam: this.data.homeTeam,
+      awayTeam: this.data.awayTeam,
+      homeTeamId: this.data.homeTeamId,
+      awayTeamId: this.data.awayTeamId,
+      homeTeamScore: this.data.homeTeamScore,
+      awayTeamScore: this.data.awayTeamScore,
+      homeTeamPenalty: this.data.homeTeamPenalty,
+      awayTeamPenalty: this.data.awayTeamPenalty,
+      refereeList: this.data.refereeList,
+      matchPlayerActionList: this.data.matchPlayerActionList,
 
+    };
+    console.log(dataToUpdate);
+    // 发送请求到后端接口
+    wx.request({
+
+      url: URL + '/match/update', // 后端接口地址
+      method: 'PUT', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log('比赛信息更新成功', res.data);
+      },
+      fail: err => {
+        console.error('比赛信息更新失败', err);
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   }
 
 })

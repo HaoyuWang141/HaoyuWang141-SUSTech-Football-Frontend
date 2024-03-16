@@ -2,9 +2,8 @@
 <!-- <text>pages/management/event_new/event_new.wxml</text> -->
 
 <view class="container">
-  <view style="width: 90%;">
 
-    <view class="basicInfo-container">
+    <view class="title-container">
       <view class="image-container">
         <image src="{{icon}}" mode="scaleToFill" class="image"></image>
       </view>
@@ -12,7 +11,7 @@
         <text class="text">{{name}}</text>
       </view>
 
-      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
+      <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
         <view class="modal-content">
           <text>请输入赛事名称：</text>
           <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
@@ -20,6 +19,19 @@
       </modal>
 
     </view> 
+
+    <view class="discription-container">
+      <view class="description-content" bindtap="showDesInput">
+        <text class="description" >{{description}}</text>
+      </view>
+
+      <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
+        <view class="modal-content">
+          <text>编辑赛事介绍：</text>
+          <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
+        </view>
+      </modal>
+    </view>
 
     <!-- 邀请球队 -->
     <view class="team-container">
@@ -34,5 +46,4 @@
       </scroll-view>
     </view>
 
-  </view>
 </view>

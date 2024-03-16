@@ -12,8 +12,8 @@
         <match-card-big name="{{newMatch.name}}" group="{{newMatch.group}}" team1="{{newMatch.team1}}" team2="{{newMatch.team2}}" icon1="{{newMatch.icon1}}" icon2="{{newMatch.icon2}}" score1="{{newMatch.score1}}" score2="{{newMatch.score2}}" time="{{newMatch.time}}" hasBegun="{{newMatch.hasBegun}}" bindtap="createNewMatch"></match-card-big>
       </view>
 
-      <view wx:for="{{matchesData}}" wx:key="index">
-        <match-card-big name="{{item.name}}" group="{{item.group}}" team1="{{item.team1}}" team2="{{item.team2}}" icon1="{{item.icon1}}" icon2="{{item.icon2}}" score1="{{item.score1}}" score2="{{item.score2}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch"></match-card-big>
+      <view wx:for="{{matchList}}" wx:key="matchId">
+        <match-card-big name="友谊赛" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-big>
       </view>
 
       

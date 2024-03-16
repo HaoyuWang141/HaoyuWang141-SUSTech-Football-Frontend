@@ -1,12 +1,15 @@
 // pages/pub/teams/teams.js
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    teamIdList: Array,
-    teamList: Array,
+    teamIdList: [],
+    teams: [],
   },
 
   /**
@@ -14,9 +17,9 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      teamIdList: options.teamIdList,
+      teamIdList: options.teamIdList || [],
     })
-    this.fetchData(options.teamIdList)
+    this.fetchData(options.id)
   },
 
   /**
@@ -68,25 +71,59 @@ Page({
 
   },
 
-    /**
-   * 监听搜索框文本
-   */
-  bindInput: function(e) {
-    this.setData({
-      searchText: e.detail.value // 更新data中的searchText值为用户输入的内容
+  ////////////////////////////////////////////////////////////////
+  // HTTP 请求
+
+  fetchData: function (id) {
+
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true // 创建一个蒙层，防止用户操作
     });
-    // 这里可以添加你的搜索逻辑，比如根据用户输入的内容进行实时搜索
+
+    // 网络请求
+    var that = this
+    wx.request({
+      url: URL + '/team/getAll',
+      success(res) {
+        console.log("/team/getAll ->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+
+        var teams = []
+        var teamIdList = that.data.teamIdList
+        for (let team of res.data) {
+          console.log(teamIdList.length, team.teamId)
+          if (teamIdList.length === 0 || teamIdList.includes(team.teamId)) {
+            teams.push(team)
+          }
+        }
+        that.setData({
+          teams: teams
+        })
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    });
   },
 
-  /**
-   * 监听搜索按钮
-   */
-  search: function() {
-    // 这里添加搜索逻辑，比如发起网络请求或其他操作
-    console.log('搜索内容:', this.data.searchText);
-  },
+  /////////////////////////////////////////////////////
+  // 跳转
 
-  fetchData: function(teamIdList) {
-    console.log("teams page: fetchData()")
-  }
+  gotoTeam: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/team/team?id=' + id,
+    })
+  },
 })
