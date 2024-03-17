@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: Number,
     icon: '/assets/cup.svg',    
     edit: '编辑',
     modalHiddenEname: true, // 控制模态框显示隐藏
@@ -89,7 +90,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -110,7 +111,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id);
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -237,5 +239,19 @@ Page({
       url: '/pages/pub/match/match?id=' + dataset.id,
     })
   },
+
+  gotoTeams: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/event_edit/event_teams/event_teams?id=' + dataset.id,
+    })
+  },
+
+  gotoMatches: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/event_edit/event_matches/event_matches?id=' + dataset.id,
+    })
+  }
 
 })

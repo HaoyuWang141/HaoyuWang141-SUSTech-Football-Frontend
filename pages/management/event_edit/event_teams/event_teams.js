@@ -1,4 +1,4 @@
-// pages/management/match_more/match_more.js
+// pages/management/event_edit/event_teams/event_teams.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 
@@ -9,18 +9,8 @@ Page({
    */
   data: {
     id: Number,
-    matchList: Array,
-    newMatch: {
-      name: '发起新比赛',
-      team1: '主队',
-      team2: '客队',
-      icon1: '/assets/newplayer.png',
-      icon2: '/assets/newplayer.png',
-      score1: 0,
-      score2: 0,
-      hasBegun: true,
-      time: "2024-03-14 23:54"
-    }
+    eventId: Number,
+    teamList: Array,
   },
 
   /**
@@ -44,23 +34,23 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/user/getUserManageMatch',
+      url: URL + '/event/get',
       data: {
-        userId: id
+        id: id
       },
       success(res) {
-        console.log("match->")
+        console.log("eventTeam->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
         // 基本数据
         that.setData({
-          matchList: res.data,
+          eventId: res.data.eventId,
+          teamList: res.data.teamList,
         });
-        
+
       },
       fail(err) {
         console.log('请求失败', err);
@@ -123,18 +113,14 @@ Page({
 
   },
 
-  // 跳转到编辑比赛页面
-  gotoEditMatch: function(e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
-    })
+  inviteTeam() {
+
   },
 
-  // 跳转到创建比赛页面
-  createNewMatch() {
+  gotoTeamPage: function(e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/match_new/match_new',
+      url: '/pages/pub/team/team?id=' + dataset.id,
     })
   },
 

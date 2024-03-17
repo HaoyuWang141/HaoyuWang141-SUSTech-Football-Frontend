@@ -36,13 +36,12 @@
   </view>
 
   <view class="block-container">
-    <view class="block-top">
+    <view class="block-top" >
       <text class="block-title">参赛球队</text>
-      <text class="block-more">查看更多</text>
+      <text class="block-more" bindtap="gotoTeams" data-id="{{eventId}}">查看更多</text>
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small name="邀请参赛球队" img="/assets/newplayer.png" bindtap="inviteNewTeam"></team-card-small>
         <team-card-small wx:for="{{teamList}}" wx:key="id" name="{{item.name}}" img="{{item.logo}}" bind:tap="gotoTeamPage" data-id="{{item.id}}"></team-card-small>
       </scroll-view>
     </view>
@@ -51,12 +50,12 @@
   <view class="block-container">
     <view class="block-top">
       <text class="block-title">比赛赛程</text>
-      <text class="block-more">查看更多</text>
+      <text class="block-more" bindtap="gotoMatches" data-id="{{eventId}}">查看更多</text>
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
         <match-card-small name="创建比赛" stage="" tag="" team1="主队" team2="客队" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" score1="" score2="" penalty1="" penalty2="" time="2024-3-15 19:49" bind:tap="createNewMatch" data-id="" data-event=""> </match-card-small>
-        <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+        <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="{{item.matchEvent.matchStage + ' ' + item.matchEvent.matchTag}}" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
       </scroll-view>
     </view>
   </view>

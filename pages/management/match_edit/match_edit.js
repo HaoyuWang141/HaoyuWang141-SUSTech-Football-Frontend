@@ -9,11 +9,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: Number,
     hasBegun: false,
     strTimeInfo: String,
     strDate: String,
     strTime: String,
-    name: '友谊赛',
+    name: String,
 
     matchId: Number,
     time: String,
@@ -70,7 +71,7 @@ Page({
         var date = new Date(res.data.time)
         let strTimeInfo = formatTime(date)
         let hasBegun = new Date() > date
-        let { strDate, strTime } = splitDateTime(strTimeInfo) 
+        let { strDate, strTime } = splitDateTime(strTimeInfo)
         // 基本数据
         that.setData({
           hasBegun: hasBegun,
@@ -90,7 +91,18 @@ Page({
           awayTeam: res.data.awayTeam,
           refereeList: res.data.refereeList,
           matchPlayerActionList: res.data.matchPlayerActionList,
+          matchEvent: res.data.matchEvent,
         });
+        // 根据 matchEvent 设置 name 的值
+        if (res.data.matchEvent) {
+          that.setData({
+            name: res.data.matchEvent.matchStage + res.data.matchEvent.matchTag
+          });
+        } else {
+          that.setData({
+            name: "友谊赛"
+          });
+        }
       },
       fail(err) {
         console.log('请求失败', err);
@@ -114,7 +126,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -135,7 +147,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id);
+    wx.stopPullDownRefresh();
   },
 
   /**
