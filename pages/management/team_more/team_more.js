@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: -1,
+    id: Number,
     teamList: Array,
   },
   
@@ -72,7 +72,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -93,7 +93,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id);
+    wx.stopPullDownRefresh();
   },
 
   /**

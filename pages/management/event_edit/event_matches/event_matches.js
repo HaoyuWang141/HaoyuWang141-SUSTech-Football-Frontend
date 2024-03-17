@@ -1,4 +1,4 @@
-// pages/management/match_more/match_more.js
+// pages/management/event_edit/event_matches/event_matches.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 
@@ -44,9 +44,9 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/user/getUserManageMatch',
+      url: URL + '/event/get',
       data: {
-        userId: id
+        id: id
       },
       success(res) {
         console.log("match->")
@@ -58,7 +58,7 @@ Page({
 
         // 基本数据
         that.setData({
-          matchList: res.data,
+          matchList: res.data.matchList,
         });
         
       },
@@ -123,19 +123,15 @@ Page({
 
   },
 
-  // 跳转到编辑比赛页面
+  createNewMatch() {
+    
+  },
+
   gotoEditMatch: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
     })
   },
-
-  // 跳转到创建比赛页面
-  createNewMatch() {
-    wx.navigateTo({
-      url: '/pages/management/match_new/match_new',
-    })
-  },
-
+  
 })

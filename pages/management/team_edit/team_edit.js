@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: Number,
     modalHidden: true, // 控制模态框显示隐藏
     newName: String,   // 用于存放用户输入的新队名
     edit: '编辑',
@@ -92,7 +93,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -113,7 +114,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id);
+    wx.stopPullDownRefresh();
   },
 
   /**

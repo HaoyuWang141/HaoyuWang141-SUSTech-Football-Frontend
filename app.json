@@ -17,6 +17,8 @@
     "pages/management/match_more/match_more",
     "pages/management/event_edit/event_edit",
     "pages/management/event_new/event_new",
+    "pages/management/event_edit/event_teams/event_teams",
+    "pages/management/event_edit/event_matches/event_matches",
     "pages/mine/mine",
     "pages/pub/match/match",
     "pages/pub/player/player",
