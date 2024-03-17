@@ -1,28 +1,32 @@
 /* pages/pub/event/event.wxss */
 
+/* 最上方的 Title Card */
 .title-card {
-  background-color: #ffffff; /* 卡片背景色 */
-  border-radius:30rpx; /* 卡片圆角 */
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
-  padding: 40rpx 20rpx; /* 卡片内边距 */
-  margin: 20rpx 10rpx; /* 外边距，根据需要调整 */
-  display: flex; /* 使用Flex布局 */
-  flex-direction: row; /* 子项垂直排列 */
-  align-items: center; /* 子项在交叉轴上居中对齐 */
+  min-height: 200rpx;
+  background-color: #ffffff;
+  border-radius: 30rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2);
+  padding: 40rpx 20rpx;
+  margin: 20rpx 10rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .cup {
   flex: 0 0 auto;
-  width: 120rpx; /* 图片宽度 */
-  height: 120rpx; /* 图片高度，根据实际图片调整 */
-  margin-right: 30rpx; /* 与下方内容的间距 */
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 30rpx;
 }
 
 .title {
-  font-size: large; /* 标题字号 */
-  font-weight: bold; /* 字体加粗 */
-  color: #333; /* 标题颜色 */
+  font-size: large;
+  font-weight: bold;
+  color: #333;
 }
+
+/* ------------------------ */
 
 .tabs {
   display: flex;
@@ -46,47 +50,8 @@
 
 /* 激活状态的tab样式 */
 .active {
-  color: rgb(237,108,0);
-  border-bottom: 2px solid rgb(237,108,0);
-}
-
-/* Block */
-/* Styles for the container */
-.block-container {
-  padding: 30rpx;
-  border: 1rpx solid #cccccc; /* Light grey border */
-  background-color: white; /* Light grey background */
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-}
-
-/* Styles for the top section */
-.block-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px; /* Adds some space between the top and the main content */
-}
-
-/* Styles for the title */
-.block-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333; /* Dark grey color for the text */
-}
-
-/* Optional: If you want the "More" text but it's empty in the example */
-.block-more {
-  padding: 10rpx 0;
-  font-size: 14px;
-  color: #666; /* Medium grey color */
-}
-
-/* Styles for the main content area */
-.block-main {
-  font-size: 14px;
-  color: #666; /* Medium grey color for the text */
-  padding: 5px 0; /* Padding on top and bottom */
+  color: rgb(237, 108, 0);
+  border-bottom: 2px solid rgb(237, 108, 0);
 }
 
 /* 比赛tab下，“选择比赛及轮次” picker */

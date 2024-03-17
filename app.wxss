@@ -14,3 +14,42 @@ page {
   /* background-color: #E0E0E0; */
   background-color: #F2F2F2;
 }
+
+/* -------------------- */
+/* Block */
+.block-container {
+  padding: 30rpx;
+  border: 1rpx solid #cccccc;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.block-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.block-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.block-more {
+  padding: 10rpx 0;
+  font-size: 14px;
+  color: #666;
+  /* Medium grey color */
+}
+
+.block-main {
+  font-size: 14px;
+  color: #666;
+  /* Medium grey color for the text */
+  padding: 5px 0;
+  /* Padding on top and bottom */
+}
+/* ---------------------- */

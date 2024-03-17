@@ -1,8 +1,8 @@
 <view class="title-card">
   <image src="/assets/cup.svg" mode="scaleToFill" class="cup"></image>
   <view class="title-container">
-    <text class="title">{{name}}</text>
-    <text class="description">{{description}}</text>
+    <view class="title">{{name}}</view>
+    <view class="description">{{description}}</view>
   </view>
 </view>
 

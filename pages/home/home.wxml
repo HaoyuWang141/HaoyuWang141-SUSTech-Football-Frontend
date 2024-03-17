@@ -3,88 +3,75 @@
 
 <button bind:tap="gotoExample">gotoExample</button>
 
-<view class="container">
-  <view style="width: 90%;">
+<view class="search-container">
+  <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
+  <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
+</view>
 
-    <view class="search-container">
-      <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
-      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
-    </view>
-
-    <view class="news-container">
-      <swiper class="news-swiper" autoplay interval="5000" duration="500">
-        <block>
-          <swiper-item>
-            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
-          </swiper-item>
-          <swiper-item>
-            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
-          </swiper-item>
-          <swiper-item>
-            <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
-          </swiper-item>
-        </block>
-      </swiper>
-      <!-- <swiper autoplay interval="2000" duration="500">
+<!-- 新闻 - 走马灯 -->
+<view class="news-container">
+  <swiper class="news-swiper" autoplay interval="5000" duration="500">
+    <block>
+      <swiper-item>
+        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
+      </swiper-item>
+      <swiper-item>
+        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
+      </swiper-item>
+      <swiper-item>
+        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- <swiper autoplay interval="2000" duration="500">
         <block wx:for="{{images}}" wx:key="index">
           <swiper-item>
             <image src="{{item}}" class="swiper-img" mode="aspectFill"></image>
           </swiper-item>
         </block>
       </swiper> -->
-    </view>
+</view>
 
-    <view class="match-container">
-      <view class="more-bar">
-        <label class="more-label">关注的比赛</label>
-        <button class="more-button" bindtap="gotoMoreMatches">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch" data-id="1"></match-card-small>
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bind:tap="gotoMatch" data-id="1"></match-card-small>
-      </scroll-view>
-    </view>
-
-    <view class="player-container">
-      <view class="more-bar">
-        <label class="more-label">关注的球员</label>
-        <button class="more-button" bindtap="gotoMorePlayers">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
-        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
-        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
-        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
-        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
-        <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
-      </scroll-view>
-    </view>
-
-    <view class="team-container">
-      <view class="more-bar">
-        <label class="more-label">关注的球队</label>
-        <button class="more-button" bindtap="gotoMoreTeams">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25"></team-card-small>
-      </scroll-view>
-    </view>
-
-    <view class="event-container">
-      <view class="more-bar">
-        <label class="more-label">关注的赛事</label>
-        <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
-      </view>
-      <event-card-big eventId="1" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="gotoEvent" data-id="1"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap"></event-card-big>
-    </view>
-
+<!-- 关注的比赛 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">关注的比赛</text>
+    <text class="block-more" bind:tap="gotoMatchesPage" data-matchList="{{matchList}}">查看更多</text>
   </view>
+  <view class="block-main">
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 关注的球员 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">关注的球员</text>
+  </view>
+  <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+    <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
+    <player-card-small wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}"></player-card-small>
+  </scroll-view>
+</view>
+
+<!-- 关注的球队 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">关注的球队</text>
+    <text class="block-more" bind:tap="gotoTeamsPage" data-teamList="{{teamList}}">查看更多</text>
+  </view>
+  <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+    <team-card-small wx:for="{{teamList}}" name="{{item.name}}" img="{{item.logoUrl}}" number="25"></team-card-small>
+  </scroll-view>
+</view>
+
+<!-- 关注的赛事 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">关注的赛事</text>
+    <text class="block-more" bind:tap="gotoEventsPage" data-teamList="{{teamList}}">查看更多</text>
+  </view>
+  <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEvent" data-id="{{item.eventId}}"></event-card-big>
 </view>
