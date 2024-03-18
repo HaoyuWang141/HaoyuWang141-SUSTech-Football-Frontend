@@ -76,6 +76,10 @@
 
 ![img5](docs/proposal/img/img5.png)
 
+![img6](docs/proposal/img/img6.png)
+
+![img7](docs/proposal/img/img7.png)
+
 ### Part III. AI Usage
 
 本部分的 AI 工具使用的是 OpenAI 官网的 ChatGPT 3.5 聊天接口。
