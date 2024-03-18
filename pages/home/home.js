@@ -175,13 +175,31 @@ Page({
     })
   },
 
-  gotoMatchesPage(e) {
+  gotoNewsPage: function (e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/pub/matches/matches',
+      url: '/pages/pub/news/news?id=' + dataset.id,
     })
   },
 
-  gotoPlayersPage(e) {
+  gotoMatchesPage(e) {
+    console.log(e.currentTarget.dataset)
+    let matchList = e.currentTarget.dataset.list
+    console.log(matchList)
+    let matchIdList = matchList.map(match => match.matchId)
+    wx.navigateTo({
+      url: '/pages/pub/matches/matches?matchIdList=' + matchIdList,
+    })
+  },
+
+  gotoMatchPage: function (e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/match/match?id=' + dataset.id,
+    })
+  },
+
+  gotoPlayerPage(e) {
     wx.navigateTo({
       url: '/pages/pub/players/players',
     })
@@ -193,24 +211,21 @@ Page({
     })
   },
 
-  // 跳转至event详情页，需要的参数为event的id 
-  gotoEvent: function (e) {
+  gotoTeamPage: function(e) {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/team/team?id=' + id,
+    })
+  },
+
+  gotoEventPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/event/event?id=' + dataset.id,
     })
   },
 
-  // 跳转至news详情页，需要的参数为news的id
-  gotoNews: function (e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/pub/news/news?id=' + dataset.id,
-    })
-  },
-
-  // 跳转至match详情页，需要的参数为match的id
-  gotoMatch: function (e) {
+  gotoPlayerPage: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/match/match?id=' + dataset.id,

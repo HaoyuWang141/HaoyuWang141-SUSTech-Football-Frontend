@@ -1,7 +1,8 @@
-<!--pages/home/home.wxml-->
-<!-- <text>pages/home/home.wxml</text> -->
+<view style="background-color: white; text-align: center;">
+  <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
+</view>
 
-<button bind:tap="gotoExample">gotoExample</button>
+<!-- <button bind:tap="gotoExample">gotoExample</button> -->
 
 <view class="search-container">
   <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
@@ -11,17 +12,15 @@
 <!-- 新闻 - 走马灯 -->
 <view class="news-container">
   <swiper class="news-swiper" autoplay interval="5000" duration="500">
-    <block>
-      <swiper-item>
-        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
-      </swiper-item>
-      <swiper-item>
-        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
-      </swiper-item>
-      <swiper-item>
-        <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNews"></news-card>
-      </swiper-item>
-    </block>
+    <swiper-item>
+      <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
+    </swiper-item>
+    <swiper-item>
+      <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
+    </swiper-item>
+    <swiper-item>
+      <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
+    </swiper-item>
   </swiper>
   <!-- <swiper autoplay interval="2000" duration="500">
         <block wx:for="{{images}}" wx:key="index">
@@ -36,7 +35,7 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的比赛</text>
-    <text class="block-more" bind:tap="gotoMatchesPage" data-matchList="{{matchList}}">查看更多</text>
+    <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}">查看更多</text>
   </view>
   <view class="block-main">
     <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
@@ -60,10 +59,10 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的球队</text>
-    <text class="block-more" bind:tap="gotoTeamsPage" data-teamList="{{teamList}}">查看更多</text>
+    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}">查看更多</text>
   </view>
   <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-    <team-card-small wx:for="{{teamList}}" name="{{item.name}}" img="{{item.logoUrl}}" number="25"></team-card-small>
+    <team-card-small wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
   </scroll-view>
 </view>
 
@@ -71,7 +70,6 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的赛事</text>
-    <text class="block-more" bind:tap="gotoEventsPage" data-teamList="{{teamList}}">查看更多</text>
   </view>
-  <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEvent" data-id="{{item.eventId}}"></event-card-big>
+  <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
 </view>

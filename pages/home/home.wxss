@@ -1,12 +1,16 @@
 /* pages/home/home.wxss */
 
-/* search */
+/* 搜索框容器样式 */
 .search-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100rpx; /* 调整容器的高度 */
-    margin-bottom: 20rpx; /* 可以添加其他样式调整容器的上下间距 */
+  display: flex;
+  align-items: center;
+  padding: 10rpx 50rpx;
+  margin: 0 8rpx 10rpx 8rpx;
+  border: 4rpx solid rgb(237, 108, 0);
+  border-radius: 20rpx;
+  background-color: #f9f9f9;
+  box-shadow: 4rpx 4rpx 8rpx rgba(237, 108, 0, 0.8);
+  height: 100rpx;
 }
 .search-container .search-input {
     flex: 1; /* 让搜索框占据剩余空间 */
@@ -15,7 +19,10 @@
 .search-container .search-button {
     height: 80%; /* 让按钮与容器高度一致 */
     width: 20%;
-    font-size: 60%; /* 设置按钮文本的大小 */
+    font-size: small;
+    font-weight: normal;
+    color: white;
+    background-color: rgb(237, 108, 0);
     margin-left: 10rpx; /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
     padding: 0 10rpx; /* 设置按钮的左右内边距 */
     line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */

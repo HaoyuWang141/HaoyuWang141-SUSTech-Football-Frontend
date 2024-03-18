@@ -1,10 +1,11 @@
 /* components/team-card-small/team.wxss */
 .container {
-  margin: 10rpx;
+  margin: 10rpx 30rpx;
   background-color: #fff;
   border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 10rpx;
+  border: 1rpx solid rgba(237, 108, 0, 0.4);
+  box-shadow: 0 4rpx 10rpx rgba(237, 108, 0, 0.4);
+  padding: 20rpx;
   display: inline-block;
   width: 150rpx;
   text-align: center;

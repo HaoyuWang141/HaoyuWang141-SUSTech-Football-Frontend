@@ -2,10 +2,11 @@
 .container {
   display: flex;
   flex-direction: row;
-  margin: 10rpx;
+  margin: 50rpx 10rpx;
   background-color: #fff;
   border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.4);
+  border: 1rpx solid rgba(237, 108, 0, 0.8);
+  box-shadow: 0 4rpx 10rpx rgba(237, 108, 0, 0.8);
   padding: 20rpx 0;
 }
 
