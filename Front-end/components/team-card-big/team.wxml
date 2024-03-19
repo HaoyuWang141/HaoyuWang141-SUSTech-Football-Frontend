@@ -5,4 +5,8 @@
     <text class="name">{{name}}</text>
     <text class="number">{{number}} 名球员</text>
   </view>
+  <view class="buttons">
+    <!-- <slot></slot> -->
+    <view><button></button></view>
+  </view>
 </view>
