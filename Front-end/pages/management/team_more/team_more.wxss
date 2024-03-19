@@ -1,1 +1,20 @@
 /* pages/management/team_more/team_more.wxss */
+.delete-btn {
+  background-color: red; /* 按钮背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 5px 10px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 按钮圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  max-width: 30%;
+}
+
+.check-btn {
+  background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 5px 10px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 按钮圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  max-width: 30%;
+}

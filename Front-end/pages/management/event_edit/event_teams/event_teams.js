@@ -117,7 +117,7 @@ Page({
 
   },
 
-  handleDeleteTeam() {
+  deleteTeam() {
 
   },
 
