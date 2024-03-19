@@ -10,7 +10,6 @@ Page({
   data: {
     id: Number,
     icon: '/assets/cup.svg',    
-    edit: '编辑',
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
 

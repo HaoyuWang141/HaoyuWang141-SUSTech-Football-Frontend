@@ -41,7 +41,6 @@
   white-space: normal; /* 允许文本换行 */
   word-wrap: break-word; /* 单词换行 */
   flex-grow: 1;
-  font-size: medium;
 }
 
 .name-edit {

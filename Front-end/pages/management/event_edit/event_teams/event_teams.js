@@ -117,6 +117,10 @@ Page({
 
   },
 
+  handleDeleteTeam() {
+
+  },
+
   gotoTeamPage: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({

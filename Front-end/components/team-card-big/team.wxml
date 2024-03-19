@@ -4,5 +4,6 @@
   <view class="sub-container">
     <text class="name">{{name}}</text>
     <text class="number">{{number}} 名球员</text>
+    <slot></slot>
   </view>
 </view>
