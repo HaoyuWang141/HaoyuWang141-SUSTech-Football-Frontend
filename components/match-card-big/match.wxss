@@ -1,6 +1,6 @@
 /* components/match-card-big/match.wxss */
 .match-card {
-  margin: 10rpx;
+  margin: 10rpx 10rpx 20rpx 10rpx;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);

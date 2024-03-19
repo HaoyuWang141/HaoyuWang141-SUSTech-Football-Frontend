@@ -39,8 +39,7 @@
     "enablePullDownRefresh": true,
     "homeButton": true,
     "backgroundColor": "#ed6c00",
-    "backgroundTextStyle": "light",
-    "restartStrategy": "homePageAndLatestPage"
+    "backgroundTextStyle": "light"
   },
   "style": "v2",
   "componentFramework": "glass-easel",
