@@ -9,18 +9,18 @@ Page({
    */
   data: {
     matchIdList: [],
-    matches: [],
-    favorMatches: [],  // 暂时不用
+    matchList: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    let matchIdList = Array(options.matchIdList) ?? []
     this.setData({
-      matchIdList: options.matchIdList || [],
+      matchIdList: matchIdList,
     })
-    this.fetchData(options.id);
+    this.fetchData(matchIdList);
   },
 
   /**
@@ -75,36 +75,27 @@ Page({
   ////////////////////////////////////////////////////////////////
   // HTTP 请求
 
-  fetchData: function (id) {
-
-    // 显示加载提示框，提示用户正在加载
+  fetchData: function (matchIdList) {
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
-
-    // 网络请求
     var that = this
+    let queryParams = ""
+    for (let id of matchIdList) {
+      queryParams += "idList=" + id + "&"
+    }
     wx.request({
-      url: URL + '/match/getAll',
+      url: URL + '/match/getByIdList?' + queryParams,
       success(res) {
-        console.log("/match/getAll ->")
+        console.log("/match/getByIdList ->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
-        var matches = []
-        var matchIdList = that.data.matchIdList
-        for (let match of res.data) {
-          console.log(matchIdList.length, match.matchId)
-          if (matchIdList.length === 0 || matchIdList.includes(match.matchId)) {
-            matches.push(match)
-          }
-        }
         that.setData({
-          matches: matches
+          matchList: res.data
         })
       },
       fail(err) {

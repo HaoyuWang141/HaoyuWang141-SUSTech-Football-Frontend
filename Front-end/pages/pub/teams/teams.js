@@ -80,12 +80,10 @@ Page({
       title: '加载中',
       mask: true 
     });
-
     let queryParams = ""
     for (let id of teamIdList) {
       queryParams += "idList=" + id + "&"
     }
-
     var that = this
     wx.request({
       url: URL + '/team/getByIdList?' + queryParams,
