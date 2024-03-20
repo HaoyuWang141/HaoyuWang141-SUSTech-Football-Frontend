@@ -16,7 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    let teamIdList = Array(options.teamIdList) || []
+    let teamIdList = Array(options.idList) ?? []
     this.setData({
       teamIdList: teamIdList,
     })

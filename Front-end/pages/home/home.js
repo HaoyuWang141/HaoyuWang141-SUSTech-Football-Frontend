@@ -183,12 +183,10 @@ Page({
   },
 
   gotoMatchesPage(e) {
-    console.log(e.currentTarget.dataset)
-    let matchList = e.currentTarget.dataset.list
-    console.log(matchList)
+    let matchList = e.currentTarget.dataset.list ?? []
     let matchIdList = matchList.map(match => match.matchId)
     wx.navigateTo({
-      url: '/pages/pub/matches/matches?matchIdList=' + matchIdList,
+      url: '/pages/pub/matches/matches?idList=' + matchIdList,
     })
   },
 
@@ -207,12 +205,9 @@ Page({
 
   gotoTeamsPage(e) {
     let teamList = e.currentTarget.dataset.list ?? []
-    let teamIdList = []
-    for(let team of teamList) {
-      teamIdList.push(team.teamId)
-    }
+    let teamIdList = teamList.map(team => team.teamId)
     wx.navigateTo({
-      url: '/pages/pub/teams/teams?teamIdList=' + teamIdList,
+      url: '/pages/pub/teams/teams?idList=' + teamIdList,
     })
   },
 

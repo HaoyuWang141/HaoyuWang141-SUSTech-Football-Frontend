@@ -16,7 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    let matchIdList = Array(options.matchIdList) ?? []
+    let matchIdList = Array(options.idList) ?? []
     this.setData({
       matchIdList: matchIdList,
     })
