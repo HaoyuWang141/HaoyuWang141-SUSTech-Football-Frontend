@@ -78,3 +78,39 @@
   width: 90%;
 }
 
+.btn-container {
+  margin-left: 2%;
+  display: flex; /* 将按钮放置在同一行 */
+  justify-content: space-between; /* 让按钮分别靠左和靠右 */
+  margin-top: 20px; /* 上边距 */
+  width: 95%;
+}
+
+.confirm-btn{
+  padding: 10px 20px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #eb903a; /* 确认修改按钮背景色 */
+  color: white; /* 文字颜色 */
+}
+
+.delete-btn {
+  padding: 10px 20px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #f44336; /* 取消比赛按钮背景色 */
+  color: white; /* 文字颜色 */
+}
+
+.confirm-btn:hover{
+  background-color: #f3ae6d; /* 鼠标悬停时背景色变暗 */
+}
+
+.delete-btn:hover {
+  background-color: rgb(226, 84, 84); /* 鼠标悬停时背景色变暗 */
+}
+

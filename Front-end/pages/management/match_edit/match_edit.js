@@ -28,8 +28,6 @@ Page({
     awayTeamPenalty: Number,
     matchPlayerActionList: Array,
     refereeList: Array,
-    // refereeList: Array,
-    // matchPlayerActionList: Array,
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
@@ -72,6 +70,9 @@ Page({
         let strTimeInfo = formatTime(date)
         let hasBegun = new Date() > date
         let { strDate, strTime } = splitDateTime(strTimeInfo)
+        console.log(res.data.time)
+        console.log(date)
+        console.log(strTimeInfo)
         // 基本数据
         that.setData({
           hasBegun: hasBegun,
@@ -114,6 +115,24 @@ Page({
       }
     });
   },
+
+  // 引入模态框的通用方法
+  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      cancelText: cancelText,
+      success(res) {
+        if (res.confirm) {
+          confirmCallback();
+        } else if (res.cancel) {
+          cancelCallback();
+        }
+      }
+    });
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -230,6 +249,30 @@ Page({
     });
   },
 
+  // 点击确认修改按钮，弹出确认修改模态框
+  showConfirmModal() {
+    this.showModal(
+      '确认修改',
+      '确定要进行修改吗？',
+      '确认',
+      '取消',
+      this.confirmEdit, // 点击确认时的回调函数
+      () => {} // 点击取消时的回调函数，这里不做任何操作
+    );
+  },
+
+  // 点击取消比赛按钮，弹出确认取消模态框
+  showCancelModal() {
+    this.showModal(
+      '确认取消比赛',
+      '确定要取消这场比赛吗？',
+      '确认取消',
+      '我再想想',
+      this.deleteMatch, // 点击确认取消时的回调函数
+      () => {} // 点击我再想想时的回调函数，这里不做任何操作
+    );
+  },
+
   // 处理提交信息修改
   confirmEdit() {
     // 显示加载提示框，提示用户正在加载
@@ -256,12 +299,10 @@ Page({
       awayTeamPenalty: this.data.awayTeamPenalty,
       refereeList: this.data.refereeList,
       matchPlayerActionList: this.data.matchPlayerActionList,
-
     };
     console.log(dataToUpdate);
     // 发送请求到后端接口
     wx.request({
-
       url: URL + '/match/update', // 后端接口地址
       method: 'PUT', // 请求方法
       data: dataToUpdate, // 要发送的数据
@@ -280,6 +321,10 @@ Page({
         wx.hideLoading(); // 关闭加载提示框
       }
     });
-  }
+  },
+
+  deleteMatch() {
+    
+  },
 
 })

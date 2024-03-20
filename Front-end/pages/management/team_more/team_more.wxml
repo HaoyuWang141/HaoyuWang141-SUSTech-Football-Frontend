@@ -12,8 +12,13 @@
         <team-card-big name="创建新球队" img="/assets/newplayer.png" number="0" bindtap="createNewTeam"></team-card-big>
       </view>
 
-      <view wx:for="{{teamList}}" wx:key="teamId">
-        <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.number}}" bindtap="gotoEditTeam" data-id="{{item.teamId}}"></team-card-big>
+      <view class="team-card-container" >
+        <block wx:for="{{teamList}}" wx:key="teamId">
+          <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerCount}}" >
+          <button class="delete-btn" bindtap="deleteTeam" data-id="{{item.teamId}}">删除</button>
+          <button class="check-btn" bindtap="gotoTeamPage" data-id="{{item.teamId}}">查看</button>
+          </team-card-big>
+        </block>
       </view>
 
     </scroll-view>
