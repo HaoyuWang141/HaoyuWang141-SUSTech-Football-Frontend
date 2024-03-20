@@ -26,24 +26,33 @@
 }
 
 .team {
+  width: 40%;
+  min-width: 40%;
+  max-width: 40%;
   flex: 0 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: small;
 }
 
-.icon {
+.team-icon {
   width: 80rpx;
   height: 80rpx;
+}
+
+.team-name {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: smaller;
+  text-align: center;
 }
 
 .middle {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10rpx auto;
-  margin: 0 10rpx;
   border-radius: 10rpx;
 }
 

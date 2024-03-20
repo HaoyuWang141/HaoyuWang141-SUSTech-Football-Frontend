@@ -10,8 +10,15 @@
         <team-card-big name="邀请球队" img="/assets/newplayer.png" bindtap="inviteTeam"></team-card-big>
       </view>
 
-      <view wx:for="{{teamList}}" wx:key="teamId">
-        <team-card-big name="{{item.name}}" img="{{item.logo}}" number="{{item.playerCount}}" bindtap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-big>
+      
+      <view class="team-card-container" >
+        <block wx:for="{{teamList}}" wx:key="teamId">
+          <team-card-big name="{{item.name}}" img="{{item.logo}}" number="{{item.playerCount}}" bindtap="gotoTeamPage" data-id="{{item.teamId}}">
+          <button class="delete-btn">删除</button>
+          <button class="check-btn">查看</button>
+          </team-card-big>
+      </block>
+        
       </view>
 
     </scroll-view>

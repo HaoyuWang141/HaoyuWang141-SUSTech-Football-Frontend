@@ -33,4 +33,7 @@
 
 .text {
   font-size: smaller;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

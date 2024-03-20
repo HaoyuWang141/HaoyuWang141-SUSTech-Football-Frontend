@@ -6,7 +6,6 @@
     <text class="number">{{number}} 名球员</text>
   </view>
   <view class="buttons">
-    <!-- <slot></slot> -->
-    <view><button></button></view>
+    <slot></slot>
   </view>
 </view>

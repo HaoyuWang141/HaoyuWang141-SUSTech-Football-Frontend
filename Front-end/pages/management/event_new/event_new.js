@@ -11,14 +11,7 @@ Page({
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
 
-    teamsData : [
-      { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
-      { name: '南科大足球队', img: '/assets/barca1.png', number: '22'},
-      { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
-      { name: '南科大足球队', img: '/assets/barca1.png', number: '22'},
-      { name: '南科大足球队', img: '/assets/barca1.png', number: '25'},
-      { name: '南科大足球队', img: '/assets/barca1.png', number: '22'},
-    ]
+    teamsData : Array,
   },
 
   /**

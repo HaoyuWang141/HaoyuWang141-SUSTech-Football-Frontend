@@ -32,14 +32,17 @@
     <!-- 管理队员 -->
     <view class="team-container">
 
-      <view class="important-person" style="display: flex; flex-direction: row;">
-        <view class="captain-container" style="flex: 1;">
+      <view class="important-person">
+        <view class="captain-container">
           <view class="text">队长</view>
-          <player-card-small name="" img="" bindtap=""></player-card-small>
+          <player-card-small name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
         </view>
-        <view class="coach-container" style="flex: 1;">
+      </view>
+
+      <view class="important-person">
+        <view class="coach-container">
           <view class="text">教练</view>
-          <player-card-small name="" img="" bindtap=""></player-card-small>
+          <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach"></player-card-small>
         </view>
       </view>
 
@@ -47,7 +50,7 @@
         <view class="text">队员</view>
         <scroll-view scroll-y enable-flex>
           <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="invitePlayer"></player-card-small>
-          <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.img}}" bindtap="managePlayer"></player-card-small>
+          <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer"></player-card-small>
         </scroll-view>
       </view>
     </view>

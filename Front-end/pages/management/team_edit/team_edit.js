@@ -13,6 +13,7 @@ Page({
     newName: String,   // 用于存放用户输入的新队名
     edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
+    captain: Array,
 
     teamId: String,
     name: String,
@@ -34,6 +35,7 @@ Page({
       id: options.id
     })
     this.fetchData(options.id);
+    this.findCaptain();
   },
 
   fetchData: function (id) {
@@ -62,12 +64,12 @@ Page({
           teamId: res.data.teamId,
           name: res.data.name,
           logoUrl: res.data.logoUrl,
-          playerList: res.data.playerList,
           captainId: res.data.captainId,
           coachList: res.data.coachList,
           eventList: res.data.eventList,
           managerList: res.data.managerList,
           matchList: res.data.matchList,
+          playerList: res.data.playerList,
         });
 
       },
@@ -80,6 +82,27 @@ Page({
         wx.hideLoading(); // 关闭加载提示框
       }
     });
+  },
+
+  findCaptain() {
+    let captainPlayer = null;
+    if (this.data.playerList !== null) {
+      for (let i = 0; i < this.data.playerList.length; i++) {
+        if (this.data.playerList[i].playerId === this.data.captainId) {
+          captainPlayer = this.data.playerList[i];
+          break;
+        }
+      }
+    
+      if (captainPlayer) {
+        this.setData({
+          captain: [captainPlayer]
+        });
+      } else {
+        console.log('未找到队长信息');
+      }
+    }
+    console.log('未找到队长信息');
   },
 
   /**
@@ -189,6 +212,14 @@ Page({
 
   // 管理队员
   managePlayer() {
+
+  },
+
+  manageCoach() {
+
+  },
+  
+  manageCaptain() {
 
   },
 

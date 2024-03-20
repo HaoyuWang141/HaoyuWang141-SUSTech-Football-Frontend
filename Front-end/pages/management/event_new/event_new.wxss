@@ -25,7 +25,8 @@
 
 .text-container {
   flex: 1;
-  display: flex;
+  display: block;
+  flex-direction: row;
   align-items: center;
   margin-left: 20rpx;
   margin-right: 20rpx;
@@ -33,9 +34,19 @@
 }
 
 .text {
-  font-size: smaller;
+  font-size: medium;
   white-space: normal; /* 允许文本换行 */
   word-wrap: break-word; /* 单词换行 */
+  flex-grow: 1;
+}
+
+.name-edit {
+  font-size: small;
+  color: gray;
+  display: inline-block; 
+  border-bottom: 1px solid gray;
+  margin-left: 3%;
+  flex-shrink: 0;
 }
 
 .team-container {

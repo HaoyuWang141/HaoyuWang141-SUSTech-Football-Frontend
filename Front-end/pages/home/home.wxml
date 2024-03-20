@@ -50,7 +50,6 @@
     <text class="block-title">关注的球员</text>
   </view>
   <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-    <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
     <player-card-small wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}"></player-card-small>
   </scroll-view>
 </view>

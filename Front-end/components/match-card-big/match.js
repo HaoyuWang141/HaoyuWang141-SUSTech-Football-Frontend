@@ -52,7 +52,7 @@ Component({
       const strTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
       const hasBegun = new Date() > date
       this.setData({
-        time: strTime,
+        strTime: strTime,
         hasBegun: hasBegun,
       })
     }

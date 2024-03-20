@@ -9,7 +9,7 @@
     </view>
     <view class="text-container" >
       <text class="text">{{name}}</text>
-      <text class="name-edit" bindtap="showNameInput">{{edit}}</text>
+      <text class="name-edit" bindtap="showNameInput">编辑</text>
     </view>
 
     <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
@@ -24,7 +24,7 @@
     <text style="margin-left: 3%;">赛事简介</text>
     <view class="description-content">
       <text class="description">{{description}}</text>
-      <text class="description-edit" bindtap="showDesInput">{{edit}}</text>
+      <text class="description-edit" bindtap="showDesInput">编辑</text>
     </view>
 
     <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
