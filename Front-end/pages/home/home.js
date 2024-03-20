@@ -206,8 +206,13 @@ Page({
   },
 
   gotoTeamsPage(e) {
+    let teamList = e.currentTarget.dataset.list ?? []
+    let teamIdList = []
+    for(let team of teamList) {
+      teamIdList.push(team.teamId)
+    }
     wx.navigateTo({
-      url: '/pages/pub/teams/teams',
+      url: '/pages/pub/teams/teams?teamIdList=' + teamIdList,
     })
   },
 

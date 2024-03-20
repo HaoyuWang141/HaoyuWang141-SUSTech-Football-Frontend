@@ -9,17 +9,18 @@ Page({
    */
   data: {
     teamIdList: [],
-    teams: [],
+    teamList: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    let teamIdList = Array(options.teamIdList) || []
     this.setData({
-      teamIdList: options.teamIdList || [],
+      teamIdList: teamIdList,
     })
-    this.fetchData(options.id)
+    this.fetchData(teamIdList)
   },
 
   /**
@@ -74,36 +75,29 @@ Page({
   ////////////////////////////////////////////////////////////////
   // HTTP 请求
 
-  fetchData: function (id) {
-
-    // 显示加载提示框，提示用户正在加载
+  fetchData: function (teamIdList) {
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true 
     });
 
-    // 网络请求
+    let queryParams = ""
+    for (let id of teamIdList) {
+      queryParams += "idList=" + id + "&"
+    }
+
     var that = this
     wx.request({
-      url: URL + '/team/getAll',
+      url: URL + '/team/getByIdList?' + queryParams,
       success(res) {
-        console.log("/team/getAll ->")
+        console.log("/team/getByIdList ->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
-        var teams = []
-        var teamIdList = that.data.teamIdList
-        for (let team of res.data) {
-          console.log(teamIdList.length, team.teamId)
-          if (teamIdList.length === 0 || teamIdList.includes(team.teamId)) {
-            teams.push(team)
-          }
-        }
         that.setData({
-          teams: teams
+          teamList: res.data
         })
       },
       fail(err) {
