@@ -94,4 +94,8 @@ Page({
       url: '/pages/pub/event/event?id=' + dataset.id,
     })
   },
+
+  search: function (e) {
+
+  },
 })
