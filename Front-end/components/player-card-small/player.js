@@ -2,7 +2,7 @@
 Component({
   properties: {
     img: String,
-    name: String,
+    name: " ",
   },
   data: {
 

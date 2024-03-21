@@ -90,8 +90,8 @@ Page({
       success(res) {
         console.log("/match/getByIdList ->")
         console.log(res.data)
-        if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
         that.setData({

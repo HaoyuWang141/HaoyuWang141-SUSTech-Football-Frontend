@@ -35,9 +35,10 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的比赛</text>
-    <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}">查看更多</text>
+    <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}" wx:if="{{matchList.length!=0}}">查看更多</text>
   </view>
   <view class="block-main">
+    <view class="no-favorite" wx:if="{{matchList.length==0}}">您还未关注任何比赛！</view>
     <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
       <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
     </scroll-view>
@@ -47,28 +48,40 @@
 <!-- 关注的球员 -->
 <view class="block-container">
   <view class="block-top">
-    <text class="block-title">关注的球员</text>
+    <text class="block-title">关注的用户</text>
   </view>
-  <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-    <player-card-small wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}"></player-card-small>
-  </scroll-view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{userList.length==0}}">您还未关注任何用户！</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <player-card-small wx:for="{{userList}}" wx:key="userId" name="{{item.nickName}}" img="{{item.avatarUrl}}"></player-card-small>
+    </scroll-view>
+  </view>
 </view>
 
 <!-- 关注的球队 -->
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的球队</text>
-    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}">查看更多</text>
+    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}" wx:if="{{teamList.length!=0}}">查看更多</text>
   </view>
-  <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-    <team-card-small wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
-  </scroll-view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{teamList.length==0}}">您还未关注任何球队！</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <team-card-small wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
+    </scroll-view>
+  </view>
 </view>
 
 <!-- 关注的赛事 -->
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的赛事</text>
+    <text class="block-more" bind:tap="gotoEventHallPage">
+      <text class="hall">全部赛事</text>
+    </text>
   </view>
-  <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{eventList.length==0}}">您还未关注任何赛事！</view>
+    <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+  </view>
 </view>

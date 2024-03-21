@@ -73,4 +73,21 @@
     line-height: 65rpx; /* 设置按钮的行高，使文本垂直居中 */
 }
 
+/* 未关注任何X时样式 */
+.no-favorite {
+  margin-left: 20rpx;
+  font-size: normal;
+  color: #666;
+}
+
+/* 赛事大厅按钮 */
+.hall {
+  background-color: rgb(237, 108, 0);
+  padding: 20rpx 20rpx;
+  color: white;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 20rpx;
+}
+
   

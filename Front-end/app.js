@@ -84,11 +84,15 @@ App({
     })
   },
 
+  /**
+   * @summary 当userId没获取到的时候，请求将加入队列；若已获取到，将立即执行
+   * @param {function} task : the func you want to apply with userId
+   */
   addToRequestQueue: function (task) {
     if (this.globalData.userId) {
-      task(this.globalData.userId); // 如果userId已经获取，直接执行任务
+      task(this.globalData.userId);
     } else {
-      this.globalData.requestQueue.push(task); // 否则加入队列
+      this.globalData.requestQueue.push(task);
     }
   },
 

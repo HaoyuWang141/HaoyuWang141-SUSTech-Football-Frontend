@@ -14,7 +14,7 @@ Page({
     searchText: '', // 初始化搜索框内容为空
     newsList: [],
     matchList: [],
-    playerList: [],
+    userList: [],
     teamList: [],
     eventList: [],
   },
@@ -90,6 +90,10 @@ Page({
       },
       success(res) {
         console.log("home page: fetchFavorite match ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
         console.log(res.data)
         let matchList = res.data ?? []
         for (let match of matchList) {
@@ -101,6 +105,9 @@ Page({
           matchList: matchList,
         })
       },
+      fail: function(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
     })
   },
 
@@ -110,15 +117,22 @@ Page({
       url: URL + '/getFavorite',
       data: {
         userId: id,
-        type: 'player',
+        type: 'user',
       },
       success(res) {
-        console.log("home page: fetchFavorite: players ->")
+        console.log("home page: fetchFavorite: users(players) ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
         console.log(res.data)
-        let playerList = res.data ?? []
+        let userList = res.data ?? []
         that.setData({
-          playerList: playerList,
+          userList: userList,
         })
+      },
+      fail: function(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
   },
@@ -133,11 +147,18 @@ Page({
       },
       success(res) {
         console.log("home page: fetchFavorite: teams ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
         console.log(res.data)
         let teamList = res.data ?? []
         that.setData({
           teamList: teamList,
         })
+      },
+      fail: function(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
   },
@@ -152,11 +173,18 @@ Page({
       },
       success(res) {
         console.log("home page: fetchFavorite: events ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
         console.log(res.data)
         let eventList = res.data ?? []
         that.setData({
           eventList: eventList,
         })
+      },
+      fail: function(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
   },
@@ -229,6 +257,12 @@ Page({
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/match/match?id=' + dataset.id,
+    })
+  },
+
+  gotoEventHallPage: function(e) {
+    wx.navigateTo({
+      url: './event_hall/event_hall',
     })
   },
 

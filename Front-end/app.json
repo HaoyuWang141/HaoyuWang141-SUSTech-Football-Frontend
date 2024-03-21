@@ -30,7 +30,8 @@
     "pages/pub/teams/teams",
     "pages/example/example",
     "pages/logs/logs",
-    "pages/pub/live/live"
+    "pages/pub/live/live",
+    "pages/home/event_hall/event_hall"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -90,7 +91,6 @@
     "team-card-big": "/components/team-card-big/team",
     "team-card-small": "/components/team-card-small/team"
   },
-  
   "useExtendedLib": {
     "weui": true
   }
