@@ -2,7 +2,7 @@
   <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
 </view>
 
-<!-- <button bind:tap="gotoExample">gotoExample</button> -->
+<button bind:tap="gotoExample">gotoExample</button>
 
 <view class="search-container">
   <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>

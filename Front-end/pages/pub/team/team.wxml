@@ -1,3 +1,49 @@
 <!--pages/pub/team/team.wxml-->
-<text>pages/pub/team/team.wxml</text>
-<view>球队详情页，球队id：{{id}} </view>
+<!-- <text>pages/pub/team/team.wxml</text> -->
+<!-- <view>球队详情页，球队id：{{id}} </view> -->
+
+<view class="section-header">
+  <view style="background-color: white;">
+    <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
+  </view>
+  <team-card-big name="{{name}}" img="{{logoUrl}}" number="{{playerList.length}}"></team-card-big>
+</view>
+
+<view class="tabs">
+  <view class="tab,{{activeIndex==0?'active':''}}" data-index="0" bindtap="switchTab">信息</view>
+  <view class="tab,{{activeIndex==1?'active':''}}" data-index="1" bindtap="switchTab">赛程</view>
+  <view class="tab,{{activeIndex==2?'active':''}}" data-index="2" bindtap="switchTab">球员</view>
+</view>
+
+<view class="tab-content">
+
+  <view wx:if="{{activeIndex == 0}}">
+
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">球队简介</text>
+        <text class="block-more"></text>
+      </view>
+      <view class="block-main">
+        {{description}}
+      </view>
+    </view>
+
+  </view>
+
+  <view wx:if="{{activeIndex == 1}}">
+    <view class="more-bar">
+      <label class="more-label"></label>
+      <button class="more-button" bindtap="gotoMatches">更多 ></button>
+    </view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
+      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
+      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{activeIndex == 2}}">
+  </view>
+
+</view>
