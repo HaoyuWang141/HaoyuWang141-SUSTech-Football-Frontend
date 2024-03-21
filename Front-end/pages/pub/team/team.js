@@ -1,11 +1,19 @@
 // pages/pub/team/team.js
-Page({
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    id: Number,
+    id: -1,
+    name: String,
+    logoUrl: String,
+    captainId: String,
+    coachList: Array,
+    playerIdList: Array,
+    activeIndex: 0,
   },
 
   /**
@@ -13,8 +21,10 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      id: options.id,
+      // id: options.id,
+      id: 1,
     })
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -64,5 +74,60 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  ////////////////////////////////////////////////////////////////
+  // HTTP 请求
+
+  // 获取比赛数据
+  fetchData: function (id) {
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
+
+    const that = this
+    wx.request({
+      url: URL + "/team/get?id=" + id,
+      
+      success(res) {
+        console.log("team/get?id=" + id + " ->")
+        console.log(res.data)
+
+        // var date = new Date(res.data.time)
+        // let strTime = formatTime(date)
+        // let hasBegun = new Date() > date
+        that.setData({
+          homeTeam: res.data.homeTeam,
+          name: res.data.name,
+          logoUrl: res.data.logoUrl,
+          captainId: res.data.captainId,
+          coachList: res.data.coachList,
+          playerList: res.data.playerList,
+        })
+      },
+      fail(err) {
+        console.log("请求失败，错误码为：" + err.statusCode + "；错误信息为：" + err.message)
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+      }
+    })
+  },
+
+  ////////////////////////////////////////////////////////////////
+  // 页面响应
+
+  switchTab: function (e) {
+    const tabIndex = e.currentTarget.dataset.index;
+    // if (this.data.activeIndex != tabIndex) {
+    //   this.loadTabData(tabIndex);
+    // }
+    this.setData({
+      activeIndex: tabIndex
+    })
+  },
+
 })
