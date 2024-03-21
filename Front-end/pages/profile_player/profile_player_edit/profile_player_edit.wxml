@@ -1,2 +1,107 @@
 <!--pages/profile_player/profile_player_edit/profile_player_edit.wxml-->
-<text>pages/profile_player/profile_player_edit/profile_player_edit.wxml</text>
+<!--<text>pages/profile_player/profile_player_edit/profile_player_edit.wxml</text>-->
+
+<view class="container">
+  <view style="width: 90%;">
+    <view class="section0">
+      <view>头像</view>
+      <view style="flex: 1;"></view>
+      <view class="edit"  bindtap="b0">
+        <image class="picture" src="/assets/busquets.jpg"></image>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>名字</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>生日</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>身高</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>体重</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>籍贯</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>学号</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>书院</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>院系</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>入学年份</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>个性签名</view>
+      <view style="flex: 1;"></view>
+      <view class="edit">
+        <view>王浩羽</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+
+
+    <view class="zan-dialog {{ showdDialog ? 'zan-dialog--show' : '' }}" catchtouchmove='ture' wx:if="{{}}">
+    <view class="zan-dialog__mask" bindtap="hidedType"/>
+    <view class="zan-dialog__container">
+        <view bindtap="chooseImage" style="margin-top: 40rpx;">从相册选择</view>
+        <!-- <camera device-position="back" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera> -->
+        <view style="margin-top: 40rpx;border-top: solid 10px rgb(241, 239, 239);padding-top: 40rpx;" bindtap="hidedType">取消</view>
+       </view>
+    </view>
+
+
+  </view>
+</view>

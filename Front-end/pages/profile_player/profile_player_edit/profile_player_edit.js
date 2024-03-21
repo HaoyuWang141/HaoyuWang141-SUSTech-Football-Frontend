@@ -5,21 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    showdDialog: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-
+  onLoad() {
+    this.setData({
+      showdDialog:false
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
+    this.setData({
+      showdDialog:false
+    })
   },
 
   /**
@@ -62,5 +66,47 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  hidedType:function(e){
+    this.setData({
+      showdDialog:false
+    })
+  },
+  //头像
+  b0:function(e){
+    this.setData({
+      showdDialog:true
+    })
+  },
+
+  //从相册选择
+  chooseImage() {
+    wx.chooseImage({
+        count: 1, //默认9
+        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album'], //从相册选择
+        success: (res) => {
+          if (this.data.imgList.length != 0) {
+            this.setData({
+              imgList: this.data.imgList.concat(res.tempFilePaths)
+            })
+            this.data.user.img=this.data.imgList
+            wx.setStorageSync('muserlist',this.data.user)//添加
+          } else {
+            this.setData({
+              imgList: res.tempFilePaths
+            })
+            this.data.user.img=this.data.imgList
+            wx.setStorageSync('muserlist',this.data.user)
+          }
+        }
+ 
+    });
+    this.setData({
+        showdDialog:false
+      })
+
+  },
+
 })
