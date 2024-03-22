@@ -6,7 +6,7 @@
     <view class="section0">
       <view>头像</view>
       <view style="flex: 1;"></view>
-      <view class="edit"  bindtap="b0">
+      <view class="edit" bindtap="b0">
         <image class="picture" src="/assets/busquets.jpg"></image>
         <view class="pointer">></view>
       </view>
@@ -93,13 +93,13 @@
     </view>
 
 
-    <view class="zan-dialog {{ showdDialog ? 'zan-dialog--show' : '' }}" catchtouchmove='ture' wx:if="{{}}">
-    <view class="zan-dialog__mask" bindtap="hidedType"/>
-    <view class="zan-dialog__container">
+    <view class="zan-dialog {{ showdDialog ? 'zan-dialog--show' : '' }}" catchtouchmove="ture" wx:if="{{true}}">
+      <view class="zan-dialog__mask" bindtap="hidedType" ></view>
+      <view class="zan-dialog__container">
         <view bindtap="chooseImage" style="margin-top: 40rpx;">从相册选择</view>
         <!-- <camera device-position="back" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera> -->
         <view style="margin-top: 40rpx;border-top: solid 10px rgb(241, 239, 239);padding-top: 40rpx;" bindtap="hidedType">取消</view>
-       </view>
+      </view>
     </view>
 
 

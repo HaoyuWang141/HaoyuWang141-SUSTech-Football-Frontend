@@ -1,61 +1,56 @@
-<!--pages/profile_player/profile_player.wxml-->
-<!--<text>pages/profile_player/profile_player.wxml</text>-->
-
-<view class="container">
-  <view style="width: 90%;">
-
-    <view class="personal-information-container">
-      <view class="more-bar">
-        <label class="more-label">个人信息</label>
-        <button class="more-button" bindtap="edit_information">编辑 ></button>
-      </view>
-      <view class="profile_information">
-        <image class="profile_picture" src="/assets/busquets.jpg"></image>
-        <text class="profile_name_and_age">王浩羽/23岁</text>
-      </view>
-      <view class="more_information">
-        <button class="coach_button" bindtap="coach_information">教练信息</button>
-        <button class="referee_button" bindtap="referee_information">裁判信息</button>
-      </view>
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">个人信息</text>
+    <text class="block-more" bind:tap="edit_information" data-list="{{matchList}}" wx:if="{{matchList.length!=0}}">编辑 ></text>
+  </view>
+  <view class="block-main">
+    <view class="profile_information">
+      <image class="profile_picture" src="/assets/busquets.jpg"></image>
+      <text class="profile_name_and_age">王浩羽/23岁</text>
     </view>
-
-    <view class="my-team-container">
-      <view class="more-bar">
-        <label class="more-label">我的球队</label>
-        <button class="more-button" bindtap="gotoTeams">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoTeam"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoTeam"></team-card-small>
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoTeam"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoTeam"></team-card-small>
-        <team-card-small name="南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoTeam"></team-card-small>
-        <team-card-small name="南科大足球队南科大足球队南科大足球队" img="/assets/barca1.png" number="25" bindtap="gotoTeam"></team-card-small>
-      </scroll-view>
+    <view class="more_information">
+      <button class="coach_button" bindtap="coach_information">教练信息</button>
+      <button class="referee_button" bindtap="referee_information">裁判信息</button>
     </view>
-
-    <view class="my-match-container">
-      <view class="more-bar">
-        <label class="more-label">我的赛程</label>
-        <button class="more-button" bindtap="gotoMatches">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
-        <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
-      </scroll-view>
-    </view>
-
-    <view class="my-event-container">
-      <view class="more-bar">
-        <label class="more-label">我的赛事</label>
-        <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
-      </view>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
-      <event-card-big eventId="{{id1}}" icon="/assets/cup.svg" name="2024年南方科技大学书院杯足球赛事" bind:tap="handleTap" bindtap="gotoEvent"></event-card-big>
-    </view>
-
   </view>
 </view>
+
+<!-- 我的赛程 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我的赛程</text>
+    <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}" wx:if="{{matchList.length!=0}}">查看更多</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{matchList.length==0}}">您目前没有比赛。</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 我的球队 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我的球队</text>
+    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}" wx:if="{{teamList.length!=0}}">查看更多</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{teamList.length==0}}">您还未加入任何球队。</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <team-card-small wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 我的赛事 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我的赛事</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{eventList.length==0}}">您还参加任何赛事。</view>
+    <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+  </view>
+</view>
+
