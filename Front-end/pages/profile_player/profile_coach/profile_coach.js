@@ -10,6 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    coachId: Number,
+    coach: {},
     matchList: [],
     teamList: [],
     eventList: [],
@@ -18,9 +20,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-    app.addToRequestQueue(this.fetchCoachId)
-  },
+  onLoad(options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -33,7 +33,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    app.addToRequestQueue(this.fetchCoachId)
   },
 
   /**
@@ -86,16 +86,23 @@ Page({
           return
         }
         console.log(res.data)
-        let playerId = res.data
-        that.fetchCoachMatches(playerId)
-        that.fetchCoachTeams(playerId)
-        that.fetchCoachEvents(playerId)
+        let coachId = res.data
+        that.setData({
+          coachId: coachId,
+        })
+        that.fetchData(coachId)
+        that.fetchCoachMatches(coachId)
+        that.fetchCoachTeams(coachId)
+        that.fetchCoachEvents(coachId)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
   },
+
+  // TODO:
+  fetchData(coachId) {},
 
   fetchCoachMatches(coachId) {
     let that = this
@@ -155,7 +162,7 @@ Page({
   fetchCoachEvents(coachId) {
     let that = this
     wx.request({
-      url: URL + '/player/event/getAll',
+      url: URL + '/coach/event/getAll',
       data: {
         coachId: coachId,
       },
@@ -221,4 +228,9 @@ Page({
     })
   },
 
+  gotoRegisterPage() {
+    wx.navigateTo({
+      url: '../profile_coach_register/profile_coach_register',
+    })
+  },
 })

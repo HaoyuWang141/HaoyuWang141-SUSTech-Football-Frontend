@@ -10,6 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    playerId: Number,
+    player: {},
     matchList: [],
     teamList: [],
     eventList: [],
@@ -19,7 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    app.addToRequestQueue(this.fetchPlayerId)
+
   },
 
   /**
@@ -33,7 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    app.addToRequestQueue(this.fetchPlayerId)
   },
 
   /**
@@ -81,15 +83,51 @@ Page({
       },
       success(res) {
         console.log("profile player page: fetchPlayerId ->")
+        if (res.statusCode == 404) {
+          console.log("用户未注册")
+          wx.showToast({
+            title: '请先注册为球员',
+            icon: 'none',
+          })
+          return
+        }
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
         console.log(res.data)
         let playerId = res.data
+        that.setData({
+          playerId: playerId,
+        })
+        that.fetchData(playerId)
         that.fetchPlayerMatches(playerId)
         that.fetchPlayerTeams(playerId)
         that.fetchPlayerEvents(playerId)
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
+
+  fetchData(playerId) {
+    let that = this
+    wx.request({
+      url: URL + '/player/get',
+      data: {
+        id: playerId,
+      },
+      success(res) {
+        console.log("profile player page: fetchData ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        that.setData({
+          player: res.data,
+        })
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -231,6 +269,12 @@ Page({
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/event/event?id=' + dataset.id,
+    })
+  },
+
+  gotoRegisterPage() {
+    wx.navigateTo({
+      url: './profile_player_register/profile_player_register',
     })
   },
 

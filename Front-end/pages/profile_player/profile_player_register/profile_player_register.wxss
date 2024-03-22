@@ -1,0 +1,56 @@
+/* pages/profile_player/profile_player_register/profile_player_register.wxss */
+
+.upload-container, .input-container {
+  margin-bottom: 20px;
+  /* border-bottom: 1rpx solid #6e6e6e; */
+}
+
+input, picker {
+  margin: 10rpx auto; /* 增加自动外边距以在页面中居中对齐，增加上下间距 */
+  border: 1rpx solid #cccccc; /* 细化边框并使用较轻的颜色 */
+  border-radius: 30rpx; /* 增加边框半径以获得更圆滑的边角 */
+  padding: 20rpx 20rpx; /* 增加内边距以提高文本输入时的可视空间 */
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1); /* 添加轻微阴影以增强层次感 */
+  background-color: #f9f9f9; /* 设置较浅的背景色以减少视觉疲劳 */
+  transition: all 0.3s ease; /* 添加过渡效果以平滑输入框和选择器的焦点变化 */
+}
+
+picker {
+  font-size: small;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+}
+
+input:focus, picker:focus {
+  border-color: #1E90FF; /* 在聚焦时改变边框颜色以提高可见性 */
+  box-shadow: 0 2rpx 8rpx rgba(30, 144, 255, 0.2); /* 聚焦时增加阴影以增强视觉反馈 */
+}
+
+textarea {
+  border: 2rpx solid #000;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-sizing: border-box;
+  height: 300rpx;
+}
+
+image {
+  width: 100px;
+  height: 100px;
+}
+
+.avatar {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.button {
+  display: block;
+  background-color: #ed6c00;
+  color: white;
+  margin-bottom: 40rpx;
+  padding: 20rpx;
+  border: none;
+  width: 40rpx;
+  min-width: 0;
+}

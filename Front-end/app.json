@@ -31,7 +31,10 @@
     "pages/example/example",
     "pages/logs/logs",
     "pages/pub/live/live",
-    "pages/home/event_hall/event_hall"
+    "pages/home/event_hall/event_hall",
+    "pages/profile_player/profile_player_register/profile_player_register",
+    "pages/profile_player/profile_referee_register/profile_referee_register",
+    "pages/profile_player/profile_coach_register/profile_coach_register"
   ],
   "window": {
     "navigationBarTextStyle": "white",

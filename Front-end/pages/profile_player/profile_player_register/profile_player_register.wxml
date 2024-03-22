@@ -1,0 +1,93 @@
+<!--pages/profile_player/profile_player_register/profile_player_register.wxml-->
+<view class="container">
+  <view style="width: 95%;">
+    <view class="block-container" bindtap="uploadImage">
+      <view class="block-top">
+        <view class="block-title">
+          <text style="color: red;">* </text>
+          <text>头像</text>
+        </view>
+        <image wx:if="{{photoUrl}}" class="avatar" src="{{photoUrl}}" mode="aspectFill"></image>
+        <text wx:else class="block-more">></text>
+      </view>
+    </view>
+
+    <view class="block-container">
+      <view class="block-top input-container">
+        <view class="block-title"><text style="color: red;">* </text>姓名：</view>
+        <view class="block-more">
+          <input type="text" placeholder="请输入名字" bindinput="inputName" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title"><text style="color: red;">* </text>学工号：</view>
+        <view class="block-more">
+          <input type="number" placeholder="请输入学工号" bindinput="inputIdentity" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title">身高(cm)：</view>
+        <view class="block-more">
+          <input type="number" placeholder="请输入身高(cm)" bindinput="inputHeight" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title">体重(kg)：</view>
+        <view class="block-more">
+          <input type="number" placeholder="请输入体重(kg)" bindinput="inputWeight" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title"><text style="color: red;">* </text>出生日期：</view>
+        <view class="block-more">
+          <picker mode="date" bindchange="bindDateChange">
+            <view>{{birthDate}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title">场上位置：</view>
+        <view class="block-more">
+          <input type="text" placeholder="请输入场上位置" bindinput="inputPosition" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title">书院：</view>
+        <view class="block-more">
+          <input type="text" placeholder="请输入书院" bindinput="inputShuYuan" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title">院系：</view>
+        <view class="block-more">
+          <input type="text" placeholder="请输入院系" bindinput="inputCollege" />
+        </view>
+      </view>
+
+      <view class="block-top input-container">
+        <view class="block-title"><text style="color: red;">* </text>入学年份：</view>
+        <picker mode="date" fields="year" bindchange="bindAdmissionYearChange">
+          <text>{{admissionYear}}</text>
+        </picker>
+      </view>
+
+      <button class="button" bindtap="submit">注册</button>
+    </view>
+
+  </view>
+</view>
+
+<!-- <view class="block-container">
+  <view class="block-top">
+    <view class="block-title"></view>
+    <view class="block-more"></view>
+  </view>
+  <view class="block-main"></view>
+</view> -->

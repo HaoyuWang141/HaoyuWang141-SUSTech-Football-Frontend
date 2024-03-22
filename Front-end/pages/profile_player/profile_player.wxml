@@ -1,4 +1,16 @@
-<view class="block-container">
+<view class="block-container" wx:if="{{!playerId}}" style="margin-top: 10rpx;">
+  <view class="block-top">
+    <text class="block-title">您还未注册为球员！</text>
+  </view>
+  <view class="block-top">
+    <text class="block-title"></text>
+    <view class="block-more">
+      <button bind:tap="gotoRegisterPage" style="display: inline; background-color: #ed6c00; color: white;">注册</button>
+    </view>
+  </view>
+</view>
+
+<view class="block-container" wx:if="{{playerId}}">
   <view class="block-top">
     <text class="block-title">球员信息</text>
     <text class="block-more" bind:tap="edit_information">编辑</text>
@@ -6,11 +18,11 @@
   <view class="block-main">
     <view class="profile_information">
       <image class="profile_picture" src="/assets/busquets.jpg"></image>
-      <text class="profile_name_and_age">王浩羽/23岁</text>
+      <text class="profile_name_and_age">{{player.name}}</text>
     </view>
     <view class="more_information">
-      <button class="coach_button" bindtap="coach_information">教练信息</button>
-      <button class="referee_button" bindtap="referee_information">裁判信息</button>
+      <button bindtap="coach_information">教练信息</button>
+      <button bindtap="referee_information">裁判信息</button>
     </view>
   </view>
 </view>
@@ -53,4 +65,3 @@
     <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
   </view>
 </view>
-

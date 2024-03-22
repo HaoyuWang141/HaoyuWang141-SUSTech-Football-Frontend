@@ -1,0 +1,40 @@
+<!--pages/profile_player/profile_player_register/profile_player_register.wxml-->
+<view class="container">
+  <view style="width: 95%;">
+    <view class="block-container" bindtap="uploadImage">
+      <view class="block-top">
+        <view class="block-title">
+          <text style="color: red;">* </text>
+          <text>头像</text>
+        </view>
+        <image wx:if="{{photoUrl}}" class="avatar" src="{{photoUrl}}" mode="aspectFill"></image>
+        <text wx:else class="block-more">></text>
+      </view>
+    </view>
+
+    <view class="block-container">
+      <view class="block-top input-container">
+        <view class="block-title"><text style="color: red;">* </text>姓名：</view>
+        <view class="block-more">
+          <input type="text" placeholder="请输入名字" bindinput="inputName" />
+        </view>
+      </view>
+    </view>
+
+    <view class="block-container">
+      <view class="block-top input-container">
+        <view class="block-title">简介：</view>
+      </view>
+      <textarea placeholder="请介绍一下自己" bindinput="inputBio"> </textarea>
+    </view>
+    <button class="button" bindtap="submit">注册</button>
+  </view>
+</view>
+
+<!-- <view class="block-container">
+  <view class="block-top">
+    <view class="block-title"></view>
+    <view class="block-more"></view>
+  </view>
+  <view class="block-main"></view>
+</view> -->

@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    coachId: Number,
     matchList: [],
     teamList: [],
     eventList: [],
@@ -20,7 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    app.addToRequestQueue(this.fetchRefereeId)
+    
   },
 
   /**
@@ -34,7 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    app.addToRequestQueue(this.fetchRefereeId)
   },
 
   /**
@@ -87,15 +88,22 @@ Page({
           return
         }
         console.log(res.data)
-        let playerId = res.data
-        that.fetchRefereeMatches(playerId)
-        that.fetchRefereeEvents(playerId)
+        let refereeId = res.data
+        that.setData({
+          refereeId: refereeId
+        })
+        that.fetchData(refereeId)
+        that.fetchRefereeMatches(refereeId)
+        that.fetchRefereeEvents(refereeId)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
   },
+
+  // TODO
+  fetchData(refereeId) {},
 
   fetchRefereeMatches(refereeId) {
     let that = this
@@ -196,4 +204,9 @@ Page({
     })
   },
 
+  gotoRegisterPage() {
+    wx.navigateTo({
+      url: '../profile_referee_register/profile_referee_register',
+    })
+  },
 })
