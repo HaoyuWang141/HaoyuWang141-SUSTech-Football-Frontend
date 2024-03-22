@@ -101,8 +101,29 @@ Page({
     })
   },
 
-  // TODO:
-  fetchData(coachId) {},
+  fetchData(coachId) {
+    let that = this
+    wx.request({
+      url: URL + '/coach/get',
+      data: {
+        id: coachId,
+      },
+      success(res) {
+        console.log("profile coach page: fetchData ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        that.setData({
+          coach: res.data,
+        })
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
 
   fetchCoachMatches(coachId) {
     let that = this

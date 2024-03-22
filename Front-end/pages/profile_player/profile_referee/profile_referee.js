@@ -11,7 +11,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    coachId: Number,
+    refereeId: Number,
+    referee: {},
     matchList: [],
     teamList: [],
     eventList: [],
@@ -103,7 +104,29 @@ Page({
   },
 
   // TODO
-  fetchData(refereeId) {},
+  fetchData(refereeId) {
+    let that = this
+    wx.request({
+      url: URL + '/referee/get',
+      data: {
+        id: refereeId,
+      },
+      success(res) {
+        console.log("profile referee page: fetchData ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        that.setData({
+          referee: res.data,
+        })
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
 
   fetchRefereeMatches(refereeId) {
     let that = this

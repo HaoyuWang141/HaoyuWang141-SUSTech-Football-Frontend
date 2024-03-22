@@ -18,8 +18,8 @@
   </view>
   <view class="block-main">
     <view class="profile_information">
-      <image class="profile_picture" src="/assets/busquets.jpg"></image>
-      <text class="profile_name_and_age">王浩羽/23岁</text>
+      <image class="profile_picture" src="{{coach.photoUrl}}"></image>
+      <text class="profile_name_and_age">{{coach.name}}</text>
     </view>
   </view>
 </view>

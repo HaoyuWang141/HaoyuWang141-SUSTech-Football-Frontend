@@ -17,7 +17,7 @@
   </view>
   <view class="block-main">
     <view class="profile_information">
-      <image class="profile_picture" src="/assets/busquets.jpg"></image>
+      <image class="profile_picture" src="{{player.photoUrl}}"></image>
       <text class="profile_name_and_age">{{player.name}}</text>
     </view>
     <view class="more_information">
