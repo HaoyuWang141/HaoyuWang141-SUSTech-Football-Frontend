@@ -10,19 +10,49 @@
   </view>
 </view>
 
-<view class="block-container" wx:if="{{playerId}}">
+<view class="container1">
+  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx;" />
+  <view class="container2">
+    <view class="container3">
+      <image class="avatar" src="{{player.photoUrl}}" mode="scaleToFill"></image>
+    </view>
+    <view class="container4">
+      <text class="name">{{player.name}}</text>
+      <text class="identity">学工号：{{player.identity}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">跳转至其他身份主页</text>
+  </view>
+  <view class="others-container">
+    <view bindtap="coach_information" class="others-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="others-image" />
+      <text class="others-text">教练主页</text>
+    </view>
+    <view bindtap="referee_information" class="others-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="others-image" />
+      <text class="others-text">裁判主页</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container" wx:if="{{playerId || '未填写'}}">
   <view class="block-top">
     <text class="block-title">球员信息</text>
     <text class="block-more" bind:tap="edit_information">编辑</text>
   </view>
   <view class="block-main">
-    <view class="profile_information">
-      <image class="profile_picture" src="{{player.photoUrl}}"></image>
-      <text class="profile_name_and_age">{{player.name}}</text>
-    </view>
-    <view class="more_information">
-      <button bindtap="coach_information">教练信息</button>
-      <button bindtap="referee_information">裁判信息</button>
+    <view class="info-section">
+      <text>出生日期：{{player.strBirthDate}}</text>
+      <text>身高 (cm)：{{player.height || defaultValue}}</text>
+      <text>体重 (kg)：{{player.weight || defaultValue}}</text>
+      <text>场上位置：{{player.position || defaultValue}}</text>
+      <text>书院：{{player.shuYuan || defaultValue}}</text>
+      <text>院系：{{player.college || defaultValue}}</text>
+      <text>入学年份：{{player.admissionYear || defaultValue}}</text>
     </view>
   </view>
 </view>

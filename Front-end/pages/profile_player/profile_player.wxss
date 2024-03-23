@@ -1,7 +1,7 @@
 /* pages/profile_player/profile_player.wxss */
 
 /* more information*/
-.personal-information-container{
+.personal-information-container {
   margin-top: 30rpx;
 }
 
@@ -17,7 +17,7 @@
 
 /* managed event */
 .my-event-container {
-  margin-top: 30rpx;  
+  margin-top: 30rpx;
 }
 
 /* more-bar */
@@ -25,19 +25,26 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 80rpx; /* 调整容器的高度 */
+  height: 80rpx;
+  /* 调整容器的高度 */
 }
+
 .more-bar .more-label {
   height: 60rpx;
   width: 200rpx;
 }
+
 .more-bar .more-button {
   height: 60rpx;
   width: 120rpx;
-  font-size: 40%; /* 设置按钮文本的大小 */
-  margin-left: 330rpx; /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
-  padding: 0 10rpx; /* 设置按钮的左右内边距 */
-  line-height: 65rpx; /* 设置按钮的行高，使文本垂直居中 */
+  font-size: 40%;
+  /* 设置按钮文本的大小 */
+  margin-left: 330rpx;
+  /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
+  padding: 0 10rpx;
+  /* 设置按钮的左右内边距 */
+  line-height: 65rpx;
+  /* 设置按钮的行高，使文本垂直居中 */
 }
 
 .profile_information {
@@ -67,11 +74,115 @@
 .more_information .coach_button {
   width: 250rpx;
   height: 80rpx;
-  font-size: 80%; /* 设置按钮文本的大小 */
+  font-size: 80%;
+  /* 设置按钮文本的大小 */
 }
 
 .more_information .referee_button {
   width: 250rpx;
   height: 80rpx;
-  font-size: 80%; /* 设置按钮文本的大小 */
+  font-size: 80%;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.profile-section {
+  padding: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 40rpx;
+  display: flex;
+  background-color: rgba(237, 108, 0, 0.8);
+}
+
+.container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: #fff;
+  width: 100%;
+}
+
+.container3 {
+  width: 200rpx;
+  /* 头像大小 */
+  height: 200rpx;
+  margin-top: -100rpx;
+  /* 将头像向上移动其一半的高度 */
+  overflow: hidden;
+  /* 隐藏超出部分 */
+  border-radius: 50%;
+  /* 圆形 */
+  background-color: white;
+  /* 背景色 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  /* 可选：添加阴影以增强立体感 */
+  margin-left: 50rpx;
+}
+
+.avatar {
+  width: 200rpx;
+  /* 头像大小 */
+  height: 200rpx;
+}
+
+.container4 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50rpx;
+  padding-top: 20rpx;
+  padding-bottom: 50rpx;
+}
+
+.name {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.identity {
+  font-size: normal;
+}
+
+.info-section {
+  width: 100%;
+  margin-left: 20rpx;
+}
+
+.info-section text {
+  display: block;
+  margin-bottom: 10rpx;
+  font-size: small;
+}
+
+.others-container {
+  display: flex;
+}
+
+.others-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.others-image {
+  width: 90rpx;
+  height: 90rpx;
+  margin-bottom: 10rpx;
+}
+
+.others-text {
+  font-size: small;
+  color: #666;
 }

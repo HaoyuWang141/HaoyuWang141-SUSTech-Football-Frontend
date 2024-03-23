@@ -15,6 +15,7 @@ Page({
     matchList: [],
     teamList: [],
     eventList: [],
+    defaultValue: '暂无',
   },
 
   /**
@@ -112,7 +113,7 @@ Page({
   },
 
   fetchData(playerId) {
-    let that = this
+    var that = this
     wx.request({
       url: URL + '/player/get',
       data: {
@@ -125,8 +126,18 @@ Page({
           return
         }
         console.log(res.data)
+        let player = res.data
+        if (player.birthDate == '' || player.birthDate == null) {
+          player.strBirthDate = '暂无';
+        } else {
+          const date = new Date(player.birthDate);
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1;
+          const day = date.getDate();
+          player.strBirthDate = `${year}-${month}-${day}`;
+        }
         that.setData({
-          player: res.data,
+          player: player,
         })
       },
       fail(err) {
