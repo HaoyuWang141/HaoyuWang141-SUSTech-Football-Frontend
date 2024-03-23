@@ -11,15 +11,27 @@
   </view>
 </view>
 
-<view class="block-container" wx:else>
+<view class="container1" wx:if="{{coachId}}">
+  <image src="https://www.sustech.edu.cn/uploads/images/2022/12/29170519_51471.jpg" mode="scaleToFill" style="height: 400rpx;" />
+  <view class="container2">
+    <view class="container3">
+      <image class="avatar" src="{{coach.photoUrl}}" mode="scaleToFill"></image>
+    </view>
+    <view class="container4">
+      <text class="name">{{coach.name}}</text>
+      <text class="id">教练id：{{coachId}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container" wx:if="{{coachId}}">
   <view class="block-top">
     <text class="block-title">教练信息</text>
     <text class="block-more" bind:tap="edit_information">编辑</text>
   </view>
   <view class="block-main">
-    <view class="profile_information">
-      <image class="profile_picture" src="{{coach.photoUrl}}"></image>
-      <text class="profile_name_and_age">{{coach.name}}</text>
+    <view class="info-section">
+      <text>教练简介：{{coach.bio}}</text>
     </view>
   </view>
 </view>

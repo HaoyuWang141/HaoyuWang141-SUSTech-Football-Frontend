@@ -1,105 +1,4 @@
-/* pages/profile_player/profile_player.wxss */
-
-/* more information*/
-.personal-information-container {
-  margin-top: 30rpx;
-}
-
-/* managed team */
-.my-team-container {
-  margin-top: 30rpx;
-}
-
-/* managed match */
-.my-match-container {
-  margin-top: 30rpx;
-}
-
-/* managed event */
-.my-event-container {
-  margin-top: 30rpx;
-}
-
-/* more-bar */
-.more-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 80rpx;
-  /* 调整容器的高度 */
-}
-
-.more-bar .more-label {
-  height: 60rpx;
-  width: 200rpx;
-}
-
-.more-bar .more-button {
-  height: 60rpx;
-  width: 120rpx;
-  font-size: 40%;
-  /* 设置按钮文本的大小 */
-  margin-left: 330rpx;
-  /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
-  padding: 0 10rpx;
-  /* 设置按钮的左右内边距 */
-  line-height: 65rpx;
-  /* 设置按钮的行高，使文本垂直居中 */
-}
-
-.profile_information {
-  display: flex;
-  flex-direction: column;
-}
-
-.profile_information .profile_picture {
-  height: 300rpx;
-  width: 300rpx;
-  border-radius: 50%;
-  margin: auto;
-}
-
-.profile_information .profile_name_and_age {
-  font-size: medium;
-  margin: auto;
-  margin-top: 30rpx;
-}
-
-.more_information {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30rpx;
-}
-
-.more_information .coach_button {
-  width: 250rpx;
-  height: 80rpx;
-  font-size: 80%;
-  /* 设置按钮文本的大小 */
-}
-
-.more_information .referee_button {
-  width: 250rpx;
-  height: 80rpx;
-  font-size: 80%;
-}
-
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20rpx;
-}
-
-.profile-section {
-  padding: 20rpx;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 40rpx;
-  display: flex;
-  background-color: rgba(237, 108, 0, 0.8);
-}
-
+/* 头部 */
 .container1 {
   display: flex;
   flex-direction: column;
@@ -150,8 +49,9 @@
   font-weight: bold;
 }
 
-.identity {
+.id {
   font-size: normal;
+  color: #666;
 }
 
 .info-section {

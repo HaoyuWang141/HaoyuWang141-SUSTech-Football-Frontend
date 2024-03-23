@@ -10,7 +10,7 @@
   </view>
 </view>
 
-<view class="container1">
+<view class="container1" wx:if="{{playerId}}">
   <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx;" />
   <view class="container2">
     <view class="container3">
@@ -18,7 +18,7 @@
     </view>
     <view class="container4">
       <text class="name">{{player.name}}</text>
-      <text class="identity">学工号：{{player.identity}}</text>
+      <text class="id">球员id：{{playerId}}</text>
     </view>
   </view>
 </view>
@@ -39,13 +39,14 @@
   </view>
 </view>
 
-<view class="block-container" wx:if="{{playerId || '未填写'}}">
+<view class="block-container" wx:if="{{playerId}}">
   <view class="block-top">
     <text class="block-title">球员信息</text>
     <text class="block-more" bind:tap="edit_information">编辑</text>
   </view>
   <view class="block-main">
     <view class="info-section">
+      <text>学工号：{{player.identity || defaultValue}}</text>
       <text>出生日期：{{player.strBirthDate}}</text>
       <text>身高 (cm)：{{player.height || defaultValue}}</text>
       <text>体重 (kg)：{{player.weight || defaultValue}}</text>

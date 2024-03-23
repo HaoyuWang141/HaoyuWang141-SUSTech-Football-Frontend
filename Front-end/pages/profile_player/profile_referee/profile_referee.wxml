@@ -10,15 +10,27 @@
   </view>
 </view>
 
-<view class="block-container" wx:else>
+<view class="container1" wx:if="{{refereeId}}">
+  <image src="https://www.sustech.edu.cn/uploads/images/2022/12/29170514_43928.jpg" mode="scaleToFill" style="height: 400rpx;" />
+  <view class="container2">
+    <view class="container3">
+      <image class="avatar" src="{{referee.photoUrl}}" mode="scaleToFill"></image>
+    </view>
+    <view class="container4">
+      <text class="name">{{referee.name}}</text>
+      <text class="id">裁判id：{{refereeId}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container" wx:if="{{refereeId}}">
   <view class="block-top">
     <text class="block-title">裁判信息</text>
     <text class="block-more" bind:tap="edit_information">编辑</text>
   </view>
   <view class="block-main">
-    <view class="profile_information">
-      <image class="profile_picture" src="{{referee.photoUrl}}"></image>
-      <text class="profile_name_and_age">{{referee.name}}</text>
+    <view class="info-section">
+      <text>裁判简介：{{referee.bio}}</text>
     </view>
   </view>
 </view>
