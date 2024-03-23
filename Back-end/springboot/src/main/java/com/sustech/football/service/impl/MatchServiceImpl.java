@@ -55,9 +55,15 @@ public class MatchServiceImpl extends ServiceImpl<MatchMapper, Match> implements
         match.setMatchPlayerActionList(matchPlayerActionService.list(new QueryWrapper<MatchPlayerAction>().eq("match_id", matchId)));
         return match;
     }
+
+    @Override
+    public List<Match> getMatchByIdList(List<Long> matchIdList) {
+        return matchIdList.stream().map(this::getMatch).toList();
+    }
+
     public List<Match> getAllMatches() {
-        List<Match> matches=list();
-        for (Match match: matches){
+        List<Match> matches = list();
+        for (Match match : matches) {
             if (match.getHomeTeamId() != null) {
                 Team homeTeam = teamService.getById(match.getHomeTeamId());
                 match.setHomeTeam(homeTeam);
@@ -108,7 +114,7 @@ public class MatchServiceImpl extends ServiceImpl<MatchMapper, Match> implements
         if (matchTeamRequestService.selectByMultiId(matchTeamRequest) != null) {
             throw new ConflictException("该队伍已经被邀请");
         }
-        if (!matchTeamRequestService.saveOrUpdateByMultiId(matchTeamRequest)) {
+        if (!matchTeamRequestService.updateByMultiId(matchTeamRequest)) {
             throw new RuntimeException("邀请失败");
         }
         return true;
@@ -148,7 +154,7 @@ public class MatchServiceImpl extends ServiceImpl<MatchMapper, Match> implements
         if (matchRefereeRequestService.selectByMultiId(matchRefereeRequest) != null) {
             throw new ConflictException("已经邀请过该裁判，请勿重复发送");
         }
-        if (!matchRefereeRequestService.saveOrUpdateByMultiId(matchRefereeRequest)) {
+        if (!matchRefereeRequestService.saveOrUpdateRequestWithTime(matchRefereeRequest)) {
             throw new RuntimeException("邀请裁判失败");
         }
         return true;
