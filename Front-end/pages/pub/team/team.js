@@ -13,9 +13,7 @@ Page({
     captainId: String,
     coachList: Array,
     playerIdList: Array,
-
     matchList: Array,
-
     activeIndex: 0,
   },
 
@@ -95,7 +93,7 @@ Page({
       url: URL + "/team/get?id=" + id,
       
       success(res) {
-        console.log("team/get?id=" + id + " ->")
+        console.log("/team/get?id=" + id + " ->")
         console.log(res.data)
         that.setData({
           homeTeam: res.data.homeTeam,

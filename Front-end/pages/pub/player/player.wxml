@@ -1,2 +1,89 @@
 <!--pages/pub/player/player.wxml-->
-<text>pages/pub/player/player.wxml playerId={{id}}</text>
+<!-- <text>pages/pub/player/player.wxml playerId={{id}}</text> -->
+
+<view class="container1">
+  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx;" />
+  <view class="container2">
+    <view class="container3">
+      <image class="avatar" src="{{player.photoUrl}}" mode="scaleToFill"></image>
+    </view>
+    <view class="container4">
+      <text class="name">{{player.name}}</text>
+      <text class="id">球员id：{{playerId}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">跳转至其他身份主页</text>
+  </view>
+  <view class="others-container">
+    <view bindtap="coach_information" class="others-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="others-image" />
+      <text class="others-text">教练主页</text>
+    </view>
+    <view bindtap="referee_information" class="others-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="others-image" />
+      <text class="others-text">裁判主页</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container" wx:if="{{playerId}}">
+  <view class="block-top">
+    <text class="block-title">球员信息</text>
+    <text class="block-more" bind:tap="edit_information"></text>
+  </view>
+  <view class="block-main">
+    <view class="info-section">
+      <text>学工号：{{player.identity || defaultValue}}</text>
+      <text>出生日期：{{player.strBirthDate}}</text>
+      <text>身高 (cm)：{{player.height || defaultValue}}</text>
+      <text>体重 (kg)：{{player.weight || defaultValue}}</text>
+      <text>场上位置：{{player.position || defaultValue}}</text>
+      <text>书院：{{player.shuYuan || defaultValue}}</text>
+      <text>院系：{{player.college || defaultValue}}</text>
+      <text>入学年份：{{player.admissionYear || defaultValue}}</text>
+    </view>
+  </view>
+</view>
+
+<!-- 我的球队 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">球队</text>
+    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}" wx:if="{{teamList.length!=0}}">查看更多</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{teamList.length==0}}">您还未加入任何球队。</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <team-card-small wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 我的赛程 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">赛程</text>
+    <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}" wx:if="{{matchList.length!=0}}">查看更多</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{matchList.length==0}}">您目前没有比赛。</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 我的赛事 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">赛事</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{eventList.length==0}}">您还参加任何赛事。</view>
+    <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+  </view>
+</view>
