@@ -1,7 +1,6 @@
 // pages/mine/mine.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-const userId = appInstance.globalData.userId
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 Page({
@@ -13,6 +12,11 @@ Page({
     avatarUrl: defaultAvatarUrl,
     nickName: '',
     playerId: null,
+    coachId: null,
+    refereeId: null, 
+    isPlayer: false,
+    isCoach: false,
+    isReferee: false,
     // 控制比赛通知和球队邀请通知的显示
     showMatchInform: false,
     showInvitationInform: false,
@@ -27,14 +31,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
       avatarUrl: appInstance.globalData.avatarUrl ?? defaultAvatarUrl,
       nickName: appInstance.globalData.nickName ?? '',
-      //id : options.id
     })
-    this.fetchData(options.id);
-    
+    appInstance.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -48,7 +49,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    appInstance.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -69,7 +70,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    appInstance.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -85,15 +86,15 @@ Page({
   onShareAppMessage() {
 
   },
-  fetchData: function () {
+
+  fetchData: function (userId) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
       mask: true // 创建一个蒙层，防止用户操作
     });
-
     var that = this;
-    // 模拟网络请求
+    //Player相关
     wx.request({
       url: URL + '/user/getPlayerId', 
       data: {
@@ -106,33 +107,54 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        this.setData({
-          playerId: res.data
+        that.setData({
+          isPlayer: true
+        })
+        //球员身份：比赛信息
+        wx.request({
+          url: URL + '/player/match/getAll',
+          data: {
+            playerId: 2,
+          },
+          success(res) {
+            console.log("match->")
+            console.log(res.data)
+            if (res.statusCode !== 200) {
+              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+              return
+            }
+            that.formatMatchs(res.data) 
+          },
+          fail(err) {
+            console.log('请求失败', err);
+          },
+          complete() {
+            wx.hideLoading(); 
+          }
         });
-      },
-      fail(err) {
-        console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
-      },
-      complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
-      }
-    });
+        //球员身份：球队邀请
+        wx.request({
+          url: URL + '/player/team/getInvitations',
+          data: {
+            playerId: 2,
+          },
+          success(res) {
+            console.log("invitation->")
+            console.log(res.data)
+            if (res.statusCode !== 200) {
+              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+              return
+            }
+            that.formatInforms(res.data)
+          },
+          fail(err) {
+            console.log('请求失败', err);
+          },
+          complete() {
+            wx.hideLoading(); 
+          }
+        });
     
-    wx.request({
-      url: URL + '/player/team/getInvitations',
-      data: {
-        playerId: 2,
-      },
-      success(res) {
-        console.log("invitation->")
-        console.log(res.data)
-        if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        that.formatInforms(res.data)
       },
       fail(err) {
         console.log('请求失败', err);
@@ -144,30 +166,56 @@ Page({
       }
     });
 
+    //教练身份
     wx.request({
-      url: URL + '/player/match/getAll',
+      url: URL + '/user/getCoachId', 
       data: {
-        playerId: 2,
+        userId: userId
       },
       success(res) {
-        console.log("match->")
+        console.log("CoachId->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        that.formatMatchs(res.data) 
+        that.setData({
+          isCoach: true
+        })
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        wx.hideLoading();
       }
     });
     
+    //裁判身份
+    wx.request({
+      url: URL + '/user/getRefereeId', 
+      data: {
+        userId: userId
+      },
+      success(res) {
+        console.log("RefereeId->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          isReferee: true
+        })
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {
+        wx.hideLoading();
+      }
+    });
+
   },
 
   formatInforms: function(invitations) {

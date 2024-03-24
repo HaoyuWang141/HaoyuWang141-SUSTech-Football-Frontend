@@ -7,9 +7,23 @@
   <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
     换头
   </button>
+
+  <view class="identity">
+  <text>您所注册的身份有：</text>
+  <view>
+    <text wx:if="{{isPlayer}}">球员</text>
+  </view>
+  <view>
+    <text wx:if="{{isCoach}}">教练</text>
+  </view>
+  <view>
+    <text wx:if="{{isReferee}}">裁判</text>
+  </view>
+  
+  </view>
   <view class="page-container">
   <!-- 比赛通知 -->
-  <view class="notification-container">
+  <view class="notification-container" wx:if="{{isPlayer}}">
     <view class="notification-title" bindtap="toggleMatchInform">
       比赛通知
       <view class="red-dot" wx:if="{{showMatchDot}}"></view>
