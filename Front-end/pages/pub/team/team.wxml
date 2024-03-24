@@ -1,6 +1,5 @@
 <!--pages/pub/team/team.wxml-->
 <!-- <text>pages/pub/team/team.wxml</text> -->
-<!-- <view>球队详情页，球队id：{{id}} </view> -->
 
 <view class="section-header">
   <view style="background-color: white;">
@@ -18,7 +17,6 @@
 <view class="tab-content">
 
   <view wx:if="{{activeIndex == 0}}">
-
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">球队简介</text>
@@ -28,22 +26,34 @@
         {{description}}
       </view>
     </view>
-
   </view>
 
   <view wx:if="{{activeIndex == 1}}">
-    <view class="more-bar">
-      <label class="more-label"></label>
-      <button class="more-button" bindtap="gotoMatches">更多 ></button>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">赛程</text>
+        <text class="block-more" bind:tap="gotoMatchesPage">查看更多</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-small>
+        </scroll-view>
+      </view>
     </view>
-    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
-      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
-      <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}" bindtap="gotoMatch"></match-card-small>
-    </scroll-view>
   </view>
 
   <view wx:if="{{activeIndex == 2}}">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">球员</text>
+        <text class="block-more" bind:tap="gotoPlayersPage">查看更多</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <player-card-small wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}"></player-card-small>
+        </scroll-view>
+      </view>
+    </view>
   </view>
 
 </view>
