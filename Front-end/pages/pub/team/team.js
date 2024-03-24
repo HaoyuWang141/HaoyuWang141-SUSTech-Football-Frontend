@@ -13,6 +13,9 @@ Page({
     captainId: String,
     coachList: Array,
     playerIdList: Array,
+
+    matchList: Array,
+
     activeIndex: 0,
   },
 
@@ -79,7 +82,7 @@ Page({
   ////////////////////////////////////////////////////////////////
   // HTTP 请求
 
-  // 获取比赛数据
+  // 获取基本数据
   fetchData: function (id) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
@@ -94,10 +97,6 @@ Page({
       success(res) {
         console.log("team/get?id=" + id + " ->")
         console.log(res.data)
-
-        // var date = new Date(res.data.time)
-        // let strTime = formatTime(date)
-        // let hasBegun = new Date() > date
         that.setData({
           homeTeam: res.data.homeTeam,
           name: res.data.name,
@@ -105,6 +104,7 @@ Page({
           captainId: res.data.captainId,
           coachList: res.data.coachList,
           playerList: res.data.playerList,
+          matchList: res.data.matchList
         })
       },
       fail(err) {
@@ -122,12 +122,26 @@ Page({
 
   switchTab: function (e) {
     const tabIndex = e.currentTarget.dataset.index;
-    // if (this.data.activeIndex != tabIndex) {
-    //   this.loadTabData(tabIndex);
-    // }
     this.setData({
       activeIndex: tabIndex
     })
   },
+
+  ////////////////////////////////////////////////////////////////
+  // 页面跳转
+
+  gotoMatchPage: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/match/match?id=' + id
+    })
+  },
+
+  gotoPlayerPage: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/player/player?id=' + id
+    })
+  }
 
 })

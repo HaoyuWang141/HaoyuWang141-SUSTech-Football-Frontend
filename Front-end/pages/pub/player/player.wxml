@@ -1,2 +1,2 @@
 <!--pages/pub/player/player.wxml-->
-<text>pages/pub/player/player.wxml</text>
+<text>pages/pub/player/player.wxml playerId={{id}}</text>
