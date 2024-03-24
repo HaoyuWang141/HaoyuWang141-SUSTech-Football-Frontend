@@ -23,10 +23,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    app.addToRequestQueue(this.fetchFavorateMatch)
-    app.addToRequestQueue(this.fetchFavoratePlayer)
-    app.addToRequestQueue(this.fetchFavorateTeam)
-    app.addToRequestQueue(this.fetchFavorateEvent)
   },
 
   /**
@@ -40,7 +36,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    app.addToRequestQueue(this.fetchFavorateMatch)
+    app.addToRequestQueue(this.fetchFavoratePlayer)
+    app.addToRequestQueue(this.fetchFavorateTeam)
+    app.addToRequestQueue(this.fetchFavorateEvent)
   },
 
   /**
@@ -61,7 +60,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    app.addToRequestQueue(this.fetchFavorateMatch)
+    app.addToRequestQueue(this.fetchFavoratePlayer)
+    app.addToRequestQueue(this.fetchFavorateTeam)
+    app.addToRequestQueue(this.fetchFavorateEvent)
   },
 
   /**

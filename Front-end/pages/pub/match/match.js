@@ -1,6 +1,7 @@
 // pages/pub/match/match.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
 const {formatTime} = require("../../../utils/timeFormatter")
 
 Page({
@@ -29,7 +30,7 @@ Page({
     awayTeamPenalty: 0,
     time: new Date(),
     hasBegun: false,
-    strTime: String,
+    strTime: '暂无',
     matchPlayerActionList: Array,
     refereeList: Array,
 
@@ -39,6 +40,7 @@ Page({
     description: "",
 
     matchEvents: [{name: 'event1'}, {name: 'event2'}],
+    isFavorite: Boolean,
   },
 
   /**
@@ -52,6 +54,7 @@ Page({
       tag: options.tag,
     })
     this.fetchData(options.id)
+    this.isFavorite(userId, options.id)
   },
 
   fetchData: function (id) {
@@ -130,7 +133,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id)
+    this.fetchData(options.id)
+    this.isFavorite(userId, options.id)
   },
 
   /**
@@ -201,5 +205,79 @@ Page({
     wx.navigateTo({
       url: '/pages/pub/live/live?url=' + url,
     })
-  }
+  },
+
+  isFavorite(userId, id) {
+    let that = this
+    wx.request({
+      url: URL + '/isFavorite',
+      data: {
+        userId: userId,
+        type: "match",
+        id: id,
+      },
+      success(res) {
+        console.log("match page: isFavorite->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          favorited: res.data
+        })
+      }
+    })
+  },
+
+  favorite() {
+    let that = this
+    wx.showLoading({
+      title: '收藏中',
+      mask: true,
+    })
+    wx.request({
+      url: URL + '/favorite?type=match&userId=' + userId + '&id=' + that.data.id,
+      method: "POST",
+      success(res) {
+        console.log("match page: favorite->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("收藏成功")
+        that.setData({
+          favorited: true,
+        })
+      },
+      complete() {
+        wx.hideLoading()
+      }
+    })
+  },
+
+  unfavorite() {
+    let that = this
+    wx.showLoading({
+      title: '取消收藏中',
+      mask: true,
+    })
+    wx.request({
+      url: URL + '/unfavorite?type=match&userId=' + userId + '&id=' + that.data.id,
+      method: "POST",
+      success(res) {
+        console.log("match page: unfavorite->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("取消收藏成功")
+        that.setData({
+          favorited: false
+        })
+      },
+      complete() {
+        wx.hideLoading()
+      }
+    })
+  },
 })
