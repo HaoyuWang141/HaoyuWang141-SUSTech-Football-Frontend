@@ -11,7 +11,7 @@
 </view>
 
 <view class="container1" wx:if="{{playerId}}">
-  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx;" />
+  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
   <view class="container2">
     <view class="container3">
       <image class="avatar" src="{{player.photoUrl}}" mode="scaleToFill"></image>
