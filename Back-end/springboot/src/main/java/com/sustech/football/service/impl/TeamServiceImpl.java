@@ -8,6 +8,7 @@ import com.sustech.football.exception.*;
 import com.sustech.football.mapper.TeamMapper;
 import com.sustech.football.service.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,15 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
         team.setPlayerList(this.getPlayers(teamId));
         team.setCoachList(this.getCoaches(teamId));
         team.setManagerList(this.getManagers(teamId).stream().map(userService::getById).toList());
-        team.setMatchList(this.getMatches(teamId));
+        List<Match> matchList = this.getMatches(teamId);
+        matchList = matchList.stream()
+                .sorted(Comparator.comparing(Match::getTime))
+                .peek(match -> {
+                    match.setHomeTeam(getById(match.getHomeTeamId()));
+                    match.setAwayTeam(getById(match.getAwayTeamId()));
+                })
+                .toList();
+        team.setMatchList(matchList);
         team.setEventList(this.getEvents(teamId));
         return team;
     }
@@ -100,6 +109,11 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
             throw new BadRequestException("邀请球员失败");
         }
         return true;
+    }
+
+    @Override
+    public List<TeamPlayerRequest> getPlayerInvitations(Long teamId) {
+        return teamPlayerRequestService.listWithPlayer(teamId, TeamPlayerRequest.TYPE_INVITATION);
     }
 
     @Override
@@ -231,7 +245,15 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
     public List<Match> getMatches(Long teamId) {
         QueryWrapper<Match> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("home_team_id", teamId).or().eq("away_team_id", teamId);
-        return matchService.list(queryWrapper);
+        List<Match> matchList = matchService.list(queryWrapper);
+        matchList = matchList.stream()
+                .sorted(Comparator.comparing(Match::getTime))
+                .peek(match -> {
+                    match.setHomeTeam(getById(match.getHomeTeamId()));
+                    match.setAwayTeam(getById(match.getAwayTeamId()));
+                })
+                .toList();
+        return matchList;
     }
 
     @Override
