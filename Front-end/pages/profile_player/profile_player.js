@@ -11,7 +11,7 @@ Page({
    */
   data: {
     playerId: Number,
-    player: {},
+    player: Object,
     matchList: [],
     teamList: [],
     eventList: [],
@@ -229,8 +229,16 @@ Page({
   ///////////////////////////////////////////////////////////////////////////////
   // 页面跳转
   edit_information() {
+    let player = this.data.player
+    console.log(player)
+    const queryString = Object.keys(player).map(key => {
+      console.log(key + ": " + encodeURIComponent(player[key]))
+      return `${key}=${encodeURIComponent(player[key])}`
+    }).join('&');
+    console.log("queryString->")
+    console.log(queryString)
     wx.navigateTo({
-      url: '/pages/profile_player/profile_player_edit/profile_player_edit',
+      url: `/pages/profile_player/profile_player_edit/profile_player_edit?${queryString}`
     })
   },
 

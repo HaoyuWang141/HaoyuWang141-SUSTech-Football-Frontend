@@ -29,3 +29,14 @@
 .pointer{
   margin-left:30rpx;
 }
+
+.button {
+  display: block;
+  background-color: #ed6c00;
+  color: white;
+  margin-bottom: 40rpx;
+  padding: 20rpx;
+  border: none;
+  width: 40rpx;
+  min-width: 0;
+}

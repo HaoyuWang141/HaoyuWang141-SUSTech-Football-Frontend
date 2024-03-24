@@ -6,102 +6,125 @@
     <view class="section0">
       <view>头像</view>
       <view style="flex: 1;"></view>
-      <view class="edit" bindtap="b0">
-        <image class="picture" src="/assets/busquets.jpg"></image>
+      <view class="edit" bindtap="uploadImage">
+        <image class="picture" src="{{photoUrl}}"></image>
         <view class="pointer">></view>
       </view>
     </view>
     <view class="section">
-      <view>名字</view>
+      <view>姓名</view>
       <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
+      <view class="edit" bindtap="showNameInput">
+        <view>{{name}}</view>
         <view class="pointer">></view>
       </view>
+    </view>
+    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeName"       bindcancel="cancelChangeName">
+      <view class="modal-content">
+        <text>请输入姓名：</text>
+        <input placeholder="姓名" bindinput="changename"/>
+      </view>
+    </modal>
+    <view class="section">
+      <view>学工号</view>
+      <view style="flex: 1;"></view>
+      <view class="edit" bindtap="showIdInput">
+        <view>{{identity}}</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <modal hidden="{{modalHiddenId}}" bindconfirm="confirmChangeId"       bindcancel="cancelChangeId">
+      <view class="modal-content">
+        <text>请输入学工号：</text>
+        <input placeholder="学工号" bindinput="changeid"/>
+      </view>
+    </modal>
+    <view class="section">
+      <view>身高(cm)</view>
+      <view style="flex: 1;"></view>
+      <view class="edit" bindtap="showHeightInput">
+        <view>{{height}}</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <modal hidden="{{modalHiddenHeight}}" bindconfirm="confirmChangeHeight"       bindcancel="cancelChangeHeight">
+      <view class="modal-content">
+        <text>请输入身高：</text>
+        <input placeholder="身高" bindinput="changeheight"/>
+      </view>
+    </modal>
+    <view class="section">
+      <view>体重(kg)</view>
+      <view style="flex: 1;"></view>
+      <view class="edit" bindtap="showWeightInput">
+        <view>{{weight}}</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <modal hidden="{{modalHiddenWeight}}" bindconfirm="confirmChangeWeight"       bindcancel="cancelChangeWeight">
+      <view class="modal-content">
+        <text>请输入体重：</text>
+        <input placeholder="体重" bindinput="changeweight"/>
+      </view>
+    </modal>
+    <view class="section">
+      <view>出生日期</view>
+      <view style="flex: 1;"></view>
+      <picker class="edit" mode="date" bindchange="bindDateChange">
+        <text>{{strBirthDate}}</text>
+        <text class="pointer">></text>
+      </picker>
     </view>
     <view class="section">
-      <view>生日</view>
+      <view>场上位置</view>
       <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
+      <view class="edit" bindtap="showPositionInput">
+        <view>{{position}}</view>
         <view class="pointer">></view>
       </view>
     </view>
-    <view class="section">
-      <view>身高</view>
-      <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
-        <view class="pointer">></view>
+    <modal hidden="{{modalHiddenPosition}}" bindconfirm="confirmChangePosition"       bindcancel="cancelChangePosition">
+      <view class="modal-content">
+        <text>请输入场上位置：</text>
+        <input placeholder="场上位置" bindinput="changeposition"/>
       </view>
-    </view>
-    <view class="section">
-      <view>体重</view>
-      <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
-        <view class="pointer">></view>
-      </view>
-    </view>
-    <view class="section">
-      <view>籍贯</view>
-      <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
-        <view class="pointer">></view>
-      </view>
-    </view>
-    <view class="section">
-      <view>学号</view>
-      <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
-        <view class="pointer">></view>
-      </view>
-    </view>
+    </modal>
     <view class="section">
       <view>书院</view>
       <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
+      <view class="edit" bindtap="showShuyuanInput">
+        <view>{{shuYuan}}</view>
         <view class="pointer">></view>
       </view>
     </view>
+    <modal hidden="{{modalHiddenShuyuan}}" bindconfirm="confirmChangeShuyuan"       bindcancel="cancelChangeShuyuan">
+      <view class="modal-content">
+        <text>请输入书院：</text>
+        <input placeholder="书院" bindinput="changeshuyuan"/>
+      </view>
+    </modal>
     <view class="section">
       <view>院系</view>
       <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
+      <view class="edit" bindtap="showCollegeInput">
+        <view>{{college}}</view>
         <view class="pointer">></view>
       </view>
     </view>
+    <modal hidden="{{modalHiddenCollege}}" bindconfirm="confirmChangeCollege"       bindcancel="cancelChangeCollege">
+      <view class="modal-content">
+        <text>请输入院系：</text>
+        <input placeholder="院系" bindinput="changecollege"/>
+      </view>
+    </modal>
     <view class="section">
       <view>入学年份</view>
       <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
-        <view class="pointer">></view>
-      </view>
+      <picker class="edit" mode="date" fields="year" bindchange="bindAdmissionYearChange">
+        <text>{{admissionYear}}</text>
+        <text class="pointer">></text>
+      </picker>
     </view>
-    <view class="section">
-      <view>个性签名</view>
-      <view style="flex: 1;"></view>
-      <view class="edit">
-        <view>王浩羽</view>
-        <view class="pointer">></view>
-      </view>
-    </view>
-
-
-    <view class="zan-dialog {{ showdDialog ? 'zan-dialog--show' : '' }}" catchtouchmove="ture" wx:if="{{true}}">
-      <view class="zan-dialog__mask" bindtap="hidedType" ></view>
-      <view class="zan-dialog__container">
-        <view bindtap="chooseImage" style="margin-top: 40rpx;">从相册选择</view>
-        <!-- <camera device-position="back" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera> -->
-        <view style="margin-top: 40rpx;border-top: solid 10px rgb(241, 239, 239);padding-top: 40rpx;" bindtap="hidedType">取消</view>
-      </view>
-    </view>
-
-
+    <button class="button" bindtap="submit">提交</button>
   </view>
 </view>
