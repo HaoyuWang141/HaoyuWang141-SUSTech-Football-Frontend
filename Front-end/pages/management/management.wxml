@@ -1,39 +1,35 @@
-<!--pages/management/management.wxml-->
-<!-- <text>pages/management/management.wxml</text> -->
+<view class="more-information-container">其他信息</view>
 
-<view class="container">
-  <view style="width: 90%;">
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">管理的球队</view>
+    <view class="block-more" bindtap="gotoTeams" data-id="5">查看更多</view>
+  </view>
+  <view class="block-main">
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoEditTeam" data-id="{{item.teamId}}"></team-card-small>
+    </scroll-view>
+  </view>
+</view>
 
-    <view class="more-information-container">其他信息</view>
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">管理的比赛</view>
+    <view class="block-more" bindtap="gotoMatches" data-id="5">查看更多</view>
+  </view>
+  <view class="block-main">
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small wx:for="{{matches}}" wx:key="index" name="友谊赛" group="{{item.group}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-small>
+    </scroll-view>
+  </view>
+</view>
 
-    <view class="managed-team-container">
-      <view class="more-bar">
-        <label class="more-label">管理的球队</label>
-        <button class="more-button" bindtap="gotoTeams" data-id="5">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoEditTeam" data-id="{{item.teamId}}"></team-card-small>
-      </scroll-view>
-    </view>
-
-    <view class="managed-match-container">
-      <view class="more-bar">
-        <label class="more-label">管理的比赛</label>
-        <button class="more-button" bindtap="gotoMatches" data-id="5">更多 ></button>
-      </view>
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small wx:for="{{matches}}" wx:key="index" name="友谊赛" group="{{item.group}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-small>
-      </scroll-view>
-    </view>
-
-    <view class="managed-event-container">
-      <view class="more-bar">
-        <label class="more-label">管理的赛事</label>
-        <!-- <button class="more-button" bindtap="more-player">更多 ></button> -->
-      </view>
-      <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
-      <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.eventId}}" icon="/assets/cup.svg" name="{{item.name}}" bindtap="gotoEditEvent" data-id="{{item.eventId}}"></event-card-big>
-    </view>
-
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">管理的赛事</view>
+  </view>
+  <view class="block-main">
+    <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
+    <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.eventId}}" icon="/assets/cup.svg" name="{{item.name}}" bindtap="gotoEditEvent" data-id="{{item.eventId}}"></event-card-big>
   </view>
 </view>

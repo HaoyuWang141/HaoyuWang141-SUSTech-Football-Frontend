@@ -12,7 +12,7 @@
 </view>
 
 <view class="container1" wx:if="{{coachId}}">
-  <image src="https://www.sustech.edu.cn/uploads/images/2022/12/29170519_51471.jpg" mode="scaleToFill" style="height: 400rpx;" />
+  <image src="https://www.sustech.edu.cn/uploads/images/2022/12/29170519_51471.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
   <view class="container2">
     <view class="container3">
       <image class="avatar" src="{{coach.photoUrl}}" mode="scaleToFill"></image>
