@@ -1,6 +1,6 @@
 <!--components/match-card-big/match.wxml-->
 <view class="match-card">
-  <text class="name">{{time}} {{name}}</text>
+  <text class="name">{{strTime}} {{name}}</text>
   <view class="info-container">
     <view class="team">
       <image class="icon" src="{{icon1}}"></image>
