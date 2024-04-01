@@ -1,5 +1,4 @@
 /* pages/management/team_new/team_new.wxss */
-
 .avatar-container {
   display: flex; /* 使用 Flexbox 布局 */
   justify-content: space-around; /* 水平对齐，元素间距会自动填充 */

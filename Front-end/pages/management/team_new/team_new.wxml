@@ -1,6 +1,4 @@
 <!--pages/management/team_new/team_new.wxml-->
-<!-- <text>pages/management/team_new/team_new.wxml</text> -->
-
 <view class="container">
   <view style="width: 90%;">
 
@@ -8,7 +6,7 @@
   <view class="avatar-container"> 
     <view class="text">队徽</view>
     <view class="image-container">
-      <image src="{{badgeSrc ? badgeSrc : '/assets/barca1.png'}}" class="image" bindtap="uploadBadge"/>
+      <image src="{{logoUrl ? logoUrl : '/assets/newplayer.png'}}" class="image" bindtap="uploadLogo"/>
     </view>
   </view>
 
@@ -24,6 +22,10 @@
     <scroll-view scroll-y enable-flex >
       <player-card-small name="邀请新队员" img="/assets/newplayer.png" bindtap="inviteNewPlayer"></player-card-small>
     </scroll-view>
+  </view>
+
+  <view class="btn-container">
+    <button class="confirm" bindtap="confirmCreate">确认创建</button>
   </view>
 
   </view>

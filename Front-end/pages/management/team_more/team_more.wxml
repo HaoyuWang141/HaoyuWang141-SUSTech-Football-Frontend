@@ -1,6 +1,4 @@
 <!--pages/management/team_more/team_more.wxml-->
-<!-- <text>pages/management/team_more/team_more.wxml</text> -->
-
 <view class="container">
   <view style="width: 90%;">
     
@@ -14,9 +12,9 @@
 
       <view class="team-card-container" >
         <block wx:for="{{teamList}}" wx:key="teamId">
-          <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerCount}}" >
+          <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerCount}}" bindtap="gotoTeamPage" data-id="{{item.teamId}}">
           <button class="delete-btn" bindtap="deleteTeam" data-id="{{item.teamId}}">删除</button>
-          <button class="check-btn" bindtap="gotoTeamPage" data-id="{{item.teamId}}">查看</button>
+          <button class="check-btn" bindtap="gotoEditTeam" data-id="{{item.teamId}}">编辑</button>
           </team-card-big>
         </block>
       </view>

@@ -1,5 +1,4 @@
 /* pages/management/event_edit/event_edit.wxss */
-
 .title-container {
   background-color: #ffffff; /* 卡片背景色 */
   border-radius:30rpx; /* 卡片圆角 */

@@ -5,8 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    badgeSrc: '',     // 队徽图片地址
-    teamname: '',     // 队名
+    logoUrl: String,     // 队徽图片地址
+    teamname: String,     // 队名
   },
 
   /**
@@ -68,14 +68,18 @@ Page({
   /**
    * 上传队徽图片
   */ 
-  uploadBadge: function () {
+  uploadLogo: function () {
     wx.chooseImage({
       count: 1,
       success: res => {
         const tempFilePaths = res.tempFilePaths;
+        console.log("image->");
+        console.log(tempFilePaths);
         this.setData({
-          badgeSrc: tempFilePaths[0]
+          logoUrl: tempFilePaths[0]
         });
+        console.log("logoUrl->")
+        console.log(this.data.logoUrl);
       }
     });
   },
@@ -95,6 +99,38 @@ Page({
   inviteNewPlayer: function () {
     // 实现邀请新队员的逻辑
     
-  }
+  },
+
+  confirmCreate: function (){
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      teamId: this.data.teamId,
+      name: this.data.teamname,
+      logoUrl: this.data.logoUrl,
+      playerList: null,
+      captainId: null,
+      coachList: null,
+      eventList: null,
+      managerList: null,
+      matchList: null,
+    };
+  
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/team/create', // 后端接口地址
+      method: 'POST', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        // 请求成功的处理逻辑
+        console.log('比赛信息更新成功', res.data);
+        // 可以根据后端返回的数据更新页面状态或进行其他操作
+      },
+      fail: err => {
+        // 请求失败的处理逻辑
+        console.error('比赛信息更新失败', err);
+        // 可以显示失败的提示信息或进行其他操作
+      }
+    });
+  },
 
 })

@@ -1,5 +1,4 @@
 <!-- pages/management/event_edit/event_matches/event_matches.wxml -->
-
 <view class="container">
   <view style="width: 90%;">
 

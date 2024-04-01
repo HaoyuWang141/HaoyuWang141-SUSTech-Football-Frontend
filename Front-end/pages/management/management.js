@@ -23,6 +23,56 @@ Page({
     this.fetchData(userId);
   },
 
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+    this.fetchData(userId);
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+    this.fetchData(userId);
+    wx.stopPullDownRefresh();
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  },
+
   fetchData: function (userId) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
@@ -116,59 +166,6 @@ Page({
     });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-    this.fetchData(userId);
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-    this.fetchData(userId);
-    wx.stopPullDownRefresh();
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
-
-///////////////////////////////////////////////////////////////////////////////
-// 页面跳转
-
 gotoMatches: function(e) {
   const dataset = e.currentTarget.dataset
   wx.navigateTo({
@@ -183,12 +180,19 @@ gotoTeams: function(e) {
   })
 },
 
-gotoEditTeam: function(e) {
+gotoTeamPage: function(e) {
   const dataset = e.currentTarget.dataset
   wx.navigateTo({
-    url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
+    url: '/pages/pub/team/team?id=' + dataset.id,
   })
 },
+
+// gotoEditTeam: function(e) {
+//   const dataset = e.currentTarget.dataset
+//   wx.navigateTo({
+//     url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
+//   })
+// },
 
 gotoEditMatch: function(e) {
   const dataset = e.currentTarget.dataset

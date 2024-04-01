@@ -1,6 +1,4 @@
 <!--pages/management/event_new/event_new.wxml-->
-<!-- <text>pages/management/event_new/event_new.wxml</text> -->
-
 <view class="container">
 
     <view class="title-container">
@@ -18,7 +16,6 @@
           <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
         </view>
       </modal>
-
     </view> 
 
     <view class="discription-container">
@@ -44,8 +41,6 @@
         <view wx:for="{{teamsData}}" wx:key="index">
           <team-card-big name="{{item.name}}" img="{{item.img}}" number="{{item.number}}"></team-card-big>
         </view>
-
       </scroll-view>
     </view>
-
 </view>
