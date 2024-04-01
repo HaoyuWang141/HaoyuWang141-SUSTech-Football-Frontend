@@ -74,7 +74,7 @@ Page({
 
   },
 
-  // 拉取数据
+  // 拉取裁判id
   fetchRefereeId(userId) {
     let that = this
     wx.request({
@@ -103,7 +103,7 @@ Page({
     })
   },
 
-  // TODO
+  // 拉取裁判个人信息
   fetchData(refereeId) {
     let that = this
     wx.request({
@@ -128,12 +128,13 @@ Page({
     })
   },
 
+  // 拉取比赛
   fetchRefereeMatches(refereeId) {
     let that = this
     wx.request({
       url: URL + '/referee/match/getAll',
       data: {
-        refereeId: refereeId,
+        refereeId,
       },
       success(res) {
         console.log("profile referee page: fetchRefereeMatches ->")
@@ -146,10 +147,10 @@ Page({
         for (let match of matchList) {
           let date = new Date(match.time)
           match.strTime = formatTime(date)
-          match.hasBegun = new Date() > date
+          match.hasBegun = match.status == 'PENDING' ? false : true
         }
         that.setData({
-          matchList: matchList,
+          matchList,
         })
       },
       fail(err) {
@@ -158,6 +159,7 @@ Page({
     })
   },
 
+  // 拉取赛事
   fetchRefereeEvents(refereeId) {
     let that = this
     wx.request({

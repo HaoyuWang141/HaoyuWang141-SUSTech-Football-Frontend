@@ -1,0 +1,81 @@
+/* pages/pub/match/match_referee/match_referee.wxss */
+
+.button-update {
+  padding: 10rpx 40rpx;
+  color: white;
+  background-color: #ed6c00;
+  font-weight: bold;
+  border-radius: 20rpx;
+}
+
+/* 球员表格相关 */
+.grid-container {
+  margin: 20rpx 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+  gap: 10rpx 0;
+  justify-items: center;
+  align-items: center;
+}
+
+/* 球员表格相关 */
+.grid-header {
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+}
+
+/* 球员表格相关 */
+.grid-item {
+  padding: 0 0;
+  text-align: center;
+  font-size: smaller;
+}
+
+/* 球员表格相关 */
+.player-avatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+}
+
+.button-update-playerList {
+  padding: 10rpx 20rpx;
+  margin: 0 10rpx;
+  color: white;
+  background-color: #ed6c00;
+  font-weight: bold;
+  border-radius: 20rpx;
+}
+
+.button-delete-action {
+  background-color: red;
+  color: white;
+  font-size: small;
+}
+
+/* pages/yourPage/yourPage.wxss */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10rpx;
+}
+
+.input-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.input-item text {
+  flex-shrink: 0;
+  margin-right: 10px;
+  color: black;
+}
+
+.input-item input, .input-item picker {
+  flex-grow: 1;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

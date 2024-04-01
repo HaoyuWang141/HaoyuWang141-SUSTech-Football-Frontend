@@ -237,3 +237,11 @@
   width: 60rpx;
   height: 60rpx;
 }
+
+.button-update {
+  padding: 10rpx 40rpx;
+  color: white;
+  background-color: #ed6c00;
+  font-weight: bold;
+  border-radius: 20rpx;
+}

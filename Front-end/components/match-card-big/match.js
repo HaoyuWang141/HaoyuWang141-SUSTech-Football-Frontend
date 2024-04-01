@@ -17,7 +17,6 @@ Component({
     penalty1: Number,
     penalty2: Number,
     time: String,
-    time: String,
     hasBegun: Boolean,
   },
 })

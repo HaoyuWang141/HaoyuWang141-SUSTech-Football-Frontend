@@ -8,7 +8,6 @@
   border: 8rpx solid rgba(237, 108, 0, 0.3);
   box-shadow: 10rpx 10rpx 40rpx rgba(237, 108, 0, 0.5);
   padding: 20rpx 20rpx;
-  width: 400rpx;
 }
 
 .name {
@@ -26,10 +25,6 @@
 }
 
 .team {
-  width: 40%;
-  min-width: 40%;
-  max-width: 40%;
-  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,12 +36,12 @@
 }
 
 .team-name {
-  width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: smaller;
   text-align: center;
+  max-width: 200rpx;
 }
 
 .middle {
@@ -54,6 +49,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 10rpx;
+  margin: 0 20rpx;
 }
 
 .score {

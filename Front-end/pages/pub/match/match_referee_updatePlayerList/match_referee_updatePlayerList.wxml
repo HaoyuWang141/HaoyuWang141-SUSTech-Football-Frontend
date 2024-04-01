@@ -1,0 +1,31 @@
+<!--pages/pub/match/match_referee_updatePlayerList/match_referee_updatePlayerList.wxml-->
+<!-- 球员名单及首发 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">{{isHomeTeam?'主队':'客队'}}球员名单</text>
+    <text class="block-more button-update" bind:tap="updatePlayerList">确认更改</text>
+  </view>
+  <view class="block-main">
+    <view style="margin-bottom: 40rpx;">球队名称：{{team.name}}</view>
+
+    <view class="grid-container">
+      <!-- 表头 -->
+      <view class="grid-header grid-item">号码</view>
+      <view class="grid-header grid-item">头像</view>
+      <view class="grid-header grid-item">姓名</view>
+      <view class="grid-header grid-item">首发</view>
+
+      <!-- 球员信息 -->
+      <block wx:for="{{team.players}}" wx:key="unique">
+        <view class="grid-item">{{item.number}}</view>
+        <view class="grid-item">
+          <image src="{{item.photoUrl}}" class="player-avatar"></image>
+        </view>
+        <view class="grid-item">{{item.name}}</view>
+        <view class="grid-item">
+          <image src="{{item.isStart?'/assets/multipleChoice_selected.png':'/assets/multipleChoice_unselected.png'}}" mode="scaleToFill" class="icon" bind:tap="changeIsStart" data-id="{{item.playerId}}" />
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

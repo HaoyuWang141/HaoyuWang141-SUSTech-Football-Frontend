@@ -34,7 +34,9 @@
     "pages/home/event_hall/event_hall",
     "pages/profile_player/profile_player_register/profile_player_register",
     "pages/profile_player/profile_referee_register/profile_referee_register",
-    "pages/profile_player/profile_coach_register/profile_coach_register"
+    "pages/profile_player/profile_coach_register/profile_coach_register",
+    "pages/pub/match/match_referee/match_referee",
+    "pages/pub/match/match_referee_updatePlayerList/match_referee_updatePlayerList"
   ],
   "window": {
     "navigationBarTextStyle": "white",

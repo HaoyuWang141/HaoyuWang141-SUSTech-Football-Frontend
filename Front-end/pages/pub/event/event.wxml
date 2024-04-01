@@ -3,12 +3,10 @@
   <view class="title-container">
     <view class="buttons">
       <view wx:if="{{!favorited}}">
-        <image class="statistic-icon" src="/assets/unfavorited.png" mode="scaleToFill" style="padding: 10rpx;" bind:tap="favorite"/>
-        <!-- <text class="button">添加收藏</text> -->
+        <image class="statistic-icon" src="/assets/unfavorited.png" mode="scaleToFill"  bind:tap="favorite"/>
       </view>
       <view wx:if="{{favorited}}">
-        <image class="statistic-icon" src="/assets/favorited.png" mode="scaleToFill" style="padding: 10rpx;" bind:tap="unfavorite"/>
-        <!-- <text class="button" wx:if="{{favorited}}">取消收藏</text> -->
+        <image class="statistic-icon" src="/assets/favorited.png" mode="scaleToFill"  bind:tap="unfavorite"/>
       </view>
     </view>
     <view class="title">{{name}}</view>

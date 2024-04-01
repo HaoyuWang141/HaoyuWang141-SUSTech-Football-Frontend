@@ -1,6 +1,9 @@
 // pages/management/match_more/match_more.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const {
+  formatTime
+} = require("../../../utils/timeFormatter")
 
 Page({
 
@@ -56,10 +59,15 @@ Page({
           return
         }
 
-        // 基本数据
+        let matchList = res.data ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
+        }
         that.setData({
-          matchList: res.data,
-        });
+          matchList,
+        })
         
       },
       fail(err) {

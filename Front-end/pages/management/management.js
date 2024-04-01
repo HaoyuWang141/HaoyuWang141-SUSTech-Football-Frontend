@@ -2,6 +2,9 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
+const {
+  formatTime
+} = require("../../utils/timeFormatter")
 
 Page({
 
@@ -72,9 +75,14 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        // 基本数据
+        let matchList = res.data ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
+        }
         that.setData({
-          matches: res.data,
+          matches: matchList,
         });
 
       },

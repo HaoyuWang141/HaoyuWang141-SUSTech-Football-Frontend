@@ -101,10 +101,10 @@ Page({
         for (let match of matchList) {
           let date = new Date(match.time)
           match.strTime = formatTime(date)
-          match.hasBegun = new Date() > date
+          match.hasBegun = match.status == 'PENDING' ? false : true
         }
         that.setData({
-          matchList: matchList,
+          matchList,
         })
       },
       fail: function(err) {

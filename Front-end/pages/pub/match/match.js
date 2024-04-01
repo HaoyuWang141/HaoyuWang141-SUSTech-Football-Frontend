@@ -2,45 +2,55 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-const {formatTime} = require("../../../utils/timeFormatter")
+const {
+  formatTime
+} = require("../../../utils/timeFormatter")
 
 Page({
   data: {
     activeIndex: 0,
     id: -1,
-    event: '友谊赛',
-    stage: String,
-    tag: String,
 
-    homeTeam: {
-      teamId: -1,
-      name: "",
-      logoUrl: "",
-    },
-    homeTeamPlayerList: [],
-    homeTeamScore: 0,
-    homeTeamPenalty: 0,
+    actions: Array,
     awayTeam: {
-      teamId: -1,
-      name: "",
       logoUrl: "",
+      name: "",
+      penalty: -1,
+      players: [],
+      score: -1,
+      teamId: -1,
     },
-    awayTeamPlayerList: [],
-    awayTeamScore: 0,
-    awayTeamPenalty: 0,
-    time: new Date(),
-    hasBegun: false,
-    strTime: '暂无',
-    matchPlayerActionList: Array,
+    event: {
+      eventId: Number,
+      eventName: String,
+      stage: String,
+      tag: String,
+    },
+    homeTeam: {
+      logoUrl: "",
+      name: "",
+      penalty: -1,
+      players: [],
+      score: -1,
+      teamId: -1,
+    },
+    managerList: Array,
     refereeList: Array,
+    status: "PENDING",
+    time: new Date(),
+
+    strTime: '',
+    hasBegun: false,
 
     liveList: [],
     videoList: [],
 
     description: "",
 
-    matchEvents: [{name: 'event1'}, {name: 'event2'}],
     isFavorite: Boolean,
+
+    refereeId: -1,
+    isReferee: false,
   },
 
   /**
@@ -49,55 +59,6 @@ Page({
   onLoad(options) {
     this.setData({
       id: options.id,
-      event: options.event,
-      stage: options.stage,
-      tag: options.tag,
-    })
-    this.fetchData(options.id)
-    this.isFavorite(userId, options.id)
-  },
-
-  fetchData: function (id) {
-    // 显示加载提示框，提示用户正在加载
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
-
-    const that = this
-    wx.request({
-      url: URL + "/match/get",
-      data: {
-        id: id,
-      },
-      success(res) {
-        console.log("match->")
-        console.log(res.data)
-
-        var date = new Date(res.data.time)
-        let strTime = formatTime(date)
-        let hasBegun = new Date() > date
-        that.setData({
-          homeTeam: res.data.homeTeam,
-          homeTeamScore: res.data.homeTeamScore,
-          homeTeamPenalty: res.data.homeTeamPenalty,
-          awayTeam: res.data.awayTeam,
-          awayTeamScore: res.data.awayTeamScore,
-          awayTeamPenalty: res.data.awayTeamPenalty,
-          time: res.data.time,
-          hasBegun: hasBegun,
-          strTime: strTime,
-          matchPlayerActionList: res.data.matchPlayerActionList,
-          refereeList: res.data.refereeList,
-        })
-      },
-      fail(err) {
-        console.log("请求失败，错误码为：" + err.statusCode + "；错误信息为：" + err.message)
-      },
-      complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
-      }
     })
   },
 
@@ -112,7 +73,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id)
+    this.isFavorite(userId, this.data.id)
   },
 
   /**
@@ -151,6 +113,67 @@ Page({
 
   },
 
+  // 获取比赛数据
+  fetchData: function (id) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
+
+    const that = this
+    wx.request({
+      url: URL + "/match/get",
+      data: {
+        id: id,
+      },
+      success: async function (res) {
+        console.log("match->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+
+        let date = new Date(res.data.time)
+        let strTime = formatTime(date)
+        let hasBegun = res.data.status != "PENDING"
+        that.setData({
+          actions: res.data.actions,
+          awayTeam: res.data.awayTeam,
+          event: res.data.event,
+          homeTeam: res.data.homeTeam,
+          managerList: res.data.managerList,
+          refereeList: res.data.refereeList,
+          status: res.data.status,
+          time: res.data.time,
+          hasBegun: hasBegun,
+          strTime: strTime,
+        })
+
+        let refereeList = res.data.refereeList
+        if (refereeList.length > 0) {
+          try {
+            const refereeId = await that.fetchRefereeId(userId)
+            if (refereeList.includes(refereeId)) {
+              that.setData({
+                isReferee: true,
+              })
+            }
+          } catch (error) {
+            console.error(error)
+          }
+        }
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+      complete() {
+        wx.hideLoading();
+      }
+    })
+  },
+
+  // 点击不同tab时调用
   switchTab: function (e) {
     const tabIndex = e.currentTarget.dataset.index;
     if (this.data.activeIndex != tabIndex) {
@@ -161,6 +184,7 @@ Page({
     })
   },
 
+  // 加载tab内信息时调用
   loadTabData: function (tabIndex) {
     const that = this
     if (tabIndex == 1) {
@@ -200,6 +224,7 @@ Page({
     }
   },
 
+  // 页面跳转
   goToLiveOrVideo: function (e) {
     const url = e.currentTarget.dataset.url
     wx.navigateTo({
@@ -207,6 +232,7 @@ Page({
     })
   },
 
+  // 获取用户是否关注该比赛
   isFavorite(userId, id) {
     let that = this
     wx.request({
@@ -229,6 +255,7 @@ Page({
     })
   },
 
+  // 关注比赛
   favorite() {
     let that = this
     wx.showLoading({
@@ -255,6 +282,7 @@ Page({
     })
   },
 
+  // 取消关注
   unfavorite() {
     let that = this
     wx.showLoading({
@@ -278,6 +306,44 @@ Page({
       complete() {
         wx.hideLoading()
       }
+    })
+  },
+
+  // 获取user的refereeId
+  fetchRefereeId(userId) {
+    let that = this
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: URL + '/user/getRefereeId',
+        data: {
+          userId: userId,
+        },
+        success(res) {
+          console.log("match referee page: fetchRefereeId ->")
+          if (res.statusCode == 404) {
+            reject(new Error("用户未注册为裁判"))
+          }
+          if (res.statusCode != 200) {
+            reject(new Error("fetchRefereeId 失败"))
+          }
+          console.log(res.data)
+          that.setData({
+            refereeId: res.data,
+          })
+          resolve(res.data)
+        },
+        fail(err) {
+          reject(new Error("fetchRefereeId 失败"))
+        },
+      })
+    })
+
+  },
+
+  // 跳转至裁判页面
+  gotoMatchRefereePage() {
+    wx.navigateTo({
+      url: './match_referee/match_referee?matchId=' + this.data.id + '&refereeId=' + this.data.refereeId,
     })
   },
 })

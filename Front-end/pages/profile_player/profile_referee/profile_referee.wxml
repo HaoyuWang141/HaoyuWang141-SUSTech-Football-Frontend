@@ -35,7 +35,7 @@
   </view>
 </view>
 
-<!-- 执教球队赛程 -->
+<!-- 执法球队赛程 -->
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">执法赛程</text>
@@ -44,7 +44,7 @@
   <view class="block-main">
     <view class="no-favorite" wx:if="{{matchList.length==0}}">您目前没有执法的比赛。</view>
     <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-      <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.time}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+      <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="{{item.event.stage}}" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeam.score}}" score2="{{item.awayTeam.score}}" penalty1="{{item.homeTeam.penalty}}" penalty2="{{item.awayTeam.penalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
     </scroll-view>
   </view>
 </view>

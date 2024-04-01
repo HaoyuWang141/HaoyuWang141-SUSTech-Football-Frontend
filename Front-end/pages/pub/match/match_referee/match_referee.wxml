@@ -1,0 +1,168 @@
+<!--pages/pub/match/match_referee/match_referee.wxml-->
+
+<!-- 指引 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">指引</text>
+    <text class="block-more"></text>
+  </view>
+  <view class="block-main">
+    您将作为裁判，在本页面中更新比赛信息，您可以独立更新以下三个模块。
+  </view>
+</view>
+
+<!-- 球员名单及首发 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">球员名单及首发</text>
+    <view class="block-more">
+      <text class="button-update-playerList" bind:tap="gotoMatchRefereeUpdatePlayerListPage" data-isHomeTeam="true">更改主队</text>
+      <text class="button-update-playerList" bind:tap="gotoMatchRefereeUpdatePlayerListPage" data-isHomeTeam="false">更改客队</text>
+    </view>
+  </view>
+  <view class="block-main">
+    <view>在此选择比赛球员名单及首发球员</view>
+
+    <view style="margin-top: 20rpx;">主队：{{match.homeTeam.name}}</view>
+    <view class="grid-container">
+      <!-- 表头 -->
+      <view class="grid-header grid-item">号码</view>
+      <view class="grid-header grid-item">头像</view>
+      <view class="grid-header grid-item">姓名</view>
+      <view class="grid-header grid-item">备注</view>
+
+      <!-- 球员信息 -->
+      <block wx:for="{{match.homeTeam.players}}" wx:key="unique">
+        <view class="grid-item">{{item.number}}</view>
+        <view class="grid-item">
+          <image src="{{item.photoUrl}}" class="player-avatar"></image>
+        </view>
+        <view class="grid-item">{{item.name}}</view>
+        <view class="grid-item">{{item.isStart ? '首发' : ''}}</view>
+      </block>
+    </view>
+
+    <view style="margin-top: 20rpx;">客队：{{match.awayTeam.name}}</view>
+    <view class="grid-container">
+      <!-- 表头 -->
+      <view class="grid-header grid-item">号码</view>
+      <view class="grid-header grid-item">头像</view>
+      <view class="grid-header grid-item">姓名</view>
+      <view class="grid-header grid-item">备注</view>
+
+      <!-- 球员信息 -->
+      <block wx:for="{{match.awayTeam.players}}" wx:key="unique">
+        <view class="grid-item">{{item.number}}</view>
+        <view class="grid-item">
+          <image src="{{item.photoUrl}}" class="player-avatar"></image>
+        </view>
+        <view class="grid-item">{{item.name}}</view>
+        <view class="grid-item">{{item.isStart ? '首发' : ''}}</view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<!-- 比赛状态及进球 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">比赛状态及进球</text>
+    <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
+  </view>
+  <view class="block-main">
+    <view style="margin-bottom: 20rpx;">在此设置比赛状态（未开始、正在进行、已结束）及更新比赛分数及点球分数</view>
+    <view style="margin-bottom: 20rpx;">当前比赛状态为：{{match.strStatus}}</view>
+    <view>主队：{{match.homeTeam.name}}</view>
+    <view>进球数：{{match.homeTeam.score}}</view>
+    <view>点球进球数：{{match.homeTeam.penalty}}</view>
+    <view style="margin-top: 20rpx;">客队：{{match.awayTeam.name}}</view>
+    <view>进球数：{{match.awayTeam.score}}</view>
+    <view>点球进球数：{{match.awayTeam.score}}</view>
+  </view>
+</view>
+
+<!-- 比赛事件 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">比赛事件</text>
+    <text class="block-more button-update" bind:tap="showActionAddModal">增加</text>
+  </view>
+  <view class="block-main">
+    <view style="margin-bottom: 40rpx;">包括进球、助攻、黄牌、红牌、上场、下场</view>
+    <view wx:for="{{match.actions}}" wx:key="index">
+      <view>时间：{{item.time}}min</view>
+      <view>球队：{{item.teamId == match.homeTeam.teamId ? match.homeTeam.name : match.awayTeam.name}}</view>
+      <view>球员：{{item.player.number}}号 {{item.player.name}}</view>
+      <view>{{item.action}}</view>
+      <button class="button-delete-action" bind:tap="showDeletePlayerActionDialog" data-action="{{item}}">删除事件</button>
+      <view>----------</view>
+    </view>
+  </view>
+</view>
+
+<!-- 模态框：更新比赛状态及进球 -->
+<modal hidden="{{MatchInfoModalIsHidden}}" title="更新比赛信息" bindconfirm="handleMatchInfoSubmit" bindcancel="handleCancel">
+  <view class="input-container">
+    <view class="input-item">
+      <text>比赛状态:</text>
+      <picker mode="selector" range="{{strStatusOptions}}" bindchange="handleStatusChange">
+        <view>{{tmpStrStatus}}</view>
+      </picker>
+    </view>
+
+    <view style="margin-top: 20rpx;" class="input-item"><text>主队：{{match.homeTeam.name}}</text></view>
+    <view class="input-item">
+      <text>主队得分:</text>
+      <input type="number" value="{{tmpHomeTeamScore}}" data-name="tmpHomeTeamScore" bindinput="handleInput" />
+    </view>
+
+    <view class="input-item">
+      <text>主队点球:</text>
+      <input type="number" value="{{tmpHomeTeamPenalty}}" data-name="tmpHomeTeamPenalty" bindinput="handleInput" />
+    </view>
+
+    <view style="margin-top: 20rpx;" class="input-item"><text>客队：{{match.awayTeam.name}}</text></view>
+    <view class="input-item">
+      <text>客队得分:</text>
+      <input type="number" value="{{tmpAwayTeamScore}}" data-name="tmpAwayTeamScore" bindinput="handleInput" />
+    </view>
+
+    <view class="input-item">
+      <text>客队点球:</text>
+      <input type="number" value="{{tmpAwayTeamPenalty}}" data-name="tmpAwayTeamPenalty" bindinput="handleInput" />
+    </view>
+  </view>
+</modal>
+
+<!-- 模态框：新增比赛事件（球员行为） -->
+<modal hidden="{{ActionAddModalIsHidden}}" title="添加比赛事件" bindconfirm="handleActionAddSubmit" bindcancel="handleCancel">
+  <view class="input-container">
+    <view class="input-item">
+      <text>时间（分钟）:</text>
+      <input type="number" value="{{tmpTime}}" placeholder="请输入时间" bindinput="handleInput" data-name="tmpTime" />
+    </view>
+
+    <view class="input-item">
+      <text>球队:</text>
+      <picker mode="selector" range="{{teamOptions}}" range-key="name" bindchange="handleTeamChange">
+        <view>{{tmpTeam.name}}</view>
+      </picker>
+    </view>
+
+    <view class="input-item">
+      <text>球员:</text>
+      <picker mode="selector" range="{{playerOptions}}" range-key="numberAndName" bindchange="handlePlayerChange">
+        <view>{{tmpPlayer.numberAndName}}</view>
+      </picker>
+    </view>
+
+    <view class="input-item">
+      <text>动作:</text>
+      <picker mode="selector" range="{{strActionOptions}}" bindchange="handleActionChange">
+        <view>{{tmpAction}}</view>
+      </picker>
+    </view>
+  </view>
+</modal>
+
+

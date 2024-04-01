@@ -2,16 +2,26 @@
   <view style="background-color: white;">
     <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
     <view class="buttons">
-      <view wx:if="{{!favorited}}" >
+      <view wx:if="{{!favorited}}">
         <image class="icon" src="/assets/unfavorited.png" mode="scaleToFill" style="padding: 10rpx;" bind:tap="favorite" />
       </view>
-      <view wx:if="{{favorited}}" >
+      <view wx:if="{{favorited}}">
         <image class="icon" src="/assets/favorited.png" mode="scaleToFill" style="padding: 10rpx;" bind:tap="unfavorite" />
       </view>
-      
     </view>
   </view>
-  <match team1="{{homeTeam.name}}" team2="{{awayTeam.name}}" icon1="{{homeTeam.logoUrl}}" icon2="{{awayTeam.logoUrl}}" score1="{{homeTeamScore}}" score2="{{awayTeamScore}}" penalty1="{{homeTeamPenalty}}" penalty2="{{awayTeamPenalty}}" time="{{strTime}}" hasBegun="{{hasBegun}}"></match>
+
+  <match team1="{{homeTeam.name}}" team2="{{awayTeam.name}}" icon1="{{homeTeam.logoUrl}}" icon2="{{awayTeam.logoUrl}}" score1="{{homeTeam.score}}" score2="{{awayTeam.score}}" penalty1="{{homeTeam.penalty}}" penalty2="{{awayTeam.penalty}}" time="{{strTime}}" hasBegun="{{hasBegun}}"></match>
+</view>
+
+<view class="block-container" wx:if="{{isReferee}}">
+  <view class="block-top">
+    <text class="block-title">更新比赛信息</text>
+    <text class="block-more button-update" bind:tap="gotoMatchRefereePage">裁判页面</text>
+  </view>
+  <view class="block-main">
+    <text>您的身份为本场比赛的管理员或裁判，可通过“裁判页面”按钮，进入裁判页面，对比赛信息进行更改。</text>
+  </view>
 </view>
 
 <view class="tabs">
@@ -28,15 +38,15 @@
         <text class="block-more"></text>
       </view>
       <view class="block-main">
-        {{event}}
+        {{event.eventName}}
       </view>
-      <block wx:if="{{!event === '友谊赛'}}">
+      <block wx:if="{{event.eventName != '友谊赛'}}">
         <view class="block-top" style="margin-top: 20rpx;">
           <text class="block-title">比赛阶段</text>
           <text class="block-more"></text>
         </view>
         <view class="block-main">
-          {{stage}} - {{tag}}
+          {{event.stage}} - {{event.tag}}
         </view>
       </block>
     </view>
@@ -82,5 +92,16 @@
   </view>
 
   <view wx:if="{{activeIndex == 2}}">
+    <view class="block-container">
+      <view class="block-main">
+        <view wx:for="{{actions}}" wx:key="index">
+          <view>时间：{{item.time}}min: </view>
+          <view>球队：{{item.teamId == homeTeam.teamId ? homeTeam.name : awayTeam.name}}</view>
+          <view>球员：{{item.player.number}}号 {{item.player.name}}</view>
+          <view>{{item.action}}</view>
+          <view>----------</view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

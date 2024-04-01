@@ -32,7 +32,7 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">赛程</text>
-        <text class="block-more" bind:tap="gotoMatchesPage">查看更多</text>
+        <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}">查看更多</text>
       </view>
       <view class="block-main">
         <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
@@ -46,12 +46,29 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">球员</text>
-        <text class="block-more" bind:tap="gotoPlayersPage">查看更多</text>
       </view>
       <view class="block-main">
-        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-          <player-card-small wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}"></player-card-small>
-        </scroll-view>
+        <view class="grid-container">
+          <!-- 表头 -->
+          <view class="grid-header grid-item">号码</view>
+          <view class="grid-header grid-item">头像</view>
+          <view class="grid-header grid-item">姓名</view>
+          <view class="grid-header grid-item">出场数</view>
+          <view class="grid-header grid-item">进球数/助攻数</view>
+          <view class="grid-header grid-item">黄牌数/红牌数</view>
+
+          <!-- 球员信息 -->
+          <block wx:for="{{playerList}}" wx:key="unique">
+            <view class="grid-item">{{item.number}}</view>
+            <view class="grid-item">
+              <image src="{{item.photoUrl}}" class="player-avatar"></image>
+            </view>
+            <view class="grid-item">{{item.name}}</view>
+            <view class="grid-item">{{item.appearances}}</view>
+            <view class="grid-item">{{item.goals}}/{{item.assists}}</view>
+            <view class="grid-item">{{item.yellowCards}}/{{item.redCards}}</view>
+          </block>
+        </view>
       </view>
     </view>
   </view>

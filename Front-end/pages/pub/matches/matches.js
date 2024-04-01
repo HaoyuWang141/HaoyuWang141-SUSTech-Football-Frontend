@@ -1,6 +1,7 @@
 // pages/pub/matches/matches.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const {formatTime} = require("../../../utils/timeFormatter")
 
 Page({
 
@@ -94,8 +95,14 @@ Page({
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        let matchList = res.data
+        for(let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = new Date() > date
+        }
         that.setData({
-          matchList: res.data
+          matchList: matchList
         })
       },
       fail(err) {
