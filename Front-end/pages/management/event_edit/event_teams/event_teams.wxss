@@ -1,5 +1,4 @@
 /*pages/management/event_edit/event_teams/event_teams.wxss*/
-/* team-card-container.wxss */
 .delete-btn {
   background-color: red; /* 按钮背景颜色 */
   color: white; /* 文字颜色 */

@@ -1,6 +1,4 @@
 <!--pages/management/event_edit/event_edit.wxml-->
-<!-- <text>pages/management/event_edit/event_edit.wxml</text> -->
-
 <view class="container">
 
   <view class="title-container">

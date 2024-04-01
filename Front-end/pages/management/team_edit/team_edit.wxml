@@ -1,6 +1,4 @@
 <!--pages/management/team_edit/team_edit.wxml-->
-<!-- <text>pages/management/team_edit/team_edit.wxml</text> -->
-
 <view class="container">
   <view style="width: 100%; margin-left: 2%;">
 

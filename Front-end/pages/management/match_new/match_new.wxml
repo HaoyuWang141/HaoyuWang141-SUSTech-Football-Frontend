@@ -1,6 +1,4 @@
 <!--pages/management/match_new/match_new.wxml-->
-<!-- <text>pages/management/match_new/match_new.wxml</text> -->
-
 <view class="container">
   <view style="width: 90%;">
 

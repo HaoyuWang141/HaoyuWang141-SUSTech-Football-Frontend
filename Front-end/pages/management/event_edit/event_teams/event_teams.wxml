@@ -5,12 +5,10 @@
     <view style="text-align: center;">管理的赛事球队</view>
 
     <scroll-view scroll-y enable-flex >
-
       <view>
         <team-card-big name="邀请球队" img="/assets/newplayer.png" bindtap="inviteTeam"></team-card-big>
       </view>
 
-      
       <view class="team-card-container" >
         <block wx:for="{{teamList}}" wx:key="teamId">
           <team-card-big name="{{item.name}}" img="{{item.logo}}" number="{{item.playerCount}}" >
@@ -19,8 +17,7 @@
           </team-card-big>
         </block>
       </view>
-
     </scroll-view>
-
+    
   </view>
 </view>
