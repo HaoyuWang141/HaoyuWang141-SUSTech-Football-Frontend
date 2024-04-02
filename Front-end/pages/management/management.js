@@ -174,54 +174,53 @@ Page({
     });
   },
 
-gotoMatches: function(e) {
-  const dataset = e.currentTarget.dataset
-  wx.navigateTo({
-    url: '/pages/management/match_more/match_more?id=' + dataset.id,
-  })
-},
+  gotoMatches: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/match_more/match_more?id=' + dataset.id,
+    })
+  },
 
-gotoTeams: function(e) {
-  const dataset = e.currentTarget.dataset
-  wx.navigateTo({
-    url: '/pages/management/team_more/team_more?id=' + dataset.id,
-  })
-},
+  gotoTeams: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/team_more/team_more?id=' + dataset.id,
+    })
+  },
 
-gotoTeamPage: function(e) {
-  const dataset = e.currentTarget.dataset
-  wx.navigateTo({
-    url: '/pages/pub/team/team?id=' + dataset.id,
-  })
-},
+  gotoTeamPage: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/team/team?id=' + dataset.id,
+    })
+  },
 
-// gotoEditTeam: function(e) {
-//   const dataset = e.currentTarget.dataset
-//   wx.navigateTo({
-//     url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
-//   })
-// },
+  // gotoEditTeam: function(e) {
+  //   const dataset = e.currentTarget.dataset
+  //   wx.navigateTo({
+  //     url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
+  //   })
+  // },
 
-gotoEditMatch: function(e) {
-  const dataset = e.currentTarget.dataset
-  wx.navigateTo({
-    url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
-  })
-},
+  gotoEditMatch: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
+    })
+  },
 
-gotoEditEvent: function(e) {
-  const dataset = e.currentTarget.dataset
-  wx.navigateTo({
-    url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
-  })
-},
+  gotoEditEvent: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
+    })
+  },
 
-
-gotoNewEvent() {
-  wx.navigateTo({
-    url: '/pages/management/event_new/event_new',
-  })
-},
+  gotoNewEvent() {
+    wx.navigateTo({
+      url: '/pages/management/event_new/event_new',
+    })
+  },
 
 })
 

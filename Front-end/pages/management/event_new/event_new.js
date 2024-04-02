@@ -1,4 +1,8 @@
 // pages/management/event_new/event_new.js
+const appInstance = getApp()
+const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
+
 Page({
 
   /**
@@ -11,7 +15,8 @@ Page({
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
 
-    teamsData : Array,
+    teamList : Array,
+    eventId: Number
   },
 
   /**
@@ -127,9 +132,11 @@ Page({
     });
   },
 
-  // 邀请参赛球队
-  inviteNewTeam() {
-
+  gotoInviteTeam: function(e){
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/invite_team/invite_team?id=' + dataset.id,
+    })
   },
 
 })

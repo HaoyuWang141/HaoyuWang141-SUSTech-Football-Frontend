@@ -10,7 +10,7 @@
         <text class="time">{{date}}{{" "}}{{time}}</text>
         <text class="name">{{name}} {{group}}</text>
         <view class="info-container">
-          <view class="team" bindtap="inviteTeam1">
+          <view class="team" bindtap="inviteTeam">
             <image class="icon" src="{{icon1}}"></image>
             <text>{{team1}}</text>
           </view>
@@ -21,7 +21,7 @@
             </block>
             <text class="not-begin" wx:else>未开始</text>
           </view>
-          <view class="team" bindtap="inviteTeam2">
+          <view class="team" bindtap="inviteTeam">
             <image class="icon" src="{{icon2}}"></image>
             <text>{{team2}}</text>
           </view>

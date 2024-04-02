@@ -47,7 +47,7 @@
       <view class="teammate-container">
         <view class="text">队员</view>
         <scroll-view scroll-y enable-flex>
-          <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="invitePlayer"></player-card-small>
+          <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="gotoInvitePlayer" data-id="{{teamId}}"></player-card-small>
           <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer"></player-card-small>
         </scroll-view>
       </view>

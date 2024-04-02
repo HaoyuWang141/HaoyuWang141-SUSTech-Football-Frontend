@@ -17,7 +17,7 @@ Page({
 
     teamId: String,
     name: String,
-    logoUrl: '',
+    logoUrl: String,
     playerList: Array,
     captainId: Number,
     coachList: Array,
@@ -204,12 +204,6 @@ Page({
     });
   },
 
-  
-  // 邀请新队员
-  invitePlayer() {
-
-  },
-
   // 管理队员
   managePlayer() {
 
@@ -253,6 +247,12 @@ Page({
         // 可以显示失败的提示信息或进行其他操作
       }
     });
-  }
-  
+  },
+
+  gotoInvitePlayer: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/invite_player/invite_player?id=' + dataset.id,
+    })
+  },
 })

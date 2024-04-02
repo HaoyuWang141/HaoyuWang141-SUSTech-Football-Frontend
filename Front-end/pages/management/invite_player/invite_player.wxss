@@ -1,0 +1,66 @@
+/* pages/management/invite_player/invite_player.wxss */
+
+/* Styles for the container */
+.block-container {
+  padding: 30rpx;
+  border: 1rpx solid #cccccc;
+  /* Light grey border */
+  background-color: white;
+  /* Light grey background */
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+/* Styles for the top section */
+.block-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  /* Adds some space between the top and the main content */
+}
+
+/* Styles for the title */
+.block-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  /* Dark grey color for the text */
+}
+
+/* Optional: If you want the "More" text but it's empty in the example */
+.block-more {
+  padding: 10rpx 0;
+  font-size: 14px;
+  color: #666;
+  /* Medium grey color */
+}
+
+/* Styles for the main content area */
+.block-main {
+  font-size: 14px;
+  color: #666;
+  /* Medium grey color for the text */
+  padding: 5px 0;
+  /* Padding on top and bottom */
+}
+
+.playerList {
+  display: flex;
+  flex-direction: column;
+}
+
+.invite-btn {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 2px 2px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 按钮圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  max-width: 30%;
+  font-size: x-small;
+}
