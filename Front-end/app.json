@@ -39,7 +39,8 @@
     "pages/profile_player/profile_referee_register/profile_referee_register",
     "pages/profile_player/profile_coach_register/profile_coach_register",
     "pages/pub/match/match_referee/match_referee",
-    "pages/pub/match/match_referee_updatePlayerList/match_referee_updatePlayerList"
+    "pages/pub/match/match_referee_updatePlayerList/match_referee_updatePlayerList",
+    "pages/development/development"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -86,6 +87,12 @@
         "pagePath": "pages/mine/mine",
         "iconPath": "/assets/mine.png",
         "selectedIconPath": "/assets/mine_selected.png"
+      },
+      {
+        "text": "开发通知",
+        "pagePath": "pages/development/development",
+        "iconPath": "/assets/develop.png",
+        "selectedIconPath": "/assets/develop_selected.png"
       }
     ]
   },
