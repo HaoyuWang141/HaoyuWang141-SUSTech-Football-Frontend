@@ -8,17 +8,18 @@
     换头
   </button>
 
-  <view class="identity" wx:if="{{isPlayer}} || {{isCoach}} || {{isReferee}}">
-  <text>您所注册的身份有：</text>
-  <view>
-    <text wx:if="{{isPlayer}}">球员:   playerId = {{playerId}}</text>
-  </view>
-  <view>
-    <text wx:if="{{isCoach}}">教练:   coachId = {{coachId}}</text>
-  </view>
-  <view>
-    <text wx:if="{{isReferee}}">裁判:   refereeId = {{refereeId}}</text>
-  </view>
+  <view class="identity" wx:if="{{isPlayer || isCoach || isReferee}}">
+    <view>您的用户id（userId）为：{{userId}}</view>
+    <text>您所注册的身份有：</text>
+    <view>
+      <text wx:if="{{isPlayer}}">球员: playerId = {{playerId}}</text>
+    </view>
+    <view>
+      <text wx:if="{{isCoach}}">教练: coachId = {{coachId}}</text>
+    </view>
+    <view>
+      <text wx:if="{{isReferee}}">裁判: refereeId = {{refereeId}}</text>
+    </view>
   </view>
   <!-- <view class="identity" wx:if="!{{isPlayer}} && !{{isCoach}} && !{{isReferee}}">
   <view>
@@ -26,101 +27,101 @@
   </view>
   </view> -->
   <view class="player-container">
-  <!-- 比赛通知 -->
-  <view class="notification-container" wx:if="{{isPlayer}}">
-    <view class="notification-title" bindtap="togglePlayerMatchInform">
-      比赛通知
-      <view class="red-dot" wx:if="{{showPlayerMatchDot}}"></view>
-    </view>
-    <scroll-view scroll-y="true" style="height: {{showPlayerMatchInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{playerMatchInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
+    <!-- 比赛通知 -->
+    <view class="notification-container" wx:if="{{isPlayer}}">
+      <view class="notification-title" bindtap="togglePlayerMatchInform">
+        比赛通知
+        <view class="red-dot" wx:if="{{showPlayerMatchDot}}"></view>
       </view>
-    </scroll-view>
-  </view>
+      <scroll-view scroll-y="true" style="height: {{showPlayerMatchInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:for="{{playerMatchInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
+    </view>
 
-  <!-- 球队邀请通知 -->
-  <view class="notification-container" wx:if="{{isPlayer}}">
-    <view class="notification-title" bindtap="togglePlayerInvitationInform">
-      球队邀请通知
-      <view class="red-dot" wx:if="{{showPlayerInvitationDot}}"></view>
+    <!-- 球队邀请通知 -->
+    <view class="notification-container" wx:if="{{isPlayer}}">
+      <view class="notification-title" bindtap="togglePlayerInvitationInform">
+        球队邀请通知
+        <view class="red-dot" wx:if="{{showPlayerInvitationDot}}"></view>
+      </view>
+      <scroll-view scroll-y="true" style="height: {{showPlayerInvitationInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:if="{{playerInvitationInform.length==0}}">
+          <text class="invitation-text">您还没有收到任何球队发出的邀请，可以尝试申请加入球队</text>
+        </view>
+        <view class="invitation-item" wx:for="{{playerInvitationInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <scroll-view scroll-y="true" style="height: {{showPlayerInvitationInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:if="{{playerInvitationInform.length==0}}">
-        <text class="invitation-text">您还没有收到任何球队发出的邀请，可以尝试申请加入球队</text>
-      </view>
-      <view class="invitation-item" wx:for="{{playerInvitationInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
 
     <!-- 球队申请通知 -->
     <view class="notification-container" wx:if="{{isPlayer}}">
-    <view class="notification-title" bindtap="toggleApplicationInform">
-      球队申请通知
-      <view class="red-dot" wx:if="{{showApplicationDot}}"></view>
+      <view class="notification-title" bindtap="toggleApplicationInform">
+        球队申请通知
+        <view class="red-dot" wx:if="{{showApplicationDot}}"></view>
+      </view>
+      <scroll-view scroll-y="true" style="height: {{showApplicationInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:for="{{applicationInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <scroll-view scroll-y="true" style="height: {{showApplicationInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{applicationInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
 
-  <view class="notification-container" wx:if="{{isCoach}}">
-    <view class="notification-title" bindtap="toggleCoachInvitationInform">
-      教练身份：球队邀请通知
-      <view class="red-dot" wx:if="{{showCoachInvitationDot}}"></view>
+    <view class="notification-container" wx:if="{{isCoach}}">
+      <view class="notification-title" bindtap="toggleCoachInvitationInform">
+        教练身份：球队邀请通知
+        <view class="red-dot" wx:if="{{showCoachInvitationDot}}"></view>
+      </view>
+      <scroll-view scroll-y="true" style="height: {{showCoachInvitationInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:if="{{coachInvitationInform.length==0}}">
+          <text class="invitation-text">您还没有收到任何球队发出的邀请，但是您无法主动申请加入球队，您可以通过与球队管理员私聊，来让对方邀请您执教其球队</text>
+        </view>
+        <view class="invitation-item" wx:for="{{coachInvitationInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <scroll-view scroll-y="true" style="height: {{showCoachInvitationInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:if="{{coachInvitationInform.length==0}}">
-        <text class="invitation-text">您还没有收到任何球队发出的邀请，但是您无法主动申请加入球队，您可以通过与球队管理员私聊，来让对方邀请您执教其球队</text>
-      </view>
-      <view class="invitation-item" wx:for="{{coachInvitationInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
 
-  <view class="notification-container" wx:if="{{isCoach}}">
-    <view class="notification-title" bindtap="toggleCoachMatchInform">
-      裁判身份：比赛通知
-      <view class="red-dot" wx:if="{{showCoachMatchDot}}"></view>
+    <view class="notification-container" wx:if="{{isCoach}}">
+      <view class="notification-title" bindtap="toggleCoachMatchInform">
+        裁判身份：比赛通知
+        <view class="red-dot" wx:if="{{showCoachMatchDot}}"></view>
+      </view>
+      <scroll-view scroll-y="true" style="height: {{showCoachMatchInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:for="{{coachMatchInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <scroll-view scroll-y="true" style="height: {{showCoachMatchInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{coachMatchInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
 
-  <view class="notification-container" wx:if="{{isReferee}}">
-    <view class="notification-title" bindtap="toggleRefereeInvitationInform">
-      裁判身份：比赛邀请通知
-      <view class="red-dot" wx:if="{{showRefereeInvitationDot}}"></view>
+    <view class="notification-container" wx:if="{{isReferee}}">
+      <view class="notification-title" bindtap="toggleRefereeInvitationInform">
+        裁判身份：比赛邀请通知
+        <view class="red-dot" wx:if="{{showRefereeInvitationDot}}"></view>
+      </view>
+      <scroll-view scroll-y="true" style="height: {{showRefereeInvitationInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:if="{{refereeInvitationInform.length==0}}">
+          <text class="invitation-text">您还没有收到任何比赛发出的邀请。</text>
+        </view>
+        <view class="invitation-item" wx:for="{{refereeInvitationInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <scroll-view scroll-y="true" style="height: {{showRefereeInvitationInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:if="{{refereeInvitationInform.length==0}}">
-        <text class="invitation-text">您还没有收到任何比赛发出的邀请。</text>
-      </view>
-      <view class="invitation-item" wx:for="{{refereeInvitationInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
 
-  <view class="notification-container" wx:if="{{isReferee}}">
-    <view class="notification-title" bindtap="toggleRefereeMatchInform">
-      裁判身份：比赛通知
-      <view class="red-dot" wx:if="{{showRefereeMatchDot}}"></view>
+    <view class="notification-container" wx:if="{{isReferee}}">
+      <view class="notification-title" bindtap="toggleRefereeMatchInform">
+        裁判身份：比赛通知
+        <view class="red-dot" wx:if="{{showRefereeMatchDot}}"></view>
+      </view>
+      <scroll-view scroll-y="true" style="height: {{showRefereeMatchInform ? '200px' : '0'}};" class="notification-box">
+        <view class="invitation-item" wx:for="{{refereeMatchInform}}" wx:key="index">
+          <text class="invitation-text">{{item}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <scroll-view scroll-y="true" style="height: {{showRefereeMatchInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{refereeMatchInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
 
-</view>
+  </view>
 </scroll-view>

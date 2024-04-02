@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userId: Number,
     avatarUrl: defaultAvatarUrl,
     nickName: '',
     playerId: null,
@@ -66,6 +67,9 @@ Page({
    */
   onShow() {
     appInstance.addToRequestQueue(this.fetchData)
+    this.setData({
+      userId: appInstance.globalData.userId,
+    })
   },
 
   /**
