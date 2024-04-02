@@ -1,4 +1,4 @@
-// pages/management/team_more/team_more.js
+// pages/management/invite_team/invite_team.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 
@@ -8,10 +8,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
+    allTeamList: Array,
     teamList: Array,
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -20,7 +20,7 @@ Page({
     this.setData({
       id: options.id
     })
-    this.fetchData(options.id);
+    this.fetchData();
   },
 
   /**
@@ -34,7 +34,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.id);
+
   },
 
   /**
@@ -55,8 +55,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id);
-    wx.stopPullDownRefresh();
+
   },
 
   /**
@@ -73,7 +72,7 @@ Page({
 
   },
 
-  fetchData: function (id) {
+  fetchData: function () {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
@@ -83,12 +82,9 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/user/getUserManageTeam',
-      data: {
-        userId: id
-      },
+      url: URL + '/team/getAll',
       success(res) {
-        console.log("team->")
+        console.log("team/getALL->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -96,9 +92,8 @@ Page({
         }
         // 基本数据
         that.setData({
-          teamList: res.data,
+          allTeamList: res.data,
         });
-
       },
       fail(err) {
         console.log('请求失败', err);
@@ -109,30 +104,5 @@ Page({
         wx.hideLoading(); // 关闭加载提示框
       }
     });
-  },
-
-  createNewTeam() {
-    wx.navigateTo({
-      url: '/pages/management/team_new/team_new',
-    })
-  },
-
-  deleteTeam: function(e) {
-
-  },
-
-  gotoTeamPage: function(e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/pub/team/team?id=' + dataset.id,
-    })
-  },
-
-  gotoEditTeam: function(e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
-    })
-  },
-
+  }
 })

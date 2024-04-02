@@ -1,0 +1,17 @@
+<!--pages/management/invite_player/invite_player.wxml-->
+<view class="container">
+  <view style="width: 100%;">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">球员列表</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-y enable-flex>
+          <player-card-small wx:for="{{allPlayerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}">
+            <button class="invite-btn" bindtap="invite" data-id="{{item.playerId}}"><text class="invite" >邀请</text></button>
+          </player-card-small>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

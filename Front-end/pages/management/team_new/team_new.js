@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    teamId: Number,
     logoUrl: String,     // 队徽图片地址
     teamname: String,     // 队名
   },
@@ -93,14 +94,6 @@ Page({
     });
   },
 
-  /**
-   * 邀请队员
-   */
-  inviteNewPlayer: function () {
-    // 实现邀请新队员的逻辑
-    
-  },
-
   confirmCreate: function (){
     // 构造要发送给后端的数据
     const dataToUpdate = {
@@ -131,6 +124,13 @@ Page({
         // 可以显示失败的提示信息或进行其他操作
       }
     });
+  },
+
+  inviteNewPlayer: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/invite_player/invite_player?id=' + dataset.id,
+    })
   },
 
 })

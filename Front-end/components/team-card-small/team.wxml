@@ -2,4 +2,8 @@
 <view class="container">
   <image src="{{img}}" mode="scaleToFill" class="image"/>
   <text class="name">{{name}}</text>
+
+  <view class="buttons">
+    <slot></slot>
+  </view>
 </view>

@@ -20,7 +20,7 @@
   <view class="teammate-container">
     <view class="text">队员</view>
     <scroll-view scroll-y enable-flex >
-      <player-card-small name="邀请新队员" img="/assets/newplayer.png" bindtap="inviteNewPlayer"></player-card-small>
+      <player-card-small name="邀请新队员" img="/assets/newplayer.png" bindtap="inviteNewPlayer" data-id="{{teamId}}"></player-card-small>
     </scroll-view>
   </view>
 

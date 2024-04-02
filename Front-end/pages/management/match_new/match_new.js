@@ -1,4 +1,5 @@
 // pages/management/match_new/match_new.js
+
 Page({
 
   /**
@@ -125,16 +126,14 @@ Page({
     });
   },
 
-  // 处理邀请队伍1
-  inviteTeam1() {
-
+  // 处理邀请队伍
+  inviteTeam: function(e) {
+    const dataset = e.currentTarget.dataset 
+    wx.navigateTo({
+      url: '/pages/management/match_new/invite_team/invite_team?id=' + dataset.id,
+    })
   },
-
-  // 处理邀请队伍2
-  inviteTeam2(){
-
-  },
-
+  
   // 处理提交信息修改
   confirmEdit(){
 

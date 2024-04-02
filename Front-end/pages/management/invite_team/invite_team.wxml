@@ -1,0 +1,18 @@
+<!--pages/management/invite_team/invite_team.wxml-->
+<view class="container">
+  <view style="width: 100%;">
+    <view class="block-container">
+      <view class="block-top">
+        <view class="block-title">球队列表</view>
+        <view class="block-more" bindtap="gotoTeams" data-id="5">查看更多</view>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-y enable-flex>
+          <team-card-small wx:for="{{allTeamList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoTeamPage" data-id="{{item.teamId}}">
+            <button class="invite-btn"><text class="invite">邀请</text></button>
+          </team-card-small>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>
