@@ -1,6 +1,9 @@
 // pages/pub/team/team.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const {
+  formatTime
+} = require("../../../utils/timeFormatter")
 
 Page({
   /**
@@ -22,10 +25,8 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      // id: options.id,
-      id: 1,
+      id: options.id,
     })
-    this.fetchData(this.data.id);
   },
 
   /**
@@ -39,7 +40,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -60,7 +61,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id);
   },
 
   /**
@@ -95,14 +96,19 @@ Page({
       success(res) {
         console.log("/team/get?id=" + id + " ->")
         console.log(res.data)
+        let matchList = res.data.matchList ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
+        }
         that.setData({
-          homeTeam: res.data.homeTeam,
           name: res.data.name,
           logoUrl: res.data.logoUrl,
           captainId: res.data.captainId,
           coachList: res.data.coachList,
           playerList: res.data.playerList,
-          matchList: res.data.matchList
+          matchList: matchList
         })
       },
       fail(err) {
