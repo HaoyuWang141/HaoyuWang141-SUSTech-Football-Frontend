@@ -5,7 +5,7 @@
     width: 200rpx;
     border-radius: 40rpx;
   }
-  .page-container {
+  .player-container {
     padding: 10px;
   }
 

@@ -21,7 +21,7 @@
   </view>
   
   </view>
-  <view class="page-container">
+  <view class="player-container">
   <!-- 比赛通知 -->
   <view class="notification-container" wx:if="{{isPlayer}}">
     <view class="notification-title" bindtap="toggleMatchInform">
@@ -29,7 +29,7 @@
       <view class="red-dot" wx:if="{{showMatchDot}}"></view>
     </view>
     <scroll-view scroll-y="true" style="height: {{showMatchInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{matchinform}}" wx:key="index">
+      <view class="invitation-item" wx:for="{{matchInform}}" wx:key="index">
         <text class="invitation-text">{{item}}</text>
       </view>
     </scroll-view>
@@ -42,7 +42,20 @@
       <view class="red-dot" wx:if="{{showInvitationDot}}"></view>
     </view>
     <scroll-view scroll-y="true" style="height: {{showInvitationInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{invitationinform}}" wx:key="index">
+      <view class="invitation-item" wx:for="{{invitationInform}}" wx:key="index">
+        <text class="invitation-text">{{item}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+    <!-- 球队申请通知 -->
+    <view class="notification-container">
+    <view class="notification-title" bindtap="toggleApplicationInform">
+      球队申请通知
+      <view class="red-dot" wx:if="{{showApplicationDot}}"></view>
+    </view>
+    <scroll-view scroll-y="true" style="height: {{showApplicationInform ? '200px' : '0'}};" class="notification-box">
+      <view class="invitation-item" wx:for="{{applicationInform}}" wx:key="index">
         <text class="invitation-text">{{item}}</text>
       </view>
     </scroll-view>

@@ -21,10 +21,12 @@ Page({
     showMatchInform: false,
     showInvitationInform: false,
     // 控制红点的显示
-    showMatchDot: true, // 假设有新的比赛通知
-    showInvitationDot: true, // 假设有新的球队邀请
-    invitationinform: [],
-    matchinform: []
+    showMatchDot: false, // 假设有新的比赛通知
+    showInvitationDot: false, // 假设有新的球队邀请
+    showApplicationDot: false,
+    invitationInform: [],
+    matchInform: [],
+    applicationsInform: []
   },
 
   /**
@@ -96,7 +98,7 @@ Page({
     var that = this;
     //Player相关
     wx.request({
-      url: URL + '/user/getPlayerId', 
+      url: URL + '/user/getPlayerId',
       data: {
         userId: userId
       },
@@ -123,13 +125,14 @@ Page({
               console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
               return
             }
-            that.formatMatchs(res.data) 
+            that.formatMatchs(res.data);
+
           },
           fail(err) {
             console.log('请求失败', err);
           },
           complete() {
-            wx.hideLoading(); 
+            wx.hideLoading();
           }
         });
         //球员身份：球队邀请
@@ -145,16 +148,41 @@ Page({
               console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
               return
             }
-            that.formatInforms(res.data)
+            that.formatInvatitons(res.data)
+            that.setData({
+
+            });
           },
           fail(err) {
             console.log('请求失败', err);
           },
           complete() {
-            wx.hideLoading(); 
+            wx.hideLoading();
           }
         });
-    
+
+        //球队申请
+        wx.request({
+          url: URL + '/player/team/getApplications',
+          data: {
+            playerId: 2,
+          },
+          success(res) {
+            console.log("application->")
+            console.log(res.data)
+            if (res.statusCode !== 200) {
+              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+              return
+            }
+            that.formatApplications(res.data)
+          },
+          fail(err) {
+            console.log('请求失败', err);
+          },
+          complete() {
+            wx.hideLoading();
+          }
+        });
       },
       fail(err) {
         console.log('请求失败', err);
@@ -168,7 +196,7 @@ Page({
 
     //教练身份
     wx.request({
-      url: URL + '/user/getCoachId', 
+      url: URL + '/user/getCoachId',
       data: {
         userId: userId
       },
@@ -190,10 +218,10 @@ Page({
         wx.hideLoading();
       }
     });
-    
+
     //裁判身份
     wx.request({
-      url: URL + '/user/getRefereeId', 
+      url: URL + '/user/getRefereeId',
       data: {
         userId: userId
       },
@@ -217,49 +245,55 @@ Page({
     });
 
   },
-
-  formatInforms: function(invitations) {
-    const informs = invitations.map(invitation => {
-        const formattedDate = new Date(invitation.lastUpdate).toLocaleString(); // 将时间戳转换为可读日期
-        let stadus;
-        if (invitation.type == "INVITATION"){
-          if (invitation.status == "PENDING"){
-            stadus = ""
-          }
-          else if(invitation.status == "ACCEPTED"){
-
-          }
-          else if(invitation.status == "REJECTED"){
-  
-          }
-          return `${invitation.team.name} 邀请您加入，邀请发起时间：${formattedDate}`;
-        }else{
-          if (invitation.status == "PENDING"){
-            stadus = "正在审核中"
-          }
-          else if(invitation.status == "ACCEPTED"){
-            stadus = "已被接受"
-          }
-          else if(invitation.status == "REJECTED"){
-            stadus = "已被拒绝"
-          }
-          return `$您申请加入${invitation.team.name}${stadus}：${formattedDate}`
-        }
-      
+  formatApplications: function(applications){
+    const informs = applications.map(application => {
+      const formattedDate = (application.lastUpdate != null) ? new Date(application.lastUpdate).toLocaleString() : ''; // 将时间戳转换为可读日期
+      let stadus;
+      if (application.status == "PENDING"){
+        stadus = "正在审核中"
+      }
+      else if(application.status == "ACCEPTED"){
+        stadus = "已被接受"
+      }
+      else if(application.status == "REJECTED"){
+        stadus = "已被拒绝"
+      }
+      return `您对${application.team.name}（球队）的申请${stadus}：${formattedDate}`
     });
     this.setData({
-      invitationinform: informs
+      applicationInform: informs
     });
+  },
+  formatInvatitons: function(invitations) {
+    const informs = invitations.map(invitation => {
+        const formattedDate = (invitation.lastUpdate != null) ? new Date(invitation.lastUpdate).toLocaleString() : '未知';
+          if (invitation.status == "PENDING"){
+            return `${invitation.team.name} 邀请您加入，邀请发起时间：${formattedDate}`;
+          }
+          else if(invitation.status == "ACCEPTED"){
+          }
+          else if(invitation.status == "REJECTED"){
+          }
+          return null;
+    }).filter(inform => inform !== null);
+    const dataToUpdate = informs.length > 0 ? { invitationInform: informs, showInvitationDot : true} : { invitationInform: ['您还没有收到任何球队发出的邀请，可以尝试申请加入球队'] };
+    this.setData(dataToUpdate);
   },
 
   formatMatchs: function(matchs) {
     const informs = matchs.map(match => {
-        const formattedDate = new Date(match.time).toLocaleString(); // 将时间戳转换为可读日期
-        return `你在${formattedDate}有一场比赛`;
-    });
-    this.setData({
-      matchinform: informs
-    });
+      const matchDay = new Date(match.time);
+      const nowDay = new Date();
+        if (matchDay < nowDay) return null;
+        else{
+          let differenceInDays = (matchDay - nowDay) / (1000 * 60 * 60 * 24);
+          if (differenceInDays <= 14)
+          return `你在${matchDay.toLocaleString()}有一场比赛`;
+        }
+        return null;
+    }).filter(inform => inform !== null);
+    const dataToUpdate = informs.length > 0 ? { matchInform: informs, showMatchDot : true} : { matchInform: ['您近两星期内没有比赛'] };
+  this.setData(dataToUpdate);
   },
 
 
@@ -297,6 +331,13 @@ Page({
     this.setData({
       showInvitationInform: !this.data.showInvitationInform,
       showInvitationDot: false
+    });
+  },
+
+  toggleApplicationInform: function() {
+    this.setData({
+      showApplicationInform: !this.data.showApplicationInform,
+      showApplicationDot: false
     });
   },
 })
