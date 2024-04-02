@@ -13,19 +13,34 @@ Page({
     nickName: '',
     playerId: null,
     coachId: null,
-    refereeId: null, 
+    refereeId: null,
+
     isPlayer: false,
     isCoach: false,
     isReferee: false,
     // 控制比赛通知和球队邀请通知的显示
-    showMatchInform: false,
-    showInvitationInform: false,
+    showPlayerMatchInform: false,
+    showCoachMatchInform: false,
+    showRefereeMatchInform: false,
+
+    showPlayerInvitationInform: false,
+    showCoachInvitationInform: false,
+    showRefereeInvitationInform: false,
     // 控制红点的显示
-    showMatchDot: false, // 假设有新的比赛通知
-    showInvitationDot: false, // 假设有新的球队邀请
+    showPlayerMatchDot: false, // 假设有新的比赛通知
+    showCoachMatchDot: false,
+    showRefereeMatchDot: false,
+    showPlayerInvitationDot: false, // 假设有新的球队邀请
+    showCoachInvitationDot: false,
+    showRefereeInvitationDot: false,
+
     showApplicationDot: false,
-    invitationInform: [],
-    matchInform: [],
+    playerInvitationInform: [],
+    coachInvitationInform: [],
+    refereeInvitationInform: [],
+    playerMatchInform: [],
+    coachMatchInform: [],
+    refereeMatchInform: [],
     applicationsInform: []
   },
 
@@ -37,7 +52,6 @@ Page({
       avatarUrl: appInstance.globalData.avatarUrl ?? defaultAvatarUrl,
       nickName: appInstance.globalData.nickName ?? '',
     })
-    appInstance.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -109,14 +123,16 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        let playerId = res.data;
         that.setData({
-          isPlayer: true
+          isPlayer: true,
+          playerId: res.data
         })
         //球员身份：比赛信息
         wx.request({
           url: URL + '/player/match/getAll',
           data: {
-            playerId: 2,
+            playerId: playerId,
           },
           success(res) {
             console.log("match->")
@@ -125,8 +141,7 @@ Page({
               console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
               return
             }
-            that.formatMatchs(res.data);
-
+            that.formatPlayerMatchs(res.data);
           },
           fail(err) {
             console.log('请求失败', err);
@@ -139,7 +154,7 @@ Page({
         wx.request({
           url: URL + '/player/team/getInvitations',
           data: {
-            playerId: 2,
+            playerId: playerId,
           },
           success(res) {
             console.log("invitation->")
@@ -148,10 +163,7 @@ Page({
               console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
               return
             }
-            that.formatInvatitons(res.data)
-            that.setData({
-
-            });
+            that.formatPlayerInvatitons(res.data)
           },
           fail(err) {
             console.log('请求失败', err);
@@ -165,7 +177,7 @@ Page({
         wx.request({
           url: URL + '/player/team/getApplications',
           data: {
-            playerId: 2,
+            playerId: playerId,
           },
           success(res) {
             console.log("application->")
@@ -207,9 +219,56 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        let coachId = res.data;
         that.setData({
-          isCoach: true
-        })
+            isCoach: true,
+            coachId: res.data
+          }),
+
+          wx.request({
+            url: URL + '/coach/match/getAll',
+            data: {
+              coachId: coachId,
+            },
+            success(res) {
+              console.log("coachMatch->")
+              console.log(res.data)
+              if (res.statusCode !== 200) {
+                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                return
+              }
+              that.formatCoachMatchs(res.data);
+            },
+            fail(err) {
+              console.log('请求失败', err);
+            },
+            complete() {
+              wx.hideLoading();
+            }
+          });
+
+          wx.request({
+            url: URL + '/coach/team/getInvitations',
+            data: {
+              coachId: coachId,
+            },
+            success(res) {
+              console.log("coachInvitation->")
+              console.log(res.data)
+              if (res.statusCode !== 200) {
+                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                return
+              }
+              that.formatCoachInvatitons(res.data);
+            },
+            fail(err) {
+              console.log('请求失败', err);
+            },
+            complete() {
+              wx.hideLoading();
+            }
+          });
+
       },
       fail(err) {
         console.log('请求失败', err);
@@ -232,9 +291,56 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        let refereeId = res.data
         that.setData({
-          isReferee: true
+          isReferee: true,
+          refereeId: res.data
         })
+
+        wx.request({
+          url: URL + '/referee/match/getAll',
+          data: {
+            refereeId: refereeId,
+          },
+          success(res) {
+            console.log("refereeMatch->")
+            console.log(res.data)
+            if (res.statusCode !== 200) {
+              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+              return
+            }
+            that.formatRefereeMatchs(res.data);
+          },
+          fail(err) {
+            console.log('请求失败', err);
+          },
+          complete() {
+            wx.hideLoading();
+          }
+        });
+
+        wx.request({
+          url: URL + '/referee/match/getInvitations',
+          data: {
+            refereeId: refereeId,
+          },
+          success(res) {
+            console.log("refereeInvitation->")
+            console.log(res.data)
+            if (res.statusCode !== 200) {
+              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+              return
+            }
+            that.formatRefereeInvatitons(res.data);
+          },
+          fail(err) {
+            console.log('请求失败', err);
+          },
+          complete() {
+            wx.hideLoading();
+          }
+        });
+
       },
       fail(err) {
         console.log('请求失败', err);
@@ -245,17 +351,15 @@ Page({
     });
 
   },
-  formatApplications: function(applications){
+  formatApplications: function (applications) {
     const informs = applications.map(application => {
-      const formattedDate = (application.lastUpdate != null) ? new Date(application.lastUpdate).toLocaleString() : ''; // 将时间戳转换为可读日期
+      const formattedDate = (application.lastUpdated != null) ? new Date(application.lastUpdated).toLocaleString() : ''; // 将时间戳转换为可读日期
       let stadus;
-      if (application.status == "PENDING"){
+      if (application.status == "PENDING") {
         stadus = "正在审核中"
-      }
-      else if(application.status == "ACCEPTED"){
+      } else if (application.status == "ACCEPTED") {
         stadus = "已被接受"
-      }
-      else if(application.status == "REJECTED"){
+      } else if (application.status == "REJECTED") {
         stadus = "已被拒绝"
       }
       return `您对${application.team.name}（球队）的申请${stadus}：${formattedDate}`
@@ -264,36 +368,117 @@ Page({
       applicationInform: informs
     });
   },
-  formatInvatitons: function(invitations) {
+
+  formatRefereeInvatitons: function (invitations) {
     const informs = invitations.map(invitation => {
-        const formattedDate = (invitation.lastUpdate != null) ? new Date(invitation.lastUpdate).toLocaleString() : '未知';
-          if (invitation.status == "PENDING"){
-            return `${invitation.team.name} 邀请您加入，邀请发起时间：${formattedDate}`;
-          }
-          else if(invitation.status == "ACCEPTED"){
-          }
-          else if(invitation.status == "REJECTED"){
-          }
-          return null;
+      const formattedDate = (invitation.time != null) ? new Date(invitation.time).toLocaleString() : '未知';
+      let matchTime = new Date(invitation.time);
+      let now = new Date();
+      if (invitation.status == "PENDING" && matchTime > now) {
+        return `有球队邀请您执法${invitation.homeTeam.name}对阵${invitation.awayTeam.name}，比赛时间为${formattedDate}, 邀请发起时间：${formattedDate}`;
+      } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
+      return null;
     }).filter(inform => inform !== null);
-    const dataToUpdate = informs.length > 0 ? { invitationInform: informs, showInvitationDot : true} : { invitationInform: ['您还没有收到任何球队发出的邀请，可以尝试申请加入球队'] };
-    this.setData(dataToUpdate);
+    let showDot = informs.length > 0 ? true : false;
+    this.setData({
+      refereeInvitationInform: informs,
+      showRefereeInvitationDot: showDot
+    });
   },
 
-  formatMatchs: function(matchs) {
+  formatCoachInvatitons: function (invitations) {
+    const informs = invitations.map(invitation => {
+      const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
+      if (invitation.status == "PENDING") {
+        return `${invitation.team.name} 邀请您以教练的身份加入，邀请发起时间：${formattedDate}`;
+      } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
+      return null;
+    }).filter(inform => inform !== null);
+    let showDot = informs.length > 0 ? true : false;
+    this.setData({
+      coachInvitationInform: informs,
+      showCoachInvitationDot: showDot
+    });
+  },
+
+  formatPlayerInvatitons: function (invitations) {
+    let that = this
+    const informs = invitations.map(invitation => {
+      const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
+      if (invitation.status == "PENDING") {
+        return `${invitation.team.name} 邀请您加入，邀请发起时间：${formattedDate}`;
+      } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
+      return null;
+    }).filter(inform => inform !== null);
+    let showDot = informs.length > 0 ? true : false;
+    that.setData({
+      playerInvitationInform: informs,
+      showPlayerInvitationDot: showDot
+    });
+  },
+
+  formatPlayerMatchs: function (matchs) {
+
     const informs = matchs.map(match => {
       const matchDay = new Date(match.time);
       const nowDay = new Date();
-        if (matchDay < nowDay) return null;
-        else{
-          let differenceInDays = (matchDay - nowDay) / (1000 * 60 * 60 * 24);
-          if (differenceInDays <= 14)
+      if (matchDay < nowDay) return null;
+      else {
+        let differenceInDays = (matchDay - nowDay) / (1000 * 60 * 60 * 24);
+        if (differenceInDays <= 14)
           return `你在${matchDay.toLocaleString()}有一场比赛`;
-        }
-        return null;
+      }
+      return null;
     }).filter(inform => inform !== null);
-    const dataToUpdate = informs.length > 0 ? { matchInform: informs, showMatchDot : true} : { matchInform: ['您近两星期内没有比赛'] };
-  this.setData(dataToUpdate);
+    const dataToUpdate = informs.length > 0 ? {
+      playerMatchInform: informs,
+      showPlayerMatchDot: true
+    } : {
+      playerMatchInform: ['您近两星期内没有比赛']
+    };
+    this.setData(dataToUpdate);
+  },
+
+  formatCoachMatchs: function (matchs) {
+    const informs = matchs.map(match => {
+      const matchDay = new Date(match.time);
+      const nowDay = new Date();
+      if (matchDay < nowDay) return null;
+      else {
+        let differenceInDays = (matchDay - nowDay) / (1000 * 60 * 60 * 24);
+        if (differenceInDays <= 14)
+          return `你在${matchDay.toLocaleString()}有一场比赛`;
+      }
+      return null;
+    }).filter(inform => inform !== null);
+    const dataToUpdate = informs.length > 0 ? {
+      coahcMatchInform: informs,
+      showCoachMatchDot: true
+    } : {
+      coachMatchInform: ['您近两星期内没有比赛']
+    };
+    this.setData(dataToUpdate);
+  },
+
+  formatRefereeMatchs: function (matchs) {
+    const informs = matchs.map(match => {
+      const matchDay = new Date(match.time);
+      const nowDay = new Date();
+      if (matchDay < nowDay) return null;
+      else {
+        let differenceInDays = (matchDay - nowDay) / (1000 * 60 * 60 * 24);
+        if (differenceInDays <= 14)
+          return `你在${matchDay.toLocaleString()}有一场比赛`;
+      }
+      return null;
+    }).filter(inform => inform !== null);
+    const dataToUpdate = informs.length > 0 ? {
+      refereeMatchInform: informs,
+      showRefereeMatchDot: true
+    } : {
+      refereeMatchInform: ['您近两星期内没有比赛']
+    };
+    this.setData(dataToUpdate);
   },
 
 
@@ -319,22 +504,49 @@ Page({
   },
 
   // 切换比赛通知的显示状态
-  toggleMatchInform: function() {
+  togglePlayerMatchInform: function () {
     this.setData({
-      showMatchInform: !this.data.showMatchInform,
-      showMatchDot: false
+      showPlayerMatchInform: !this.data.showPlayerMatchInform,
+      showPlayerMatchDot: false
     });
   },
 
+  toggleCoachMatchInform: function () {
+    this.setData({
+      showCoachMatchInform: !this.data.showCoachMatchInform,
+      showCoachMatchDot: false
+    });
+  },
+
+  toggleRefereeMatchInform: function () {
+    this.setData({
+      showRefereeMatchInform: !this.data.showRefereeMatchInform,
+      showRefereeMatchDot: false
+    });
+  },
   // 切换球队邀请通知的显示状态
-  toggleInvitationInform: function() {
+  togglePlayerInvitationInform: function () {
     this.setData({
-      showInvitationInform: !this.data.showInvitationInform,
-      showInvitationDot: false
+      showPlayerInvitationInform: !this.data.showPlayerInvitationInform,
+      showPlayerInvitationDot: false
     });
   },
 
-  toggleApplicationInform: function() {
+  toggleCoachInvitationInform: function () {
+    this.setData({
+      showCoachInvitationInform: !this.data.showCoachInvitationInform,
+      showCoachInvitationDot: false
+    });
+  },
+
+  toggleRefereeInvitationInform: function () {
+    this.setData({
+      showRefereeInvitationInform: !this.data.showRefereeInvitationInform,
+      showRefereeInvitationDot: false
+    });
+  },
+
+  toggleApplicationInform: function () {
     this.setData({
       showApplicationInform: !this.data.showApplicationInform,
       showApplicationDot: false
