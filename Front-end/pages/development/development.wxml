@@ -1,0 +1,16 @@
+<!--pages/development/development.wxml-->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我说大家先别急</text>
+  </view>
+  <view class="block-main">
+    <view>本小程序功能包括：</view>
+    <view>首页：查看关注的内容</view>
+    <view>球员：将自己注册为球员、裁判、教练；球员可以加入球队，教练可以执教球队，裁判可以执法赛事，更改比分等比赛数据</view>
+    <view>管理：在管理页面可以新建或管理球队、友谊赛或大型赛事</view>
+    <view>我的：可以查看通知，接受/拒绝各色邀请</view>
+    <view style="margin-top: 40rpx;">最后：</view>
+    <view>老子有在干活，有bug群里开喷</view>
+    <image src="/assets/bug group.jpg" mode="widthFix" />
+  </view>
+</view>

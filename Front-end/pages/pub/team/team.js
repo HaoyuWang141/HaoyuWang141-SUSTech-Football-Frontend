@@ -1,6 +1,10 @@
 // pages/pub/team/team.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
+const {
+  formatTime
+} = require("../../../utils/timeFormatter")
 
 Page({
   /**
@@ -15,6 +19,7 @@ Page({
     playerIdList: Array,
     matchList: Array,
     activeIndex: 0,
+    favorited: Boolean,
   },
 
   /**
@@ -22,10 +27,8 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      // id: options.id,
-      id: 1,
+      id: options.id,
     })
-    this.fetchData(this.data.id);
   },
 
   /**
@@ -39,7 +42,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.id);
+    this.isFavorite(userId, this.data.id)
   },
 
   /**
@@ -60,7 +64,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.id);
+    this.isFavorite(userId, this.data.id)
   },
 
   /**
@@ -91,18 +96,23 @@ Page({
     const that = this
     wx.request({
       url: URL + "/team/get?id=" + id,
-      
+
       success(res) {
         console.log("/team/get?id=" + id + " ->")
         console.log(res.data)
+        let matchList = res.data.matchList ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
+        }
         that.setData({
-          homeTeam: res.data.homeTeam,
           name: res.data.name,
           logoUrl: res.data.logoUrl,
           captainId: res.data.captainId,
           coachList: res.data.coachList,
           playerList: res.data.playerList,
-          matchList: res.data.matchList
+          matchList: matchList
         })
       },
       fail(err) {
@@ -148,6 +158,83 @@ Page({
     wx.navigateTo({
       url: '/pages/pub/player/player?id=' + id
     })
-  }
+  },
+
+  // 获取用户是否关注该比赛
+  isFavorite(userId, id) {
+    let that = this
+    wx.request({
+      url: URL + '/isFavorite',
+      data: {
+        userId: userId,
+        type: "team",
+        id: id,
+      },
+      success(res) {
+        console.log("team page: isFavorite->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          favorited: res.data
+        })
+      }
+    })
+  },
+
+  // 关注球队
+  favorite() {
+    let that = this
+    wx.showLoading({
+      title: '收藏中',
+      mask: true,
+    })
+    wx.request({
+      url: URL + '/favorite?type=team&userId=' + userId + '&id=' + that.data.id,
+      method: "POST",
+      success(res) {
+        console.log("team page: favorite->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("收藏成功")
+        that.setData({
+          favorited: true,
+        })
+      },
+      complete() {
+        wx.hideLoading()
+      }
+    })
+  },
+
+  // 取消关注
+  unfavorite() {
+    let that = this
+    wx.showLoading({
+      title: '取消收藏中',
+      mask: true,
+    })
+    wx.request({
+      url: URL + '/unfavorite?type=team&userId=' + userId + '&id=' + that.data.id,
+      method: "POST",
+      success(res) {
+        console.log("team page: unfavorite->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("取消收藏成功")
+        that.setData({
+          favorited: false
+        })
+      },
+      complete() {
+        wx.hideLoading()
+      }
+    })
+  },
 
 })
