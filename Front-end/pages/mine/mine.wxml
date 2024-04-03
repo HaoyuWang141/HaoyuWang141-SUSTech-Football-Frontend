@@ -40,10 +40,10 @@
       <view class="block-top" bindtap="togglePlayerMatchInform">
         <view class="block-title">
           <text>球员身份：比赛通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showPlayerMatchDot}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showPlayerMatchDot}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -63,10 +63,10 @@
       <view class="block-top" bindtap="togglePlayerInvitationInform">
         <view class="block-title">
           <text>球员身份：球队邀请通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showPlayerInvitationDot}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showPlayerInvitationDot}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -86,10 +86,10 @@
       <view class="block-top" bindtap="toggleApplicationInform">
         <view class="block-title">
           <text> 球员身份：球队申请通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showApplicationDot}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showApplicationDot}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -106,10 +106,10 @@
       <view class="block-top" bindtap="toggleCoachInvitationInform">
         <view class="block-title">
           <text>教练身份：球队邀请通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showCoachInvitationDot}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showCoachInvitationDot}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -129,10 +129,10 @@
       <view class="block-top" bindtap="toggleCoachMatchInform">
         <view class="block-title">
           <text>教练身份：比赛通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showCoachMatchDot}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showCoachMatchDot}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -152,10 +152,11 @@
       <view class="block-top" bindtap="toggleRefereeInvitationInformForEvent">
         <view class="block-title">
           <text>裁判身份：赛事邀请通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showRefereeInvitationDotForEvent}}">
+          </view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showRefereeInvitationDotForEvent}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -175,10 +176,10 @@
       <view class="block-top" bindtap="toggleRefereeInvitationInformForMatch">
         <view class="block-title">
           <text>裁判身份：比赛邀请通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showRefereeInvitationDotForMatch}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showRefereeInvitationDotForMatch}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -198,10 +199,10 @@
       <view class="block-top" bindtap="toggleRefereeMatchInform">
         <view class="block-title">
           <text>裁判身份：比赛通知</text>
-          <image class="icon" src="/assets/down333.png" mode="" />
+          <view class="red-dot" wx:if="{{showRefereeMatchDot}}"></view>
         </view>
         <view class="block-more">
-          <view class="red-dot" wx:if="{{showRefereeMatchDot}}"></view>
+          <image class="icon" src="/assets/down333.png" mode="" />
         </view>
       </view>
       <view class="block-main">
@@ -215,6 +216,6 @@
         </scroll-view>
       </view>
     </view>
-    
+
   </view>
 </scroll-view>

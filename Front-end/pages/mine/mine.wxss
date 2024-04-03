@@ -28,6 +28,7 @@
     height: 10px;
     border-radius: 50%;
     background-color: red;
+    margin-left: 20rpx;
   }
 
   .notification-box {
@@ -50,5 +51,4 @@
   .icon{
     width: 60rpx;
     height: 60rpx;
-    margin-left: 20rpx;
   }
