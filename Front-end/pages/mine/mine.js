@@ -12,33 +12,33 @@ Page({
     userId: Number,
     avatarUrl: defaultAvatarUrl,
     nickName: '',
+
     playerId: null,
     coachId: null,
     refereeId: null,
-
     isPlayer: false,
     isCoach: false,
     isReferee: false,
+
     // 控制比赛通知和球队邀请通知的显示
     showPlayerMatchInform: false,
     showCoachMatchInform: false,
     showRefereeMatchInform: false,
-
     showPlayerInvitationInform: false,
     showCoachInvitationInform: false,
     showRefereeInvitationInformForMatch: false,
     showRefereeInvitationInformForEvent: false,
 
     // 控制红点的显示
-    showPlayerMatchDot: false, // 假设有新的比赛通知
+    showPlayerMatchDot: false,
     showCoachMatchDot: false,
     showRefereeMatchDot: false,
-    showPlayerInvitationDot: false, // 假设有新的球队邀请
+    showPlayerInvitationDot: false,
     showCoachInvitationDot: false,
     showRefereeInvitationDotForMatch: false,
     showRefereeInvitationDotForEvent: false,
-
     showApplicationDot: false,
+
     playerInvitationInform: [],
     coachInvitationInform: [],
     refereeInvitationInformForMatch: [],
@@ -57,7 +57,6 @@ Page({
       avatarUrl: appInstance.globalData.avatarUrl ?? defaultAvatarUrl,
       nickName: appInstance.globalData.nickName ?? '',
     })
-    appInstance.addToRequestQueue(this.fetchUserId)
   },
 
   /**
@@ -72,6 +71,16 @@ Page({
    */
   onShow() {
     appInstance.addToRequestQueue(this.fetchData)
+    appInstance.addToRequestQueue(this.fetchUserId)
+    this.setData({
+      showPlayerMatchInform: false,
+      showCoachMatchInform: false,
+      showRefereeMatchInform: false,
+      showPlayerInvitationInform: false,
+      showCoachInvitationInform: false,
+      showRefereeInvitationInformForMatch: false,
+      showRefereeInvitationInformForEvent: false,
+    })
   },
 
   /**
@@ -93,6 +102,7 @@ Page({
    */
   onPullDownRefresh() {
     appInstance.addToRequestQueue(this.fetchData)
+    appInstance.addToRequestQueue(this.fetchUserId)
   },
 
   /**
@@ -442,8 +452,10 @@ Page({
       }
       return `您对${application.team.name}（球队）的申请${stadus}：${formattedDate}`
     });
+    let showDot = informs.length > 0 ? true : false;
     this.setData({
-      applicationInform: informs
+      applicationInform: informs,
+      showApplicationDot: showDot,
     });
   },
 
@@ -489,8 +501,12 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return `${invitation.team.name} 邀请您以教练的身份加入，邀请发起时间：${formattedDate}`;
-      } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
+        return `${invitation.team.name} 邀请您执教球队，邀请发起时间：${formattedDate}`;
+      } else if (invitation.status == "ACCEPTED") {
+
+      } else if (invitation.status == "REJECTED") {
+
+      }
       return null;
     }).filter(inform => inform !== null);
     let showDot = informs.length > 0 ? true : false;
@@ -501,12 +517,16 @@ Page({
   },
 
   formatPlayerInvitations: function (invitations) {
-    let that = this
+    const that = this
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return `${invitation.team.name} 邀请您加入，邀请发起时间：${formattedDate}`;
-      } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
+        return `${invitation.team.name} 邀请您加入球队，邀请发起时间：${formattedDate}`;
+      } else if (invitation.status == "ACCEPTED") {
+
+      } else if (invitation.status == "REJECTED") {
+
+      }
       return null;
     }).filter(inform => inform !== null);
     let showDot = informs.length > 0 ? true : false;
@@ -531,13 +551,11 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    const dataToUpdate = informs.length > 0 ? {
+    const showDot = informs.length > 0 ? true : false
+    this.setData({
       playerMatchInform: informs,
-      showPlayerMatchDot: true
-    } : {
-      playerMatchInform: ['您近两星期内没有比赛']
-    };
-    this.setData(dataToUpdate);
+      showPlayerMatchDot: showDot,
+    });
   },
 
   formatCoachMatches: function (matches) {
@@ -552,13 +570,11 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    const dataToUpdate = informs.length > 0 ? {
-      coahcMatchInform: informs,
-      showCoachMatchDot: true
-    } : {
-      coachMatchInform: ['您近两星期内没有比赛']
-    };
-    this.setData(dataToUpdate);
+    const showDot = informs.length > 0 ? true : false
+    this.setData({
+      coachMatchInform: informs,
+      showCoachMatchDot: showDot,
+    });
   },
 
   formatRefereeMatches: function (matches) {
@@ -573,13 +589,11 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    const dataToUpdate = informs.length > 0 ? {
+    const showDot = informs.length > 0 ? true : false
+    this.setData({
       refereeMatchInform: informs,
-      showRefereeMatchDot: true
-    } : {
-      refereeMatchInform: ['您近两星期内没有比赛']
-    };
-    this.setData(dataToUpdate);
+      showRefereeMatchDot: showDot,
+    });
   },
 
   // ------------------

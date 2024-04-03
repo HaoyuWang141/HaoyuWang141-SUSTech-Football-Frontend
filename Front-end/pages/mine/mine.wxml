@@ -35,9 +35,15 @@
         <view class="red-dot" wx:if="{{showPlayerMatchDot}}"></view>
       </view>
       <scroll-view scroll-y="true" style="height: {{showPlayerMatchInform ? '200px' : '0'}};" class="notification-box">
+
+        <view class="invitation-item" wx:if="{{playerMatchInform.length==0}}">
+          <text class="invitation-text">您近两星期内没有比赛</text>
+        </view>
+
         <view class="invitation-item" wx:for="{{playerMatchInform}}" wx:key="index">
           <text class="invitation-text">{{item}}</text>
         </view>
+
       </scroll-view>
     </view>
 
@@ -85,15 +91,22 @@
       </scroll-view>
     </view>
 
+    <!-- 教练身份比赛通知 -->
     <view class="notification-container" wx:if="{{isCoach}}">
       <view class="notification-title" bindtap="toggleCoachMatchInform">
         教练身份：比赛通知
         <view class="red-dot" wx:if="{{showCoachMatchDot}}"></view>
       </view>
       <scroll-view scroll-y="true" style="height: {{showCoachMatchInform ? '200px' : '0'}};" class="notification-box">
+
+        <view class="invitation-item" wx:if="{{coachMatchInform.length==0}}">
+          <text class="invitation-text">您近两星期内没有比赛</text>
+        </view>
+
         <view class="invitation-item" wx:for="{{coachMatchInform}}" wx:key="index">
           <text class="invitation-text">{{item}}</text>
         </view>
+
       </scroll-view>
     </view>
 
@@ -133,9 +146,15 @@
         <view class="red-dot" wx:if="{{showRefereeMatchDot}}"></view>
       </view>
       <scroll-view scroll-y="true" style="height: {{showRefereeMatchInform ? '200px' : '0'}};" class="notification-box">
+
+        <view class="invitation-item" wx:if="{{refereeMatchInform.length==0}}">
+          <text class="invitation-text">您近两星期内没有比赛</text>
+        </view>
+
         <view class="invitation-item" wx:for="{{refereeMatchInform}}" wx:key="index">
           <text class="invitation-text">{{item}}</text>
         </view>
+
       </scroll-view>
     </view>
 
