@@ -6,7 +6,6 @@
   border: none; /* 去除按钮边框 */
   border-radius: 5px; /* 按钮圆角 */
   cursor: pointer; /* 鼠标样式 */
-  max-width: 30%;
 }
 
 .check-btn {
@@ -16,5 +15,4 @@
   border: none; /* 去除按钮边框 */
   border-radius: 5px; /* 按钮圆角 */
   cursor: pointer; /* 鼠标样式 */
-  max-width: 30%;
 }

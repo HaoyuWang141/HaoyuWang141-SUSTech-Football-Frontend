@@ -1,6 +1,6 @@
 /* components/team-card-small/team.wxss */
 .container {
-  margin: 10rpx 30rpx;
+  margin: 10rpx 20rpx;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 10rpx 10rpx 40rpx rgba(237, 108, 0, 0.5);

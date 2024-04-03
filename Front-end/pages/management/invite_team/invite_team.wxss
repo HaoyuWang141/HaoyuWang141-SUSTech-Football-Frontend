@@ -1,32 +1,38 @@
 /* pages/management/invite_team/invite_team.wxss */
 .block-more {
-padding: 10rpx 0;
-font-size: 14px;
-color: #666;
-/* Medium grey color */
+  padding: 10rpx 0;
+  font-size: 14px;
+  color: #666;
+  /* Medium grey color */
 }
 
 /* Styles for the main content area */
 .block-main {
-font-size: 14px;
-color: #666;
-/* Medium grey color for the text */
-padding: 5px 0;
-/* Padding on top and bottom */
+  font-size: 14px;
+  color: #666;
+  /* Medium grey color for the text */
+  padding: 5px 0;
+  /* Padding on top and bottom */
 }
 
 .invite-btn {
-display: flex;
-flex-direction: row;
-background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
-color: white; /* 文字颜色 */
-padding: 2px 2px; /* 按钮内边距 */
-border: none; /* 去除按钮边框 */
-border-radius: 5px; /* 按钮圆角 */
-cursor: pointer; /* 鼠标样式 */
-max-width: 30%;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 2px 2px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 按钮圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  max-width: 50%;
 }
 
 .invite {
-font-size: x-small;
+  font-size: x-small;
+  white-space: nowrap;
+}
+
+.invite-btn:active {
+  /* 定义按钮在被点击时的样式 */
+  background-color: #d8e2ff; /* 按钮被点击时的背景色 */
 }
