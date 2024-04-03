@@ -13,9 +13,9 @@ Page({
     avatarUrl: defaultAvatarUrl,
     nickName: '',
 
-    playerId: null,
-    coachId: null,
-    refereeId: null,
+    playerId: Number,
+    coachId: Number,
+    refereeId: Number,
     isPlayer: false,
     isCoach: false,
     isReferee: false,
@@ -277,7 +277,7 @@ Page({
         })
 
         that.fetchCoachMatches(coachId)
-        that.fetchCoachInvitations(coachId)
+        that.fetchCoachTeamInvitations(coachId)
       },
       fail(err) {
         console.log('请求失败', err);
@@ -309,7 +309,7 @@ Page({
     });
   },
 
-  fetchCoachInvitations(coachId) {
+  fetchCoachTeamInvitations(coachId) {
     const that = this
     wx.request({
       url: URL + '/coach/team/getInvitations',
@@ -467,7 +467,10 @@ Page({
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       let matchTime = new Date(invitation.match.time).toLocaleString();
       if (invitation.status == "PENDING") {
-        return `邀请您执法${invitation.match.homeTeam.name}对阵${invitation.match.awayTeam.name}，比赛时间为${matchTime}, 邀请发起时间：${formattedDate}`;
+        return {
+          content: `邀请您执法${invitation.match.homeTeam.name}对阵${invitation.match.awayTeam.name}，比赛时间为${matchTime}, 邀请发起时间：${formattedDate}`,
+          id: invitation.match.matchId,
+        };
       } else if (invitation.status == "ACCEPTED") {
 
       } else if (invitation.status == "REJECTED") {
@@ -486,8 +489,15 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return `邀请您执法赛事：${invitation.event.name}, 邀请发起时间：${formattedDate}`;
-      } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
+        return {
+          content: `邀请您执法赛事：${invitation.event.name}, 邀请发起时间：${formattedDate}`,
+          id: invitation.event.eventId,
+        };
+      } else if (invitation.status == "ACCEPTED") {
+
+      } else if (invitation.status == "REJECTED") {
+
+      }
       return null;
     }).filter(inform => inform !== null);
     let showDot = informs.length > 0 ? true : false;
@@ -501,7 +511,10 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return `${invitation.team.name} 邀请您执教球队，邀请发起时间：${formattedDate}`;
+        return {
+          content: `${invitation.team.name} 邀请您执教球队，邀请发起时间：${formattedDate}`,
+          id: invitation.team.teamId,
+        };
       } else if (invitation.status == "ACCEPTED") {
 
       } else if (invitation.status == "REJECTED") {
@@ -521,7 +534,10 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return `${invitation.team.name} 邀请您加入球队，邀请发起时间：${formattedDate}`;
+        return {
+          content: `${invitation.team.name} 邀请您加入球队，邀请发起时间：${formattedDate}`,
+          id: invitation.team.teamId,
+        };
       } else if (invitation.status == "ACCEPTED") {
 
       } else if (invitation.status == "REJECTED") {
@@ -685,14 +701,261 @@ Page({
   },
 
   // ------------------
+  // 弹出 modal 用来同意或拒绝邀请
+
+  showPlayerTeamInvitationModal(e) {
+    let teamId = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '球队邀请',
+      content: `是否加入球队？`,
+      cancelText: '拒绝',
+      cancelColor: '#FF0000',
+      confirmText: '接受',
+      confirmColor: '#1cb72d',
+      success: (res) => {
+        if (res.confirm) {
+          this.playerReplyTeamInvitation(true, teamId);
+        } else if (res.cancel) {
+          this.playerReplyTeamInvitation(false, teamId);
+        }
+      }
+    });
+  },
+
+  showCoachTeamInvitationModal(e) {
+    let teamId = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '执教邀请',
+      content: `是否接受球队执教邀请？`,
+      cancelText: '拒绝',
+      cancelColor: '#FF0000',
+      confirmText: '接受',
+      confirmColor: '#1cb72d',
+      success: (res) => {
+        if (res.confirm) {
+          this.coachReplyTeamInvitation(true, teamId);
+        } else if (res.cancel) {
+          this.coachReplyTeamInvitation(false, teamId);
+        }
+      }
+    });
+  },
+
+  showRefereeEventInvitationModal(e) {
+    let eventId = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '赛事执法',
+      content: `是否接受赛事执法邀请？`,
+      cancelText: '拒绝',
+      cancelColor: '#FF0000',
+      confirmText: '接受',
+      confirmColor: '#1cb72d',
+      success: (res) => {
+        if (res.confirm) {
+          this.refereeReplyEventInvitation(true, eventId);
+        } else if (res.cancel) {
+          this.refereeReplyEventInvitation(false, eventId);
+        }
+      }
+    });
+  },
+
+  showRefereeMatchInvitationModal(e) {
+    let matchId = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '比赛执法',
+      content: `是否接受比赛执法邀请？`,
+      cancelText: '拒绝',
+      cancelColor: '#FF0000',
+      confirmText: '接受',
+      confirmColor: '#1cb72d',
+      success: (res) => {
+        if (res.confirm) {
+          this.refereeReplyMatchInvitation(true, matchId);
+        } else if (res.cancel) {
+          this.refereeReplyMatchInvitation(false, matchId);
+        }
+      }
+    });
+  },
+
+  // ------------------
   // 同意/拒绝各邀请, accepted=true/false
 
-  playerReplyTeamInvitation(accepted, teamId) {},
+  playerReplyTeamInvitation(accept, teamId) {
+    const that = this
+    const playerId = Number(this.data.playerId)
+    teamId = Number(teamId)
+    accept = Boolean(accept)
 
-  coachReplyTeamInvitation(accepted, teamId) {},
+    wx.showLoading({
+      title: '正在提交',
+      mask: true,
+    })
 
-  refereeReplyEventInvitation(accepted, eventId) {},
+    wx.request({
+      url: URL + '/player/team/replyInvitation?playerId=' + playerId + '&teamId=' + teamId + '&accept=' + accept,
+      method: "POST",
+      success(res) {
+        console.log("mine page: player Reply Team Invitation ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '回复失败',
+            icon: 'error',
+          })
+          return
+        }
+        wx.showToast({
+          title: '回复成功',
+          icon: 'success',
+        })
+        console.log("回复球队邀请成功")
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg)
+        wx.showToast({
+          title: '回复失败',
+          icon: 'error',
+        })
+      },
+      complete() {
+        wx.hideLoading()
+        that.fetchPlayerTeamInvitations(that.data.playerId)
+      }
+    })
+  },
 
-  refereeReplyMatchInvitation(accepted, matchId) {},
+  coachReplyTeamInvitation(accept, teamId) {
+    const that = this
+    const coachId = Number(this.data.coachId)
+    teamId = Number(teamId)
+    accept = Boolean(accept)
+
+    wx.showLoading({
+      title: '正在提交',
+      mask: true,
+    })
+
+    wx.request({
+      url: URL + '/coach/team/replyInvitation?coachId=' + coachId + '&teamId=' + teamId + '&accept=' + accept,
+      method: "POST",
+      success(res) {
+        console.log("mine page: coach Reply Team Invitation ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '回复失败',
+            icon: 'error',
+          })
+          return
+        }
+        wx.showToast({
+          title: '回复成功',
+          icon: 'success',
+        })
+        console.log("回复球队邀请成功")
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg)
+        wx.showToast({
+          title: '回复失败',
+          icon: 'error',
+        })
+      },
+      complete() {
+        wx.hideLoading()
+        that.fetchCoachTeamInvitations(that.data.coachId)
+      }
+    })
+  },
+
+  refereeReplyEventInvitation(accept, eventId) {
+    const that = this
+    const refereeId = Number(this.data.refereeId)
+    eventId = Number(eventId)
+    accept = Boolean(accept)
+
+    wx.showLoading({
+      title: '正在提交',
+      mask: true,
+    })
+
+    wx.request({
+      url: URL + '/referee/event/replyInvitation?refereeId=' + refereeId + '&eventId=' + eventId + '&accept=' + accept,
+      method: "POST",
+      success(res) {
+        console.log("mine page: referee Reply Event Invitation ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '回复失败',
+            icon: 'error',
+          })
+          return
+        }
+        wx.showToast({
+          title: '回复成功',
+          icon: 'success',
+        })
+        console.log("回复赛事邀请成功")
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+        wx.showToast({
+          title: '回复失败',
+          icon: 'error',
+        })
+      },
+      complete() {
+        wx.hideLoading()
+        that.fetchRefereeInvitationsForEvent(that.data.refereeId)
+      }
+    })
+  },
+
+  refereeReplyMatchInvitation(accept, matchId) {
+    const that = this
+    const refereeId = Number(this.data.refereeId)
+    matchId = Number(matchId)
+    accept = Boolean(accept)
+
+    wx.showLoading({
+      title: '正在提交',
+      mask: true,
+    })
+
+    wx.request({
+      url: URL + '/referee/match/replyInvitation?refereeId=' + refereeId + '&matchId=' + matchId + '&accept=' + accept,
+      method: "POST",
+      success(res) {
+        console.log("mine page: referee Reply Match Invitation ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '回复失败',
+            icon: 'error',
+          })
+          return
+        }
+        wx.showToast({
+          title: '回复成功',
+          icon: 'success',
+        })
+        console.log("回复比赛邀请成功")
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+        wx.showToast({
+          title: '回复失败',
+          icon: 'error',
+        })
+      },
+      complete() {
+        wx.hideLoading()
+        that.fetchRefereeInvitationsForMatch(that.data.refereeId)
+      }
+    })
+  },
 
 })
