@@ -32,8 +32,12 @@
     </modal>
   </view>
 
+  <view class="btn-container">
+    <button class="confirm" bindtap="confirmCreate">确认创建</button>
+  </view>
+
   <!-- 邀请球队 -->
-  <view class="team-container" >
+  <!-- <view class="team-container" >
     <text>参赛球队</text>
     <scroll-view scroll-y enable-flex >
       <view class="invite-container" >
@@ -44,5 +48,5 @@
         <team-card-big name="{{item.name}}" img="{{item.img}}" number="{{item.number}}"></team-card-big>
       </view>
     </scroll-view>
-  </view>
+  </view> -->
 </view>

@@ -200,33 +200,33 @@ Page({
   },
 
   // 显示比赛名称输入弹窗
-  showNameInput: function () {
-    this.setData({
-      modalHidden: false
-    });
-  },
+  // showNameInput: function () {
+  //   this.setData({
+  //     modalHidden: false
+  //   });
+  // },
 
-  changeName: function (e) {
-    this.setData({
-      newname: e.detail.value
-    });
-  },
+  // changeName: function (e) {
+  //   this.setData({
+  //     newname: e.detail.value
+  //   });
+  // },
 
   // 确认更改比赛名时触发的事件
-  confirmChangeName: function () {
-    // 这里可以添加逻辑，如检查输入是否合法等
-    this.setData({
-      name: this.data.newname,
-      modalHidden: true
-    });
-  },
+  // confirmChangeName: function () {
+  //   // 这里可以添加逻辑，如检查输入是否合法等
+  //   this.setData({
+  //     name: this.data.newname,
+  //     modalHidden: true
+  //   });
+  // },
 
   // 取消更改比赛名时触发的事件
-  cancelChangeName: function () {
-    this.setData({
-      modalHidden: true
-    });
-  },
+  // cancelChangeName: function () {
+  //   this.setData({
+  //     modalHidden: true
+  //   });
+  // },
 
   // 处理比分选择器选择完成事件
   bindPickerChangeScore: function (e) {
@@ -324,6 +324,14 @@ Page({
 
   deleteMatch() {
     
+  },
+
+  // 处理邀请队伍
+  inviteTeam: function(e) {
+    const dataset = e.currentTarget.dataset 
+    wx.navigateTo({
+      url: '/pages/management/match_edit/invite_team/invite_team?id=' + dataset.id,
+    })
   },
 
 })

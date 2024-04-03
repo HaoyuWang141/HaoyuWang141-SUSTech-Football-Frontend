@@ -126,17 +126,44 @@ Page({
   },
 
   // 取消更改队名时触发的事件
-  cancelChangeEventdes: function () {
+  cancelChangeEventdes: function (){
     this.setData({
       modalHiddenEdes: true
     });
   },
 
-  gotoInviteTeam: function(e){
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/invite_team/invite_team?id=' + dataset.id,
-    })
+  confirmCreate: function (){
+    var that = this;
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      name: this.data.name,
+      description: this.data.description,
+    };
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/event/create?ownerId=' + userId, // 后端接口地址
+      method: 'POST', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        // 请求成功的处理逻辑
+        console.log("dataToUpdate->");
+        console.log(dataToUpdate);
+        console.log('比赛信息更新成功', res.data);
+        // 可以根据后端返回的数据更新页面状态或进行其他操作
+      },
+      fail: err => {
+        // 请求失败的处理逻辑
+        console.error('比赛信息更新失败', err);
+        // 可以显示失败的提示信息或进行其他操作
+      }
+    });
   },
+
+  // gotoInviteTeam: function(e){
+  //   const dataset = e.currentTarget.dataset
+  //   wx.navigateTo({
+  //     url: '/pages/management/invite_team/invite_team?id=' + dataset.id,
+  //   })
+  // },
 
 })

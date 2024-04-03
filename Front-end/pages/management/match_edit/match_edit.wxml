@@ -15,8 +15,8 @@
       <text class="name">{{name}}</text>
       <view class="info-container">
         <view class="team">
-          <image class="icon" src="{{homeTeam.logoUrl}}"></image>
-          <text>{{homeTeam.name}}</text>
+          <image class="icon" src="{{homeTeam.logoUrl ? homeTeam.logoUrl : '/assets/newplayer.png'}}" bindtap="inviteTeam" data-id="{{matchId}}"></image>
+          <text>{{homeTeam.name ? homeTeam.name : '主队'}}</text>
         </view>
         <view class="middle">
           <block wx:if="{{hasBegun}}">
@@ -26,8 +26,8 @@
           <text class="not-begin" wx:else>未开始</text>
         </view>
         <view class="team">
-          <image class="icon" src="{{awayTeam.logoUrl}}"></image>
-          <text>{{awayTeam.name}}</text>
+          <image class="icon" src="{{awayTeam.logoUrl ? awayTeam.logoUrl : '/assets/newplayer.png'}}" bindtap="inviteTeam" data-id="{{matchId}}"></image>
+          <text>{{awayTeam.name ? awayTeam.name : '客队'}}</text>
         </view>
       </view>
     </view>
@@ -48,10 +48,10 @@
     </picker>
 
     <!-- 比赛名称 -->
-    <view class="changeInfo-container" bindtap="showNameInput">
+    <!-- <view class="changeInfo-container" bindtap="showNameInput">
       <text>比赛名称：</text>
       <text>{{name}}</text>
-    </view>
+    </view> -->
 
     <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName"       bindcancel="cancelChangeName">
       <view class="modal-content">

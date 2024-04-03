@@ -8,8 +8,8 @@
       </view>
       <view class="block-main">
         <scroll-view scroll-y enable-flex>
-          <team-card-small wx:for="{{allTeamList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoTeamPage" data-id="{{item.teamId}}">
-            <button class="invite-btn"><text class="invite">邀请</text></button>
+          <team-card-small wx:for="{{allTeamList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" >
+            <button class="invite-btn"><text class="invite" bindtap="invite" data-id="{{item.teamId}}">邀请</text></button>
           </team-card-small>
         </scroll-view>
       </view>

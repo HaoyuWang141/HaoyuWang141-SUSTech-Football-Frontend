@@ -35,7 +35,6 @@ Page({
       id: options.id
     })
     this.fetchData(options.id);
-    this.findCaptain();
   },
 
   /**
@@ -89,14 +88,11 @@ Page({
   },
 
   fetchData: function (id) {
-    // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
-
     var that = this;
-    // 模拟网络请求
     wx.request({
       url: URL + '/team/get',
       data: {
@@ -109,7 +105,6 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        // 基本数据
         that.setData({
           teamId: res.data.teamId,
           name: res.data.name,
@@ -121,38 +116,40 @@ Page({
           matchList: res.data.matchList,
           playerList: res.data.playerList,
         });
-
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        wx.hideLoading();
       }
     });
   },
 
-  findCaptain() {
-    let captainPlayer = null;
-    if (this.data.playerList !== null) {
-      for (let i = 0; i < this.data.playerList.length; i++) {
-        if (this.data.playerList[i].playerId === this.data.captainId) {
-          captainPlayer = this.data.playerList[i];
-          break;
+  fetchCaptain() {
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/player/get',
+      data: {
+        id: this.data.captainId
+      },
+      success(res) {
+        console.log("captain->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
         }
-      }
-    
-      if (captainPlayer) {
-        this.setData({
-          captain: [captainPlayer]
+        // 基本数据
+        that.setData({
+          captain: res.data
         });
-      } else {
-        console.log('未找到队长信息');
-      }
-    }
-    console.log('未找到队长信息');
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+    })
   },
 
   /**

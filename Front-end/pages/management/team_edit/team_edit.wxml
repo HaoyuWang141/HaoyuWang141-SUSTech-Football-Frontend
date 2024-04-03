@@ -33,7 +33,7 @@
       <view class="important-person">
         <view class="captain-container">
           <view class="text">队长</view>
-          <player-card-small name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
+          <player-card-small wx:if="{{captainId !== null}}" name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
         </view>
       </view>
 
