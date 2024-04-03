@@ -36,20 +36,25 @@ page {
   font-size: 16px;
   font-weight: bold;
   color: #333;
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  align-items: center;
 }
 
 .block-more {
   padding: 10rpx 0;
   font-size: 14px;
   color: #666;
-  /* Medium grey color */
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  align-items: center;
 }
 
 .block-main {
   font-size: 14px;
   color: #666;
-  /* Medium grey color for the text */
   padding: 5px 0;
-  /* Padding on top and bottom */
 }
 /* ---------------------- */

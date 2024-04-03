@@ -89,7 +89,7 @@
         "selectedIconPath": "/assets/mine_selected.png"
       },
       {
-        "text": "开发通知",
+        "text": "开发",
         "pagePath": "pages/development/development",
         "iconPath": "/assets/develop.png",
         "selectedIconPath": "/assets/develop_selected.png"

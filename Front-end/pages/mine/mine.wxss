@@ -5,8 +5,8 @@
     width: 200rpx;
     border-radius: 40rpx;
   }
-  .player-container {
-    padding: 10px;
+  .container-mine {
+    padding: 0 20rpx;
   }
 
   .notification-container {
@@ -45,4 +45,10 @@
   .invitation-text {
     font-size: 16px;
     color: #333;
+  }
+
+  .icon{
+    width: 60rpx;
+    height: 60rpx;
+    margin-left: 20rpx;
   }

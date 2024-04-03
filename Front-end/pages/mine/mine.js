@@ -683,4 +683,16 @@ Page({
       showApplicationDot: false
     });
   },
+
+  // ------------------
+  // 同意/拒绝各邀请, accepted=true/false
+
+  playerReplyTeamInvitation(accepted, teamId) {},
+
+  coachReplyTeamInvitation(accepted, teamId) {},
+
+  refereeReplyEventInvitation(accepted, eventId) {},
+
+  refereeReplyMatchInvitation(accepted, matchId) {},
+
 })
