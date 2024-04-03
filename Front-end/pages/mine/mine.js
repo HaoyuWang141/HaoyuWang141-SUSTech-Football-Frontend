@@ -26,19 +26,23 @@ Page({
 
     showPlayerInvitationInform: false,
     showCoachInvitationInform: false,
-    showRefereeInvitationInform: false,
+    showRefereeInvitationInformForMatch: false,
+    showRefereeInvitationInformForEvent: false,
+
     // 控制红点的显示
     showPlayerMatchDot: false, // 假设有新的比赛通知
     showCoachMatchDot: false,
     showRefereeMatchDot: false,
     showPlayerInvitationDot: false, // 假设有新的球队邀请
     showCoachInvitationDot: false,
-    showRefereeInvitationDot: false,
+    showRefereeInvitationDotForMatch: false,
+    showRefereeInvitationDotForEvent: false,
 
     showApplicationDot: false,
     playerInvitationInform: [],
     coachInvitationInform: [],
-    refereeInvitationInform: [],
+    refereeInvitationInformForMatch: [],
+    refereeInvitationInformForEvent: [],
     playerMatchInform: [],
     coachMatchInform: [],
     refereeMatchInform: [],
@@ -53,6 +57,7 @@ Page({
       avatarUrl: appInstance.globalData.avatarUrl ?? defaultAvatarUrl,
       nickName: appInstance.globalData.nickName ?? '',
     })
+    appInstance.addToRequestQueue(this.fetchUserId)
   },
 
   /**
@@ -67,9 +72,6 @@ Page({
    */
   onShow() {
     appInstance.addToRequestQueue(this.fetchData)
-    this.setData({
-      userId: appInstance.globalData.userId,
-    })
   },
 
   /**
@@ -107,21 +109,44 @@ Page({
 
   },
 
+  // ------------------
+  // fetch data
+
+  fetchUserId(userId) {
+    const that = this
+    that.setData({
+      userId
+    })
+  },
+
+  // 根据userId获取本页面全部数据
   fetchData: function (userId) {
-    // 显示加载提示框，提示用户正在加载
-    wx.showLoading({
-      title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
-    });
-    var that = this;
+
+    const that = this
+
     //Player相关
+    that.fetchPlayerId(userId)
+
+    //教练身份
+    that.fetchCoachId(userId)
+
+    //裁判身份
+    that.fetchRefereeId(userId)
+
+  },
+
+  // ------------------
+  // fetch data: player
+
+  fetchPlayerId(userId) {
+    const that = this
     wx.request({
       url: URL + '/user/getPlayerId',
       data: {
         userId: userId
       },
       success(res) {
-        console.log("playerId->")
+        console.log("mine page: playerId->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -132,92 +157,104 @@ Page({
           isPlayer: true,
           playerId: res.data
         })
-        //球员身份：比赛信息
-        wx.request({
-          url: URL + '/player/match/getAll',
-          data: {
-            playerId: playerId,
-          },
-          success(res) {
-            console.log("match->")
-            console.log(res.data)
-            if (res.statusCode !== 200) {
-              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-              return
-            }
-            that.formatPlayerMatchs(res.data);
-          },
-          fail(err) {
-            console.log('请求失败', err);
-          },
-          complete() {
-            wx.hideLoading();
-          }
-        });
-        //球员身份：球队邀请
-        wx.request({
-          url: URL + '/player/team/getInvitations',
-          data: {
-            playerId: playerId,
-          },
-          success(res) {
-            console.log("invitation->")
-            console.log(res.data)
-            if (res.statusCode !== 200) {
-              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-              return
-            }
-            that.formatPlayerInvatitons(res.data)
-          },
-          fail(err) {
-            console.log('请求失败', err);
-          },
-          complete() {
-            wx.hideLoading();
-          }
-        });
 
-        //球队申请
-        wx.request({
-          url: URL + '/player/team/getApplications',
-          data: {
-            playerId: playerId,
-          },
-          success(res) {
-            console.log("application->")
-            console.log(res.data)
-            if (res.statusCode !== 200) {
-              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-              return
-            }
-            that.formatApplications(res.data)
-          },
-          fail(err) {
-            console.log('请求失败', err);
-          },
-          complete() {
-            wx.hideLoading();
-          }
-        });
+        //球员身份：比赛信息
+        that.fetchPlayerMatches(playerId)
+
+        //球员身份：球队邀请
+        that.fetchPlayerTeamInvitations(playerId)
+
+        //球员身份：球队申请
+        that.fetchPlayerTeamApplications(playerId)
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
-      complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
-      }
+      complete() {}
     });
+  },
 
-    //教练身份
+  fetchPlayerMatches(playerId) {
+    const that = this
+    wx.request({
+      url: URL + '/player/match/getAll',
+      data: {
+        playerId: playerId,
+      },
+      success(res) {
+        console.log("mine page: fetch Player Matches->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatPlayerMatches(res.data);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchPlayerTeamInvitations(playerId) {
+    const that = this
+    wx.request({
+      url: URL + '/player/team/getInvitations',
+      data: {
+        playerId: playerId,
+      },
+      success(res) {
+        console.log("mine page: fetch Player Team Invitations->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatPlayerInvitations(res.data)
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchPlayerTeamApplications(playerId) {
+    const that = this
+    wx.request({
+      url: URL + '/player/team/getApplications',
+      data: {
+        playerId: playerId,
+      },
+      success(res) {
+        console.log("mine page: fetch Player Team Applications->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatApplications(res.data)
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  // ------------------
+  // fetch data: coach
+
+  fetchCoachId(userId) {
+    const that = this
     wx.request({
       url: URL + '/user/getCoachId',
       data: {
         userId: userId
       },
       success(res) {
-        console.log("CoachId->")
+        console.log("mine page: CoachId->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -225,71 +262,78 @@ Page({
         }
         let coachId = res.data;
         that.setData({
-            isCoach: true,
-            coachId: res.data
-          }),
+          isCoach: true,
+          coachId: coachId,
+        })
 
-          wx.request({
-            url: URL + '/coach/match/getAll',
-            data: {
-              coachId: coachId,
-            },
-            success(res) {
-              console.log("coachMatch->")
-              console.log(res.data)
-              if (res.statusCode !== 200) {
-                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-                return
-              }
-              that.formatCoachMatchs(res.data);
-            },
-            fail(err) {
-              console.log('请求失败', err);
-            },
-            complete() {
-              wx.hideLoading();
-            }
-          });
-
-          wx.request({
-            url: URL + '/coach/team/getInvitations',
-            data: {
-              coachId: coachId,
-            },
-            success(res) {
-              console.log("coachInvitation->")
-              console.log(res.data)
-              if (res.statusCode !== 200) {
-                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-                return
-              }
-              that.formatCoachInvatitons(res.data);
-            },
-            fail(err) {
-              console.log('请求失败', err);
-            },
-            complete() {
-              wx.hideLoading();
-            }
-          });
-
+        that.fetchCoachMatches(coachId)
+        that.fetchCoachInvitations(coachId)
       },
       fail(err) {
         console.log('请求失败', err);
       },
-      complete() {
-        wx.hideLoading();
-      }
+      complete() {}
     });
+  },
 
-    //裁判身份
+  fetchCoachMatches(coachId) {
+    const that = this
+    wx.request({
+      url: URL + '/coach/match/getAll',
+      data: {
+        coachId: coachId,
+      },
+      success(res) {
+        console.log("mine page: fetch Coach Matches->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatCoachMatches(res.data);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchCoachInvitations(coachId) {
+    const that = this
+    wx.request({
+      url: URL + '/coach/team/getInvitations',
+      data: {
+        coachId: coachId,
+      },
+      success(res) {
+        console.log("mine page: fetch Coach Invitations->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatCoachInvitations(res.data);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  // ------------------
+  // fetch data: referee
+
+  fetchRefereeId(userId) {
+    const that = this
     wx.request({
       url: URL + '/user/getRefereeId',
       data: {
         userId: userId
       },
       success(res) {
-        console.log("RefereeId->")
+        console.log("mine page: RefereeId->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -298,63 +342,93 @@ Page({
         let refereeId = res.data
         that.setData({
           isReferee: true,
-          refereeId: res.data
+          refereeId: refereeId
         })
 
-        wx.request({
-          url: URL + '/referee/match/getAll',
-          data: {
-            refereeId: refereeId,
-          },
-          success(res) {
-            console.log("refereeMatch->")
-            console.log(res.data)
-            if (res.statusCode !== 200) {
-              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-              return
-            }
-            that.formatRefereeMatchs(res.data);
-          },
-          fail(err) {
-            console.log('请求失败', err);
-          },
-          complete() {
-            wx.hideLoading();
-          }
-        });
-
-        wx.request({
-          url: URL + '/referee/match/getInvitations',
-          data: {
-            refereeId: refereeId,
-          },
-          success(res) {
-            console.log("refereeInvitation->")
-            console.log(res.data)
-            if (res.statusCode !== 200) {
-              console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-              return
-            }
-            that.formatRefereeInvatitons(res.data);
-          },
-          fail(err) {
-            console.log('请求失败', err);
-          },
-          complete() {
-            wx.hideLoading();
-          }
-        });
+        that.fetchRefereeMatches(refereeId)
+        that.fetchRefereeInvitationsForMatch(refereeId)
+        that.fetchRefereeInvitationsForEvent(refereeId)
 
       },
       fail(err) {
         console.log('请求失败', err);
       },
-      complete() {
-        wx.hideLoading();
-      }
+      complete() {}
     });
-
   },
+
+  fetchRefereeMatches(refereeId) {
+    const that = this
+    wx.request({
+      url: URL + '/referee/match/getAll',
+      data: {
+        refereeId: refereeId,
+      },
+      success(res) {
+        console.log("mine page: fetch Referee Match->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatRefereeMatches(res.data);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchRefereeInvitationsForMatch(refereeId) {
+    const that = this
+    wx.request({
+      url: URL + '/referee/match/getInvitations',
+      data: {
+        refereeId: refereeId,
+      },
+      success(res) {
+        console.log("mine page: fetch Referee Invitations For Match->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatRefereeInvitationsForMatch(res.data);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchRefereeInvitationsForEvent(refereeId) {
+    const that = this
+    wx.request({
+      url: URL + '/referee/event/getInvitations',
+      data: {
+        refereeId: refereeId,
+      },
+      success(res) {
+        console.log("mine page: fetch Referee Invitations For Event->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatRefereeInvitationsForEvent(res.data);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  // ------------------
+  // format applications
+
   formatApplications: function (applications) {
     const informs = applications.map(application => {
       const formattedDate = (application.lastUpdated != null) ? new Date(application.lastUpdated).toLocaleString() : ''; // 将时间戳转换为可读日期
@@ -373,24 +447,45 @@ Page({
     });
   },
 
-  formatRefereeInvatitons: function (invitations) {
+  // ------------------
+  // format invitations
+
+  formatRefereeInvitationsForMatch: function (invitations) {
     const informs = invitations.map(invitation => {
-      const formattedDate = (invitation.time != null) ? new Date(invitation.time).toLocaleString() : '未知';
-      let matchTime = new Date(invitation.time);
-      let now = new Date();
-      if (invitation.status == "PENDING" && matchTime > now) {
-        return `有球队邀请您执法${invitation.homeTeam.name}对阵${invitation.awayTeam.name}，比赛时间为${formattedDate}, 邀请发起时间：${formattedDate}`;
+      const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
+      let matchTime = new Date(invitation.match.time).toLocaleString();
+      if (invitation.status == "PENDING") {
+        return `邀请您执法${invitation.match.homeTeam.name}对阵${invitation.match.awayTeam.name}，比赛时间为${matchTime}, 邀请发起时间：${formattedDate}`;
+      } else if (invitation.status == "ACCEPTED") {
+
+      } else if (invitation.status == "REJECTED") {
+
+      }
+      return null;
+    }).filter(inform => inform !== null);
+    let showDot = informs.length > 0 ? true : false;
+    this.setData({
+      refereeInvitationInformForMatch: informs,
+      showRefereeInvitationDotForMatch: showDot,
+    });
+  },
+
+  formatRefereeInvitationsForEvent: function (invitations) {
+    const informs = invitations.map(invitation => {
+      const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
+      if (invitation.status == "PENDING") {
+        return `邀请您执法赛事：${invitation.event.name}, 邀请发起时间：${formattedDate}`;
       } else if (invitation.status == "ACCEPTED") {} else if (invitation.status == "REJECTED") {}
       return null;
     }).filter(inform => inform !== null);
     let showDot = informs.length > 0 ? true : false;
     this.setData({
-      refereeInvitationInform: informs,
-      showRefereeInvitationDot: showDot
+      refereeInvitationInformForEvent: informs,
+      showRefereeInvitationDotForEvent: showDot
     });
   },
 
-  formatCoachInvatitons: function (invitations) {
+  formatCoachInvitations: function (invitations) {
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
@@ -405,7 +500,7 @@ Page({
     });
   },
 
-  formatPlayerInvatitons: function (invitations) {
+  formatPlayerInvitations: function (invitations) {
     let that = this
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
@@ -421,9 +516,11 @@ Page({
     });
   },
 
-  formatPlayerMatchs: function (matchs) {
+  // ------------------
+  // format matches
 
-    const informs = matchs.map(match => {
+  formatPlayerMatches: function (matches) {
+    const informs = matches.map(match => {
       const matchDay = new Date(match.time);
       const nowDay = new Date();
       if (matchDay < nowDay) return null;
@@ -443,8 +540,8 @@ Page({
     this.setData(dataToUpdate);
   },
 
-  formatCoachMatchs: function (matchs) {
-    const informs = matchs.map(match => {
+  formatCoachMatches: function (matches) {
+    const informs = matches.map(match => {
       const matchDay = new Date(match.time);
       const nowDay = new Date();
       if (matchDay < nowDay) return null;
@@ -464,8 +561,8 @@ Page({
     this.setData(dataToUpdate);
   },
 
-  formatRefereeMatchs: function (matchs) {
-    const informs = matchs.map(match => {
+  formatRefereeMatches: function (matches) {
+    const informs = matches.map(match => {
       const matchDay = new Date(match.time);
       const nowDay = new Date();
       if (matchDay < nowDay) return null;
@@ -485,6 +582,7 @@ Page({
     this.setData(dataToUpdate);
   },
 
+  // ------------------
 
   onChooseAvatar(e) {
     const {
@@ -507,7 +605,9 @@ Page({
     });
   },
 
+  // ------------------
   // 切换比赛通知的显示状态
+
   togglePlayerMatchInform: function () {
     this.setData({
       showPlayerMatchInform: !this.data.showPlayerMatchInform,
@@ -528,7 +628,10 @@ Page({
       showRefereeMatchDot: false
     });
   },
+
+  // ------------------
   // 切换球队邀请通知的显示状态
+
   togglePlayerInvitationInform: function () {
     this.setData({
       showPlayerInvitationInform: !this.data.showPlayerInvitationInform,
@@ -543,12 +646,22 @@ Page({
     });
   },
 
-  toggleRefereeInvitationInform: function () {
+  toggleRefereeInvitationInformForMatch: function () {
     this.setData({
-      showRefereeInvitationInform: !this.data.showRefereeInvitationInform,
-      showRefereeInvitationDot: false
+      showRefereeInvitationInformForMatch: !this.data.showRefereeInvitationInformForMatch,
+      showRefereeInvitationDotForMatch: false
     });
   },
+
+  toggleRefereeInvitationInformForEvent: function () {
+    this.setData({
+      showRefereeInvitationInformForEvent: !this.data.showRefereeInvitationInformForEvent,
+      showRefereeInvitationDotForEvent: false
+    });
+  },
+
+  // ------------------
+  // 切换申请加入球队通知的显示状态
 
   toggleApplicationInform: function () {
     this.setData({
