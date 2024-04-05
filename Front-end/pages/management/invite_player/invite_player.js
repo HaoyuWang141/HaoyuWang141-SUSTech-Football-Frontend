@@ -25,7 +25,7 @@ Page({
   onLoad(options) {
     console.log(options.id);
     this.setData({
-      teamId: options.id,
+      teamId: parseInt(options.id)
     })
     this.fetchData(this.data.teamId);
   },
@@ -41,7 +41,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData(this.data.teamId);
   },
 
   /**
@@ -62,7 +62,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData(this.data.teamId);
   },
 
   /**
@@ -131,28 +131,39 @@ Page({
     })
   },
 
-  invite: function(e) {
-    const dataToUpdate = {
-      teamId: this.data.teamId,
-      playerId: e.currentTarget.dataset.id
-    };
-    // 发送请求到后端接口
+  // 判断球员是否在playerList中
+  isInPlayerList: function(id) {
+    const isInList = this.data.playerList.find(player => player.playerId.include(id));
+    console.log(`Player ${id} is ${isInList ? 'in' : 'not in'} the player list.`);
+    return isInList;
+  },
+
+  invite(e) {
     wx.request({
-      url: URL + '/team/player/invite', // 后端接口地址
-      method: 'POST', // 请求方法
-      data: dataToUpdate, // 要发送的数据
+      url: URL + '/team/player/invite?teamId=' + this.data.teamId + "&playerId=" + e.currentTarget.dataset.id,
+      method: 'POST',
       success: res => {
-        // 请求成功的处理逻辑
         console.log('比赛信息更新成功', res.data);
-        // 可以根据后端返回的数据更新页面状态或进行其他操作
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '已邀请'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
       },
       fail: err => {
-        // 请求失败的处理逻辑
         console.error('比赛信息更新失败', err);
-        // 可以显示失败的提示信息或进行其他操作
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
       }
     });
   },
+  
 
   gotoPlayerPage: function (e) {
     const id = e.currentTarget.dataset.id

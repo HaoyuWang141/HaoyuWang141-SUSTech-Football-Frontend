@@ -1,18 +1,10 @@
 /* pages/management/match_new/invite_team/invite_team.wxss */
 
 /* Styles for the container */
-.block-container {
-  padding: 30rpx;
-  border: 1rpx solid #cccccc;
-  /* Light grey border */
-  background-color: white;
-  /* Light grey background */
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  margin-left: 10rpx;
-  margin-right: 10rpx;
-}
 
+.block-container {
+  margin-bottom: 0%;
+}
 /* Styles for the top section */
 .block-top {
   display: flex;
@@ -61,6 +53,15 @@
   border: none; /* 去除按钮边框 */
   border-radius: 5px; /* 按钮圆角 */
   cursor: pointer; /* 鼠标样式 */
-  max-width: 30%;
+  max-width: 50%;
+}
+
+.invite {
   font-size: x-small;
+  white-space: nowrap;
+}
+
+.invite-btn:active {
+  /* 定义按钮在被点击时的样式 */
+  background-color: #d8e2ff; /* 按钮被点击时的背景色 */
 }

@@ -130,5 +130,17 @@ Page({
         wx.hideLoading(); // 关闭加载提示框
       }
     });
-  }
+  },
+
+  selectHomeTeam (){
+
+  },
+
+  selectAwayTeam (){
+
+  },
+
+  confirmSelect (){
+
+  },
 })

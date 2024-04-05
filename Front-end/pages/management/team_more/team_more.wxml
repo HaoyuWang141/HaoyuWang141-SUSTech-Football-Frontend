@@ -1,20 +1,22 @@
 <!--pages/management/team_more/team_more.wxml-->
 <view class="container">
   <view style="width: 90%;">
-    
+
     <view style="text-align: center;">管理的球队</view>
 
-    <scroll-view scroll-y enable-flex >
+    <scroll-view scroll-y enable-flex>
 
       <view>
         <team-card-big name="创建新球队" img="/assets/newplayer.png" number="0" bindtap="createNewTeam"></team-card-big>
       </view>
 
-      <view class="team-card-container" >
+      <view class="team-card-container">
         <block wx:for="{{teamList}}" wx:key="teamId">
-          <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerCount}}" bindtap="gotoTeamPage" data-id="{{item.teamId}}">
-          <button class="delete-btn" bindtap="deleteTeam" data-id="{{item.teamId}}">删除</button>
-          <button class="check-btn" bindtap="gotoEditTeam" data-id="{{item.teamId}}">编辑</button>
+          <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerCount}}">
+            <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
+              <view class="delete-btn" bindtap="deleteTeam" data-id="{{item.teamId}}">删除</view>
+              <view class="check-btn" bindtap="gotoEditTeam" data-id="{{item.teamId}}">编辑</view>
+            </view>
           </team-card-big>
         </block>
       </view>

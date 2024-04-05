@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    eventId: Number,
     allTeamList: Array,
     teamList: Array,
   },
@@ -18,7 +19,7 @@ Page({
   onLoad(options) {
     console.log(options.id)
     this.setData({
-      id: options.id
+      eventId: parseInt(options.id)
     })
     this.fetchData();
   },
@@ -73,14 +74,11 @@ Page({
   },
 
   fetchData: function () {
-    // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
-
     var that = this;
-    // 模拟网络请求
     wx.request({
       url: URL + '/team/getAll',
       success(res) {
@@ -90,19 +88,42 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        // 基本数据
         that.setData({
           allTeamList: res.data,
         });
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        wx.hideLoading();
       }
     });
-  }
+  },
+
+  invite(e) {
+    wx.request({
+      url: URL + '/event/team/invite?eventId=' + this.data.eventId + '&teamId=' + e.currentTarget.dataset.id,
+      method: 'POST',
+      success: res => {
+        console.log('比赛信息更新成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '已邀请'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('比赛信息更新失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    });
+  },
 })

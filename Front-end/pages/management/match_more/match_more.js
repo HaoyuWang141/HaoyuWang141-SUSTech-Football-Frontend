@@ -22,7 +22,7 @@ Page({
       score1: 0,
       score2: 0,
       hasBegun: true,
-      time: "2024-03-14 23:54"
+      time: String
     }
   },
 
@@ -116,7 +116,7 @@ Page({
           match.hasBegun = match.status == 'PENDING' ? false : true
         }
         that.setData({
-          matchList,
+          matchList: res.data,
         })
         
       },

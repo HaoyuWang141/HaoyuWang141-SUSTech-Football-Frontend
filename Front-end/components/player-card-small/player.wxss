@@ -1,6 +1,6 @@
 /* components/palyer-card-small/player.wxss */
 .player-card {
-  margin: 10rpx 30rpx;
+  margin: 10rpx 20rpx;
   background-color: #fff;
   border-radius: 10rpx;
   /* box-shadow: 10rpx 10rpx 40rpx rgba(0, 63, 67, 0.5); */

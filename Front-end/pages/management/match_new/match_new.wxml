@@ -12,18 +12,14 @@
         <view class="info-container">
           <view class="team" bindtap="inviteTeam">
             <image class="icon" src="{{icon1}}"></image>
-            <text>{{team1}}</text>
+            <text>{{homeTeam}}</text>
           </view>
           <view class="middle">
-            <block wx:if="{{hasBegun}}">
-              <text class="score">{{score1}} - {{score2}}</text>
-              <text class="penalty" wx:if="{{score1 === score2}}">({{penalty1}} - {{penalty2}})</text>
-            </block>
-            <text class="not-begin" wx:else>未开始</text>
+            <text class="not-begin">未开始</text>
           </view>
           <view class="team" bindtap="inviteTeam">
             <image class="icon" src="{{icon2}}"></image>
-            <text>{{team2}}</text>
+            <text>{{awayTeam}}</text>
           </view>
         </view>
       </view>
@@ -43,24 +39,24 @@
         <text>{{time}}</text>
       </picker>
 
-      <!-- 比赛名称 -->
+      <!-- 比赛名称
       <view class="changeInfo-container" bindtap="showNameInput">
         <text>比赛名称：</text>
         <text>{{name}}</text>
-      </view>
+      </view> -->
 
-      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname"       bindcancel="cancelChangeTeamname">
+      <!-- <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname"       bindcancel="cancelChangeTeamname">
         <view class="modal-content">
           <text>请输入比赛名称：</text>
           <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
         </view>
-      </modal>
+      </modal> -->
 
     </view>
 
     <!-- 提交按钮 -->
     <view class="btn-container">
-      <button class="confirm" bindtap="confirmEdit">确认创建</button>
+      <button class="confirm" bindtap="confirmCreate">确认创建</button>
     </view>
     
   </view>
