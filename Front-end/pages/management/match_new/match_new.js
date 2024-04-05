@@ -166,11 +166,24 @@ Page({
         console.log(dataToUpdate);
         console.log('比赛信息更新成功', res.data);
         // 可以根据后端返回的数据更新页面状态或进行其他操作
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
       },
       fail: err => {
         // 请求失败的处理逻辑
         console.error('比赛信息更新失败', err);
         // 可以显示失败的提示信息或进行其他操作
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
       }
     });
   },

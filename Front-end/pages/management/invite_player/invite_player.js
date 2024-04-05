@@ -63,6 +63,7 @@ Page({
    */
   onPullDownRefresh() {
     this.fetchData(this.data.teamId);
+    wx.stopPullDownRefresh();
   },
 
   /**
