@@ -249,7 +249,7 @@ Page({
           return
         }
         that.setData({
-          favorited: res.data
+          favorited: Boolean(res.data)
         })
       }
     })

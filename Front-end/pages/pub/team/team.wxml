@@ -2,10 +2,11 @@
   <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
 
   <view class="buttons">
+    <!-- <view>{{favorited}}</view> -->
     <view wx:if="{{!favorited}}">
       <image class="icon" src="/assets/unfavorited.png" mode="scaleToFill" bind:tap="favorite" />
     </view>
-    <view wx:if="{{true}}">
+    <view wx:else>
       <image class="icon" src="/assets/favorited.png" mode="scaleToFill" bind:tap="unfavorite" />
     </view>
   </view>

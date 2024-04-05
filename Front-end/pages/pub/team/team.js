@@ -176,8 +176,9 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        console.log(res.data)
         that.setData({
-          favorited: res.data
+          favorited: Boolean(res.data)
         })
       }
     })
