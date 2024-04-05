@@ -3,11 +3,8 @@
   <view class="block-top">
     <text class="block-title">您还未注册为教练员！</text>
   </view>
-  <view class="block-top">
-    <text class="block-title"></text>
-    <view class="block-more">
-      <button bind:tap="gotoRegisterPage" style="display: inline; background-color: #ed6c00; color: white;">注册</button>
-    </view>
+  <view class="block-main">
+    <button bind:tap="gotoRegisterPage" style="background-color: #ed6c00; color: white;">注册</button>
   </view>
 </view>
 

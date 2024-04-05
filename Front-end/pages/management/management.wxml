@@ -1,5 +1,12 @@
 <!-- pages/management/management.wxml -->
-<view class="more-information-container">其他信息</view>
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">引导</view>
+  </view>
+  <view class="block-main">
+    本页面包含您管理的球队、比赛和赛事。您可以在本页面中创建它们并自动成为管理员。由其他人创建的球队、比赛和赛事的管理员也可能将您设为这些实体的管理员，您可以在此页面中看到它们。
+  </view>
+</view>
 
 <view class="block-container">
   <view class="block-top">

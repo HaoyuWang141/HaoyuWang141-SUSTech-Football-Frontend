@@ -65,24 +65,24 @@
   font-size: small;
 }
 
-.others-container {
+.function-container {
   display: flex;
 }
 
-.others-button {
+.function-button {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20rpx;
 }
 
-.others-image {
+.function-image {
   width: 90rpx;
   height: 90rpx;
   margin-bottom: 10rpx;
 }
 
-.others-text {
+.function-text {
   font-size: small;
   color: #666;
 }

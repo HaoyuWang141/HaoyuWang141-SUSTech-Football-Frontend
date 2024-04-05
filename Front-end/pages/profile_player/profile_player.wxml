@@ -2,11 +2,8 @@
   <view class="block-top">
     <text class="block-title">您还未注册为球员！</text>
   </view>
-  <view class="block-top">
-    <text class="block-title"></text>
-    <view class="block-more">
-      <button bind:tap="gotoRegisterPage" style="display: inline; background-color: #ed6c00; color: white;">注册</button>
-    </view>
+  <view class="block-main">
+    <button bind:tap="gotoRegisterPage" style="background-color: #ed6c00; color: white;">注册</button>
   </view>
 </view>
 
@@ -25,16 +22,20 @@
 
 <view class="block-container">
   <view class="block-top">
-    <text class="block-title">跳转至其他身份主页</text>
+    <text class="block-title">功能</text>
   </view>
-  <view class="others-container">
-    <view bindtap="coach_information" class="others-button">
-      <image src="/assets/coach.png" mode="scaleToFill" class="others-image" />
-      <text class="others-text">教练主页</text>
+  <view class="function-container">
+    <view bindtap="gotoProfileCoachPage" class="function-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">教练主页</text>
     </view>
-    <view bindtap="referee_information" class="others-button">
-      <image src="/assets/referee.png" mode="scaleToFill" class="others-image" />
-      <text class="others-text">裁判主页</text>
+    <view bindtap="gotoProfileRefereePage" class="function-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">裁判主页</text>
+    </view>
+    <view bindtap="openJoinTeamModal" class="function-button" wx:if="{{playerId}}">
+      <image src="/assets/statistic-team.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">加入球队</text>
     </view>
   </view>
 </view>

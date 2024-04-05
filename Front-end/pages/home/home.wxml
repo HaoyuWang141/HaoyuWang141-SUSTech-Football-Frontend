@@ -9,27 +9,36 @@
   <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
 </view>
 
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">通知！</text>
+  </view>
+  <view class="block-main">
+    <text>目前为测试阶段，随时删库跑路，详情见右下角</text><text style="font-weight: bold; color: #ed6c00;">“开发”</text>
+  </view>
+</view>
+
 <!-- 新闻 - 走马灯 -->
-<view class="news-container">
+<!-- <view class="news-container">
   <swiper class="news-swiper" autoplay interval="5000" duration="500">
     <swiper-item>
-      <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
+      <news-card title="" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
     </swiper-item>
     <swiper-item>
-      <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
+      <news-card title="" img="/assets/de.jpg" bindtap="gotoNewsPage"></news-card>
     </swiper-item>
     <swiper-item>
-      <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
+      <news-card title="" img="/assets/barca.jpg" bindtap="gotoNewsPage"></news-card>
     </swiper-item>
   </swiper>
-  <!-- <swiper autoplay interval="2000" duration="500">
+  <swiper autoplay interval="2000" duration="500">
         <block wx:for="{{images}}" wx:key="index">
           <swiper-item>
             <image src="{{item}}" class="swiper-img" mode="aspectFill"></image>
           </swiper-item>
         </block>
-      </swiper> -->
-</view>
+      </swiper>
+</view> -->
 
 <!-- 关注的比赛 -->
 <view class="block-container">

@@ -10,8 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    playerId: Number,
-    player: Object,
+    playerId: 0,
+    player: null,
     matchList: [],
     teamList: [],
     eventList: [],
@@ -226,7 +226,6 @@ Page({
     })
   },
 
-  ///////////////////////////////////////////////////////////////////////////////
   // 页面跳转
   edit_information() {
     let player = this.data.player
@@ -242,13 +241,14 @@ Page({
     })
   },
 
-  coach_information() {
+  gotoProfileCoachPage() {
+
     wx.navigateTo({
       url: '/pages/profile_player/profile_coach/profile_coach',
     })
   },
 
-  referee_information() {
+  gotoProfileRefereePage() {
     wx.navigateTo({
       url: '/pages/profile_player/profile_referee/profile_referee',
     })
@@ -294,6 +294,71 @@ Page({
   gotoRegisterPage() {
     wx.navigateTo({
       url: './profile_player_register/profile_player_register',
+    })
+  },
+
+  // 加入球队，可以输入id或名称
+  openJoinTeamModal() {
+    const that = this
+    wx.showModal({
+      title: '申请加入球队',
+      editable: true,
+      placeholderText: '请输入球队id',
+      complete: (res) => {
+        if (res.confirm) {
+          let teamId = res.content
+          that.applyToJoinTeam(teamId)
+        }
+      }
+    })
+  },
+
+  applyToJoinTeam(teamId) {
+    if (isNaN(teamId) || teamId.trim() === '') {
+      wx.showToast({
+        title: '输入的不是数字',
+        icon: 'error',
+      })
+      return
+    }
+    teamId = Number(teamId)
+    let playerId = this.data.playerId
+    console.log('playerId:' + playerId)
+    console.log(typeof(playerId))
+    console.log(`playerId: ${playerId}`)
+
+    wx.showLoading({
+      title: '正在发送申请',
+    })
+
+    wx.request({
+      url: `${URL}/player/team/applyToJoin?playerId=${playerId}&teamId=${teamId}`,
+      method: 'POST',
+      success(res) {
+        console.log("profile player page: applyToJoinTeam ->")
+        if (res.statusCode != 200) {
+          console.error(res)
+          wx.showToast({
+            title: res.data,
+            icon: 'error'
+          })
+          return
+        }
+        wx.showToast({
+          title: '已申请',
+          icon: 'success'
+        })
+      },
+      fail(err) {
+        console.error(err)
+        wx.showToast({
+          title: '申请失败',
+          icon: 'error'
+        })
+      },
+      complete() {
+        wx.hideLoading()
+      }
     })
   },
 
