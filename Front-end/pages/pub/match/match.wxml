@@ -1,13 +1,12 @@
 <view class="section-header">
-  <view style="background-color: white;">
-    <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
-    <view class="buttons">
-      <view wx:if="{{!favorited}}">
-        <image class="icon" src="/assets/unfavorited.png" mode="scaleToFill" style="padding: 10rpx;" bind:tap="favorite" />
-      </view>
-      <view wx:if="{{favorited}}">
-        <image class="icon" src="/assets/favorited.png" mode="scaleToFill" style="padding: 10rpx;" bind:tap="unfavorite" />
-      </view>
+  <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
+
+  <view class="buttons">
+    <view wx:if="{{!favorited}}">
+      <image class="icon" src="/assets/unfavorited.png" mode="scaleToFill" bind:tap="favorite" />
+    </view>
+    <view wx:if="{{favorited}}">
+      <image class="icon" src="/assets/favorited.png" mode="scaleToFill" bind:tap="unfavorite" />
     </view>
   </view>
 

@@ -1,35 +1,24 @@
 /* pages/pub/match/match.wxss */
-/* title */
-.title-card {
-  margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx 0;
-  padding-bottom: 50rpx;
-}
-.header-container {
-  display: flex;
-  justify-content: space-between; /* 将子元素分散对齐，左右两端对齐 */
-}
-.header-text {
-  padding-left: 20rpx;
-  padding-right: 20rpx;
-  color: #666;
-}
-.info-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 30rpx 60rpx 0 60rpx;
-}
-.team {
-  display: flex;
-  flex-direction: column;
-}
-/* ======= */
+
 .section-header {
   text-align: center;
+}
+
+.buttons {
+  margin: 10rpx 20rpx;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20rpx;
+  margin-bottom: -120rpx;
+}
+
+.icon {
+  width: 60rpx;
+  height: 60rpx;
+  padding: 10rpx;
 }
 
 .tabs {
@@ -58,144 +47,6 @@
   border-bottom: 2px solid rgb(237, 108, 0);
 }
 
-/* 比赛主要信息部分 */
-.match-section {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-items: center;
-  background-color: #fff;
-
-}
-
-.team {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  max-width: 300rpx;
-}
-
-.icon {
-  width: 120rpx;
-  height: 120rpx;
-}
-.middle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-}
-.group {
-  font-size: small;
-}
-.score {
-  font-size: larger;
-}
-.penalty {
-  font-size: small;
-  /* color: #FF4500; */
-}
-.not-begin {
-  background-color: rgba(237,108,0, 0.3);
-  padding: 20rpx;
-  border-radius: 15rpx;
-}
-
-/* options */
-.options-card {
-  margin: 10rpx;
-  display: flex;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx 0;
-}
-.options-card button {
-  height: 70rpx;
-  width: 210rpx;
-  font-size: 40%; /* 设置按钮文本的大小 */
-  padding: 0 0; /* 设置按钮的左右内边距 */
-  line-height: 65rpx; /* 设置按钮的行高，使文本垂直居中 */
-}
-
-/* description */
-.description-card {
-  margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx 0;
-}
-.content-text {
-  padding-top: 35rpx;
-  padding-bottom: 50rpx;
-  padding-left: 35rpx;
-  padding-right: 35rpx;
-  font-size: 15px; /* 设置文本字体大小 */
-  line-height: 2.0; /* 设置文本行高 */
-  color: #333; /* 设置文本颜色 */
-  display: block; /* 换行后正确显示左右padding */
-  white-space: pre-wrap; /* 保留空格和换行符 */
-}
-
-/* match event */
-.event-card {
-  margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx 0;
-}
-/* ======= */
-
-/* Block */
-/* Styles for the container */
-.block-container {
-  padding: 30rpx;
-  border: 1rpx solid #cccccc;
-  /* Light grey border */
-  background-color: white;
-  /* Light grey background */
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  margin-left: 10rpx;
-  margin-right: 10rpx;
-}
-
-/* Styles for the top section */
-.block-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  /* Adds some space between the top and the main content */
-}
-
-/* Styles for the title */
-.block-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  /* Dark grey color for the text */
-}
-
-/* Optional: If you want the "More" text but it's empty in the example */
-.block-more {
-  padding: 10rpx 0;
-  font-size: 14px;
-  color: #666;
-  /* Medium grey color */
-}
-
-/* Styles for the main content area */
-.block-main {
-  font-size: 14px;
-  color: #666;
-  /* Medium grey color for the text */
-  padding: 5px 0;
-  /* Padding on top and bottom */
-}
 
 /* 直播或回放按钮的样式 */
 .videoOrLive {
@@ -207,36 +58,7 @@
   margin-bottom: 20rpx;
 }
 
-.buttons {
-  margin: 10rpx 20rpx;
-  text-align: right;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 20rpx;
-  margin-bottom: -120rpx;
-}
 
-.button {
-  background-color: #ed6c00;
-  padding: 10rpx 30rpx;
-  color: white;
-  font-size: small;
-  font-weight: bold;
-  border-radius: 10rpx;
-}
-
-.favorited-tag {
-  padding: 10rpx 30rpx;
-  color: #666;
-  font-size: small;
-}
-
-.icon {
-  width: 60rpx;
-  height: 60rpx;
-}
 
 .button-update {
   padding: 10rpx 40rpx;
@@ -245,3 +67,4 @@
   font-weight: bold;
   border-radius: 20rpx;
 }
+

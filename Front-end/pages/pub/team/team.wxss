@@ -2,6 +2,24 @@
 
 .section-header {
   text-align: center;
+  background-color: white;
+}
+
+.buttons {
+  margin: 10rpx 20rpx;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20rpx;
+  margin-bottom: -120rpx;
+}
+
+.icon {
+  width: 60rpx;
+  height: 60rpx;
+  padding: 10rpx;
 }
 
 .tabs {
@@ -30,54 +48,6 @@
   border-bottom: 2px solid rgb(237, 108, 0);
 }
 
-/* Block */
-/* Styles for the container */
-.block-container {
-  padding: 30rpx;
-  border: 1rpx solid #cccccc;
-  /* Light grey border */
-  background-color: white;
-  /* Light grey background */
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  margin-left: 10rpx;
-  margin-right: 10rpx;
-}
-
-/* Styles for the top section */
-.block-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  /* Adds some space between the top and the main content */
-}
-
-/* Styles for the title */
-.block-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  /* Dark grey color for the text */
-}
-
-/* Optional: If you want the "More" text but it's empty in the example */
-.block-more {
-  padding: 10rpx 0;
-  font-size: 14px;
-  color: #666;
-  /* Medium grey color */
-}
-
-/* Styles for the main content area */
-.block-main {
-  font-size: 14px;
-  color: #666;
-  /* Medium grey color for the text */
-  padding: 5px 0;
-  /* Padding on top and bottom */
-}
-
 .grid-container {
   display: grid;
   grid-template-columns: 1fr repeat(5, 2fr);
@@ -102,20 +72,4 @@
   width: 50rpx;
   height: 50rpx;
   border-radius: 50%;
-}
-
-.buttons {
-  margin: 10rpx 20rpx;
-  text-align: right;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 20rpx;
-  margin-bottom: -120rpx;
-}
-
-.icon {
-  width: 60rpx;
-  height: 60rpx;
 }
