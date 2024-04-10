@@ -16,9 +16,19 @@ Page({
     playerId: Number,
     coachId: Number,
     refereeId: Number,
+    manageTeamIdList: [],
+    manageMatchIdList: [],
+    manageEventIdList: [],
     isPlayer: false,
     isCoach: false,
     isReferee: false,
+    isTeamManager: false,
+    isMatchManager: false,
+    isEventManager: false,
+
+    manageTeamNumber: 0,
+    manageMatchNumber: 0,
+    manageEventNumber: 0,
 
     // 控制比赛通知和球队邀请通知的显示
     showPlayerMatchInform: false,
@@ -28,6 +38,7 @@ Page({
     showCoachInvitationInform: false,
     showRefereeInvitationInformForMatch: false,
     showRefereeInvitationInformForEvent: false,
+    showManageTeamApplicationInform: false,
 
     // 控制红点的显示
     showPlayerMatchDot: false,
@@ -38,6 +49,7 @@ Page({
     showRefereeInvitationDotForMatch: false,
     showRefereeInvitationDotForEvent: false,
     showApplicationDot: false,
+    showManageTeamApplicationDot: false,
 
     playerInvitationInform: [],
     coachInvitationInform: [],
@@ -46,7 +58,8 @@ Page({
     playerMatchInform: [],
     coachMatchInform: [],
     refereeMatchInform: [],
-    applicationsInform: []
+    applicationsInform: [],
+    manageTeamApplicationsInform: []
   },
 
   /**
@@ -136,13 +149,21 @@ Page({
 
     //Player相关
     that.fetchPlayerId(userId)
-
+    
     //教练身份
     that.fetchCoachId(userId)
 
     //裁判身份
     that.fetchRefereeId(userId)
 
+    //球队管理员身份
+    that.fetchManageTeamList(userId)
+
+    //比赛管理员身份
+    that.fetchManageMatchList(userId)
+
+    //赛事管理员身份
+    that.fetchManageEventList(userId)
   },
 
   // ------------------
@@ -437,6 +458,122 @@ Page({
   },
 
   // ------------------
+  // fetch data: manager
+
+  fetchManageTeamList(userId) {
+    const that = this
+    wx.request({
+      url: URL + '/user/getUserManageTeam',
+      data: {
+        userId: 1
+      },
+      success(res) {
+        console.log("mine page: manageTeam->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        let manageTeamIdList = res.data;
+        let manageTeamNumber = res.data.length;
+        that.setData({
+          isTeamManager: true,
+          manageTeamApplicationsInform: [],
+          manageTeamIdList: res.data,
+          manageTeamNumber: res.data.length
+        })
+        for (let index = 0; index < manageTeamNumber; index++) {
+          const team = manageTeamIdList[index];
+          console.log("team->")
+          console.log(team.teamId)
+          that.fetchManageTeamApplications(team.teamId, team.name);
+        }
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },  
+
+  fetchManageTeamApplications: function (teamId, teamName) {
+    const that = this
+    wx.request({
+      url: URL + '/team/player/getApplications',
+      data: {
+        teamId: teamId,
+      },
+      success(res) {
+        console.log("mine page: fetch team application->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.formatManageTeamApplication(res.data, teamName);
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchManageMatchList(userId) {
+    const that = this
+    wx.request({
+      url: URL + '/user/getUserManageMatch',
+      data: {
+        userId: 1
+      },
+      success(res) {
+        console.log("mine page: manageMatch->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          isMatchManager: true,
+          manageMatchIdList: res.data,
+          manageMatchNumber: res.data.length
+        })
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },  
+
+  fetchManageEventList(userId) {
+    const that = this
+    wx.request({
+      url: URL + '/user/getUserManageEvent',
+      data: {
+        userId: 1
+      },
+      success(res) {
+        console.log("mine page: manageEvent->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          isEventManager: true,
+          manageEventIdList: res.data,
+          manageEventNumber: res.data.length
+        })
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },  
+
+  // ------------------
   // format applications
 
   formatApplications: function (applications) {
@@ -456,6 +593,21 @@ Page({
     this.setData({
       applicationInform: informs,
       showApplicationDot: showDot,
+    });
+  },
+
+  formatManageTeamApplication: function (applications, teamName) {
+    const informs = applications.map(application => {
+      const formattedDate = (application.lastUpdated != null) ? new Date(application.lastUpdated).toLocaleString() : ''; // 将时间戳转换为可读日期
+      if (application.status == "PENDING") {
+        return `${application.player.name}（球员）于${formattedDate}对您所管理的球队 ${teamName} (teamId = ${application.teamId})发出了入队申请，请您进行审核`
+      }
+      return null;
+    }).filter(inform => inform !== null);
+    let showDot = informs.length > 0 ? true : false;
+    this.setData({
+      manageTeamApplicationsInform: this.data.manageTeamApplicationsInform.concat(informs),
+      showManageTeamApplicationDot: showDot
     });
   },
 
@@ -701,6 +853,15 @@ Page({
   },
 
   // ------------------
+  // 切换球队管理员处理申请通知的显示状态
+
+  toggleManageTeamApplicationInform: function () {
+    this.setData({
+      showManageTeamApplicationInform: !this.data.showManageTeamApplicationInform,
+      showManageTeamApplicationDot: false
+    });
+  },
+  // ------------------
   // 弹出 modal 用来同意或拒绝邀请
 
   showPlayerTeamInvitationModal(e) {
@@ -779,6 +940,27 @@ Page({
     });
   },
 
+  showManageTeamApplicationModal(e) {
+    let playerId = e.currentTarget.dataset.id
+    let teamIndex = e.currentTarget.dataset.index
+    console.log(playerId)
+    console.log(teamIndex)
+    wx.showModal({
+      title: '球员申请',
+      content: `是否同意该球员加入球队？`,
+      cancelText: '拒绝',
+      cancelColor: '#FF0000',
+      confirmText: '接受',
+      confirmColor: '#1cb72d',
+      success: (res) => {
+        if (res.confirm) {
+          this.teamManagerReplyApplication(true, playerId, teamIndex);
+        } else if (res.cancel) {
+          this.teamManagerReplyApplication(false, playerId, teamIndex);
+        }
+      }
+    });
+  },
   // ------------------
   // 同意/拒绝各邀请, accepted=true/false
 
@@ -958,4 +1140,47 @@ Page({
     })
   },
 
+  teamManagerReplyApplication(accept, playerId, index) {
+    const that = this
+    const teamId = Number(this.data.manageTeamIdList[index].teamId)
+    playerId = Number(playerId)
+    accept = Boolean(accept)
+
+    wx.showLoading({
+      title: '正在提交',
+      mask: true,
+    })
+
+    wx.request({
+      url: URL + '/team/player/replyApplication?teamId=' + teamId + '&playerId=' + playerId + '&accept=' + accept,
+      method: "POST",
+      success(res) {
+        console.log("mine page: Team Reply Player Application ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '回复失败',
+            icon: 'error',
+          })
+          return
+        }
+        wx.showToast({
+          title: '回复成功',
+          icon: 'success',
+        })
+        console.log("回复球员申请成功")
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg)
+        wx.showToast({
+          title: '回复失败',
+          icon: 'error',
+        })
+      },
+      complete() {
+        wx.hideLoading()
+        that.fetchManageTeamList(that.data.userId)
+      }
+    })
+  },
 })
