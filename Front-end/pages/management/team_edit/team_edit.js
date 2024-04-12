@@ -13,6 +13,8 @@ Page({
     newName: String,   // 用于存放用户输入的新队名
     edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
+    selectCaptain: {name: '选择队长', img: '/assets/newplayer.png'},
+    inviteCoach: {name: '邀请教练', img: '/assets/newplayer.png'},
     captain: Array,
 
     teamId: String,
@@ -90,7 +92,7 @@ Page({
   fetchData: function (id) {
     wx.showLoading({
       title: '加载中',
-      mask: true
+      mask: true,
     });
     var that = this;
     wx.request({
@@ -235,13 +237,24 @@ Page({
       data: dataToUpdate, // 要发送的数据
       success: res => {
         // 请求成功的处理逻辑
-        console.log('比赛信息更新成功', res.data);
-        // 可以根据后端返回的数据更新页面状态或进行其他操作
+        console.log('球队信息更新成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
       },
       fail: err => {
         // 请求失败的处理逻辑
-        console.error('比赛信息更新失败', err);
-        // 可以显示失败的提示信息或进行其他操作
+        console.error('球队信息更新失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '修改失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
       }
     });
   },
@@ -250,6 +263,20 @@ Page({
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite_player/invite_player?id=' + dataset.id,
+    })
+  },
+
+  gotoSelectCaptain: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/team_edit/select_captain/select_captain?id=' + dataset.id,
+    })
+  },
+
+  gotoInviteCoach: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/team_edit/invite_coach/invite_coach?id=' + dataset.id,
     })
   },
 })
