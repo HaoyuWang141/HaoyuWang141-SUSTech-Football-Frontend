@@ -185,14 +185,6 @@ Page({
     });
   },
 
-  inviteNewTeam() {
-
-  },
-
-  createNewMatch() {
-    
-  },
-
   // 处理提交信息修改
   confirmEdit() {
     // 构造要发送给后端的数据
@@ -262,6 +254,13 @@ Page({
     wx.navigateTo({
       url: '/pages/management/event_edit/event_matches/event_matches?id=' + dataset.id,
     })
-  }
+  },
+
+  goToCreateMatch: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/event_edit/match_new/match_new?id=' + dataset.id,
+    })
+  },
 
 })

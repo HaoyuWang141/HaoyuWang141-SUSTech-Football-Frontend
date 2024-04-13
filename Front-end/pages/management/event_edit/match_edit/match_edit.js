@@ -1,7 +1,7 @@
-// pages/management/match_edit/match_edit.js
+// pages/management/event_edit/match_edit/match_edit.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-const {formatTime, splitDateTime} = require("../../../utils/timeFormatter")
+const {formatTime, splitDateTime} = require("../../../../utils/timeFormatter")
 
 Page({
 
@@ -9,13 +9,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
+    eventId: Number,
     hasBegun: false,
     strTimeInfo: String,
     strDate: String,
     strTime: String,
     name: String,
-
+    stage: String,
+    tag: String,
+    stageList: Array,
+    stageNameList: Array,
+    tagNameList: Array,
     matchId: Number,
     time: String,
     homeTeam: Array,
@@ -28,6 +32,7 @@ Page({
     awayTeamPenalty: Number,
     matchPlayerActionList: Array,
     refereeList: Array,
+    matchEvent: Array,
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
@@ -38,11 +43,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
-      id: options.id
+      matchId: options.id,
     })
-    this.fetchData(options.id);
+    this.fetchData(this.data.matchId);
   },
 
   /**
@@ -56,7 +60,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.id);
+    this.fetchData(this.data.matchId);
   },
 
   /**
@@ -77,7 +81,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id);
+    this.fetchData(this.data.matchId);
     wx.stopPullDownRefresh();
   },
 
@@ -105,10 +109,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/match/get',
-      data: {
-        id: id
-      },
+      url: URL + '/match/get?id=' + that.data.matchId,
       success(res) {
         console.log("match->")
         console.log(res.data)
@@ -141,11 +142,59 @@ Page({
           homeTeam: res.data.homeTeam,
           awayTeam: res.data.awayTeam,
           refereeList: res.data.refereeList,
+          matchPlayerActionList: res.data.matchPlayerActionList,
+          stage: res.data.event.stage,
+          tag: res.data.event.tag,
+          matchEvent: res.data.matchEvent,
+          eventId: res.data.event.eventId,
         });
       },
       fail(err) {
         console.log('请求失败', err);
         // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 无论请求成功还是失败都会执行
+        wx.hideLoading(); // 关闭加载提示框
+        that.load(that.data.eventId);
+      }
+    });
+  },
+
+  load: function(eventId){
+    // 显示加载提示框，提示用户正在加载
+    wx.showLoading({
+      title: '加载中',
+      mask: true 
+    });
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/event/get?id=' + eventId,
+      success(res) {
+        console.log("event->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        // 将 stageList 中的每个 stageName 提取出来存储到 stageNameList 中
+        const stageNameList = res.data.stageList.map(stage => stage.stageName);
+        console.log("stageNameList->");
+        console.log(stageNameList);
+        const selectedStage = res.data.stageList.find(stage => stage.stageName === that.data.stage);
+        const tagNameList = selectedStage.tags.map(tag => tag.tagName);
+        // 基本数据
+        that.setData({
+          stageList: res.data.stageList,
+          stageNameList: stageNameList,
+          tagNameList: tagNameList,
+        });
+        console.log('stageList->');
+        console.log(that.data.stageList);
+      },
+      fail(err) {
+        console.log('请求失败', err);
       },
       complete() {
         // 无论请求成功还是失败都会执行
@@ -187,34 +236,23 @@ Page({
     });
   },
 
-  // 显示比赛名称输入弹窗
-  // showNameInput: function () {
-  //   this.setData({
-  //     modalHidden: false
-  //   });
-  // },
-
-  // changeName: function (e) {
-  //   this.setData({
-  //     newname: e.detail.value
-  //   });
-  // },
-
-  // 确认更改比赛名时触发的事件
-  // confirmChangeName: function () {
-  //   // 这里可以添加逻辑，如检查输入是否合法等
-  //   this.setData({
-  //     name: this.data.newname,
-  //     modalHidden: true
-  //   });
-  // },
-
-  // 取消更改比赛名时触发的事件
-  // cancelChangeName: function () {
-  //   this.setData({
-  //     modalHidden: true
-  //   });
-  // },
+  bindStageChange: function (e){
+    // 更新页面上的比赛阶段显示
+    const selectedStage = this.data.stageList.find(stage => stage.stageName === this.data.stageNameList[e.detail.value]);
+    const tagNameList = selectedStage.tags.map(tag => tag.tagName);
+    this.setData({
+      stage: this.data.stageNameList[e.detail.value],
+      tag: "",
+      tagNameList: tagNameList,
+    });
+  },
+  
+  bindTagChange: function (e){
+    // 更新页面上的比赛组别显示
+    this.setData({
+      tag: this.data.tagNameList[e.detail.value],
+    });
+  },
 
   // 处理比分选择器选择完成事件
   bindPickerChangeScore: function (e) {
@@ -267,11 +305,12 @@ Page({
       title: '加载中',
       mask: true // 创建一个蒙层，防止用户操作
     });
-    var that = this;
+
     let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+00:00"; // 转换为 ISO 
-    that.setData({
+    this.setData({
       time: sqlTimestamp,
     });
+
     // 构造要发送给后端的数据
     const dataToUpdate = {
       matchId: this.data.matchId,
@@ -286,6 +325,10 @@ Page({
       awayTeamPenalty: this.data.awayTeamPenalty,
       refereeList: this.data.refereeList,
       matchPlayerActionList: this.data.matchPlayerActionList,
+      matchEvent: {
+        stage: this.data.stage,
+        tag: this.data.tag,
+      },
     };
     console.log(dataToUpdate);
     // 发送请求到后端接口
