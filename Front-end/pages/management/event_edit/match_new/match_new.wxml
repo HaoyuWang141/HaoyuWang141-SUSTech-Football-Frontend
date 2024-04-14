@@ -1,4 +1,4 @@
-<!--pages/management/match_new/match_new.wxml-->
+<!--pages/management/event_edit/match_new/match_new.wxml-->
 <view class="container">
   <view style="width: 90%;">
 
@@ -7,8 +7,8 @@
     <!-- 比赛信息卡片 -->
     <view class="match-card-container">
       <view class="match-card">
-        <text class="time">{{date}}{{" "}}{{time}}</text>
-        <text class="name">{{name}} {{group}}</text>
+        <text class="time">{{date  + ' ' + time}}</text>
+        <text class="name">{{stage===null?  '':stage}}{{' '}}{{tag===null? '':tag}}</text>
         <view class="info-container">
           <view class="team">
             <image class="icon" src="{{icon1}}"></image>
@@ -39,19 +39,17 @@
         <text>{{time}}</text>
       </picker>
 
-      <!-- 比赛名称
-      <view class="changeInfo-container" bindtap="showNameInput">
-        <text>比赛名称：</text>
-        <text>{{name}}</text>
-      </view> -->
+      <!-- 比赛阶段 -->
+      <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}"  bindchange="bindStageChange">
+        <text>比赛阶段：</text>
+        <text>{{stage}}</text>
+      </picker>
 
-      <!-- <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeTeamname"       bindcancel="cancelChangeTeamname">
-        <view class="modal-content">
-          <text>请输入比赛名称：</text>
-          <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
-        </view>
-      </modal> -->
 
+      <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+        <text>比赛组别：</text>
+        <text>{{tag}}</text>
+      </picker>
     </view>
 
     <!-- 提交按钮 -->

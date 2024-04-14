@@ -1,4 +1,4 @@
-// pages/management/invite_player/invite_player.js
+// pages/management/team_edit/invite_coach/invite_coach.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 
@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    allPlayerList: Array,
+    allCoachList: Array,
 
     teamId: Number,
     name: String,
@@ -90,12 +90,12 @@ Page({
 
     const that = this
     wx.request({
-      url: URL + "/player/getAll",
+      url: URL + "/coach/getAll",
       success(res) {
-        console.log("/player/getAll")
+        console.log("/coach/getAll")
         console.log(res.data)
         that.setData({
-          allPlayerList: res.data,
+          allCoachList: res.data,
         })
       },
       fail(err) {
@@ -132,16 +132,16 @@ Page({
     })
   },
 
-  // 判断球员是否在playerList中
-  isInPlayerList: function(id) {
-    const isInList = this.data.playerList.find(player => player.playerId.include(id));
-    console.log(`Player ${id} is ${isInList ? 'in' : 'not in'} the player list.`);
+  // 判断球员是否在coachList中
+  isInCoachList: function(id) {
+    const isInList = this.data.coachList.find(coach => coach.coachId.include(id));
+    console.log('Coach ${id} is {isInList ? "in" : "not in"} the player list.');
     return isInList;
   },
 
   invite(e) {
     wx.request({
-      url: URL + '/team/player/invite?teamId=' + this.data.teamId + "&playerId=" + e.currentTarget.dataset.id,
+      url: URL + '/team/coach/invite?teamId=' + this.data.teamId + "&coachId=" + e.currentTarget.dataset.id,
       method: 'POST',
       success: res => {
         console.log('已邀请', res.data);
@@ -165,11 +165,4 @@ Page({
     });
   },
   
-
-  gotoPlayerPage: function (e) {
-    const id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: '/pages/pub/player/player?id=' + id
-    })
-  },
 })
