@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
+    eventId: Number,
     matchList: Array,
     newMatch: {
       name: '发起新比赛',
@@ -27,11 +27,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
-      id: options.id
+      eventId: parseInt(options.id),
     })
-    this.fetchData(options.id);
+    this.fetchData();
   },
 
   /**
@@ -84,7 +83,7 @@ Page({
 
   },
 
-  fetchData: function (id) {
+  fetchData: function () {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
@@ -96,7 +95,7 @@ Page({
     wx.request({
       url: URL + '/event/get',
       data: {
-        id: id
+        id: this.data.eventId,
       },
       success(res) {
         console.log("match->")
@@ -123,14 +122,17 @@ Page({
     });
   },
 
-  createNewMatch() {
-    
+  goToCreateMatch: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/event_edit/match_new/match_new?id=' + dataset.id,
+    })
   },
 
   gotoEditMatch: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
+      url: '/pages/management/event_edit/match_edit/match_edit?id=' + dataset.id,
     })
   },
   

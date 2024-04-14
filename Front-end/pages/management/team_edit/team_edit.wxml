@@ -33,6 +33,7 @@
       <view class="important-person">
         <view class="captain-container">
           <view class="text">队长</view>
+          <player-card-small name="{{selectCaptain.name}}" img="{{selectCaptain.img}}" bindtap="gotoSelectCaptain" data-id="{{teamId}}"></player-card-small>
           <player-card-small wx:if="{{captainId !== null}}" name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
         </view>
       </view>
@@ -40,6 +41,7 @@
       <view class="important-person">
         <view class="coach-container">
           <view class="text">教练</view>
+          <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
           <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach"></player-card-small>
         </view>
       </view>

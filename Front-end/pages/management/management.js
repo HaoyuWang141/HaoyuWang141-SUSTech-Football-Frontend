@@ -86,10 +86,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/user/getUserManageTeam',
-      data: {
-        userId: userId
-      },
+      url: URL + '/user/getUserManageTeam?userId=' + userId,
       success(res) {
         console.log("team->")
         console.log(res.data)
@@ -114,10 +111,7 @@ Page({
     });
 
     wx.request({
-      url: URL + '/user/getUserManageMatch',
-      data: {
-        userId: userId
-      },
+      url: URL + '/user/getUserManageMatch?userId=' + userId,
       success(res) {
         console.log("match->")
         console.log(res.data)
@@ -134,6 +128,8 @@ Page({
         that.setData({
           matches: matchList,
         });
+        console.log('matches->');
+        console.log(that.data.matches);
 
       },
       fail(err) {
@@ -147,10 +143,7 @@ Page({
     });
 
     wx.request({
-      url: URL + '/user/getUserManageEvent',
-      data: {
-        userId: userId
-      },
+      url: URL + '/user/getUserManageEvent?userId=' + userId,
       success(res) {
         console.log("event->")
         console.log(res.data)

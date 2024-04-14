@@ -9,14 +9,21 @@ Page({
    * 页面的初始数据
    */
   data: {
+    matchId: Number,
     managedTeamList: Array,
     allTeamList: Array,
+    homeTeamId: Number,
+    awayTeamId: Number,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.setData({
+      matchId: options.id
+    })
+    console.log('比赛' + this.data.matchId);
     this.fetchData(userId);
   },
 
@@ -133,15 +140,68 @@ Page({
     });
   },
 
-  selectHomeTeam (){
-
+  selectHomeTeam(e){
+    const homeTeamId = e.target.dataset.id
+    this.setData({
+      homeTeamId: homeTeamId
+    })
+    console.log('选择主队' + this.data.homeTeamId)
   },
 
-  selectAwayTeam (){
-
+  selectAwayTeam(e){
+    const awayTeamId = e.target.dataset.id
+    this.setData({
+      awayTeamId: awayTeamId
+    })
+    console.log('选择客队' + this.data.awayTeamId)
   },
 
   confirmSelect (){
-
+    wx.request({
+      url: URL + '/match/team/invite?matchId=' + this.data.matchId + '&teamId=' + this.data.homeTeamId + '&isHomeTeam=' + Boolean(true),
+      method: 'POST',
+      success: res => {
+        console.log('主队邀请成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '已邀请主队'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('主队邀请失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    });
+    wx.request({
+      url: URL + '/match/team/invite?matchId=' + this.data.matchId + '&teamId=' + this.data.awayTeamId + '&isHomeTeam=' + Boolean(false),
+      method: 'POST',
+      success: res => {
+        console.log('客队邀请成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '已邀请客队'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('客队邀请失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    });
   },
 })
