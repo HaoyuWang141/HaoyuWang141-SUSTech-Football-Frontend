@@ -4,7 +4,7 @@
     "coverView": true,
     "es6": true,
     "postcss": true,
-    "minified": true,
+    "minified": false,
     "enhance": true,
     "showShadowRootInWxmlPanel": true,
     "packNpmRelationList": [],
@@ -14,7 +14,9 @@
       "outputPath": ""
     },
     "ignoreUploadUnusedFiles": false,
-    "ignoreDevUnusedFiles": false
+    "ignoreDevUnusedFiles": false,
+    "minifyWXSS": false,
+    "minifyWXML": false
   },
   "condition": {},
   "editorSetting": {

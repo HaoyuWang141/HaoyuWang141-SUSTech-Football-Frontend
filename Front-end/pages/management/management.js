@@ -12,10 +12,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: -1,
-    teams: Array,
-    matches: Array,
-    events: Array,
+    id: 0,
+    teams: [],
+    matches: [],
+    events: [],
     newEvent: { id: 'id', icon: '/assets/newplayer.png', name: '创建赛事'},
   },
 

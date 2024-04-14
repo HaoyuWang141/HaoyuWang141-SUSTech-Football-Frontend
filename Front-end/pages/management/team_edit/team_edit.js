@@ -8,12 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
+    id: 0,
     modalHidden: true, // 控制模态框显示隐藏
-    newName: String,   // 用于存放用户输入的新队名
+    newName: '',   // 用于存放用户输入的新队名
     edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
-    captain: Array,
+    captain: [],
 
     teamId: String,
     name: String,

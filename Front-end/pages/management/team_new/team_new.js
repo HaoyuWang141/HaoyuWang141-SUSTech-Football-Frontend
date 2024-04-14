@@ -9,10 +9,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    teamId: Number,
-    logoUrl: String, 
-    tempFilePath: String,
-    teamname: String,     // 队名
+    teamId: 0,
+    logoUrl: '', 
+    tempFilePath: '',
+    teamname: '',
   },
 
   /**

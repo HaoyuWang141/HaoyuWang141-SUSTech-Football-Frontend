@@ -290,4 +290,8 @@ Page({
     this.gotoSearch();
   },
 
+  login() {
+    app.userLogin()
+  }
+
 })

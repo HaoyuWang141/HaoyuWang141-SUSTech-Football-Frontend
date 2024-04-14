@@ -9,9 +9,9 @@ const {
 Page({
   data: {
     activeIndex: 0,
-    id: -1,
+    id: 0,
 
-    actions: Array,
+    actions: [],
     awayTeam: {
       logoUrl: "",
       name: "",

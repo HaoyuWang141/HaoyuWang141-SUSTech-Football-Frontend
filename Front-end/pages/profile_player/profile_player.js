@@ -335,6 +335,7 @@ Page({
       url: `${URL}/player/team/applyToJoin?playerId=${playerId}&teamId=${teamId}`,
       method: 'POST',
       success(res) {
+        wx.hideLoading()
         console.log("profile player page: applyToJoinTeam ->")
         if (res.statusCode != 200) {
           console.error(res)
@@ -350,14 +351,12 @@ Page({
         })
       },
       fail(err) {
+        wx.hideLoading()
         console.error(err)
         wx.showToast({
           title: '申请失败',
           icon: 'error'
         })
-      },
-      complete() {
-        wx.hideLoading()
       }
     })
   },

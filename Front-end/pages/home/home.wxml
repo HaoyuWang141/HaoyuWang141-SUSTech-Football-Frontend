@@ -1,3 +1,5 @@
+<button bind:tap="login">获取User</button>
+
 <view style="background-color: white; text-align: center;">
   <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
 </view>

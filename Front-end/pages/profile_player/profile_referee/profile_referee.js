@@ -11,7 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    refereeId: Number,
+    refereeId: 0,
     referee: {},
     matchList: [],
     teamList: [],

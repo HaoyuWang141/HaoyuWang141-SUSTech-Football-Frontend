@@ -8,8 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
-    teamList: Array,
+    id: 0,
+    teamList: [],
   },
   
   /**
