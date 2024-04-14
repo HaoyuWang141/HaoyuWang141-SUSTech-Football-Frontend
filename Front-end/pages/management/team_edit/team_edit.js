@@ -13,13 +13,9 @@ Page({
     newName: '',   // 用于存放用户输入的新队名
     edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
-<<<<<<< HEAD
-    captain: [],
-=======
     selectCaptain: {name: '选择队长', img: '/assets/newplayer.png'},
     inviteCoach: {name: '邀请教练', img: '/assets/newplayer.png'},
     captain: Array,
->>>>>>> bc42fd2a0caab6d7f4339d2445d1294d7ac3a087
 
     teamId: String,
     name: String,
