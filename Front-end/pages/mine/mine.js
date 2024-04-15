@@ -868,7 +868,7 @@ Page({
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
         return {
-          content: `${invitation.matchId} 邀请您所管理的 ${teamName} (球队)与对方球队进行比赛，邀请发起时间：${formattedDate}`,
+          content: `${invitation.matchId} 邀请您所管理的 ${teamName} (球队)参与比赛，比赛的描述信息为：${invitation.description}，邀请发起时间：${formattedDate}`,
           teamId: invitation.teamId,
           matchId: invitation.matchId,
         };
