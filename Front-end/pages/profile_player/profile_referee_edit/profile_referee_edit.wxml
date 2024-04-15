@@ -1,2 +1,44 @@
 <!--pages/profile_player/profile_referee_edit/profile_referee_edit.wxml-->
-<text>pages/profile_player/profile_referee_edit/profile_referee_edit.wxml</text>
+<!--<text>pages/profile_player/profile_referee_edit/profile_referee_edit.wxml</text>-->
+
+<view class="container">
+  <view style="width: 90%;">
+    <view class="section0">
+      <view>头像</view>
+      <view style="flex: 1;"></view>
+      <view class="edit" bindtap="uploadImage">
+        <image class="picture" src="{{photoUrl}}"></image>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <view class="section">
+      <view>姓名</view>
+      <view style="flex: 1;"></view>
+      <view class="edit" bindtap="showNameInput">
+        <view>{{name}}</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeName"       bindcancel="cancelChangeName">
+      <view class="modal-content">
+        <text>请输入姓名：</text>
+        <input placeholder="姓名" bindinput="changename"/>
+      </view>
+    </modal>
+    <view class="section">
+      <view>个人简介</view>
+      <view style="flex: 1;"></view>
+      <view class="edit" bindtap="showBioInput">
+        <view>{{bio}}</view>
+        <view class="pointer">></view>
+      </view>
+    </view>
+    <modal hidden="{{modalHiddenBio}}" bindconfirm="confirmChangeBio"       bindcancel="cancelChangeBio">
+      <view class="modal-content">
+        <text>请输入个人简介：</text>
+        <input placeholder="个人简介" bindinput="changebio"/>
+      </view>
+    </modal>
+    <button class="button" bindtap="submit">提交</button>
+  </view>
+</view>

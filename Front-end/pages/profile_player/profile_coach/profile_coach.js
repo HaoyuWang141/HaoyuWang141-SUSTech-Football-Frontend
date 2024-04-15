@@ -205,12 +205,20 @@ Page({
     })
   },
 
-  // 页面跳转
-  edit_information() {
-    wx.navigateTo({
-      url: '/pages/profile_player/profile_coach_edit/profile_coach_edit',
-    })
-  },
+    // 页面跳转
+    edit_information() {
+      let coach = this.data.coach
+      console.log(coach)
+      const queryString = Object.keys(coach).map(key => {
+        console.log(key + ": " + encodeURIComponent(coach[key]))
+        return `${key}=${encodeURIComponent(coach[key])}`
+      }).join('&');
+      console.log("queryString->")
+      console.log(queryString)
+      wx.navigateTo({
+        url: `/pages/profile_player/profile_coach_edit/profile_coach_edit?${queryString}`
+      })
+    },
 
   gotoMatchesPage(e) {
     let matchList = e.currentTarget.dataset.list ?? []

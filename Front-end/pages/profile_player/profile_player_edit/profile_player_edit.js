@@ -395,9 +395,6 @@ Page({
           }
           console.log('更新球员成功')
           wx.navigateBack()
-          that.setData({
-            shuxing: player.shuxing
-          })
         },
         fail(err) {
           console.error('更新球员失败：', err.statusCode, err.errMsg);

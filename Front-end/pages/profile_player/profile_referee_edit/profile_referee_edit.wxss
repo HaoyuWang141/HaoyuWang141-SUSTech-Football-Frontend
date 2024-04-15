@@ -1,1 +1,42 @@
 /* pages/profile_player/profile_referee_edit/profile_referee_edit.wxss */
+
+
+.section{
+  display: flex;
+  border-bottom: 1px solid rgb(236, 235, 235);
+  line-height: 130rpx;
+}
+
+.section0{
+  display: flex;
+  border-bottom: 1px solid rgb(236, 235, 235);
+  line-height: 200rpx;
+}
+
+.edit{
+  display: flex;
+  text-align: end;
+  color: #99949d;
+  position: relative;
+}
+
+.picture{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+}
+
+.pointer{
+  margin-left:30rpx;
+}
+
+.button {
+  display: block;
+  background-color: #ed6c00;
+  color: white;
+  margin-bottom: 40rpx;
+  padding: 20rpx;
+  border: none;
+  width: 40rpx;
+  min-width: 0;
+}

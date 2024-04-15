@@ -187,8 +187,16 @@ Page({
 
   // 页面跳转
   edit_information() {
+    let referee = this.data.referee
+    console.log(referee)
+    const queryString = Object.keys(referee).map(key => {
+      console.log(key + ": " + encodeURIComponent(referee[key]))
+      return `${key}=${encodeURIComponent(referee[key])}`
+    }).join('&');
+    console.log("queryString->")
+    console.log(queryString)
     wx.navigateTo({
-      url: '/pages/profile_player/profile_referee_edit/profile_referee_edit',
+      url: `/pages/profile_player/profile_referee_edit/profile_referee_edit?${queryString}`
     })
   },
 
