@@ -1,0 +1,17 @@
+<!--pages/management/invite_referee/invite_referee.wxml-->
+<view class="container">
+  <view style="width: 100%;">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">裁判列表</text>
+        <text class="block-more">点击邀请裁判</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-y enable-flex>
+          <player-card-small wx:for="{{allRefereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.refereeId}}" >
+          </player-card-small>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

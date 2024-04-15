@@ -47,12 +47,6 @@
       <text>{{strTime}}</text>
     </picker>
 
-    <!-- 比赛名称 -->
-    <!-- <view class="changeInfo-container" bindtap="showNameInput">
-      <text>比赛名称：</text>
-      <text>{{name}}</text>
-    </view> -->
-
     <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName"       bindcancel="cancelChangeName">
       <view class="modal-content">
         <text>请输入新名称：</text>
@@ -78,6 +72,16 @@
         </picker>
       </block>
     </block>
+  </view>
+
+  <view class="team-container">
+    <view class="teammate-container">
+      <view class="text">裁判</view>
+      <scroll-view scroll-y enable-flex>
+        <player-card-small name="邀请裁判" img="/assets/newplayer.png" bindtap="gotoInviteReferee" data-id="{{matchId}}"></player-card-small>
+        <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageReferee"></player-card-small>
+      </scroll-view>
+    </view>
   </view>
 
   <!-- 提交按钮 -->

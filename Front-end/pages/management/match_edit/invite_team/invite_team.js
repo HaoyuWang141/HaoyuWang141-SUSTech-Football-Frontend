@@ -14,6 +14,8 @@ Page({
     allTeamList: Array,
     homeTeamId: Number,
     awayTeamId: Number,
+    activeHomeTeam: -1,
+    activeAwayTeam: -1,
   },
 
   /**
@@ -141,19 +143,25 @@ Page({
   },
 
   selectHomeTeam(e){
-    const homeTeamId = e.target.dataset.id
+    let id = e.currentTarget.dataset.item;
+    const homeTeamId = e.target.dataset.id;
     this.setData({
-      homeTeamId: homeTeamId
+      homeTeamId: homeTeamId,
+      activeHomeTeam: id,
     })
-    console.log('选择主队' + this.data.homeTeamId)
+    console.log('选择主队' + this.data.homeTeamId);
+    console.log('activeHomeTeam->' + this.data.activeHomeTeam);
   },
 
   selectAwayTeam(e){
-    const awayTeamId = e.target.dataset.id
+    let id = e.currentTarget.dataset.item;
+    const awayTeamId = e.target.dataset.id;
     this.setData({
-      awayTeamId: awayTeamId
+      awayTeamId: awayTeamId,
+      activeAwayTeam: id,
     })
     console.log('选择客队' + this.data.awayTeamId)
+    console.log('activeAwayTeam->' + this.data.activeAwayTeam);
   },
 
   confirmSelect (){
@@ -180,6 +188,7 @@ Page({
         });
       }
     });
+    var that = this;
     wx.request({
       url: URL + '/match/team/invite?matchId=' + this.data.matchId + '&teamId=' + this.data.awayTeamId + '&isHomeTeam=' + Boolean(false),
       method: 'POST',
@@ -201,6 +210,21 @@ Page({
           icon: 'none',
           duration: 2000
         });
+      },
+      complete() {
+        wx.showToast({
+          title: '成功邀请',
+          icon: 'none',
+          duration: 1000
+        });
+        let pages = getCurrentPages();
+        let prevPage = pages[pages.length - 2];
+        prevPage.setData({
+              homeTeamId: that.data.homeTeamId,
+        })
+        wx.navigateBack({
+              delta: 1,
+        })
       }
     });
   },

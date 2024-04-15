@@ -1,4 +1,23 @@
-/* pages/management/invite_team/invite_team.wxss */
+/* pages/management/invite_referee/invite_referee.wxss */
+
+/* Styles for the top section */
+.block-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  /* Adds some space between the top and the main content */
+}
+
+/* Styles for the title */
+.block-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  /* Dark grey color for the text */
+}
+
+/* Optional: If you want the "More" text but it's empty in the example */
 .block-more {
   padding: 10rpx 0;
   font-size: 14px;
@@ -20,11 +39,19 @@
   flex-direction: row;
   background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
   color: white; /* 文字颜色 */
-  padding: 2px 2px; /* 按钮内边距 */
+  padding: 3px 3px; /* 按钮内边距 */
   border: none; /* 去除按钮边框 */
   border-radius: 5px; /* 按钮圆角 */
   cursor: pointer; /* 鼠标样式 */
   max-width: 50%;
+  font-size: x-small;
+
+}
+
+.invite {
+  font-size: x-small;
+  white-space: nowrap;
+
 }
 
 .invite-btn:active {

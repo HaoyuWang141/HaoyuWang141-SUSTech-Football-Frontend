@@ -18,11 +18,12 @@ Page({
     stageList: Array,
     stageNameList: Array,
     tagNameList: Array,
-    name: '友谊赛',
-    homeTeam: "主队",
-    awayTeam: "客队",
-    icon1: '/assets/newplayer.png',
-    icon2: '/assets/newplayer.png',
+    homeTeamId: -1,
+    awayTeamId: -1,
+    homeTeamName: "主队",
+    awayTeamName: "客队",
+    homeTeamLogoUrl: '/assets/newplayer.png',
+    awayTeamLogoUrl: '/assets/newplayer.png',
     hasBegun: false,
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
@@ -61,7 +62,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.fetchData();
   },
 
   /**
@@ -82,7 +83,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.fetchData();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -138,6 +140,62 @@ Page({
       }
     });
 
+    if (this.data.homeTeamId !== -1){
+      console.log('homeTeamId');
+      console.log(that.data.homeTeamId);
+      wx.request({
+        url: URL + '/team/get?id=' + that.data.homeTeamId,
+        success(res) {
+          console.log("homeTeam->")
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            return
+          }
+          // 基本数据
+          that.setData({
+            homeTeamName: res.data.name,
+            homeTeamLogoUrl: res.data.logoUrl,
+          });
+        },
+        fail(err) {
+          console.log('请求失败', err);
+          // 可以显示失败的提示信息，或者做一些错误处理
+        },
+        complete() {
+          // 无论请求成功还是失败都会执行
+          wx.hideLoading(); // 关闭加载提示框
+        }
+      });
+    }
+    if (this.data.awayTeamId !== -1){
+      console.log('awayTeamId');
+      console.log(that.data.awayTeamId)
+      wx.request({
+        url: URL + '/team/get?id=' + that.data.awayTeamId,
+        success(res) {
+          console.log("awayTeam->")
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            return
+          }
+          // 基本数据
+          that.setData({
+            awayTeamName: res.data.name,
+            awayTeamLogoUrl: res.data.logoUrl,
+          });
+        },
+        fail(err) {
+          console.log('请求失败', err);
+          // 可以显示失败的提示信息，或者做一些错误处理
+        },
+        complete() {
+          // 无论请求成功还是失败都会执行
+          wx.hideLoading(); // 关闭加载提示框
+        }
+      });
+    }
   },
 
   // 处理日期选择器选择完成事件
@@ -177,7 +235,7 @@ Page({
   // 处理提交信息修改
   confirmCreate: function (){
     var that = this;
-    let sqlTimestamp = this.data.date + 'T' + this.data.time + ":00.000+00:00"; // 转换为 ISO 
+    let sqlTimestamp = this.data.date + ' ' + this.data.time + ":00.000"; // 转换为 ISO 
     that.setData({
       dateTime: sqlTimestamp,
     });
@@ -187,7 +245,7 @@ Page({
     };
     // 发送请求到后端接口
     wx.request({
-      url: URL + '/event/match/add', // 后端接口地址
+      url: URL + '/event/match/add?eventId=' + this.data.eventId + "&stage=" + this.data.stage + "&tag=" + this.data.tag + "&time=" + this.data.dateTime + "&homeTeamId=" + this.data.homeTeamId + "&awayTeamId=" + this.data.awayTeamId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
         // 请求成功的处理逻辑
@@ -211,6 +269,13 @@ Page({
         });
       }
     });
+  },
+
+  inviteTeam: function(e) {
+    const dataset = e.currentTarget.dataset 
+    wx.navigateTo({
+      url: '/pages/management/event_edit/invite_team/invite_team?id=' + dataset.id,
+    })
   },
 
 })

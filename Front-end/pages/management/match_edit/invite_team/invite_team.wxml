@@ -6,7 +6,7 @@
   </view>
   <view class="block-main">
     <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-      <team-card-small wx:for="{{managedTeamList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="selectHomeTeam" data-id="{{item.teamId}}"></team-card-small>
+      <team-card-small wx:for="{{managedTeamList}}" wx:key="index" class="item {{activeHomeTeam === index? 'selected':' '}}" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="selectHomeTeam" data-id="{{item.teamId}}" data-item="{{index}}"></team-card-small>
     </scroll-view>
   </view>
 </view>
@@ -18,7 +18,7 @@
   </view>
   <view class="block-main">
     <scroll-view scroll-y enable-flex>
-      <team-card-small wx:for="{{allTeamList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="selectAwayTeam" data-id="{{item.teamId}}"></team-card-small>
+      <team-card-small wx:for="{{allTeamList}}" wx:key="index" class="item {{activeAwayTeam === index? 'selected':' '}}" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="selectAwayTeam" data-id="{{item.teamId}}" data-item="{{index}}"></team-card-small>
     </scroll-view>
   </view>
 </view>

@@ -26,6 +26,8 @@
     "pages/management/team_edit/invite_coach/invite_coach",
     "pages/management/event_edit/match_new/match_new",
     "pages/management/event_edit/match_edit/match_edit",
+    "pages/management/event_edit/invite_team/invite_team",
+    "pages/management/invite_referee/invite_referee",
     "pages/mine/mine",
     "pages/pub/match/match",
     "pages/pub/player/player",
