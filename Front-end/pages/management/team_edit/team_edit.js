@@ -1,6 +1,7 @@
 // pages/management/team_edit/team_edit.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
 
 Page({
 
@@ -11,11 +12,12 @@ Page({
     id: 0,
     modalHidden: true, // 控制模态框显示隐藏
     newName: '',   // 用于存放用户输入的新队名
+    tempFilePath: String,
     edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
     selectCaptain: {name: '选择队长', img: '/assets/newplayer.png'},
     inviteCoach: {name: '邀请教练', img: '/assets/newplayer.png'},
-    captain: Array,
+    captain: [],
 
     teamId: String,
     name: String,
@@ -124,6 +126,7 @@ Page({
       },
       complete() {
         wx.hideLoading();
+        that.fetchCaptain();
       }
     });
   },
@@ -132,10 +135,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/player/get',
-      data: {
-        id: this.data.captainId
-      },
+      url: URL + '/player/get?id=' + that.data.captainId,
       success(res) {
         console.log("captain->")
         console.log(res.data)
@@ -157,16 +157,24 @@ Page({
   /**
    * 修改队徽
    */
-  changeLogo: function () {
-    wx.chooseImage({
-      count: 1,
-      success: res => {
-        const tempFilePaths = res.tempFilePaths;
-        this.setData({
-          logoUrl: tempFilePaths[0]
+  uploadLogo: function () {
+    var that = this;
+    // 打开相册或相机选择图片
+    wx.chooseMedia({
+      count: 1, // 默认为9，设置为1表示只选择一张图片
+      mediaType: ['image'],
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表
+        console.log(res.tempFiles)
+        that.setData({
+          tempFilePath: res.tempFiles[0].tempFilePath,
         });
+        console.log('tempFilePath->');
+        console.log(that.data.tempFilePath);
       }
-    });
+    })
   },
  
 
@@ -217,46 +225,85 @@ Page({
   },
 
   confirmEdit() {
-    // 构造要发送给后端的数据
-    const dataToUpdate = {
-      teamId: this.data.teamId,
-      name: this.data.name,
-      logoUrl: this.data.logoUrl,
-      playerList: this.data.playerList,
-      captainId: this.data.captainId,
-      coachList: this.data.coachList,
-      eventList: this.data.eventList,
-      managerList: this.data.managerList,
-      matchList: this.data.matchList,
-    };
-  
-    // 发送请求到后端接口
-    wx.request({
-      url: URL + '/team/update', // 后端接口地址
-      method: 'PUT', // 请求方法
-      data: dataToUpdate, // 要发送的数据
-      success: res => {
-        // 请求成功的处理逻辑
-        console.log('球队信息更新成功', res.data);
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
+    var that = this;
+    wx.uploadFile({
+      url: URL + '/upload', // 你的上传图片的服务器API地址
+      filePath: that.data.tempFilePath,
+      name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
+      success: function (uploadRes) {
+        console.log('Create Team: uploadLogo ->')
+        console.log(uploadRes)
+        if (uploadRes.statusCode != 200) {
+          console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
+          wx.showToast({
+            title: '上传头像失败，请检查网络！', // 错误信息文本
+            icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
+            duration: 3000 // 持续时间
+          });
+          return
+        }
+        var filename = uploadRes.data;
+        that.setData({
+          logoUrl: URL + '/download?filename=' + filename
+        });
+        console.log("logoUrl->")
+        console.log(that.data.logoUrl)
+        wx.hideLoading()
         wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000
+          title: '上传成功',
+          icon: 'success',
+          duration: 2000,
         });
       },
-      fail: err => {
-        // 请求失败的处理逻辑
-        console.error('球队信息更新失败', err);
-        // 显示失败信息
+      fail: function (error) {
+        console.log('上传失败', error);
+        wx.hideLoading()
         wx.showToast({
-          title: '修改失败，请重试',
-          icon: 'none',
-          duration: 2000
+          title: '上传头像失败，请检查网络！', // 错误信息文本
+          icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
+          duration: 3000 // 持续时间
+        });
+      },
+      complete: function(){
+        // 构造要发送给后端的数据
+        const dataToUpdate = {
+          teamId: that.data.teamId,
+          name: that.data.name,
+          logoUrl: that.data.logoUrl,
+          captainId: that.data.captainId,
+        };
+        console.log('dataToUpdate->');
+        console.log(dataToUpdate);
+        // 发送请求到后端接口
+        wx.request({
+          url: URL + '/team/update?manegerId=' + userId, // 后端接口地址
+          method: 'PUT', // 请求方法
+          data: dataToUpdate, // 要发送的数据
+          success: res => {
+            // 请求成功的处理逻辑
+            console.log('球队信息更新成功', res.data);
+            // 获取成功信息并显示在 toast 中
+            const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
+            wx.showToast({
+              title: successMsg,
+              icon: 'none',
+              duration: 2000
+            });
+          },
+          fail: err => {
+            // 请求失败的处理逻辑
+            console.error('球队信息更新失败', err);
+            // 显示失败信息
+            wx.showToast({
+              title: '修改失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+          }
         });
       }
-    });
+    })
+
   },
 
   gotoInvitePlayer: function(e) {

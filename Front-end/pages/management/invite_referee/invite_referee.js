@@ -1,7 +1,6 @@
-// pages/management/team_edit/select_captain/select_captain.js
+// pages/management/invite_referee/invite_referee.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-const userId = appInstance.globalData.userId
 
 Page({
 
@@ -9,17 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    allPlayerList: Array,
-
-    teamId: Number,
-    name: String,
-    logoUrl: String,
-    captainId: String,
-    coachList: Array,
-    playerList: Array,
-    eventList: Array,
-    matchList: Array,
-    managerList: Array,
+    allRefereeList: Array,
+    matchId: Number,
   },
 
   /**
@@ -28,9 +18,9 @@ Page({
   onLoad(options) {
     console.log(options.id);
     this.setData({
-      teamId: parseInt(options.id)
+      matchId: parseInt(options.id)
     })
-    this.fetchData(this.data.teamId);
+    this.fetchData();
   },
 
   /**
@@ -44,7 +34,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.teamId);
+    this.fetchData();
   },
 
   /**
@@ -65,7 +55,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.teamId);
+    this.fetchData();
     wx.stopPullDownRefresh();
   },
 
@@ -84,25 +74,20 @@ Page({
   },
 
   // 获取基本数据
-  fetchData: function (id) {
+  fetchData: function () {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
       mask: true
     });
-
     const that = this
     wx.request({
-      url: URL + "/team/get?id=" + id,
+      url: URL + "/referee/getAll",
       success(res) {
-        console.log("/team/get?id=" + id + " ->")
+        console.log("referee->")
         console.log(res.data)
         that.setData({
-          homeTeam: res.data.homeTeam,
-          name: res.data.name,
-          logoUrl: res.data.logoUrl,
-          captainId: res.data.captainId,
-          playerList: res.data.playerList,
+          allRefereeList: res.data,
         })
       },
       fail(err) {
@@ -115,51 +100,33 @@ Page({
     })
   },
 
-  select(e) {
-    this.setData({
-      captainId: e.target.dataset.id,
-    })
-    const dataToUpdate = {
-      teamId: this.data.teamId,
-      name: this.data.name,
-      captainId: this.data.captainId,
-      logoUrl: this.data.logoUrl,
-    }
-    console.log('dataToUpdate->')
-    console.log(dataToUpdate);
+  invite(e) {
     wx.request({
-      url: URL + '/team/update?managerId=' + userId,
-      method: 'PUT',
-      data: dataToUpdate,
+      url: URL + '/match/referee/invite?matchId=' + this.data.matchId + "&refereeId=" + e.currentTarget.dataset.id,
+      method: 'POST',
       success: res => {
-        console.log('成功设置队长', res.data);
+        console.log('已邀请', res.data);
         // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '成功设置队长'; // 假设后端返回的成功信息在 res.data.message 中
+        const successMsg = res.data ? res.data : '已邀请'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 1000,
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
-              })
-            }, 1000);
-          }
-        });
-      },
-      fail: err => {
-        console.error('设置失败', err);
-        // 显示失败信息
-        wx.showToast({
-          title: '设置失败，请重试',
           icon: 'none',
           duration: 2000
         });
       },
+      fail: err => {
+        console.error('邀请失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      }
     });
   },
   
+
   gotoPlayerPage: function (e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({

@@ -1,0 +1,26 @@
+<!-- pages/management/event_edit/invite_team/invite_team.wxml -->
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">选择主队</view>
+    <view class="block-more" bindtap="gotoTeams" data-id="5">查看更多</view>
+  </view>
+  <view class="block-main">
+    <scroll-view scroll-x enable-flex style="flex-direction: column;">
+      <team-card-small wx:for="{{teamList}}" wx:key="index" class="item {{activeHomeTeam === index? 'selected':' '}}" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="selectHomeTeam" data-id="{{item.teamId}}" data-item="{{index}}"></team-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">选择客队</view>
+    <view class="block-more" bindtap="gotoTeams" data-id="5">查看更多</view>
+  </view>
+  <view class="block-main">
+    <scroll-view scroll-y enable-flex style="flex-direction: column;">
+      <team-card-small wx:for="{{teamList}}" wx:key="index" class="item {{activeAwayTeam === index? 'selected':' '}}" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="selectAwayTeam" data-id="{{item.teamId}}" data-item="{{index}}"></team-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<button class="confirm-btn" bindtap="confirmSelect">确认选择</button>

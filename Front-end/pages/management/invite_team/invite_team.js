@@ -10,7 +10,6 @@ Page({
   data: {
     eventId: Number,
     allTeamList: Array,
-    teamList: Array,
   },
 
   /**

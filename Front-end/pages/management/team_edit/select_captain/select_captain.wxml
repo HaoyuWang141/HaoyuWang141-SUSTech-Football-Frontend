@@ -7,12 +7,7 @@
       </view>
       <view class="block-main">
         <scroll-view scroll-y enable-flex>
-          <player-card-small wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}">
-          <view>
-            <button class="select-btn" bindtap="select" data-id="{{item.playerId}}" disabled="{{isInPlayerList(item.playerId)}}">
-            <text class="select">选择</text>
-            </button>
-          </view>
+          <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="select" data-id="{{item.playerId}}">
           </player-card-small>
         </scroll-view>
       </view>

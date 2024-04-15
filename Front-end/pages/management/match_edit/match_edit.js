@@ -322,4 +322,11 @@ Page({
     })
   },
 
+  gotoInviteReferee: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/invite_referee/invite_referee?id=' + dataset.id,
+    })
+  },
+
 })

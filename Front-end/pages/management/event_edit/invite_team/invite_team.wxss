@@ -1,9 +1,10 @@
-/* pages/management/match_new/invite_team/invite_team.wxss */
+/* pages/management/event_edit/invite_team/invite_team.wxss */
 
 /* Styles for the container */
 
 .block-container {
   margin-bottom: 0%;
+  max-height: 45%;
 }
 /* Styles for the top section */
 .block-top {
