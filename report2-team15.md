@@ -58,15 +58,13 @@
 <div style="display:flex; justify-content:center;">
     <img src="docs/sprint1/UI-player.drawio.svg" style="width:96%;">
 </div>
-
 **【管理】**
 
 管理页面显示自己管理的球队、比赛、赛事。可跳转到管理的球队、比赛、赛事详情页面并编辑信息。
 
 <div style="display:flex; justify-content:center;">
-    <img src="docs/sprint1/UI-management.drawio.svg" style="width:45%;">
+    <img src="docs/sprint1/UI-management.drawio.svg" style="width:100%;">
 </div>
-
 **【我的】**
 
 我的页面显示用户相关信息（区别于球员主页），根据自己注册的不同身份（例如裁判、教练、管理员等）分类接收通知（例如比赛提醒、入队邀请等）。
@@ -74,7 +72,6 @@
 <div style="display:flex; justify-content:center;">
     <img src="docs/sprint1/UI-mine.drawio.svg" style="width:13%;">
 </div>
-
 ### Part II. Process & Collaborations
 
 #### 1. Github Project board
