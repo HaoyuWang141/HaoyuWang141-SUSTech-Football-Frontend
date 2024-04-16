@@ -96,7 +96,6 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        
         // 基本数据
         that.setData({
           teamList: res.data,

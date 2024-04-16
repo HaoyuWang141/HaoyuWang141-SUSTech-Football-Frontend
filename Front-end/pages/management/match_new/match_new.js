@@ -184,6 +184,11 @@ Page({
           icon: 'none',
           duration: 2000
         });
+      },
+      complete: function(){
+        wx.navigateBack({
+          delta: 1,
+        })
       }
     });
   },

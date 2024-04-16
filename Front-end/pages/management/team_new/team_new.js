@@ -177,15 +177,13 @@ Page({
           icon: 'none',
           duration: 2000
         });
+      },
+      complete: function(){
+        wx.navigateBack({
+          delta: 1,
+        })
       }
     });
   },
-
-  // inviteNewPlayer: function(e) {
-  //   const dataset = e.currentTarget.dataset
-  //   wx.navigateTo({
-  //     url: '/pages/management/invite_player/invite_player?id=' + dataset.id,
-  //   })
-  // },
-
+  
 })
