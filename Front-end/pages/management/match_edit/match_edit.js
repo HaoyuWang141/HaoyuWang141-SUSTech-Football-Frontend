@@ -1,6 +1,7 @@
 // pages/management/match_edit/match_edit.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
 const {formatTime, splitDateTime} = require("../../../utils/timeFormatter")
 
 Page({
@@ -9,25 +10,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
     hasBegun: false,
-    strTimeInfo: String,
-    strDate: String,
-    strTime: String,
-    name: String,
-
-    matchId: Number,
-    time: String,
-    homeTeam: Array,
-    awayTeam: Array,
-    homeTeamId: Number,
-    awayTeamId: Number,
-    homeTeamScore: Number,
-    awayTeamScore: Number,
-    homeTeamPenalty: Number,
-    awayTeamPenalty: Number,
-    matchPlayerActionList: Array,
-    refereeList: Array,
+    strTimeInfo: '',
+    strDate: '',
+    strTime: '',
+    name: '',
+    tempHomeTeamId: 0,
+    tempAwayTeamId: 0,
+    matchId: 0,
+    time: '',
+    homeTeam: [],
+    awayTeam: [],
+    homeTeamId: 0,
+    awayTeamId: 0,
+    homeTeamName: '',
+    awayTeamName: '',
+    homeTeamLogoUrl: '',
+    awayTeamLogoUrl: '',
+    homeTeamScore: 0,
+    awayTeamScore: 0,
+    homeTeamPenalty: 0,
+    awayTeamPenalty: 0,
+    matchPlayerActionList: [],
+    refereeList: [],
+    matchEvent: [],
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
@@ -40,7 +46,7 @@ Page({
   onLoad(options) {
     console.log(options.id)
     this.setData({
-      id: options.id
+      matchId: options.id
     })
     this.fetchData(options.id);
   },
@@ -56,7 +62,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.id);
+    console.log('homeTeamId->')
+    console.log(this.data.homeTeamId)
+    console.log('awayTeamId->')
+    console.log(this.data.awayTeamId)
+    this.fetchData();
   },
 
   /**
@@ -77,7 +87,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id);
+    this.fetchData();
     wx.stopPullDownRefresh();
   },
 
@@ -95,7 +105,7 @@ Page({
 
   },
 
-  fetchData: function (id) {
+  fetchData: function () {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
@@ -105,10 +115,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/match/get',
-      data: {
-        id: id
-      },
+      url: URL + '/match/get?id=' + that.data.matchId,
       success(res) {
         console.log("match->")
         console.log(res.data)
@@ -129,27 +136,94 @@ Page({
           strTimeInfo: strTimeInfo,
           strDate: strDate,
           strTime: strTime,
-
           matchId: res.data.matchId,
           time: res.data.time,
+          homeTeam: res.data.homeTeam,
+          awayTeam: res.data.awayTeam,
+          homeTeamName: res.data.homeTeam.name,
+          awayTeamName: res.data.awayTeam.name,
+          homeTeamLogoUrl: res.data.homeTeam.logoUrl,
+          awayTeamLogoUrl: res.data.awayTeam.logoUrl,
           homeTeamId: res.data.homeTeam.teamId,
           awayTeamId: res.data.awayTeam.teamId,
           homeTeamScore: res.data.homeTeam.score,
           awayTeamScore: res.data.awayTeam.score,
           homeTeamPenalty: res.data.homeTeam.penalty,
           awayTeamPenalty: res.data.awayTeam.penalty,
-          homeTeam: res.data.homeTeam,
-          awayTeam: res.data.awayTeam,
           refereeList: res.data.refereeList,
         });
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
+        // 显示失败信息
+        wx.showToast({
+          title: '请求失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
       },
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
+        if (that.data.tempHomeTeamId !== 0){
+          console.log('homeTeamId');
+          console.log(that.data.tempHomeTeamId);
+          wx.request({
+            url: URL + '/team/get?id=' + that.data.tempHomeTeamId,
+            success(res) {
+              console.log("homeTeam->")
+              console.log(res.data)
+              if (res.statusCode !== 200) {
+                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                return
+              }
+              // 基本数据
+              that.setData({
+                homeTeamId: res.data.teamId,
+                homeTeamName: res.data.name,
+                homeTeamLogoUrl: res.data.logoUrl,
+              });
+            },
+            fail(err) {
+              console.log('请求失败', err);
+              // 可以显示失败的提示信息，或者做一些错误处理
+            },
+            complete() {
+              // 无论请求成功还是失败都会执行
+              wx.hideLoading(); // 关闭加载提示框
+            }
+          });
+        }
+        
+        if (that.data.tempAwayTeamId !== 0){
+          console.log('awayTeamId');
+          console.log(that.data.tempAwayTeamId)
+          wx.request({
+            url: URL + '/team/get?id=' + that.data.tempAwayTeamId,
+            success(res) {
+              console.log("awayTeam->")
+              console.log(res.data)
+              if (res.statusCode !== 200) {
+                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                return
+              }
+              // 基本数据
+              that.setData({
+                awayTeamId: res.data.teamId,
+                awayTeamName: res.data.name,
+                awayTeamLogoUrl: res.data.logoUrl,
+              });
+            },
+            fail(err) {
+              console.log('请求失败', err);
+              // 可以显示失败的提示信息，或者做一些错误处理
+            },
+            complete() {
+              // 无论请求成功还是失败都会执行
+              wx.hideLoading(); // 关闭加载提示框
+            }
+          });
+        }
       }
     });
   },
@@ -186,35 +260,6 @@ Page({
       strTime: e.detail.value
     });
   },
-
-  // 显示比赛名称输入弹窗
-  // showNameInput: function () {
-  //   this.setData({
-  //     modalHidden: false
-  //   });
-  // },
-
-  // changeName: function (e) {
-  //   this.setData({
-  //     newname: e.detail.value
-  //   });
-  // },
-
-  // 确认更改比赛名时触发的事件
-  // confirmChangeName: function () {
-  //   // 这里可以添加逻辑，如检查输入是否合法等
-  //   this.setData({
-  //     name: this.data.newname,
-  //     modalHidden: true
-  //   });
-  // },
-
-  // 取消更改比赛名时触发的事件
-  // cancelChangeName: function () {
-  //   this.setData({
-  //     modalHidden: true
-  //   });
-  // },
 
   // 处理比分选择器选择完成事件
   bindPickerChangeScore: function (e) {
@@ -290,7 +335,7 @@ Page({
     console.log(dataToUpdate);
     // 发送请求到后端接口
     wx.request({
-      url: URL + '/match/update', // 后端接口地址
+      url: URL + '/match/update?managerId=' + userId, // 后端接口地址
       method: 'PUT', // 请求方法
       data: dataToUpdate, // 要发送的数据
       success: res => {
@@ -308,7 +353,7 @@ Page({
         });
       },
       fail: err => {
-        console.error('比赛信息更新失败', err);
+        console.error('比赛信息修改失败', err);
         // 显示失败信息
         wx.showToast({
           title: '修改失败，请重试',
@@ -328,17 +373,24 @@ Page({
   },
 
   // 处理邀请队伍
-  inviteTeam: function(e) {
+  inviteHomeTeam: function(e) {
     const dataset = e.currentTarget.dataset 
     wx.navigateTo({
-      url: '/pages/management/match_edit/invite_team/invite_team?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'hometeam-match',
+    })
+  },
+
+  inviteAwayTeam: function(e) {
+    const dataset = e.currentTarget.dataset 
+    wx.navigateTo({
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'awayteam-match',
     })
   },
 
   gotoInviteReferee: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/invite_referee/invite_referee?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'referee',
     })
   },
 

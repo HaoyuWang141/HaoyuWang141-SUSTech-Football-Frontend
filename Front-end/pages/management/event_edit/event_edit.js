@@ -1,14 +1,16 @@
 // pages/management/event_edit/event_edit.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-
+const {
+  formatTime
+} = require("../../../utils/timeFormatter")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    id: Number,
+    eventId: Number,
     icon: '/assets/cup.svg',    
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
@@ -27,11 +29,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
-      id: options.id
+      eventId: options.id
     })
-    this.fetchData(options.id);
+    this.fetchData();
   },
 
   /**
@@ -45,7 +46,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.id);
+    this.fetchData();
   },
 
   /**
@@ -66,7 +67,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id);
+    this.fetchData();
     wx.stopPullDownRefresh();
   },
 
@@ -94,16 +95,20 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/event/get',
-      data: {
-        id: id
-      },
+      url: URL + '/event/get?id=' + that.data.eventId,
       success(res) {
         console.log("event->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
+        }
+        // 格式化时间
+        let matchList = res.data.matchList ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
         }
         // 基本数据
         that.setData({

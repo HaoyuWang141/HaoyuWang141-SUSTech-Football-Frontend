@@ -5,15 +5,13 @@
     <view style="text-align: center;">管理的比赛</view>
 
     <scroll-view scroll-y enable-flex>
-
       <view>
         <match-card-big name="{{newMatch.name}}" group="{{newMatch.group}}" team1="{{newMatch.team1}}" team2="{{newMatch.team2}}" icon1="{{newMatch.icon1}}" icon2="{{newMatch.icon2}}" score1="{{newMatch.score1}}" score2="{{newMatch.score2}}" time="{{newMatch.time}}" hasBegun="{{newMatch.hasBegun}}" bindtap="goToCreateMatch" data-id="{{eventId}}"></match-card-big>
       </view>
 
       <view wx:for="{{matchList}}" wx:key="matchId">
-        <match-card-big name="{{item.matchEvent.matchStage + ' ' + item.matchEvent.matchTag}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.time}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-big>
+        <match-card-big name="{{item.matchEvent.matchStage + ' ' + item.matchEvent.matchTag}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-big>
       </view>
-
     </scroll-view>
   </view>
 </view>

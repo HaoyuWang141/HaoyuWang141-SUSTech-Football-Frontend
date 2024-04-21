@@ -9,17 +9,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    eventId: Number,
-    dateTime: String,
-    date: String,
-    time: String, 
-    stage: String,
-    tag: String,
-    stageList: Array,
-    stageNameList: Array,
-    tagNameList: Array,
-    homeTeamId: -1,
-    awayTeamId: -1,
+    eventId: 0,
+    dateTime: '',
+    date: '',
+    time: '', 
+    stage: '',
+    tag: '',
+    stageList: [],
+    stageNameList: [],
+    tagNameList: [],
+    tempHomeTeamId: 0,
+    tempAwayTeamId: 0,
+    homeTeamId: 0,
+    awayTeamId: 0,
     homeTeamName: "主队",
     awayTeamName: "客队",
     homeTeamLogoUrl: '/assets/newplayer.png',
@@ -110,7 +112,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/event/get?id=' + this.data.eventId,
+      url: URL + '/event/get?id=' + that.data.eventId,
       success(res) {
         console.log("event->")
         console.log(res.data)
@@ -140,11 +142,11 @@ Page({
       }
     });
 
-    if (this.data.homeTeamId !== -1){
+    if (this.data.tempHomeTeamId !== 0){
       console.log('homeTeamId');
-      console.log(that.data.homeTeamId);
+      console.log(that.data.tempHomeTeamId);
       wx.request({
-        url: URL + '/team/get?id=' + that.data.homeTeamId,
+        url: URL + '/team/get?id=' + that.data.tempHomeTeamId,
         success(res) {
           console.log("homeTeam->")
           console.log(res.data)
@@ -154,6 +156,7 @@ Page({
           }
           // 基本数据
           that.setData({
+            homeTeamId: res.data.teamId,
             homeTeamName: res.data.name,
             homeTeamLogoUrl: res.data.logoUrl,
           });
@@ -168,11 +171,12 @@ Page({
         }
       });
     }
-    if (this.data.awayTeamId !== -1){
+    
+    if (this.data.tempAwayTeamId !== 0){
       console.log('awayTeamId');
-      console.log(that.data.awayTeamId)
+      console.log(that.data.tempAwayTeamId)
       wx.request({
-        url: URL + '/team/get?id=' + that.data.awayTeamId,
+        url: URL + '/team/get?id=' + that.data.tempAwayTeamId,
         success(res) {
           console.log("awayTeam->")
           console.log(res.data)
@@ -182,6 +186,7 @@ Page({
           }
           // 基本数据
           that.setData({
+            awayTeamId: res.data.teamId,
             awayTeamName: res.data.name,
             awayTeamLogoUrl: res.data.logoUrl,
           });
@@ -239,47 +244,52 @@ Page({
     that.setData({
       dateTime: sqlTimestamp,
     });
-    // 构造要发送给后端的数据
-    const dataToUpdate = {
-      time: this.data.dateTime
-    };
     // 发送请求到后端接口
     wx.request({
-      url: URL + '/event/match/add?eventId=' + this.data.eventId + "&stage=" + this.data.stage + "&tag=" + this.data.tag + "&time=" + this.data.dateTime + "&homeTeamId=" + this.data.homeTeamId + "&awayTeamId=" + this.data.awayTeamId, // 后端接口地址
+      url: URL + '/event/match/add?eventId=' + that.data.eventId + "&stage=" + that.data.stage + "&tag=" + that.data.tag + "&time=" + that.data.dateTime + "&homeTeamId=" + that.data.homeTeamId + "&awayTeamId=" + that.data.awayTeamId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
         // 请求成功的处理逻辑
-        console.log('比赛信息更新成功', res.data);
+        console.log('赛事比赛创建成功', res.data);
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
           icon: 'none',
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 500);
+          }
         });
       },
       fail: err => {
         // 请求失败的处理逻辑
-        console.error('比赛信息更新失败', err);
+        console.error('赛事比赛创建失败', err);
         // 显示失败信息
         wx.showToast({
-          title: '请求失败，请重试',
+          title: '创建失败，请重试',
           icon: 'none',
           duration: 2000
         });
       },
-      complete: function(){
-        wx.navigateBack({
-          delta: 1,
-        })
-      }
     });
   },
 
-  inviteTeam: function(e) {
+  inviteHomeTeam: function(e) {
     const dataset = e.currentTarget.dataset 
     wx.navigateTo({
-      url: '/pages/management/event_edit/invite_team/invite_team?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'hometeam-event-match',
+    })
+  },
+
+  inviteAwayTeam: function(e) {
+    const dataset = e.currentTarget.dataset 
+    wx.navigateTo({
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'awayteam-event-match',
     })
   },
 

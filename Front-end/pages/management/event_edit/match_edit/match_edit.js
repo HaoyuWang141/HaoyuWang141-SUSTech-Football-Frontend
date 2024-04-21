@@ -20,6 +20,7 @@ Page({
     stageList: Array,
     stageNameList: Array,
     tagNameList: Array,
+    
     matchId: Number,
     time: String,
     homeTeam: Array,
@@ -341,9 +342,9 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        console.log('比赛信息更新成功', res.data);
+        console.log('赛事比赛信息修改成功', res.data);
         // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
+        const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
           icon: 'none',
@@ -351,18 +352,14 @@ Page({
         });
       },
       fail: err => {
-        console.error('比赛信息更新失败', err);
+        console.error('赛事比赛信息修改失败', err);
         // 显示失败信息
         wx.showToast({
-          title: '请求失败，请重试',
+          title: '修改失败，请重试',
           icon: 'none',
           duration: 2000
         });
       },
-      complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
-      }
     });
   },
 
@@ -370,18 +367,10 @@ Page({
     
   },
 
-  // 处理邀请队伍
-  inviteTeam: function(e) {
-    const dataset = e.currentTarget.dataset 
-    wx.navigateTo({
-      url: '/pages/management/match_edit/invite_team/invite_team?id=' + dataset.id,
-    })
-  },
-
   gotoInviteReferee: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/invite_referee/invite_referee?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'referee',
     })
   },
 

@@ -1,7 +1,9 @@
 // pages/management/event_edit/event_matches/event_matches.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-
+const {
+  formatTime
+} = require("../../../../utils/timeFormatter")
 Page({
 
   /**
@@ -44,7 +46,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.id);
+    this.fetchData();
   },
 
   /**
@@ -65,7 +67,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id);
+    this.fetchData();
     wx.stopPullDownRefresh();
   },
 
@@ -87,24 +89,27 @@ Page({
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
 
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/event/get',
-      data: {
-        id: this.data.eventId,
-      },
+      url: URL + '/event/get?id=' + that.data.eventId,
       success(res) {
-        console.log("match->")
+        console.log("event match->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
+        // 格式化时间
+        let matchList = res.data.matchList ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
+        }
         // 基本数据
         that.setData({
           matchList: res.data.matchList,

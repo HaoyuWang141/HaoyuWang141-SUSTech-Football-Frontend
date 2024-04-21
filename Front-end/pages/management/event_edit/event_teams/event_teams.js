@@ -116,7 +116,7 @@ Page({
   gotoInviteTeam: function(e){
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/invite_team/invite_team?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'team',
     })
   },
 

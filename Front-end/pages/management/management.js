@@ -188,13 +188,6 @@ Page({
     })
   },
 
-  // gotoEditTeam: function(e) {
-  //   const dataset = e.currentTarget.dataset
-  //   wx.navigateTo({
-  //     url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
-  //   })
-  // },
-
   gotoEditMatch: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({

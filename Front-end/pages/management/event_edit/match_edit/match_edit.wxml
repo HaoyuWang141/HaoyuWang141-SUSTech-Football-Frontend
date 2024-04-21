@@ -15,7 +15,7 @@
       <text class="name">{{stage===null?  '':stage}}{{' '}}{{tag===null? '':tag}}</text>
       <view class="info-container">
         <view class="team">
-          <image class="icon" src="{{homeTeam.logoUrl ? homeTeam.logoUrl : '/assets/newplayer.png'}}" bindtap="inviteTeam" data-id="{{matchId}}"></image>
+          <image class="icon" src="{{homeTeam.logoUrl ? homeTeam.logoUrl : '/assets/newplayer.png'}}"></image>
           <text>{{homeTeam.name ? homeTeam.name : '主队'}}</text>
         </view>
         <view class="middle">
@@ -26,7 +26,7 @@
           <text class="not-begin" wx:else>未开始</text>
         </view>
         <view class="team">
-          <image class="icon" src="{{awayTeam.logoUrl ? awayTeam.logoUrl : '/assets/newplayer.png'}}" bindtap="inviteTeam" data-id="{{matchId}}"></image>
+          <image class="icon" src="{{awayTeam.logoUrl ? awayTeam.logoUrl : '/assets/newplayer.png'}}"></image>
           <text>{{awayTeam.name ? awayTeam.name : '客队'}}</text>
         </view>
       </view>

@@ -1,0 +1,45 @@
+<!--pages/management/invite/invite.wxml-->
+<view class="container">
+  <view style="width: 100%;">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">{{blockTitle}}</text>
+        <text class="block-more">{{blockMore}}</text>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-y enable-flex wx:if="{{type === 'player'}}">
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.playerId}}">
+          </player-card-small>
+        </scroll-view>
+        <scroll-view scroll-y enable-flex wx:if="{{type === 'coach'}}">
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.coachId}}">
+          </player-card-small>
+        </scroll-view>
+        <scroll-view scroll-y enable-flex wx:if="{{type === 'referee'}}">
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.refereeId}}" >
+          </player-card-small>
+        </scroll-view>
+        <scroll-view scroll-y enable-flex wx:if="{{type === 'team'}}">
+          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="invite" data-id="{{item.teamId}}">
+          </team-card-small>
+        </scroll-view>
+        <scroll-view scroll-x enable-flex wx:if="{{type === 'hometeam-match'}}">
+          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="selectHomeTeam" data-id="{{item.teamId}}"></team-card-small>
+        </scroll-view>
+        <scroll-view scroll-x enable-flex wx:if="{{type === 'awayteam-match'}}">
+          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="selectAwayTeam" data-id="{{item.teamId}}"></team-card-small>
+        </scroll-view>
+        <scroll-view scroll-x enable-flex wx:if="{{type === 'hometeam-event-match'}}">
+          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="selectHomeTeam" data-id="{{item.teamId}}"></team-card-small>
+        </scroll-view>
+        <scroll-view scroll-x enable-flex wx:if="{{type === 'awayteam-event-match'}}">
+          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="selectAwayTeam" data-id="{{item.teamId}}"></team-card-small>
+        </scroll-view>
+        <scroll-view scroll-y enable-flex wx:if="{{type === 'captain'}}">
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="selectCaptain" data-id="{{item.playerId}}">
+          </player-card-small>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

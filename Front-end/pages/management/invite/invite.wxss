@@ -1,4 +1,4 @@
-/* pages/management/team_edit/invite_coach/invite_coach.wxss */
+/* pages/management/invite/invite.wxss */
 
 /* Styles for the top section */
 .block-top {

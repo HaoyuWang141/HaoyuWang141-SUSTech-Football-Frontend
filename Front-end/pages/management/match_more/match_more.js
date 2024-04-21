@@ -1,6 +1,7 @@
 // pages/management/match_more/match_more.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
 const {
   formatTime
 } = require("../../../utils/timeFormatter")
@@ -11,7 +12,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: Number,
     matchList: Array,
     newMatch: {
       name: '发起新比赛',
@@ -30,11 +30,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
-    this.setData({
-      id: options.id
-    })
-    this.fetchData(options.id);
+    this.fetchData();
   },
 
   /**
@@ -48,7 +44,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.fetchData(this.data.id);
+    this.fetchData();
   },
 
   /**
@@ -69,7 +65,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.fetchData(this.data.id);
+    this.fetchData();
     wx.stopPullDownRefresh();
   },
 
@@ -87,20 +83,17 @@ Page({
 
   },
 
-  fetchData: function (id) {
+  fetchData: function () {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
 
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/user/getUserManageMatch',
-      data: {
-        userId: id
-      },
+      url: URL + '/user/getUserManageMatch?userId=' + userId,
       success(res) {
         console.log("match->")
         console.log(res.data)
@@ -108,7 +101,7 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
+        // 格式化时间
         let matchList = res.data ?? []
         for (let match of matchList) {
           let date = new Date(match.time)
@@ -118,7 +111,6 @@ Page({
         that.setData({
           matchList: res.data,
         })
-        
       },
       fail(err) {
         console.log('请求失败', err);

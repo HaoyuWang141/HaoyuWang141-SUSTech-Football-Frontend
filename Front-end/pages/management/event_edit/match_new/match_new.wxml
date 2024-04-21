@@ -10,14 +10,14 @@
         <text class="time">{{date  + ' ' + time}}</text>
         <text class="name">{{stage===null?  '':stage}}{{' '}}{{tag===null? '':tag}}</text>
         <view class="info-container">
-          <view class="team" bindtap="inviteTeam" data-id="{{eventId}}">
+          <view class="team" bindtap="inviteHomeTeam" data-id="{{eventId}}">
             <image class="icon" src="{{homeTeamLogoUrl}}"></image>
             <text>{{homeTeamName}}</text>
           </view>
           <view class="middle">
             <text class="not-begin">未开始</text>
           </view>
-          <view class="team" bindtap="inviteTeam" data-id="{{eventId}}">
+          <view class="team" bindtap="inviteAwayTeam" data-id="{{eventId}}">
             <image class="icon" src="{{awayTeamLogoUrl}}"></image>
             <text>{{awayTeamName}}</text>
           </view>

@@ -115,7 +115,7 @@ Page({
           wx.showToast({
             title: '上传头像失败，请检查网络！', // 错误信息文本
             icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-            duration: 3000 // 持续时间
+            duration: 2000 // 持续时间
           });
           return
         }
@@ -125,12 +125,6 @@ Page({
         });
         console.log("logoUrl->")
         console.log(this.data.logoUrl)
-        wx.hideLoading()
-        wx.showToast({
-          title: '上传成功',
-          icon: 'success',
-          duration: 2000,
-        });
       },
       fail: function (error) {
         console.log('上传失败', error);
@@ -138,7 +132,7 @@ Page({
         wx.showToast({
           title: '上传头像失败，请检查网络！', // 错误信息文本
           icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-          duration: 3000 // 持续时间
+          duration: 2000 // 持续时间
         });
       }
     })
@@ -158,32 +152,31 @@ Page({
         // 请求成功的处理逻辑
         console.log("dataToUpdate->");
         console.log(dataToUpdate);
-        console.log('比赛信息更新成功', res.data);
-        // 可以根据后端返回的数据更新页面状态或进行其他操作
+        console.log('球队创建成功', res.data);
         const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
           icon: 'none',
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 500);
+          }
         });
       },
       fail: err => {
         // 请求失败的处理逻辑
-        console.error('比赛信息更新失败', err);
-        // 可以显示失败的提示信息或进行其他操作
+        console.error('球队创建失败', err);
         // 显示失败信息
         wx.showToast({
-          title: '请求失败，请重试',
+          title: '创建失败，请重试',
           icon: 'none',
           duration: 2000
         });
       },
-      complete: function(){
-        wx.navigateBack({
-          delta: 1,
-        })
-      }
     });
   },
-  
 })

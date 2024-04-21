@@ -238,7 +238,7 @@ Page({
           wx.showToast({
             title: '上传头像失败，请检查网络！', // 错误信息文本
             icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-            duration: 3000 // 持续时间
+            duration: 2000 // 持续时间
           });
           return
         }
@@ -248,12 +248,6 @@ Page({
         });
         console.log("logoUrl->")
         console.log(that.data.logoUrl)
-        wx.hideLoading()
-        wx.showToast({
-          title: '上传成功',
-          icon: 'success',
-          duration: 2000,
-        });
       },
       fail: function (error) {
         console.log('上传失败', error);
@@ -261,7 +255,7 @@ Page({
         wx.showToast({
           title: '上传头像失败，请检查网络！', // 错误信息文本
           icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-          duration: 3000 // 持续时间
+          duration: 2000 // 持续时间
         });
       },
       complete: function(){
@@ -281,7 +275,7 @@ Page({
           data: dataToUpdate, // 要发送的数据
           success: res => {
             // 请求成功的处理逻辑
-            console.log('球队信息更新成功', res.data);
+            console.log('球队信息修改成功', res.data);
             // 获取成功信息并显示在 toast 中
             const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
             wx.showToast({
@@ -292,7 +286,7 @@ Page({
           },
           fail: err => {
             // 请求失败的处理逻辑
-            console.error('球队信息更新失败', err);
+            console.error('球队信息修改失败', err);
             // 显示失败信息
             wx.showToast({
               title: '修改失败，请重试',
@@ -303,27 +297,27 @@ Page({
         });
       }
     })
-
   },
 
   gotoInvitePlayer: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/invite_player/invite_player?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'player',
     })
   },
 
   gotoSelectCaptain: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/team_edit/select_captain/select_captain?id=' + dataset.id,
+      //url: '/pages/management/team_edit/select_captain/select_captain?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'captain',
     })
   },
 
   gotoInviteCoach: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/team_edit/invite_coach/invite_coach?id=' + dataset.id,
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'coach',
     })
   },
 })

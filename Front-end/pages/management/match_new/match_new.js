@@ -106,43 +106,6 @@ Page({
       time: e.detail.value
     });
   },
-
-  // 显示比赛名称输入弹窗
-  // showNameInput: function () {
-  //   this.setData({
-  //     modalHidden: false
-  //   });
-  // },
-
-  // changename: function (e) {
-  //   this.setData({
-  //     newname: e.detail.value
-  //   });
-  // },
-
-  // 确认更改队名时触发的事件
-  // confirmChangeTeamname: function () {
-    // 这里可以添加逻辑，如检查输入是否合法等
-  //   this.setData({
-  //     name: this.data.newname,
-  //     modalHidden: true
-  //   });
-  // },
-
-  // 取消更改队名时触发的事件
-  // cancelChangeTeamname: function () {
-  //   this.setData({
-  //     modalHidden: true
-  //   });
-  // },
-
-  // 处理邀请队伍
-  // inviteTeam: function(e) {
-  //   const dataset = e.currentTarget.dataset 
-  //   wx.navigateTo({
-  //     url: '/pages/management/match_edit/invite_team/invite_team?id=' + dataset.id,
-  //   })
-  // },
   
   // 处理提交信息修改
   confirmCreate: function (){
@@ -171,25 +134,27 @@ Page({
         wx.showToast({
           title: successMsg,
           icon: 'none',
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 500);
+          }
         });
       },
       fail: err => {
         // 请求失败的处理逻辑
-        console.error('比赛信息更新失败', err);
+        console.error('比赛创建失败', err);
         // 可以显示失败的提示信息或进行其他操作
         // 显示失败信息
         wx.showToast({
-          title: '请求失败，请重试',
+          title: '创建失败，请重试',
           icon: 'none',
           duration: 2000
         });
       },
-      complete: function(){
-        wx.navigateBack({
-          delta: 1,
-        })
-      }
     });
   },
 
