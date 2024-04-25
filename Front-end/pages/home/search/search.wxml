@@ -7,41 +7,85 @@
     <view class="search-container">
       <input class="search-input" type="text" placeholder="搜索" bindinput="bindInput" value="{{ searchText }}"></input>
       <button class="search-button" bindtap="search">搜索</button>
-      <button class="filter-button" bindtap="filter">
+      <!-- <button class="filter-button" bindtap="filter">
         <image class="icon" src="/assets/filter.svg"></image>
-      </button>
+      </button> -->
+      <picker wx:if="{{type=='全部'}}" class="filter-picker-unselected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+        <image class="icon" src="/assets/filter.svg"></image>
+      </picker>
+      <picker wx:if="{{type!='全部'}}" class="filter-picker-selected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+        <image class="icon" src="/assets/filter.svg"></image>
+      </picker>
     </view>
-
-    <view class="filter-container" wx:if="{{showFilter}}">
-      <picker wx:if="true" class="picker-card" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+    <!-- <view class="filter-container" wx:if="{{false}}">
+      <picker wx:if="{{false}}" class="picker-card" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
         <text>类型：</text>
         <text>{{type}}</text>
       </picker>
-      <picker wx:if="false" class="picker-card" bindchange="bindSortingChange" range="{{filterSortings}}" mode="selector">
+      <picker wx:if="{{false}}" class="picker-card" bindchange="bindSortingChange" range="{{filterSortings}}" mode="selector">
         <text>排序：</text>
         <text>{{sorting}}</text>
       </picker>
-      <picker wx:if="false" class="picker-card" bindchange="bindFavorChange" range="{{filterFavors}}" mode="selector">
+      <picker wx:if="{{false}}" class="picker-card" bindchange="bindFavorChange" range="{{filterFavors}}" mode="selector">
         <text>筛选：</text>
         <text>{{favor}}</text>
       </picker>
-      <!-- <checkbox-group class="checkbox-group" bindchange="checkboxChange">
-        <label wx:for="{{checkboxItems}}" wx:key="{{index}}">
-          <checkbox value="{{item.value}}" checked="{{item.checked}}">{{item.name}}</checkbox>
-        </label>
-      </checkbox-group>
-      <radio-group class="radio-group" hidden="{{!showFilter}}" bindchange="radioChange">
-        <label wx:for="{{radioItems}}" wx:key="{{index}}">
-          <radio value="{{item.value}}" checked="{{item.checked}}">{{item.name}}</radio>
-        </label>
-      </radio-group> -->
+    </view> -->
+
+    <!-- 无结果 -->
+    <view class="no-results-container" wx:if="{{newsList.length==0 && eventList.length==0 && matchList.length==0 && userList.length==0 && teamList.length==0}}">
+      <view class="image-container">
+        <image src="/assets/no_results.svg"></image>
+      </view>
+      <view class="text">无搜索结果</view>
     </view>
 
-    <view class="content-container">
-      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
-      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
-      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
-      <match-card-big name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/team.svg" icon2="/assets/team.svg" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{false}}"></match-card-big>
+
+    <!-- 新闻 -->
+    <view class="block-container" wx:if="{{newsList.length > 0}}">
+      <view class="block-top">
+        <text class="block-title">新闻</text>
+      </view>
+    </view>
+
+    <!-- 赛事 -->
+    <view wx:if="{{eventList.length > 0}}">
+      <view class="block-top">
+        <text class="block-title">赛事</text>
+      </view>
+      <view class="event-container">
+        <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEvent" data-id="{{item.eventId}}"></event-card-big>
+      </view>
+    </view>
+
+    <!-- 比赛 -->
+    <view wx:if="{{matchList.length > 0}}">
+      <view class="block-top">
+        <text class="block-title">比赛</text>
+      </view>
+      <view class="match-container">
+        <match-card-big wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatch" data-id="{{item.matchId}}"> </match-card-big>
+      </view>
+    </view>
+
+    <!-- 用户 -->
+    <view wx:if="{{userList.length > 0}}">
+      <view class="block-top">
+        <text class="block-title">用户</text>
+      </view>
+      <view class="player-container">
+        <player-card-big wx:for="{{players}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}" number="{{-1}}" field="{{item.position}}" goals="" assists="" bind:tap="gotoPlayer" data-id="{{item.matchId}}"> </player-card-big>
+      </view>
+    </view>
+
+    <!-- 球队 -->
+    <view wx:if="{{teamList.length > 0}}">
+      <view class="block-top">
+        <text class="block-title">球队</text>
+      </view>
+      <view class="team-container">
+        <team-card-big wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerList.length}}" bind:tap="gotoTeam" data-id="{{item.teamId}}"> </team-card-big>
+      </view>
     </view>
 
   </view>

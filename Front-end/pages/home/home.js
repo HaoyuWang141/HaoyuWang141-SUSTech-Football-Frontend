@@ -200,8 +200,12 @@ Page({
   },
 
   gotoSearch() {
+    let text = this.data.searchText
+    this.setData({
+      searchText: '',
+    })
     wx.navigateTo({
-      url: '/pages/home/search/search?' + 'searchText=' + encodeURIComponent(this.data.searchText),
+      url: '/pages/home/search/search?' + 'searchText=' + encodeURIComponent(text),
     })
   },
 

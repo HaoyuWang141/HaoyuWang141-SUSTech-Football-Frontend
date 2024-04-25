@@ -1,17 +1,17 @@
 <!--pages/home/event_hall/event_hall.wxml-->
-<view class="block-container">
-  <view class="block-top">
-    <text class="block-title">赛事大厅</text>
-  </view>
+<!-- <view class="block-container">
   <view class="block-main">
     <view class="search-container">
       <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
       <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
     </view>
   </view>
-</view>
+</view> -->
 
 <view class="block-container">
+  <view class="block-top">
+    <text class="block-title">赛事大厅</text>
+  </view>
   <view class="block-main">
     <view class="no-favorite" wx:if="{{eventList.length==0}}">暂无赛事！</view>
     <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>

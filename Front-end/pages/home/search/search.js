@@ -1,4 +1,13 @@
 // pages/home/search/search.js
+const app = getApp()
+const URL = app.globalData.URL
+const {
+  formatTime
+} = require("../../../utils/timeFormatter")
+const {
+  filter
+} = require("../../../utils/searchFilter")
+
 Page({
 
   /**
@@ -7,34 +16,19 @@ Page({
   data: {
     userId: 0,
     searchText: '',
-    newsIdList: [],
-    matchIdList: [],
-    playerIdList: [],
-    teamIdList: [],
-    eventIdList: [],
+    newsList: [],
+    eventList: [],
+    matchList: [],
+    userList: [],
+    teamList: [],
 
-    filterButtonText: '+', // 弃用
-    showFilter: false,
-    filterTypes: ['全部', '新闻', '比赛', '球员(裁判)', '球队', '赛事', '其它'],
+    filterTypes: ['全部', '赛事', '比赛', '用户', '球队', '新闻'],
     type: '全部',
-    filterSortings: ['按时间', '按热度'],
-    sorting: '按时间',
-    filterFavors: ['仅我的关注', '所有'],
-    favor: '仅我的关注'
-
-    //   checkboxItems: [
-    //     { name: '新闻', value: 'news', checked: true },
-    //     { name: '比赛', value: 'matches', checked: true },
-    //     { name: '球员(裁判)', value: 'players', checked: true },
-    //     { name: '球队', value: 'teams', checked: true },
-    //     { name: '赛事', value: 'events', checked: true },
-    //     { name: '其它', value: 'others', checked: true },
-    //   ],
-    //   radioItems: [
-    //     { name: '按时间', value: 'time', checked: true },
-    //     { name: '按热度', value: 'popularity', checked: true },
-    //   ]
-
+    // showFilter: false,
+    // filterSortings: ['按时间', '按热度'],
+    // sorting: '按时间',
+    // filterFavors: ['仅我的关注', '所有'],
+    // favor: '仅我的关注'
   },
 
   /**
@@ -57,7 +51,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    app.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -78,7 +72,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    app.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -95,17 +89,168 @@ Page({
 
   },
 
+  /////////////////////////////////////
+  // 网络传输
+
+  fetchData(id) {
+    this.setData({
+      newsList: [],
+      eventList: [],
+      matchList: [],
+      userList: [],
+      teamList: [],
+    })
+    if (this.data.type == '全部') {
+      app.addToRequestQueue(this.fetchEvent)
+      app.addToRequestQueue(this.fetchMatch)
+      app.addToRequestQueue(this.fetchTeam)
+      app.addToRequestQueue(this.fetchUser)
+      app.addToRequestQueue(this.fetchNews)
+    } else {
+      if (this.data.type == '赛事') {
+        app.addToRequestQueue(this.fetchEvent)
+      } else if (this.data.type == '比赛') {
+        app.addToRequestQueue(this.fetchMatch)
+      } else if (this.data.type == '球队') {
+        app.addToRequestQueue(this.fetchTeam)
+      } else if (this.data.type == '用户') {
+        app.addToRequestQueue(this.fetchUser)
+      } else if (this.data.type == '新闻') {
+        app.addToRequestQueue(this.fetchNews)
+      }
+    }
+  },
+
+  fetchEvent(id) {
+    let that = this
+    wx.request({
+      url: URL + '/event/getAll',
+      success(res) {
+        console.log("search page: fetch event ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        let eventList = res.data ?? []
+        let filterEventList = []
+        for (let event of eventList) {
+          if (filter(that.data.searchText,  event.name + event.description)) {
+            filterEventList.push(event)
+          }
+        }
+        that.setData({
+          eventList: filterEventList,
+        })
+      },
+      fail: function (err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
+
+  fetchMatch(id) {
+    let that = this
+    wx.request({
+      url: URL + '/match/getAll',
+      success(res) {
+        console.log("search page: fetch match ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        let matchList = res.data ?? []
+        let filterMatchList = []
+        for (let match of matchList) {
+          let pattern = (match.homeTeam ? match.homeTeam.name : '') + (match.awayTeam ? match.awayTeam.name : '') + (match.matchEvent ? match.matchEvent.eventName : '')
+          if (filter(that.data.searchText,  pattern)) {
+            let date = new Date(match.time)
+            match.strTime = formatTime(date)
+            match.hasBegun = match.status == 'PENDING' ? false : true
+            filterMatchList.push(match)
+          }
+        }
+        that.setData({
+          matchList: filterMatchList,
+        })
+      },
+      fail: function (err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
+
+  fetchUser(id) {
+    let that = this
+    wx.request({
+      url: URL + '/getUsers',  //TODO
+      success(res) {
+        console.log("home page: fetch verified users ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        let userList = res.data ?? []
+        let filterUserList = []
+        for (let user of userList) {
+          if (filter(that.data.searchText, user.name)) {
+            filterUserList.push(user)
+          }
+        }
+        that.setData({
+          userList: filterUserList,
+        })
+      },
+      fail: function (err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
+
+  fetchTeam(id) {
+    let that = this
+    wx.request({
+      url: URL + '/team/getAll',
+      success(res) {
+        console.log("home page: fetch teams ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        let teamList = res.data ?? []
+        let filterTeamList = []
+        for (let team of teamList) {
+          if (filter(that.data.searchText, team.name)) {
+            filterTeamList.push(team)
+          }
+        }
+        that.setData({
+          teamList: filterTeamList,
+        })
+      },
+      fail: function (err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
+
+  fetchNews(id) {
+    // TODO
+  },
+
   ///////////////////////////////////////////////////////////////////////////////
-  // 其它逻辑
+  // 监听
 
   /**
    * 监听搜索框文本
    */
   bindInput: function (e) {
     this.setData({
-      searchText: e.detail.value // 更新data中的searchText值为用户输入的内容
+      searchText: e.detail.value,
     });
-    // 这里可以添加你的搜索逻辑，比如根据用户输入的内容进行实时搜索
   },
 
   /**
@@ -113,17 +258,7 @@ Page({
    */
   search: function () {
     console.log('搜索内容:', this.data.searchText);
-  },
-
-  /**
-   * 监听过滤器按钮
-   */
-  filter: function () {
-    console.log('点击过滤器按钮');
-    this.setData({
-      filterButtonText: this.data.filterButtonText == '+' ? '-' : '+',
-      showFilter: !this.data.showFilter
-    });
+    app.addToRequestQueue(this.fetchData)
   },
 
   bindTypeChange: function (e) {
@@ -131,47 +266,62 @@ Page({
     this.setData({
       type: this.data.filterTypes[val]
     });
+    app.addToRequestQueue(this.fetchData)
   },
 
-  bindSortingChange: function (e) {
-    const val = e.detail.value;
-    this.setData({
-      sorting: this.data.filterSortings[val]
-    });
+  /**
+   * 监听过滤器按钮
+   */
+  // filter: function () {
+  //   console.log('点击过滤器按钮');
+  //   this.setData({
+  //     showFilter: !this.data.showFilter
+  //   });
+  // },
+
+  // bindSortingChange: function (e) {
+  //   const val = e.detail.value;
+  //   this.setData({
+  //     sorting: this.data.filterSortings[val]
+  //   });
+  // },
+
+  // bindFavorChange: function (e) {
+  //   const val = e.detail.value;
+  //   this.setData({
+  //     favor: this.data.filterFavors[val]
+  //   });
+  // },
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // 跳转
+
+  gotoEvent: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/event/event?id=' + id,
+    })
   },
 
-  bindFavorChange: function (e) {
-    const val = e.detail.value;
-    this.setData({
-      favor: this.data.filterFavors[val]
-    });
+  gotoMatch: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/match/match?id=' + id,
+    })
   },
 
-  // showMultiPicker() {
-  //     wx.showActionSheet({
-  //       itemList: this.data.items,
-  //       success: res => {
-  //         // 用户选择的选项的索引数组
-  //         const selectedIndexes = res.tapIndex;
-  //         // 根据索引数组获取选中的选项，并保存到 selectedOptions 中
-  //         const selectedOptions = selectedIndexes.map(index => this.data.items[index]);
-  //         this.setData({ selectedOptions });
-  //       }
-  //     });
-  //   },
+  gotoPlayer: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/player/player?id=' + id,
+    })
+  },
 
-  // checkboxChange(e) {
-  //     const checkedValues = e.detail.value; // 获取被选中的复选框的值
-  //     const items = this.data.items.map(item => {
-  //       // 遍历所有选项，更新选中状态
-  //       if (checkedValues.indexOf(item.value) !== -1) {
-  //         item.checked = true;
-  //       } else {
-  //         item.checked = false;
-  //       }
-  //       return item;
-  //     });
-  //     this.setData({ items });
-  // }
+  gotoTeam: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/team/team?id=' + id,
+    })
+  },
 
 })
