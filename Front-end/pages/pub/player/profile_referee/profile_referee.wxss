@@ -54,6 +54,7 @@
   color: #666;
 }
 
+
 .info-section {
   width: 100%;
   margin-left: 20rpx;
@@ -63,26 +64,4 @@
   display: block;
   margin-bottom: 10rpx;
   font-size: small;
-}
-
-.function-container {
-  display: flex;
-}
-
-.function-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20rpx;
-}
-
-.function-image {
-  width: 90rpx;
-  height: 90rpx;
-  margin-bottom: 10rpx;
-}
-
-.function-text {
-  font-size: small;
-  color: #666;
 }

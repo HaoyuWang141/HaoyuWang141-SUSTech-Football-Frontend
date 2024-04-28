@@ -184,7 +184,7 @@ Page({
   fetchUser(id) {
     let that = this
     wx.request({
-      url: URL + '/getUsers',  //TODO
+      url: URL + '/user/getAllRoleUsers',
       success(res) {
         console.log("home page: fetch verified users ->")
         if (res.statusCode != 200) {

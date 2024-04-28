@@ -74,7 +74,7 @@
         <text class="block-title">用户</text>
       </view>
       <view class="player-container">
-        <player-card-big wx:for="{{players}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}" number="{{-1}}" field="{{item.position}}" goals="" assists="" bind:tap="gotoPlayer" data-id="{{item.matchId}}"> </player-card-big>
+        <player-card-big wx:for="{{playerList}}" wx:key="playerId" name="{{item.name}}" img="{{item.photoUrl}}" number="{{-1}}" field="{{item.position}}" goals="" assists="" bind:tap="gotoPlayer" data-id="{{item.matchId}}"> </player-card-big>
       </view>
     </view>
 

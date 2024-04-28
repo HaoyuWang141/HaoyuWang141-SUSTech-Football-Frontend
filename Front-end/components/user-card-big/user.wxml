@@ -1,0 +1,7 @@
+<view class="player-card">
+  <view class="number">{{number}}</view>
+  <image src="{{img}}" mode="scaleToFill" class="img"/>
+  <text class="name">{{name}}</text>
+  <text class="goals">{{goals}}</text>
+  <text class="assists">{{assists}}</text>
+</view>
