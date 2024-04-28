@@ -294,7 +294,7 @@ Page({
       captainId: e.target.dataset.id,
     })
     wx.request({
-      url: URL + '/team/captain/select?teamId=' + that.data.id + '&captainId=' + e.currentTarget.dataset.id,
+      url: URL + '/team/captain/updateByPlayerId?teamId=' + that.data.id + '&captainId=' + e.currentTarget.dataset.id,
       method: 'POST',
       success: res => {
         console.log('成功设置队长', res.data);
@@ -309,7 +309,7 @@ Page({
               wx.navigateBack({
                 delta: 1,
               })
-            }, 500);
+            }, 1000);
           }
         });
       },

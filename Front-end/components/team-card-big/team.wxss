@@ -24,11 +24,14 @@
   margin-left: 20rpx;
   display: flex;
   flex-direction: column;
+  max-width: 45%; /*限制最大宽度不会与button区域冲突*/
 }
 
 .name {
   font-size: medium;
   font-weight: bold;
+  white-space: normal;  /*允许文本换行*/
+  word-wrap: break-word;  /*在文本太长时换行*/
 }
 
 .number {

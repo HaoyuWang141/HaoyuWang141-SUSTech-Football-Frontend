@@ -1,4 +1,13 @@
 /* pages/management/match_edit/match_edit.wxss */
+.block-container {
+  padding: 5rpx;
+  border: 1rpx solid #cccccc;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  width: 95%;
+}
+
 .section-header {
   text-align: center;
 }
@@ -15,12 +24,11 @@
 
 .match-card {
   display: inline-block;
-  margin: 10rpx;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 20rpx 20rpx;
-  width: 90%;
+  width: 95%;
 }
 
 .name {
@@ -30,7 +38,7 @@
   text-align: center;
 }
 
-.info-container {
+.match-info-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -69,29 +77,38 @@
   font-size: larger;
 }
 
-.changeInfo-container {
-  margin: 10rpx;
+.info-container {
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 10rpx;
+  margin-top: 2%;
+}
+
+.changeInfo-container {
+  margin: 10rpx;
   padding: 20rpx;
   width: 90%;
+  border-bottom: 1px solid rgb(202, 202, 202);
+  margin-top: 3%;
 }
 
 .team-container {
-  margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx;
-  width: 90%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 100%;
+}
+
+.teammate-container {
+  margin-bottom: 5%;
 }
 
 .btn-container {
   margin-left: 2%;
   display: flex; /* 将按钮放置在同一行 */
   justify-content: space-between; /* 让按钮分别靠左和靠右 */
-  margin-top: 20px; /* 上边距 */
+  margin-top: 5%; /* 上边距 */
+  margin-bottom: 5%;
   width: 95%;
 }
 

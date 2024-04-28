@@ -1,30 +1,30 @@
 <!--pages/management/event_edit/match_new/match_new.wxml-->
-<view class="container">
-  <view style="width: 90%;">
+<view class="block-container">
 
-    <view style="text-align: center;">比赛创建</view>
+  <view style="text-align: center;">比赛创建</view>
 
-    <!-- 比赛信息卡片 -->
-    <view class="match-card-container">
-      <view class="match-card">
-        <text class="time">{{date  + ' ' + time}}</text>
-        <text class="name">{{stage===null?  '':stage}}{{' '}}{{tag===null? '':tag}}</text>
-        <view class="info-container">
-          <view class="team" bindtap="inviteHomeTeam" data-id="{{eventId}}">
-            <image class="icon" src="{{homeTeamLogoUrl}}"></image>
-            <text>{{homeTeamName}}</text>
-          </view>
-          <view class="middle">
-            <text class="not-begin">未开始</text>
-          </view>
-          <view class="team" bindtap="inviteAwayTeam" data-id="{{eventId}}">
-            <image class="icon" src="{{awayTeamLogoUrl}}"></image>
-            <text>{{awayTeamName}}</text>
-          </view>
+  <!-- 比赛信息卡片 -->
+  <view class="match-card-container">
+    <view class="match-card">
+      <text class="time">{{date  + ' ' + time}}</text>
+      <text class="name">{{stage===null?  '':stage}}{{' '}}{{tag===null? '':tag}}</text>
+      <view class="match-info-container">
+        <view class="team" bindtap="inviteHomeTeam" data-id="{{eventId}}">
+          <image class="icon" src="{{homeTeamLogoUrl}}"></image>
+          <text>{{homeTeamName}}</text>
+        </view>
+        <view class="middle">
+          <text class="not-begin">未开始</text>
+        </view>
+        <view class="team" bindtap="inviteAwayTeam" data-id="{{eventId}}">
+          <image class="icon" src="{{awayTeamLogoUrl}}"></image>
+          <text>{{awayTeamName}}</text>
         </view>
       </view>
     </view>
+  </view>
 
+  <view class="info-container">
     <!-- 修改信息区域 -->
     <view class="manage-info">
       <!-- 比赛日期 -->
@@ -45,7 +45,7 @@
         <text>{{stage}}</text>
       </picker>
 
-
+      <!-- 比赛组别 -->
       <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
         <text>比赛组别：</text>
         <text>{{tag}}</text>
@@ -54,8 +54,7 @@
 
     <!-- 提交按钮 -->
     <view class="btn-container">
-      <button class="confirm" bindtap="confirmCreate">确认创建</button>
+      <button class="confirm-btn" bindtap="confirmCreate">确认创建</button>
     </view>
-    
   </view>
 </view>

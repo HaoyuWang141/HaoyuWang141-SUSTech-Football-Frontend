@@ -1,4 +1,11 @@
 /* pages/management/invite/invite.wxss */
+.block-container {
+  padding: 30rpx;
+  border: 1rpx solid #cccccc;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
 
 /* Styles for the top section */
 .block-top {
@@ -32,29 +39,4 @@
   /* Medium grey color for the text */
   padding: 5px 0;
   /* Padding on top and bottom */
-}
-
-.invite-btn {
-  display: flex;
-  flex-direction: row;
-  background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
-  color: white; /* 文字颜色 */
-  padding: 3px 3px; /* 按钮内边距 */
-  border: none; /* 去除按钮边框 */
-  border-radius: 5px; /* 按钮圆角 */
-  cursor: pointer; /* 鼠标样式 */
-  max-width: 50%;
-  font-size: x-small;
-
-}
-
-.invite {
-  font-size: x-small;
-  white-space: nowrap;
-
-}
-
-.invite-btn:active {
-  /* 定义按钮在被点击时的样式 */
-  background-color: #d8e2ff; /* 按钮被点击时的背景色 */
 }

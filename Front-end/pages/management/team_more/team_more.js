@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: 0,
+    deleteTeamId: 0,
     teamList: [],
   },
   
@@ -104,7 +104,39 @@ Page({
     });
   },
 
-  deleteTeam(e) {
+  // 引入模态框的通用方法
+  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      cancelText: cancelText,
+      success(res) {
+        if (res.confirm) {
+          confirmCallback();
+        } else if (res.cancel) {
+          cancelCallback();
+        }
+      }
+    });
+  },
+
+  // 点击取消比赛按钮，弹出确认取消模态框
+  showCancelModal(e) {
+    this.setData({
+      deleteTeamId: e.currentTarget.dataset.id
+    }) 
+    this.showModal(
+      '确认删除球队',
+      '确定要删除这支球队吗？',
+      '确认删除',
+      '我再想想',
+      this.deleteTeam, // 点击确认删除时的回调函数
+      () => {} // 点击我再想想时的回调函数，这里不做任何操作
+    );
+  },
+
+  deleteTeam() {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
@@ -113,7 +145,7 @@ Page({
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/team/delete?id=' + e.currentTarget.dataset.id,
+      url: URL + '/team/delete?id=' + that.data.deleteTeamId,
       method: 'DELETE',
       success(res) {
         console.log("delete team->")

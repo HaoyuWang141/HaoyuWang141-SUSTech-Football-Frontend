@@ -85,7 +85,7 @@ Page({
 
   },
 
-  fetchData: function (id) {
+  fetchData: function () {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
@@ -190,6 +190,35 @@ Page({
     });
   },
 
+  // 引入模态框的通用方法
+  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      cancelText: cancelText,
+      success(res) {
+        if (res.confirm) {
+          confirmCallback();
+        } else if (res.cancel) {
+          cancelCallback();
+        }
+      }
+    });
+  },
+
+  // 点击确认修改按钮，弹出确认修改模态框
+  showConfirmModal() {
+    this.showModal(
+      '确认修改',
+      '确定要进行修改吗？',
+      '确认',
+      '取消',
+      this.confirmEdit, // 点击确认时的回调函数
+      () => {} // 点击取消时的回调函数，这里不做任何操作
+    );
+  },
+
   // 处理提交信息修改
   confirmEdit() {
     // 构造要发送给后端的数据
@@ -217,7 +246,14 @@ Page({
         wx.showToast({
           title: successMsg,
           icon: 'none',
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1000);
+          }
         });
       },
       fail: err => {

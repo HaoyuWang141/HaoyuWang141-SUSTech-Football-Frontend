@@ -11,7 +11,7 @@ Page({
     activeIndex: 0,
     id: 0,
 
-    actions: [],
+    matchPlayerActionList: [],
     awayTeam: {
       logoUrl: "",
       name: "",
@@ -20,7 +20,7 @@ Page({
       score: -1,
       teamId: -1,
     },
-    event: {
+    matchEvent: {
       eventId: Number,
       eventName: String,
       stage: String,
@@ -138,9 +138,9 @@ Page({
         let strTime = formatTime(date)
         let hasBegun = res.data.status != "PENDING"
         that.setData({
-          actions: res.data.actions,
+          matchPlayerActionList: res.data.matchPlayerActionList,
           awayTeam: res.data.awayTeam,
-          event: res.data.event,
+          matchEvent: res.data.matchEvent,
           homeTeam: res.data.homeTeam,
           managerList: res.data.managerList,
           refereeList: res.data.refereeList,
@@ -154,11 +154,13 @@ Page({
         if (refereeList.length > 0) {
           try {
             const refereeId = await that.fetchRefereeId(userId)
-            if (refereeList.includes(refereeId)) {
-              that.setData({
-                isReferee: true,
-              })
-            }
+            refereeList.forEach(function (referee){
+              if(referee.refereeId === refereeId) {
+                that.setData({
+                  isReferee: true,
+                })
+              }
+            })
           } catch (error) {
             console.error(error)
           }

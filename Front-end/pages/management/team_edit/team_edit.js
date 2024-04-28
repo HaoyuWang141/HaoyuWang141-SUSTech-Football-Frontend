@@ -12,22 +12,22 @@ Page({
     id: 0,
     modalHidden: true, // 控制模态框显示隐藏
     newName: '',   // 用于存放用户输入的新队名
-    tempFilePath: String,
+    tempFilePath: '',
     edit: '编辑',
     invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
     selectCaptain: {name: '选择队长', img: '/assets/newplayer.png'},
     inviteCoach: {name: '邀请教练', img: '/assets/newplayer.png'},
     captain: [],
 
-    teamId: String,
-    name: String,
-    logoUrl: String,
-    playerList: Array,
-    captainId: Number,
-    coachList: Array,
-    eventList: Array,
-    managerList: Array,
-    matchList: Array,
+    teamId: 0,
+    name: '',
+    logoUrl: '',
+    playerList: [],
+    captainId: 0,
+    coachList: [],
+    eventList: [],
+    managerList: [],
+    matchList: [],
   },
 
   /**
@@ -113,13 +113,17 @@ Page({
           teamId: res.data.teamId,
           name: res.data.name,
           logoUrl: res.data.logoUrl,
-          captainId: res.data.captainId,
           coachList: res.data.coachList,
           eventList: res.data.eventList,
           managerList: res.data.managerList,
           matchList: res.data.matchList,
           playerList: res.data.playerList,
         });
+        if (res.data.captainId !== null) {
+          that.setData({
+            captainId: res.data.captainId,
+          });
+        }
       },
       fail(err) {
         console.log('请求失败', err);
@@ -211,6 +215,35 @@ Page({
     });
   },
 
+  // 引入模态框的通用方法
+  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      cancelText: cancelText,
+      success(res) {
+        if (res.confirm) {
+          confirmCallback();
+        } else if (res.cancel) {
+          cancelCallback();
+        }
+      }
+    });
+  },
+
+  // 点击确认修改按钮，弹出确认修改模态框
+  showConfirmModal() {
+    this.showModal(
+      '确认修改',
+      '确定要进行修改吗？',
+      '确认',
+      '取消',
+      this.confirmEdit, // 点击确认时的回调函数
+      () => {} // 点击取消时的回调函数，这里不做任何操作
+    );
+  },
+
   // 管理队员
   managePlayer() {
 
@@ -264,13 +297,13 @@ Page({
           teamId: that.data.teamId,
           name: that.data.name,
           logoUrl: that.data.logoUrl,
-          captainId: that.data.captainId,
+          captainId: that.data.captainId
         };
         console.log('dataToUpdate->');
         console.log(dataToUpdate);
         // 发送请求到后端接口
         wx.request({
-          url: URL + '/team/update?manegerId=' + userId, // 后端接口地址
+          url: URL + '/team/update?managerId=' + userId, // 后端接口地址
           method: 'PUT', // 请求方法
           data: dataToUpdate, // 要发送的数据
           success: res => {
@@ -281,7 +314,14 @@ Page({
             wx.showToast({
               title: successMsg,
               icon: 'none',
-              duration: 2000
+              duration: 2000,
+              success: function () {
+                setTimeout(function () {
+                  wx.navigateBack({
+                    delta: 1,
+                  })
+                }, 1000);
+              }
             });
           },
           fail: err => {

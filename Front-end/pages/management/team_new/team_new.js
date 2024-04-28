@@ -105,9 +105,9 @@ Page({
     var that = this;
     wx.uploadFile({
       url: URL + '/upload', // 你的上传图片的服务器API地址
-      filePath: this.data.tempFilePath,
+      filePath: that.data.tempFilePath,
       name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
-      success: function (uploadRes) {
+      success (uploadRes) {
         console.log('Create Team: uploadLogo ->')
         console.log(uploadRes)
         if (uploadRes.statusCode != 200) {
@@ -124,9 +124,9 @@ Page({
           logoUrl: URL + '/download?filename=' + filename
         });
         console.log("logoUrl->")
-        console.log(this.data.logoUrl)
+        console.log(that.data.logoUrl)
       },
-      fail: function (error) {
+      fail (error) {
         console.log('上传失败', error);
         wx.hideLoading()
         wx.showToast({
@@ -134,49 +134,49 @@ Page({
           icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
           duration: 2000 // 持续时间
         });
-      }
-    })
-
-    // 构造要发送给后端的数据
-    const dataToUpdate = {
-      name: this.data.teamname,
-      logoUrl: this.data.logoUrl,
-    };
-  
-    // 发送请求到后端接口
-    wx.request({
-      url: URL + '/team/create?ownerId=' + userId, // 后端接口地址
-      method: 'POST', // 请求方法
-      data: dataToUpdate, // 要发送的数据
-      success: res => {
-        // 请求成功的处理逻辑
-        console.log("dataToUpdate->");
-        console.log(dataToUpdate);
-        console.log('球队创建成功', res.data);
-        const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
-        wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
+      },
+      complete (){
+        // 构造要发送给后端的数据
+        const dataToUpdate = {
+          name: that.data.teamname,
+          logoUrl: that.data.logoUrl,
+        };
+        // 发送请求到后端接口
+        wx.request({
+          url: URL + '/team/create?ownerId=' + userId, // 后端接口地址
+          method: 'POST', // 请求方法
+          data: dataToUpdate, // 要发送的数据
+          success: res => {
+            // 请求成功的处理逻辑
+            console.log("dataToUpdate->");
+            console.log(dataToUpdate);
+            console.log('球队创建成功', res.data);
+            const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
+            wx.showToast({
+              title: successMsg,
+              icon: 'none',
+              duration: 2000,
+            });
+          },
+          fail: err => {
+            // 请求失败的处理逻辑
+            console.error('球队创建失败', err);
+            // 显示失败信息
+            wx.showToast({
+              title: '创建失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+          },
+          complete() {
             setTimeout(function () {
               wx.navigateBack({
                 delta: 1,
               })
-            }, 500);
+            }, 1000);
           }
         });
-      },
-      fail: err => {
-        // 请求失败的处理逻辑
-        console.error('球队创建失败', err);
-        // 显示失败信息
-        wx.showToast({
-          title: '创建失败，请重试',
-          icon: 'none',
-          duration: 2000
-        });
-      },
-    });
+      }
+    })
   },
 })

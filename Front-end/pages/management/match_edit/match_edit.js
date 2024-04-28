@@ -32,8 +32,23 @@ Page({
     homeTeamPenalty: 0,
     awayTeamPenalty: 0,
     matchPlayerActionList: [],
-    refereeList: [],
-    matchEvent: [],
+    refereeList: [
+      {
+        refereeId: 0,
+        name: "",
+        photoUrl: "",
+        bio: "",
+        userId: 0,
+        matchList: []
+      }
+    ],
+    matchEvent: {
+      eventId: 0,
+      matchStage: "",
+      matchTag: "",
+      eventName: ""
+    },
+    status: '',
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
@@ -151,6 +166,7 @@ Page({
           homeTeamPenalty: res.data.homeTeam.penalty,
           awayTeamPenalty: res.data.awayTeam.penalty,
           refereeList: res.data.refereeList,
+          status: res.data.status
         });
       },
       fail(err) {
@@ -331,7 +347,10 @@ Page({
       awayTeamPenalty: this.data.awayTeamPenalty,
       refereeList: this.data.refereeList,
       matchPlayerActionList: this.data.matchPlayerActionList,
+      matchEvent: this.data.matchEvent,
+      status: this.data.status
     };
+    console.log('dataToUpdate->');
     console.log(dataToUpdate);
     // 发送请求到后端接口
     wx.request({
@@ -349,7 +368,14 @@ Page({
         wx.showToast({
           title: successMsg,
           icon: 'none',
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1000);
+          }
         });
       },
       fail: err => {
@@ -364,6 +390,7 @@ Page({
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
+
       }
     });
   },

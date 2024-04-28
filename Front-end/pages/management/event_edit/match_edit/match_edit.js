@@ -1,6 +1,7 @@
 // pages/management/event_edit/match_edit/match_edit.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
 const {formatTime, splitDateTime} = require("../../../../utils/timeFormatter")
 
 Page({
@@ -9,31 +10,45 @@ Page({
    * 页面的初始数据
    */
   data: {
-    eventId: Number,
+    eventId: 0,
     hasBegun: false,
-    strTimeInfo: String,
-    strDate: String,
-    strTime: String,
-    name: String,
-    stage: String,
-    tag: String,
-    stageList: Array,
-    stageNameList: Array,
-    tagNameList: Array,
-    
-    matchId: Number,
-    time: String,
-    homeTeam: Array,
-    awayTeam: Array,
-    homeTeamId: Number,
-    awayTeamId: Number,
-    homeTeamScore: Number,
-    awayTeamScore: Number,
-    homeTeamPenalty: Number,
-    awayTeamPenalty: Number,
-    matchPlayerActionList: Array,
-    refereeList: Array,
-    matchEvent: Array,
+    strTimeInfo: '',
+    strDate: '',
+    strTime: '',
+    name: '',
+    stage: '',
+    tag: '',
+    stageList: [],
+    stageNameList: [],
+    tagNameList: [],
+    matchId: 0,
+    time: '',
+    homeTeam: [],
+    awayTeam: [],
+    homeTeamId: 0,
+    awayTeamId: 0,
+    homeTeamScore: 0,
+    awayTeamScore: 0,
+    homeTeamPenalty: 0,
+    awayTeamPenalty: 0,
+    matchPlayerActionList: [],
+    refereeList: [
+      {
+        refereeId: 0,
+        name: "",
+        photoUrl: "",
+        bio: "",
+        userId: 0,
+        matchList: []
+      }
+    ],
+    matchEvent: {
+      eventId: 0,
+      matchStage: "",
+      matchTag: "",
+      eventName: ""
+    },
+    status: '',
     modalHidden: true, // 控制模态框显示隐藏
     array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
@@ -131,7 +146,6 @@ Page({
           strTimeInfo: strTimeInfo,
           strDate: strDate,
           strTime: strTime,
-
           matchId: res.data.matchId,
           time: res.data.time,
           homeTeamId: res.data.homeTeam.teamId,
@@ -144,10 +158,11 @@ Page({
           awayTeam: res.data.awayTeam,
           refereeList: res.data.refereeList,
           matchPlayerActionList: res.data.matchPlayerActionList,
-          stage: res.data.event.stage,
-          tag: res.data.event.tag,
+          stage: res.data.matchEvent.stage,
+          tag: res.data.matchEvent.tag,
           matchEvent: res.data.matchEvent,
-          eventId: res.data.event.eventId,
+          eventId: res.data.matchEvent.eventId,
+          status: res.data.status
         });
       },
       fail(err) {
@@ -241,17 +256,23 @@ Page({
     // 更新页面上的比赛阶段显示
     const selectedStage = this.data.stageList.find(stage => stage.stageName === this.data.stageNameList[e.detail.value]);
     const tagNameList = selectedStage.tags.map(tag => tag.tagName);
+    const matchEvent = this.data.matchEvent
+    matchEvent.matchStage = this.data.stageNameList[e.detail.value],
     this.setData({
       stage: this.data.stageNameList[e.detail.value],
       tag: "",
       tagNameList: tagNameList,
+      matchEvent: matchEvent
     });
   },
   
   bindTagChange: function (e){
     // 更新页面上的比赛组别显示
+    const matchEvent = this.data.matchEvent
+    matchEvent.matchTag = this.data.tagNameList[e.detail.value],
     this.setData({
       tag: this.data.tagNameList[e.detail.value],
+      matchEvent: matchEvent
     });
   },
 
@@ -324,17 +345,16 @@ Page({
       awayTeamScore: this.data.awayTeamScore,
       homeTeamPenalty: this.data.homeTeamPenalty,
       awayTeamPenalty: this.data.awayTeamPenalty,
+      status: this.data.status,
       refereeList: this.data.refereeList,
       matchPlayerActionList: this.data.matchPlayerActionList,
-      matchEvent: {
-        stage: this.data.stage,
-        tag: this.data.tag,
-      },
+      matchEvent: this.data.matchEvent
     };
+    console.log('dataToUpdate->');
     console.log(dataToUpdate);
     // 发送请求到后端接口
     wx.request({
-      url: URL + '/match/update', // 后端接口地址
+      url: URL + '/match/update?managerId=' + userId, // 后端接口地址
       method: 'PUT', // 请求方法
       data: dataToUpdate, // 要发送的数据
       success: res => {

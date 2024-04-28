@@ -119,6 +119,7 @@ Page({
       time: this.data.dateTime
     };
     // 发送请求到后端接口
+    var message;
     wx.request({
       url: URL + '/match/create?ownerId=' + userId, // 后端接口地址
       method: 'POST', // 请求方法
@@ -131,17 +132,11 @@ Page({
         // 可以根据后端返回的数据更新页面状态或进行其他操作
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
+        message = successMsg;
         wx.showToast({
           title: successMsg,
           icon: 'none',
           duration: 2000,
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
-              })
-            }, 500);
-          }
         });
       },
       fail: err => {
@@ -155,6 +150,13 @@ Page({
           duration: 2000
         });
       },
+      complete() {
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1,
+          })
+        }, 1000);
+      }
     });
   },
 

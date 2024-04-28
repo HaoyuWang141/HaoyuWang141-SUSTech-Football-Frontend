@@ -1,13 +1,15 @@
 <!--pages/management/event_edit/event_edit.wxml-->
-<view class="container">
+<view class="block-container">
 
-  <view class="title-container">
-    <view class="image-container">
-      <image src="{{icon}}" mode="scaleToFill" class="image"></image>
-    </view>
-    <view class="text-container" >
-      <text class="text">{{name}}</text>
-      <text class="name-edit" bindtap="showNameInput">编辑</text>
+  <view class="block-space">
+    <view class="title-container">
+      <view class="image-container">
+        <image src="{{icon}}" mode="scaleToFill" class="image"></image>
+      </view>
+      <view class="text-container" >
+        <text class="text">{{name}}</text>
+        <text class="name-edit" bindtap="showNameInput">编辑</text>
+      </view>
     </view>
 
     <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
@@ -18,7 +20,7 @@
     </modal>
   </view>
 
-  <view class="discription-container">
+  <view class="block-space">
     <text style="margin-left: 3%;">赛事简介</text>
     <view class="description-content">
       <text class="description">{{description}}</text>
@@ -33,7 +35,7 @@
     </modal>
   </view>
 
-  <view class="block-container">
+  <view class="block-space">
     <view class="block-top" >
       <text class="block-title">参赛球队</text>
       <text class="block-more" bindtap="gotoTeams" data-id="{{eventId}}">查看更多</text>
@@ -45,7 +47,7 @@
     </view>
   </view>
 
-  <view class="block-container">
+  <view class="block-space">
     <view class="block-top">
       <text class="block-title">比赛赛程</text>
       <text class="block-more" bindtap="gotoMatches" data-id="{{eventId}}">查看更多</text>
@@ -60,7 +62,7 @@
 
   <!-- 提交按钮 -->
   <view class="btn-container">
-    <button class="confirm" bindtap="confirmEdit">确认修改</button>
+    <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
   </view>
 
 </view>
