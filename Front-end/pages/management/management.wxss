@@ -1,4 +1,24 @@
 /* pages/management/management.wxss */
+
+.block-space {
+  border-bottom: 1px solid rgb(202, 202, 202);
+  margin-bottom: 5%;
+}
+
+.block-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.block-main {
+  font-size: 14px;
+  color: #666;
+  padding: 5px 0;
+  margin-bottom: 5%;
+}
+
 .more-information-container{
   text-align: center;
 }

@@ -1,24 +1,27 @@
 <!--pages/management/team_new/team_new.wxml-->
 <view class="container">
-  <view style="width: 90%;">
-
-  <!-- 队徽上传 -->
-  <view class="avatar-container"> 
-    <view class="text">队徽</view>
-    <view class="image-container">
-      <image src="{{tempFilePath ? tempFilePath : '/assets/newplayer.png'}}" class="image" bindtap="uploadLogo"/>
+  <view class="block-container">
+    <!-- 队徽上传 -->
+    <view class="block-space">
+      <view class="avatar-container"> 
+        <view class="text">队徽</view>
+        <view class="image-container">
+          <image src="{{tempFilePath ? tempFilePath : '/assets/newplayer.png'}}" class="image" bindtap="uploadLogo"/>
+        </view>
+      </view>
     </view>
-  </view>
 
-  <!-- 新队名输入 -->
-  <view class="teamname-container">
-    <view class="text">队名</view>
-    <input class="teamname" bindinput="inputTeamname" placeholder="请输入队名" style="flex: 1; text-align: right;"></input>
-  </view>
+      <!-- 新队名输入 -->
+    <view class="block-space">
+      <view class="teamname-container">
+        <view class="text">队名</view>
+        <input class="teamname" bindinput="inputTeamname" placeholder="请输入队名" style="flex: 1; text-align: right;"></input>
+      </view>
+    </view>
 
-  <view class="btn-container">
-    <button class="confirm" bindtap="confirmCreate">确认创建</button>
-  </view>
 
+    <view class="btn-container">
+      <button class="confirm-btn" bindtap="confirmCreate">确认创建</button>
+    </view>
   </view>
 </view>

@@ -1,43 +1,47 @@
 <!-- pages/management/management.wxml -->
 <view class="block-container">
-  <view class="block-top">
-    <view class="block-title">引导</view>
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">引导</view>
+    </view>
+    <view class="block-main">
+      本页面包含您管理的球队、比赛和赛事。您可以在本页面中创建它们并自动成为管理员。由其他人创建的球队、比赛和赛事的管理员也可能将您设为这些实体的管理员，您可以在此页面中看到它们。
+    </view>
   </view>
-  <view class="block-main">
-    本页面包含您管理的球队、比赛和赛事。您可以在本页面中创建它们并自动成为管理员。由其他人创建的球队、比赛和赛事的管理员也可能将您设为这些实体的管理员，您可以在此页面中看到它们。
+  <!-- 管理的球队 -->
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">管理的球队</view>
+      <view class="block-more" bindtap="gotoTeams" data-id="5">查看更多</view>
+    </view>
+    <view class="block-main">
+      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+        <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
+      </scroll-view>
+    </view>
   </view>
-</view>
 
-<view class="block-container">
-  <view class="block-top">
-    <view class="block-title">管理的球队</view>
-    <view class="block-more" bindtap="gotoTeams" data-id="5">查看更多</view>
+  <!-- 管理的比赛 -->
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">管理的比赛</view>
+      <view class="block-more" bindtap="gotoMatches" data-id="5">查看更多</view>
+    </view>
+    <view class="block-main">
+      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+        <match-card-small wx:for="{{matches}}" wx:key="index" name="友谊赛" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-small>
+      </scroll-view>
+    </view>
   </view>
-  <view class="block-main">
-    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-      <team-card-small wx:for="{{teams}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" number="" bindtap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
-    </scroll-view>
-  </view>
-</view>
 
-<view class="block-container">
-  <view class="block-top">
-    <view class="block-title">管理的比赛</view>
-    <view class="block-more" bindtap="gotoMatches" data-id="5">查看更多</view>
-  </view>
-  <view class="block-main">
-    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-      <match-card-small wx:for="{{matches}}" wx:key="index" name="友谊赛" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-small>
-    </scroll-view>
-  </view>
-</view>
-
-<view class="block-container">
-  <view class="block-top">
-    <view class="block-title">管理的赛事</view>
-  </view>
-  <view class="block-main">
-    <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
-    <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.eventId}}" icon="/assets/cup.svg" name="{{item.name}}" bindtap="gotoEditEvent" data-id="{{item.eventId}}"></event-card-big>
+  <!-- 管理的赛事 -->
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">管理的赛事</view>
+    </view>
+    <view class="block-main">
+      <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
+      <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.eventId}}" icon="/assets/cup.svg" name="{{item.name}}" bindtap="gotoEditEvent" data-id="{{item.eventId}}"></event-card-big>
+    </view>
   </view>
 </view>

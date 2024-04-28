@@ -1,14 +1,23 @@
 /* pages/management/event_new/event_new.wxss */
+.block-container {
+  padding: 10rpx;
+  border: 1rpx solid #cccccc;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  width: 95%;
+}
+
+.block-space {
+  border-bottom: 1px solid rgb(202, 202, 202);
+  margin-bottom: 5%;
+}
+
 .title-container {
-  background-color: #ffffff; /* 卡片背景色 */
-  border-radius:30rpx; /* 卡片圆角 */
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
-  padding: 40rpx 20rpx; /* 卡片内边距 */
-  margin: 10rpx; /* 外边距，根据需要调整 */
+  padding: 40rpx 10rpx; /* 卡片内边距 */
   display: flex; /* 使用Flex布局 */
   flex-direction: row; /* 子项垂直排列 */
   align-items: center; /* 子项在交叉轴上居中对齐 */
-  width: 90%;
 }
 
 .image-container {
@@ -19,8 +28,9 @@
 }
 
 .image {
-  width: 100%;
-  height: 100%;
+  flex: 0 0 auto;
+  width: 120rpx;
+  height: 120rpx;
 }
 
 .text-container {
@@ -49,29 +59,18 @@
   flex-shrink: 0;
 }
 
-.team-container {
-  margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx;
-  width: 90%;
-}
-
 .discription-container {
   background-color: #ffffff; /* 卡片背景色 */
-  border-radius:30rpx; /* 卡片圆角 */
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
-  padding: 40rpx 20rpx; /* 卡片内边距 */
   margin: 10rpx; /* 外边距，根据需要调整 */
   flex-direction: row; /* 子项垂直排列 */
   align-items: center; /* 子项在交叉轴上居中对齐 */
-  width: 90%;
+  width: 95%;
   display: block;
 }
 
 .description-content {
   padding: 3%;
+  margin-bottom: 5%;
 }
 
 .description {
@@ -86,4 +85,17 @@
   color: gray;
   border-bottom: 1px solid gray;
   margin-left: 3%;
+}
+
+.confirm-btn{
+  border: none; /* 去除按钮边框 */
+  border-radius: 20px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #eb903a; /* 确认修改按钮背景色 */
+  color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

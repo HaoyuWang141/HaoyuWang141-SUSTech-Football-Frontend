@@ -1,52 +1,45 @@
 <!--pages/management/event_new/event_new.wxml-->
 <view class="container">
+  <view class="block-container">
 
-  <view class="title-container">
-    <view class="image-container">
-      <image src="{{icon}}" mode="scaleToFill" class="image"></image>
-    </view>
-    <view class="text-container" bindtap="showNameInput">
-      <text class="text">{{name}}</text>
-      <text class="name-edit">编辑</text>
+    <view class="block-space">
+      <view class="title-container">
+        <view class="image-container">
+          <image src="{{icon}}" mode="scaleToFill" class="image"></image>
+        </view>
+        <view class="text-container" bindtap="showNameInput">
+          <text class="text">{{name}}</text>
+          <text class="name-edit">编辑</text>
+        </view>
+
+        <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
+          <view class="modal-content">
+            <text>请输入赛事名称：</text>
+            <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
+          </view>
+        </modal>
+      </view> 
     </view>
 
-    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
-      <view class="modal-content">
-        <text>请输入赛事名称：</text>
-        <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
+    <view class="block-space">
+      <view class="discription-container">
+        <text style="margin-left: 3%;">赛事简介</text>
+        <view class="description-content" >
+          <text class="description" >{{description}}</text>
+          <text class="description-edit" bindtap="showDesInput">编辑</text>
+        </view>
+
+        <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
+          <view class="modal-content">
+            <text>编辑赛事介绍：</text>
+            <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
+          </view>
+        </modal>
       </view>
-    </modal>
-  </view> 
-
-  <view class="discription-container">
-    <view class="description-content" bindtap="showDesInput">
-      <text class="description" >{{description}}</text>
-      <text class="description-edit">编辑</text>
     </view>
 
-    <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
-      <view class="modal-content">
-        <text>编辑赛事介绍：</text>
-        <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
-      </view>
-    </modal>
+    <view class="btn-container">
+      <button class="confirm-btn" bindtap="confirmCreate">确认创建</button>
+    </view>
   </view>
-
-  <view class="btn-container">
-    <button class="confirm" bindtap="confirmCreate">确认创建</button>
-  </view>
-
-  <!-- 邀请球队 -->
-  <!-- <view class="team-container" >
-    <text>参赛球队</text>
-    <scroll-view scroll-y enable-flex >
-      <view class="invite-container" >
-        <team-card-small name="邀请参赛球队" img="/assets/newplayer.png" bindtap="gotoInviteTeam"></team-card-small>
-      </view>
-      
-      <view wx:for="{{teamList}}" wx:key="index">
-        <team-card-big name="{{item.name}}" img="{{item.img}}" number="{{item.number}}"></team-card-big>
-      </view>
-    </scroll-view>
-  </view> -->
 </view>

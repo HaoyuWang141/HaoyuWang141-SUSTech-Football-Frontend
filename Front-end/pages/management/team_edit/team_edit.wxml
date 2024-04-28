@@ -1,64 +1,72 @@
 <!--pages/management/team_edit/team_edit.wxml-->
 <view class="container">
-  <view style="width: 100%; margin-left: 2%;">
+  <view style="text-align: center;">球队管理</view>
 
-    <view style="text-align: center;">球队管理</view>
-    
+  <view class="block-container">
     <!-- 管理队徽 -->
-    <view class="avatar-container">
-      <view class="text">队徽</view>
-      <view class="image-container">
-        <image src="{{logoUrl ? logoUrl : tempFilePath}}" class="image" bindtap="uploadLogo"/>
+    <view class="block-space">
+      <view class="avatar-container">
+        <view class="text">队徽</view>
+        <view class="image-container">
+          <image src="{{logoUrl ? logoUrl : (tempFilePath ? tempFilePath : '/assets/newplayer.png')}}" class="image" bindtap="uploadLogo"/>
+        </view>
       </view>
     </view>
 
     <!-- 管理队名 -->
-    <view class="teamname-container" bindtap="showNameModal">
-      <view class="text">队名</view>
-      <text class="teamname" >{{name}}</text>
-      <text class="name-edit" >{{edit}}</text>
+    <view class="block-space">
+      <view class="teamname-container" bindtap="showNameModal">
+        <view class="text">队名</view>
+        <text class="teamname" >{{name}}</text>
+        <text class="name-edit" >{{edit}}</text>
+      </view>
+
+
+      <!-- 管理队名 -->
+      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
+        <view class="modal-content">
+          <text>请输入新队名：</text>
+          <input placeholder="新队名" value="{{newName}}" bindinput="changeName"/>
+        </view>
+      </modal>
     </view>
 
-    <!-- 管理队名 -->
-    <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
-      <view class="modal-content">
-        <text>请输入新队名：</text>
-        <input placeholder="新队名" value="{{newName}}" bindinput="changeName"/>
-      </view>
-    </modal>
-    
     <!-- 管理队员 -->
     <view class="team-container">
-
-      <view class="important-person">
-        <view class="captain-container">
-          <view class="text">队长</view>
-          <player-card-small name="{{selectCaptain.name}}" img="{{selectCaptain.img}}" bindtap="gotoSelectCaptain" data-id="{{teamId}}"></player-card-small>
-          <player-card-small wx:if="{{captainId !== null}}" name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
+      <view class="block-space">
+        <view class="important-person">
+          <view class="captain-container">
+            <view class="text">队长</view>
+            <player-card-small name="{{selectCaptain.name}}" img="{{selectCaptain.img}}" bindtap="gotoSelectCaptain" data-id="{{teamId}}"></player-card-small>
+            <player-card-small wx:if="{{captainId !== 0}}" name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
+          </view>
         </view>
       </view>
 
-      <view class="important-person">
-        <view class="coach-container">
-          <view class="text">教练</view>
-          <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
-          <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach"></player-card-small>
+      <view class="block-space">
+        <view class="important-person">
+          <view class="coach-container">
+            <view class="text">教练</view>
+            <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
+            <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach"></player-card-small>
+          </view>
         </view>
       </view>
 
-      <view class="teammate-container">
-        <view class="text">队员</view>
-        <scroll-view scroll-y enable-flex>
-          <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="gotoInvitePlayer" data-id="{{teamId}}"></player-card-small>
-          <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer"></player-card-small>
-        </scroll-view>
+      <view class="block-space">
+        <view class="teammate-container">
+          <view class="text">队员</view>
+          <scroll-view scroll-y enable-flex>
+            <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="gotoInvitePlayer" data-id="{{teamId}}"></player-card-small>
+            <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer"></player-card-small>
+          </scroll-view>
+        </view>
       </view>
     </view>
 
     <!-- 提交按钮 -->
     <view class="btn-container">
-      <button class="confirm" bindtap="confirmEdit">确认修改</button>
+      <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
     </view>
-
   </view>
 </view>

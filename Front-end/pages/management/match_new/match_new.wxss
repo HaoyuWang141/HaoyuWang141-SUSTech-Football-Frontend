@@ -1,16 +1,16 @@
 /* pages/management/match_new/match_new.wxss */
 .match-card-container {
+  margin-top: 10rpx;
   text-align: center;
 }
 
 .match-card {
   display: inline-block;
-  margin: 10rpx;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 20rpx 20rpx;
-  width: 90%;
+  width: 95%;
 }
 
 .name {
@@ -20,7 +20,7 @@
   text-align: center;
 }
 
-.info-container {
+.match-info-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -59,11 +59,32 @@
   font-size: larger;
 }
 
-.changeInfo-container {
-  margin: 10rpx;
+.info-container {
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 10rpx;
+  margin-top: 2%;
+}
+
+.changeInfo-container {
+  margin: 10rpx;
+  background-color: #fff;
   padding: 20rpx;
   width: 90%;
+  border-bottom: 1px solid rgb(202, 202, 202);
+  margin-top: 3%;
+}
+
+.confirm-btn{
+  border: none; /* 去除按钮边框 */
+  border-radius: 20px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #eb903a; /* 确认修改按钮背景色 */
+  color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

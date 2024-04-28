@@ -136,8 +136,8 @@ Page({
     var that = this;
     // 构造要发送给后端的数据
     const dataToUpdate = {
-      name: this.data.name,
-      description: this.data.description,
+      name: that.data.name,
+      description: that.data.description,
     };
     // 发送请求到后端接口
     wx.request({
@@ -152,13 +152,6 @@ Page({
           title: successMsg,
           icon: 'none',
           duration: 2000,
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
-              })
-            }, 500);
-          }
         });
       },
       fail: err => {
@@ -172,6 +165,13 @@ Page({
           duration: 2000
         });
       },
+      complete() {
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1,
+          })
+        }, 1000);
+      }
     });
   },
 })

@@ -1,20 +1,29 @@
 /* pages/management/team_edit/team_edit.wxss */
+.block-container {
+  padding: 5rpx;
+  border: 1rpx solid #cccccc;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  width: 95%;
+}
+
+.block-space {
+  width: 100%;
+  border-bottom: 1px solid rgb(202, 202, 202);
+  margin-bottom: 5%;
+}
+
 .avatar-container {
   display: flex; /* 使用 Flexbox 布局 */
   justify-content: space-around; /* 水平对齐，元素间距会自动填充 */
   margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 20rpx;
   width: 90%;
 }
 
 .teamname-container {
   margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 20rpx;
   width: 90%;
 }
@@ -36,13 +45,17 @@
   flex-shrink: 0;
 }
 
+.important-person {
+  margin-bottom: 5%;
+}
+
 .team-container {
   margin: 10rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx;
-  width: 90%;
+  width: 100%;
+}
+
+.teammate-container {
+  margin-bottom: 5%;
 }
 
 .text {
@@ -53,4 +66,17 @@
   margin-left: auto;
   width: 120rpx;
   height: 120rpx;
+}
+
+.confirm-btn{
+  border: none; /* 去除按钮边框 */
+  border-radius: 20px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #eb903a; /* 确认修改按钮背景色 */
+  color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

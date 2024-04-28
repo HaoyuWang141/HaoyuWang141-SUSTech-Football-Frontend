@@ -93,7 +93,7 @@
   <view wx:if="{{activeIndex == 2}}">
     <view class="block-container">
       <view class="block-main">
-        <view wx:for="{{actions}}" wx:key="index">
+        <view wx:for="{{matchPlayerActionList}}" wx:key="index">
           <view>时间：{{item.time}}min: </view>
           <view>球队：{{item.teamId == homeTeam.teamId ? homeTeam.name : awayTeam.name}}</view>
           <view>球员：{{item.player.number}}号 {{item.player.name}}</view>
