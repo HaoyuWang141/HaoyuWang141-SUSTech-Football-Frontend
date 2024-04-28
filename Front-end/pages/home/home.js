@@ -37,7 +37,7 @@ Page({
    */
   onShow() {
     app.addToRequestQueue(this.fetchFavorateMatch)
-    app.addToRequestQueue(this.fetchFavoratePlayer)
+    app.addToRequestQueue(this.fetchFavorateUser)
     app.addToRequestQueue(this.fetchFavorateTeam)
     app.addToRequestQueue(this.fetchFavorateEvent)
   },
@@ -61,7 +61,7 @@ Page({
    */
   onPullDownRefresh() {
     app.addToRequestQueue(this.fetchFavorateMatch)
-    app.addToRequestQueue(this.fetchFavoratePlayer)
+    app.addToRequestQueue(this.fetchFavorateUser)
     app.addToRequestQueue(this.fetchFavorateTeam)
     app.addToRequestQueue(this.fetchFavorateEvent)
   },
@@ -82,6 +82,7 @@ Page({
 
   /////////////////////////////////////
   // 网络传输
+  
   fetchFavorateMatch(id) {
     let that = this
     wx.request({
@@ -113,7 +114,7 @@ Page({
     })
   },
 
-  fetchFavoratePlayer(id) {
+  fetchFavorateUser(id) {
     let that = this
     wx.request({
       url: URL + '/getFavorite',
@@ -122,7 +123,7 @@ Page({
         type: 'user',
       },
       success(res) {
-        console.log("home page: fetchFavorite: users(players) ->")
+        console.log("home page: fetchFavorite: users ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
@@ -193,6 +194,7 @@ Page({
 
   ///////////////////////////////////////////////////////////////////////////////
   // 页面跳转
+  
   gotoExample() {
     wx.navigateTo({
       url: '/pages/example/example',
@@ -259,10 +261,10 @@ Page({
     })
   },
 
-  gotoPlayerPage: function(e) {
+  gotoUserPage: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/pub/match/match?id=' + dataset.id,
+      url: '/pages/pub/user/user?id=' + dataset.id,
     })
   },
 
@@ -273,7 +275,7 @@ Page({
   },
 
   ///////////////////////////////////////////////////////////////////////////////
-  // 其它逻辑
+  // 监听
 
   /**
    * 监听搜索框文本

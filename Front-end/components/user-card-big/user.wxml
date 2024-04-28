@@ -1,7 +1,16 @@
-<view class="player-card">
-  <view class="number">{{number}}</view>
-  <image src="{{img}}" mode="scaleToFill" class="img"/>
-  <text class="name">{{name}}</text>
-  <text class="goals">{{goals}}</text>
-  <text class="assists">{{assists}}</text>
+<!--components/user-card-big/user.wxml-->
+<view class="container">
+  <image src="{{img}}" mode="scaleToFill" class="image"></image>
+  <view class="sub-container">
+    <view class="name-container">
+      <text class="name">{{name}}</text>
+    </view>
+    <view>
+      <image wx:if="{{isPlayer || isReferee || isCoach}}" class="icon" src="/assets/verified.png"></image>
+      <text wx:if="{{isPlayer}}" class="role">{{"球员"}}</text>
+      <text wx:if="{{isReferee}}" class="role">{{"裁判"}}</text>
+      <text wx:if="{{isCoach}}" class="role">{{"教练"}}</text>
+      <text class="role">{{""}}</text>
+    </view>
+  </view>
 </view>

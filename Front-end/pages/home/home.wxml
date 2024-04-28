@@ -1,10 +1,9 @@
 <button bind:tap="login">获取User</button>
+<!-- <button bind:tap="gotoExample">gotoExample</button> -->
 
 <view style="background-color: white; text-align: center;">
   <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
 </view>
-
-<!-- <button bind:tap="gotoExample">gotoExample</button> -->
 
 <view class="search-container">
   <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
@@ -56,7 +55,7 @@
   </view>
 </view>
 
-<!-- 关注的球员 -->
+<!-- 关注的用户 -->
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的用户</text>
@@ -64,7 +63,7 @@
   <view class="block-main">
     <view class="no-favorite" wx:if="{{userList.length==0}}">您还未关注任何用户！</view>
     <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-      <player-card-small wx:for="{{userList}}" wx:key="userId" name="{{item.nickName}}" img="{{item.avatarUrl}}"></player-card-small>
+      <user-card-small wx:for="{{userList}}" wx:key="userId" name="{{item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}"></user-card-small>
     </scroll-view>
   </view>
 </view>

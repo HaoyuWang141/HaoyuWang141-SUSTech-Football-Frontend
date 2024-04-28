@@ -1,13 +1,3 @@
-<!--pages/profile_player/profile_coach/profile_coach.wxml-->
-<view class="block-container" wx:if="{{!coachId}}" style="margin-top: 10rpx;">
-  <view class="block-top">
-    <text class="block-title">您还未注册为教练员！</text>
-  </view>
-  <view class="block-main">
-    <button bind:tap="gotoRegisterPage" style="background-color: #ed6c00; color: white;">注册</button>
-  </view>
-</view>
-
 <view class="container1" wx:if="{{coachId}}">
   <image src="https://www.sustech.edu.cn/uploads/images/2022/12/29170519_51471.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
   <view class="container2">
@@ -24,7 +14,7 @@
 <view class="block-container" wx:if="{{coachId}}">
   <view class="block-top">
     <text class="block-title">教练信息</text>
-    <text class="block-more" bind:tap="edit_information">编辑</text>
+    <!-- <text class="block-more" bind:tap="edit_information">编辑</text> -->
   </view>
   <view class="block-main">
     <view class="info-section">

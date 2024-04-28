@@ -1,9 +1,8 @@
-// pages/profile_player/profile_referee/profile_referee.js
 const app = getApp()
 const URL = app.globalData.URL
 const {
   formatTime
-} = require("../../../utils/timeFormatter")
+} = require("../../../../utils/timeFormatter")
 
 Page({
 
@@ -11,18 +10,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    refereeId: 0,
-    referee: {},
+    playerId: 0,
+    player: null,
     matchList: [],
     teamList: [],
     eventList: [],
+    defaultValue: '暂无',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    this.setData({
+      playerId: options.id,
+    })
   },
 
   /**
@@ -36,7 +38,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    app.addToRequestQueue(this.fetchRefereeId)
+    app.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -57,7 +59,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    app.addToRequestQueue(this.fetchRefereeId)
+    app.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -74,28 +76,72 @@ Page({
 
   },
 
-  // 拉取裁判id
-  fetchRefereeId(userId) {
-    let that = this
+  // 拉取数据
+  // fetchPlayerId(userId) {
+  //   let that = this
+  //   wx.request({
+  //     url: URL + '/user/getPlayerId',
+  //     data: {
+  //       userId: userId,
+  //     },
+  //     success(res) {
+  //       console.log("profile player page: fetchPlayerId ->")
+  //       if (res.statusCode == 404) {
+  //         console.log("用户未注册")
+  //         wx.showToast({
+  //           title: '请先注册为球员',
+  //           icon: 'none',
+  //         })
+  //         return
+  //       }
+  //       if (res.statusCode != 200) {
+  //         console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+  //         return
+  //       }
+  //       console.log(res.data)
+  //       let playerId = res.data
+  //       that.setData({
+  //         playerId: playerId,
+  //       })
+  //       that.fetchData(playerId)
+  //       that.fetchPlayerMatches(playerId)
+  //       that.fetchPlayerTeams(playerId)
+  //       that.fetchPlayerEvents(playerId)
+  //     },
+  //     fail(err) {
+  //       console.error('请求失败：', err.statusCode, err.errMsg);
+  //     },
+  //   })
+  // },
+
+  fetchData(id) {
+    let playerId = this.data.playerId
+    var that = this
     wx.request({
-      url: URL + '/user/getRefereeId',
+      url: URL + '/player/get',
       data: {
-        userId: userId,
+        id: playerId,
       },
       success(res) {
-        console.log("profile referee page: fetchRefereeId ->")
+        console.log("profile player page: fetchData ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
         console.log(res.data)
-        let refereeId = res.data
+        let player = res.data
+        if (player.birthDate == '' || player.birthDate == null) {
+          player.strBirthDate = '暂无';
+        } else {
+          const date = new Date(player.birthDate);
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1;
+          const day = date.getDate();
+          player.strBirthDate = `${year}-${month}-${day}`;
+        }
         that.setData({
-          refereeId: refereeId
+          player: player,
         })
-        that.fetchData(refereeId)
-        that.fetchRefereeMatches(refereeId)
-        that.fetchRefereeEvents(refereeId)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -103,41 +149,16 @@ Page({
     })
   },
 
-  // 拉取裁判个人信息
-  fetchData(refereeId) {
+  fetchPlayerMatches(id) {
+    let playerId = this.data.playerId
     let that = this
     wx.request({
-      url: URL + '/referee/get',
+      url: URL + '/player/match/getAll',
       data: {
-        id: refereeId,
+        playerId: playerId,
       },
       success(res) {
-        console.log("profile referee page: fetchData ->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        that.setData({
-          referee: res.data,
-        })
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
-
-  // 拉取比赛
-  fetchRefereeMatches(refereeId) {
-    let that = this
-    wx.request({
-      url: URL + '/referee/match/getAll',
-      data: {
-        refereeId,
-      },
-      success(res) {
-        console.log("profile referee page: fetchRefereeMatches ->")
+        console.log("profile player page: fetchPlayerMatches ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
@@ -159,16 +180,42 @@ Page({
     })
   },
 
-  // 拉取赛事
-  fetchRefereeEvents(refereeId) {
+  fetchPlayerTeams(id) {
+    let playerId = this.data.playerId
     let that = this
     wx.request({
-      url: URL + '/referee/event/getAll',
+      url: URL + '/player/team/getAll',
       data: {
-        refereeId: refereeId,
+        playerId: playerId,
       },
       success(res) {
-        console.log("profile referee page: fetchRefereeEvents ->")
+        console.log("profile player page: fetchPlayerTeams ->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        let teamList = res.data ?? []
+        that.setData({
+          teamList: teamList,
+        })
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+    })
+  },
+
+  fetchPlayerEvents(id) {
+    let playerId = this.data.playerId
+    let that = this
+    wx.request({
+      url: URL + '/player/event/getAll',
+      data: {
+        playerId: playerId,
+      },
+      success(res) {
+        console.log("profile player page: fetchPlayerEvents ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
@@ -186,19 +233,6 @@ Page({
   },
 
   // 页面跳转
-  edit_information() {
-    let referee = this.data.referee
-    console.log(referee)
-    const queryString = Object.keys(referee).map(key => {
-      console.log(key + ": " + encodeURIComponent(referee[key]))
-      return `${key}=${encodeURIComponent(referee[key])}`
-    }).join('&');
-    console.log("queryString->")
-    console.log(queryString)
-    wx.navigateTo({
-      url: `/pages/profile_player/profile_referee_edit/profile_referee_edit?${queryString}`
-    })
-  },
 
   gotoMatchesPage(e) {
     let matchList = e.currentTarget.dataset.list ?? []
@@ -237,9 +271,4 @@ Page({
     })
   },
 
-  gotoRegisterPage() {
-    wx.navigateTo({
-      url: '../profile_referee_register/profile_referee_register',
-    })
-  },
 })
