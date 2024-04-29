@@ -190,33 +190,22 @@ Page({
     });
   },
 
-  // 引入模态框的通用方法
-  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+  // 点击确认修改按钮，弹出确认修改模态框
+  showConfirmModal() {
+    var that = this
     wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      cancelText: cancelText,
+      title: '确认修改',
+      content: '确定要进行修改吗？',
+      confirmText: '确认',
+      cancelText: '取消',
       success(res) {
         if (res.confirm) {
-          confirmCallback();
+          that.confirmEdit() // 点击确认时的回调函数
         } else if (res.cancel) {
-          cancelCallback();
+          () => {} // 点击取消时的回调函数，这里不做任何操作
         }
       }
     });
-  },
-
-  // 点击确认修改按钮，弹出确认修改模态框
-  showConfirmModal() {
-    this.showModal(
-      '确认修改',
-      '确定要进行修改吗？',
-      '确认',
-      '取消',
-      this.confirmEdit, // 点击确认时的回调函数
-      () => {} // 点击取消时的回调函数，这里不做任何操作
-    );
   },
 
   // 处理提交信息修改

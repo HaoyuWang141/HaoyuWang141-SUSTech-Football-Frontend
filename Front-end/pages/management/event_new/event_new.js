@@ -132,6 +132,24 @@ Page({
     });
   },
 
+  // 点击确认创建按钮，弹出确认修改模态框
+  showCreateModal() {
+    var that = this
+    wx.showModal({
+      title: '确认创建',
+      content: '确定要进行创建赛事吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.confirmCreate() // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    });
+  },
+
   confirmCreate: function (){
     var that = this;
     // 构造要发送给后端的数据
@@ -152,6 +170,13 @@ Page({
           title: successMsg,
           icon: 'none',
           duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 2000);
+          }
         });
       },
       fail: err => {
@@ -165,13 +190,6 @@ Page({
           duration: 2000
         });
       },
-      complete() {
-        setTimeout(function () {
-          wx.navigateBack({
-            delta: 1,
-          })
-        }, 1000);
-      }
     });
   },
 })
