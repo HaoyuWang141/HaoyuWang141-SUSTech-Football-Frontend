@@ -22,6 +22,9 @@ Page({
     userList: [],
     teamList: [],
 
+    // 搜索相关
+    searchPlaceholder: '请输入搜索内容',
+    activeIndex: 0,
     filterTypes: ['全部', '赛事', '比赛', '用户', '球队', '新闻'],
     type: '全部',
     // showFilter: false,

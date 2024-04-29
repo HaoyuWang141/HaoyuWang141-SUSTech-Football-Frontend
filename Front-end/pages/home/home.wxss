@@ -28,6 +28,34 @@
     line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */
 }
 
+.hall-bar {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  padding: 10px 0;
+}
+.hall-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+.hall-image {
+  width: 90rpx;
+  height: 90rpx;
+  margin-bottom: 10rpx;
+}
+.event-hall-image {
+  width: 87rpx;
+  height: 90rpx;
+  margin-bottom: 10rpx;
+}
+.hall-text {
+  font-size: small;
+  font-weight: bold;
+  color: #666;
+}
+
 /* news */
 .news-swiper {
     height: 600rpx;

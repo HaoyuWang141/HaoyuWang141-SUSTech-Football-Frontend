@@ -18,6 +18,7 @@
       <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/shude.png" icon2="/assets/shuren.png" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
     </scroll-view>
 
+    <news-card title="题目" img="/assets/barca.jpg"></news-card>
     <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg"></news-card>
 
     <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="中后卫、右边后卫" goals="0" assists="0"></player-card-big>

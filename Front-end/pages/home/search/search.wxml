@@ -1,19 +1,17 @@
-<!--pages/home/home.wxml-->
-<!-- <text>pages/home/search/search.wxml</text> -->
+
+<view class="search-container">
+  <input class="search-input" type="text" placeholder="{{searchPlaceholder}}" bindinput="bindInput" value="{{ searchText }}"></input>
+  <button class="search-button" bindtap="search">搜索</button>
+  <picker wx:if="{{type=='全部'}}" class="filter-picker-unselected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+    <image class="icon" src="/assets/filter.svg"></image>
+  </picker>
+  <picker wx:if="{{type!='全部'}}" class="filter-picker-selected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+    <image class="icon" src="/assets/filter.svg"></image>
+  </picker>
+</view>
 
 <view class="container">
   <view style="width: 90%;">
-
-    <view class="search-container">
-      <input class="search-input" type="text" placeholder="搜索" bindinput="bindInput" value="{{ searchText }}"></input>
-      <button class="search-button" bindtap="search">搜索</button>
-      <picker wx:if="{{type=='全部'}}" class="filter-picker-unselected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
-        <image class="icon" src="/assets/filter.svg"></image>
-      </picker>
-      <picker wx:if="{{type!='全部'}}" class="filter-picker-selected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
-        <image class="icon" src="/assets/filter.svg"></image>
-      </picker>
-    </view>
 
     <!-- 无结果 -->
     <view class="no-results-container" wx:if="{{newsList.length==0 && eventList.length==0 && matchList.length==0 && userList.length==0 && teamList.length==0}}">

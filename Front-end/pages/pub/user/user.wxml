@@ -1,5 +1,6 @@
 <view class="container1">
-  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
+  <image src="https://www.sustech.edu.cn/uploads/images/2024/04/12141752_38075.jpg" mode="aspectFill" style="height: 400rpx; width: 100%;" />
+  <!-- <image src="https://www.sustech.edu.cn/uploads/images/2024/04/12141743_12804.jpg" mode="aspectFill" style="height: 400rpx; width: 100%;" /> -->
   <view class="container2">
     <view class="container3">
       <image class="avatar" src="{{user.avatarUrl}}" mode="scaleToFill"></image>

@@ -274,6 +274,30 @@ Page({
     })
   },
 
+  gotoMatchHallPage: function(e) {
+    wx.navigateTo({
+      url: './match_hall/match_hall',
+    })
+  },
+
+  gotoTeamHallPage: function(e) {
+    wx.navigateTo({
+      url: './team_hall/team_hall',
+    })
+  },
+
+  gotoUserHallPage: function(e) {
+    wx.navigateTo({
+      url: './user_hall/user_hall',
+    })
+  },
+
+  gotoNewsHallPage: function(e) {
+    wx.navigateTo({
+      url: './news_hall/news_hall',
+    })
+  },
+
   ///////////////////////////////////////////////////////////////////////////////
   // 监听
 
