@@ -22,6 +22,9 @@ Page({
     userList: [],
     teamList: [],
 
+    // 搜索相关
+    searchPlaceholder: '请输入搜索内容',
+    activeIndex: 0,
     filterTypes: ['全部', '赛事', '比赛', '用户', '球队', '新闻'],
     type: '全部',
     // showFilter: false,
@@ -195,7 +198,7 @@ Page({
         let userList = res.data ?? []
         let filterUserList = []
         for (let user of userList) {
-          if (filter(that.data.searchText, user.name)) {
+          if (filter(that.data.searchText, user.nickName ? user.nickName : '')) {
             filterUserList.push(user)
           }
         }
@@ -269,30 +272,6 @@ Page({
     app.addToRequestQueue(this.fetchData)
   },
 
-  /**
-   * 监听过滤器按钮
-   */
-  // filter: function () {
-  //   console.log('点击过滤器按钮');
-  //   this.setData({
-  //     showFilter: !this.data.showFilter
-  //   });
-  // },
-
-  // bindSortingChange: function (e) {
-  //   const val = e.detail.value;
-  //   this.setData({
-  //     sorting: this.data.filterSortings[val]
-  //   });
-  // },
-
-  // bindFavorChange: function (e) {
-  //   const val = e.detail.value;
-  //   this.setData({
-  //     favor: this.data.filterFavors[val]
-  //   });
-  // },
-
   ///////////////////////////////////////////////////////////////////////////////
   // 跳转
 
@@ -310,10 +289,10 @@ Page({
     })
   },
 
-  gotoPlayer: function (e) {
+  gotoUser: function (e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/pub/player/player?id=' + id,
+      url: '/pages/pub/user/user?id=' + id,
     })
   },
 

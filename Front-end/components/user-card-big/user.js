@@ -1,12 +1,11 @@
-// components/palyer-card-big/player.js
+// components/user-card-big/user.js
 Component({
   properties: {
     name: String,
     img: String,
-    number: Number,
-    field: String,
-    goals: Number,
-    assists: Number,
+    isPlayer: Boolean,
+    isReferee: Boolean,
+    isCoach: Boolean
   },
 
   data: {

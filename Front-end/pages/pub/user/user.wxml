@@ -1,0 +1,33 @@
+<view class="container1">
+  <image src="https://www.sustech.edu.cn/uploads/images/2024/04/12141752_38075.jpg" mode="aspectFill" style="height: 400rpx; width: 100%;" />
+  <!-- <image src="https://www.sustech.edu.cn/uploads/images/2024/04/12141743_12804.jpg" mode="aspectFill" style="height: 400rpx; width: 100%;" /> -->
+  <view class="container2">
+    <view class="container3">
+      <image class="avatar" src="{{user.avatarUrl}}" mode="scaleToFill"></image>
+    </view>
+    <view class="container4">
+      <text class="name">{{user.nickName}}</text>
+      <text class="id">用户id：{{user.userId}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">身份</text>
+  </view>
+  <view class="function-container">
+    <view wx:if="{{user.playerRole}}" bindtap="gotoPlayerPage" class="function-button">
+      <image src="/assets/football_selected.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">球员主页</text>
+    </view>
+    <view wx:if="{{user.coachRole}}" bindtap="gotoCoachPage" class="function-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">教练主页</text>
+    </view>
+    <view wx:if="{{user.refereeRole}}" bindtap="gotoRefereePage" class="function-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">裁判主页</text>
+    </view>
+  </view>
+</view>

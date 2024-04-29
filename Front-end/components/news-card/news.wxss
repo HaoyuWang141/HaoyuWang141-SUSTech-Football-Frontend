@@ -4,13 +4,14 @@
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 20rpx 20rpx;
+  padding: 20rpx 20rpx 5rpx 20rpx;
 }
 
 .image {
   display: block;
-  flex-shrink: 0;
-  max-width: 100%;
+  width: 100%;
+  min-height: 300rpx;
+  max-height: 400rpx;
 }
 
 .text-box {
@@ -22,5 +23,6 @@
   text-overflow: ellipsis;
   white-space: normal; /* 允许换/行 */
   line-height: 1.5; /* 根据需要调整行高，以改善可读性 */
-  flex-grow: 1;
+  height: 3em;
+  /* flex-grow: 1; */
 }

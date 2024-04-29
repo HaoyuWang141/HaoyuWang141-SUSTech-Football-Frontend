@@ -2,7 +2,7 @@ const app = getApp()
 const URL = app.globalData.URL
 const {
   formatTime
-} = require("../../../utils/timeFormatter")
+} = require("../../../../utils/timeFormatter")
 
 Page({
 
@@ -20,7 +20,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {},
+  onLoad(options) {
+    this.setData({
+      coachId: options.id,
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -33,7 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    app.addToRequestQueue(this.fetchCoachId)
+    app.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -54,7 +58,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    app.addToRequestQueue(this.fetchCoachId)
+    app.addToRequestQueue(this.fetchData)
   },
 
   /**
@@ -72,36 +76,37 @@ Page({
   },
 
   // 拉取数据
-  fetchCoachId(userId) {
-    let that = this
-    wx.request({
-      url: URL + '/user/getCoachId',
-      data: {
-        userId: userId,
-      },
-      success(res) {
-        console.log("profile coach page: fetchCoachId ->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        let coachId = res.data
-        that.setData({
-          coachId: coachId,
-        })
-        that.fetchData(coachId)
-        that.fetchCoachMatches(coachId)
-        that.fetchCoachTeams(coachId)
-        that.fetchCoachEvents(coachId)
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
+  // fetchCoachId(userId) {
+  //   let that = this
+  //   wx.request({
+  //     url: URL + '/user/getCoachId',
+  //     data: {
+  //       userId: userId,
+  //     },
+  //     success(res) {
+  //       console.log("profile coach page: fetchCoachId ->")
+  //       if (res.statusCode != 200) {
+  //         console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+  //         return
+  //       }
+  //       console.log(res.data)
+  //       let coachId = res.data
+  //       that.setData({
+  //         coachId: coachId,
+  //       })
+  //       that.fetchData(coachId)
+  //       that.fetchCoachMatches(coachId)
+  //       that.fetchCoachTeams(coachId)
+  //       that.fetchCoachEvents(coachId)
+  //     },
+  //     fail(err) {
+  //       console.error('请求失败：', err.statusCode, err.errMsg);
+  //     },
+  //   })
+  // },
 
-  fetchData(coachId) {
+  fetchData(id) {
+    let coachId = this.data.coachId
     let that = this
     wx.request({
       url: URL + '/coach/get',
@@ -125,7 +130,8 @@ Page({
     })
   },
 
-  fetchCoachMatches(coachId) {
+  fetchCoachMatches(id) {
+    let coachId = this.data.coachId
     let that = this
     wx.request({
       url: URL + '/coach/match/getAll',
@@ -155,7 +161,8 @@ Page({
     })
   },
 
-  fetchCoachTeams(coachId) {
+  fetchCoachTeams(id) {
+    let coachId = this.data.coachId
     let that = this
     wx.request({
       url: URL + '/coach/team/getAll',
@@ -180,7 +187,8 @@ Page({
     })
   },
 
-  fetchCoachEvents(coachId) {
+  fetchCoachEvents(id) {
+    let coachId = this.data.coachId
     let that = this
     wx.request({
       url: URL + '/coach/event/getAll',
@@ -206,19 +214,6 @@ Page({
   },
 
     // 页面跳转
-    edit_information() {
-      let coach = this.data.coach
-      console.log(coach)
-      const queryString = Object.keys(coach).map(key => {
-        console.log(key + ": " + encodeURIComponent(coach[key]))
-        return `${key}=${encodeURIComponent(coach[key])}`
-      }).join('&');
-      console.log("queryString->")
-      console.log(queryString)
-      wx.navigateTo({
-        url: `/pages/profile_player/profile_coach_edit/profile_coach_edit?${queryString}`
-      })
-    },
 
   gotoMatchesPage(e) {
     let matchList = e.currentTarget.dataset.list ?? []
@@ -257,9 +252,4 @@ Page({
     })
   },
 
-  gotoRegisterPage() {
-    wx.navigateTo({
-      url: '../profile_coach_register/profile_coach_register',
-    })
-  },
 })

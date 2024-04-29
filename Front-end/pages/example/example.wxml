@@ -18,11 +18,16 @@
       <match-card-small name="书院杯" group="A组" team1="team1" team2="team2" icon1="/assets/shude.png" icon2="/assets/shuren.png" score1="1" score2="1" time="2024-2-1 15:00" hasBegun="{{true}}"></match-card-small>
     </scroll-view>
 
+    <news-card title="题目" img="/assets/barca.jpg"></news-card>
     <news-card title="题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目题目" img="/assets/barca.jpg"></news-card>
 
     <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="中后卫、右边后卫" goals="0" assists="0"></player-card-big>
     <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="后卫" goals="0" assists="0"></player-card-big>
     <player-card-big name="王浩羽" img="/assets/busquets.jpg" number="5" field="中后卫、右边后卫中后卫、右边后卫" goals="0" assists="0"></player-card-big>
+
+    <user-card-big name="王浩羽" img="/assets/busquets.jpg" isPlayer="{{true}}" isReferee="{{true}}" isCoach="{{true}}"> </user-card-big>
+    <user-card-big name="王浩羽" img="/assets/busquets.jpg" isPlayer="{{true}}" isReferee="{{false}}" isCoach="{{true}}"> </user-card-big>
+    <user-card-big name="王浩羽XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" img="/assets/busquets.jpg" isPlayer="{{false}}" isReferee="{{false}}" isCoach="{{false}}"> </user-card-big>
 
     <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
       <player-card-small name="王浩羽" img="/assets/busquets.jpg"></player-card-small>
