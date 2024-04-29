@@ -31,7 +31,15 @@
   margin: 0 30rpx;
 }
 
-.icon {
+.team-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: smaller;
+  text-align: center;
+  max-width: 120rpx;
+}
+
+.team-icon {
   width: 120rpx;
   height: 120rpx;
 }

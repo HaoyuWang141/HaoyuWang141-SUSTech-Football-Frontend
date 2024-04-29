@@ -50,6 +50,11 @@
   font-size: small;
 }
 
+.teamname {
+  max-width: 150rpx;
+  white-space: nowrap;
+}
+
 .icon {
   width: 150rpx;
   height: 150rpx;

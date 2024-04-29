@@ -15,7 +15,7 @@
         <view class="match-info-container">
           <view class="team">
             <image class="icon" src="{{homeTeamLogoUrl ? homeTeamLogoUrl : '/assets/newplayer.png'}}" bindtap="inviteHomeTeam" data-id="{{matchId}}"></image>
-            <text>{{homeTeamName ? homeTeamName : '主队'}}</text>
+            <text class="teamname">{{homeTeamName ? homeTeamName : '主队'}}</text>
           </view>
           <view class="middle">
             <block wx:if="{{hasBegun}}">
@@ -26,7 +26,7 @@
           </view>
           <view class="team">
             <image class="icon" src="{{awayTeamLogoUrl ? awayTeamLogoUrl : '/assets/newplayer.png'}}" bindtap="inviteAwayTeam" data-id="{{matchId}}"></image>
-            <text>{{awayTeamName ? awayTeamName : '客队'}}</text>
+            <text class="teamname">{{awayTeamName ? awayTeamName : '客队'}}</text>
           </view>
         </view>
       </view>

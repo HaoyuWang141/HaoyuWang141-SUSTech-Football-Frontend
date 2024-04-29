@@ -41,7 +41,7 @@
   text-overflow: ellipsis;
   font-size: smaller;
   text-align: center;
-  max-width: 200rpx;
+  max-width: 120rpx;
 }
 
 .middle {

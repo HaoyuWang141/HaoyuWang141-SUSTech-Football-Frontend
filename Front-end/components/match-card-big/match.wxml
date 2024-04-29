@@ -3,8 +3,8 @@
   <text class="name">{{time}} {{name}}</text>
   <view class="info-container">
     <view class="team">
-      <image class="icon" src="{{icon1}}"></image>
-      <text>{{team1}}</text>
+      <image class="team-icon" src="{{icon1}}"></image>
+      <text class="team-name">{{team1}}</text>
     </view>
     <view class="middle">
       <block wx:if="{{hasBegun}}">
@@ -15,8 +15,8 @@
       <text class="not-begin" wx:else>未开始</text>
     </view>
     <view class="team">
-      <image class="icon" src="{{icon2}}"></image>
-      <text>{{team2}}</text>
+      <image class="team-icon" src="{{icon2}}"></image>
+      <text class="team-name">{{team2}}</text>
     </view>
   </view>
 </view>
