@@ -2,7 +2,6 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-
 Page({
 
   /**
@@ -104,36 +103,26 @@ Page({
     });
   },
 
-  // 引入模态框的通用方法
-  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
-    wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      cancelText: cancelText,
-      success(res) {
-        if (res.confirm) {
-          confirmCallback();
-        } else if (res.cancel) {
-          cancelCallback();
-        }
-      }
-    });
-  },
-
   // 点击取消比赛按钮，弹出确认取消模态框
   showCancelModal(e) {
     this.setData({
       deleteTeamId: e.currentTarget.dataset.id
     }) 
-    this.showModal(
-      '确认删除球队',
-      '确定要删除这支球队吗？',
-      '确认删除',
-      '我再想想',
-      this.deleteTeam, // 点击确认删除时的回调函数
-      () => {} // 点击我再想想时的回调函数，这里不做任何操作
-    );
+    var that = this
+    wx.showModal({
+      title: '确认删除球队',
+      content: '确定要删除这支球队吗？',
+      confirmText: '确认删除',
+      confirmColor: '#FF0000',
+      cancelText: '我再想想',
+      success(res) {
+        if (res.confirm) {
+          that.deleteTeam // 点击确认删除时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击我再想想时的回调函数，这里不做任何操作
+        }
+      }
+    });
   },
 
   deleteTeam() {

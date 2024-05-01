@@ -106,6 +106,24 @@ Page({
       time: e.detail.value
     });
   },
+
+  // 点击确认创建按钮，弹出确认修改模态框
+  showCreateModal() {
+    var that = this
+    wx.showModal({
+      title: '确认创建',
+      content: '确定要进行创建比赛吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.confirmCreate() // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    });
+  },
   
   // 处理提交信息修改
   confirmCreate: function (){
@@ -132,11 +150,19 @@ Page({
         // 可以根据后端返回的数据更新页面状态或进行其他操作
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
-        message = successMsg;
+        message = successMsg
+        console.log(successMsg)
         wx.showToast({
           title: successMsg,
           icon: 'none',
           duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 2000);
+          }
         });
       },
       fail: err => {
@@ -150,13 +176,6 @@ Page({
           duration: 2000
         });
       },
-      complete() {
-        setTimeout(function () {
-          wx.navigateBack({
-            delta: 1,
-          })
-        }, 1000);
-      }
     });
   },
 

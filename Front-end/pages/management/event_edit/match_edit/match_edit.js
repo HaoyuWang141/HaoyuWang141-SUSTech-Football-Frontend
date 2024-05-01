@@ -220,11 +220,12 @@ Page({
   },
 
   // 引入模态框的通用方法
-  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+  showModal: function (title, content, confirmText, confirmColor, cancelText, confirmCallback, cancelCallback) {
     wx.showModal({
       title: title,
       content: content,
       confirmText: confirmText,
+      confirmColor: confirmColor,
       cancelText: cancelText,
       success(res) {
         if (res.confirm) {
@@ -302,6 +303,7 @@ Page({
       '确认修改',
       '确定要进行修改吗？',
       '确认',
+      'black',
       '取消',
       this.confirmEdit, // 点击确认时的回调函数
       () => {} // 点击取消时的回调函数，这里不做任何操作
@@ -314,6 +316,7 @@ Page({
       '确认取消比赛',
       '确定要取消这场比赛吗？',
       '确认取消',
+      '#FF0000',
       '我再想想',
       this.deleteMatch, // 点击确认取消时的回调函数
       () => {} // 点击我再想想时的回调函数，这里不做任何操作

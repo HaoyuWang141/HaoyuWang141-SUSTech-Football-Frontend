@@ -113,33 +113,26 @@ Page({
     });
   },
 
-  // 引入模态框的通用方法
-  showModal: function (title, content, confirmText, cancelText, confirmCallback, cancelCallback) {
+  // 点击取消比赛按钮，弹出确认取消模态框
+  showCancelModal(e) {
+    this.setData({
+      deleteTeamId: e.currentTarget.dataset.id
+    }) 
+    var that = this
     wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      cancelText: cancelText,
+      title: '确认删除球队',
+      content: '确定要删除这支球队吗？',
+      confirmText: '确认删除',
+      confirmColor: '#FF0000',
+      cancelText: '我再想想',
       success(res) {
         if (res.confirm) {
-          confirmCallback();
+          that.deleteTeam // 点击确认删除时的回调函数
         } else if (res.cancel) {
-          cancelCallback();
+          () => {} // 点击我再想想时的回调函数，这里不做任何操作
         }
       }
     });
-  },
-
-  // 点击取消比赛按钮，弹出确认取消模态框
-  showCancelModal() {
-    this.showModal(
-      '确认删除球队',
-      '确定要删除这支球队吗？',
-      '确认删除',
-      '我再想想',
-      this.deleteTeam, // 点击确认删除时的回调函数
-      () => {} // 点击我再想想时的回调函数，这里不做任何操作
-    );
   },
 
   deleteTeam() {
