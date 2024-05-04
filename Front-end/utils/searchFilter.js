@@ -1,13 +1,16 @@
-const filter = (keyword, pattern) => {
+const filter = (keyword, patterns) => {
   // keyword: search text
-  console.log(keyword)
-  console.log(pattern)
   keyword = keyword.trim()
   if (keyword == '') {
     return true
   }
   else {
-    return pattern.includes(keyword)
+    for (let pattern of patterns) {
+      if (pattern.includes(keyword)) {
+        return true
+      }
+    }
+    return false
   }
 }
 
