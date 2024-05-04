@@ -38,6 +38,36 @@
       </view>
     </view>
 
+    <!-- 赛事类型 -->
+    <view class="block-space">
+      <picker class="eventType-container" mode="selector" range="{{eventTypeList}}" bindchange="changeEventType">
+        <text style="margin-left: 3%;">赛事类型：</text>
+        <text>{{eventType}}</text>
+      </picker>
+    </view>
+
+    <!-- 赛事阶段 -->
+    <view class="block-space">
+      <view class="stage-container">
+        <text style="margin-left: 3%;">赛事阶段</text>
+        <view wx:for="{{stageList}}" wx:key="name">
+          <view class="addStage-Tag">{{item.stageName}}</view>
+          <picker wx:if="{{item.stageName == '小组赛'}}" class="select-tag" mode="selector" range="{{groupNumber}}" bindchange="groupNumberChange">
+            <text>小组总数：</text>
+            <text>{{gNumber}}</text>
+          </picker>
+          <picker wx:if="{{item.stageName == '淘汰赛'}}" class="select-tag" mode="selector" range="{{teamNumber}}" bindchange="teamNumberChange">
+            <text>出线队伍数：</text>
+            <text>{{tNumber}}</text>
+          </picker>
+          <picker wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector" range="{{turnNumber}}" bindchange="turnNumberChange">
+            <text>联赛总轮数：</text>
+            <text>{{tuNumber}}</text>
+          </picker>
+        </view>
+      </view>
+    </view>
+
     <view class="btn-container">
       <button class="confirm-btn" bindtap="showCreateModal">确认创建</button>
     </view>
