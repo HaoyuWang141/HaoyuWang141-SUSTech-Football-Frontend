@@ -59,7 +59,6 @@
 }
 
 
-
 .button-update {
   padding: 10rpx 40rpx;
   color: white;
@@ -68,3 +67,133 @@
   border-radius: 20rpx;
 }
 
+
+/* 搜索框容器样式 */
+.comment-container {
+  display: flex;
+  margin-top: 30rpx;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 50rpx;
+  border: 4rpx solid rgb(237, 108, 0);
+  border-radius: 20rpx;
+  background-color: #f9f9f9;
+  height: 80rpx;
+  margin-right: 5%;
+}
+
+.input-container .input {
+  flex: 1; /* 让搜索框占据剩余空间 */
+  height: 100%; /* 让搜索框与容器高度一致 */
+}
+
+.button {
+  align-self: center;
+  height: 90%; /* 让按钮与容器高度一致 */
+  max-width: 130rpx;
+  font-size: medium;
+  font-weight: normal;
+  color: white;
+  background-color: rgb(237, 108, 0);
+  padding: 0 10rpx; /* 设置按钮的左右内边距 */
+  line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */
+}
+
+.reply-input-container {
+  display: flex;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.comments {
+  margin-top: 30rpx;
+}
+
+.user-comment {
+  display: flex; /* 使用 Flex 布局 */
+  flex-direction: column; /* 主轴方向为垂直方向 */
+  border-top: 1px solid rgb(202, 202, 202);
+  border-bottom: 1px solid rgb(202, 202, 202);
+}
+
+.user-container {
+  align-items: center; /* 在交叉轴上居中对齐，确保子元素在垂直方向上位于同一水平高度 */
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.avatar-name {
+  display: flex;
+  align-items: center;
+}
+
+.reply-container {
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-left: 10%;
+  align-items: center; /* 在交叉轴上居中对齐，确保子元素在垂直方向上位于同一水平高度 */
+}
+
+.img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 60rpx;
+}
+
+.name {
+  margin-left: 30rpx;
+  font-size: small;
+}
+
+.comment {
+  margin-top: 3px; /* 设置评论部分与头像、姓名的间距 */
+  font-size: smaller;
+}
+
+.reply {
+  margin-top: 3px; /* 设置回复部分与头像、姓名的间距 */
+  margin-bottom: 3%;
+  font-size: small;
+}
+
+.expand-conatainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.expand {
+  font-size: small;
+  color: rgb(126, 125, 125);
+}
+
+.deleteComment {
+  font-size: small;
+  color: rgb(241, 13, 13);
+}
+
+.deleteReply {
+  margin-left: 43%;
+  font-size: small;
+  color: rgb(241, 13, 13);
+}
+
+.like {
+  font-size: small;
+}
+
+.like-img {
+  margin-left: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+}
+
+.liked-img {
+  margin-left: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+}
