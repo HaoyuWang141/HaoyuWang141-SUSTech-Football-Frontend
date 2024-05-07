@@ -64,7 +64,6 @@
   margin: 10rpx; /* 外边距，根据需要调整 */
   flex-direction: row; /* 子项垂直排列 */
   align-items: center; /* 子项在交叉轴上居中对齐 */
-  width: 95%;
   display: block;
 }
 
@@ -87,6 +86,8 @@
   margin-left: 3%;
 }
 
+
+
 .confirm-btn{
   border: none; /* 去除按钮边框 */
   border-radius: 20px; /* 圆角 */
@@ -98,4 +99,34 @@
   max-width: 50%;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+.eventType-container {
+  margin-bottom: 3%;
+}
+
+.addStage-Tag{
+  height: 60rpx;
+  width: 200rpx;
+  background-color: #eb903a;
+  border-radius: 60rpx;
+  text-align: center;
+  align-items: center;
+  color: white;
+  font-size: medium;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.stage-container {
+  margin: auto;
+  margin-bottom: 3%;
+}
+
+.select-tag {
+  margin-left: 10%;
+  margin-bottom: 3%;
+  margin-top: 3%;
 }

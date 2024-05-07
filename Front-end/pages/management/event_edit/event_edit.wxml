@@ -35,6 +35,36 @@
     </modal>
   </view>
 
+  <!-- 赛事类型 -->
+  <view class="block-space">
+    <view class="eventType-container" mode="selector">
+      <text style="margin-left: 3%;">赛事类型：</text>
+      <text>{{eventType}}</text>
+    </view>
+  </view>
+
+  <!-- 赛事阶段 -->
+  <view class="block-space">
+    <view class="stage-container">
+      <text style="margin-left: 3%;">赛事阶段</text>
+      <view wx:for="{{stageList}}" wx:key="name">
+        <view class="addStage-Tag">{{item.stageName}}</view>
+        <view wx:if="{{item.stageName == '小组赛' || item.stageName == '小组赛阶段'}}" class="select-tag" mode="selector">
+          <text>小组总数：</text>
+          <text>{{gNumber}}</text>
+        </view>
+        <view wx:if="{{item.stageName == '淘汰赛' || item.stageName == '淘汰赛阶段'}}" class="select-tag" mode="selector">
+          <text>出线队伍数：</text>
+          <text>{{tNumber}}</text>
+        </view>
+        <view wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector">
+          <text>联赛总轮数：</text>
+          <text>{{tuNumber}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <view class="block-space">
     <view class="block-top" >
       <text class="block-title">参赛球队</text>

@@ -1,19 +1,24 @@
-<!--pages/home/event_hall/event_hall.wxml-->
-<!-- <view class="block-container">
-  <view class="block-main">
-    <view class="search-container">
-      <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
-      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
-    </view>
-  </view>
-</view> -->
-
 <view class="block-container">
   <view class="block-top">
-    <text class="block-title">赛事大厅</text>
+    <text class="block-title">球队大厅</text>
+    <text class="block-more" bind:tap="showAll" wx:if="{{searchText!=''}}">显示全部</text>
   </view>
   <view class="block-main">
-    <view class="no-favorite" wx:if="{{eventList.length==0}}">暂无赛事！</view>
-    <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+    <view class="search-container">
+      <input class="search-input" type="text" placeholder="搜索球队" bindinput="bindInput" value="{{ searchText }}"></input>
+      <button class="search-button" bindtap="search">搜索</button>
+    </view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-main">
+    <view class="no-results-container" wx:if="{{teamList.length==0}}">
+      <view class="image-container">
+        <image src="/assets/no_results.svg"></image>
+      </view>
+      <view class="text">未找到球队</view>
+    </view>
+    <team-card-big wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerList.length}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"> </team-card-big>
   </view>
 </view>

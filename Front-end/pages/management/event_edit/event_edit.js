@@ -23,6 +23,13 @@ Page({
     groupList: Array,
     managerList: Array,
     stageList: Array,
+    eventType: '',
+    groupNumber: [],
+    teamNumber: [],
+    turnNumber: [],
+    gNumber: 0,
+    tNumber: 0,
+    tuNumber: 0,
   },
 
   /**
@@ -128,9 +135,55 @@ Page({
       },
       complete() {
         // 无论请求成功还是失败都会执行
+        that.initTag();
         wx.hideLoading(); // 关闭加载提示框
       }
     });
+  },
+
+  initTag: function () {
+    if(this.data.stageList[0].stageName !== '联赛') {
+      // 初始化groupNumber数组
+      var groupArr = [];
+      for (var i = 2; i <= 8; i++) {
+        groupArr.push(i);
+      }
+
+      // 初始化teamNumber数组
+      var teamArr = [];
+      for (var j = 2; j <= 16; j*=2) {
+        teamArr.push(j);
+      }
+
+      var gNumber = this.data.stageList[0].tags.length
+      var tNumber = 1
+      for(let i = 0; i < this.data.stageList[1].tags.length -1; i++) {
+        tNumber *= 2
+      }
+
+      // 更新data中的数组
+      this.setData({
+        eventType: '杯赛',
+        groupNumber: groupArr,
+        teamNumber: teamArr,
+        gNumber: gNumber,
+        tNumber, tNumber
+      });
+    } else {
+      // 初始化turnNumber数组
+      var turnArr = [];
+      for (var k = 1; k <= 20; k++) {
+        turnArr.push(k);
+      }
+
+      var tuNumber = this.data.stageList[0].tags.length
+      // 更新data中的数组
+      this.setData({
+        eventType: '联赛',
+        turnNumber: turnArr,
+        tuNumber: tuNumber
+      });
+    }
   },
 
   // 显示赛事名称输入弹窗

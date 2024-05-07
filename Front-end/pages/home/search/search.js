@@ -138,7 +138,8 @@ Page({
         let eventList = res.data ?? []
         let filterEventList = []
         for (let event of eventList) {
-          if (filter(that.data.searchText,  event.name + event.description)) {
+          let patterns = [event.name, (event.description ? event.description : '')]
+          if (filter(that.data.searchText, patterns)) {
             filterEventList.push(event)
           }
         }
@@ -166,8 +167,8 @@ Page({
         let matchList = res.data ?? []
         let filterMatchList = []
         for (let match of matchList) {
-          let pattern = (match.homeTeam ? match.homeTeam.name : '') + (match.awayTeam ? match.awayTeam.name : '') + (match.matchEvent ? match.matchEvent.eventName : '')
-          if (filter(that.data.searchText,  pattern)) {
+          let patterns = [(match.homeTeam ? match.homeTeam.name : ''), (match.awayTeam ? match.awayTeam.name : ''), (match.matchEvent ? match.matchEvent.eventName : '')]
+          if (filter(that.data.searchText,  patterns)) {
             let date = new Date(match.time)
             match.strTime = formatTime(date)
             match.hasBegun = match.status == 'PENDING' ? false : true
@@ -198,7 +199,8 @@ Page({
         let userList = res.data ?? []
         let filterUserList = []
         for (let user of userList) {
-          if (filter(that.data.searchText, user.nickName ? user.nickName : '')) {
+          let patterns = [(user.nickName ? user.nickName : ''), (user.playerRole ? user.playerRole.name : ''), (user.coachRole ? user.coachRole.name : ''), (user.refereeRole ? user.refereeRole.name : '')]
+          if (filter(that.data.searchText, patterns)) {
             filterUserList.push(user)
           }
         }
@@ -226,7 +228,7 @@ Page({
         let teamList = res.data ?? []
         let filterTeamList = []
         for (let team of teamList) {
-          if (filter(that.data.searchText, team.name)) {
+          if (filter(that.data.searchText, [team.name])) {
             filterTeamList.push(team)
           }
         }
@@ -241,7 +243,7 @@ Page({
   },
 
   fetchNews(id) {
-    // TODO
+    //TODO
   },
 
   ///////////////////////////////////////////////////////////////////////////////

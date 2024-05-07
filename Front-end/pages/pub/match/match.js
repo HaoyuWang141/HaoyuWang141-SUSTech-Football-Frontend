@@ -51,6 +51,13 @@ Page({
 
     refereeId: -1,
     isReferee: false,
+
+    commentList: [],
+    commentText: '', // 用于存储输入框中的评论内容
+    replyText: '', // 用于存储输入框中的回复内容
+    expandList: [],
+    likesList: [],
+    userId: 0
   },
 
   /**
@@ -59,6 +66,7 @@ Page({
   onLoad(options) {
     this.setData({
       id: options.id,
+      userId: userId
     })
   },
 
@@ -171,6 +179,73 @@ Page({
       },
       complete() {
         wx.hideLoading();
+        that.fetchComment(that.data.id)
+      }
+    })
+  },
+
+  fetchComment: function (id) {
+
+    const that = this
+    wx.request({
+      url: URL + "/comment/match/getCommentWithReply?matchId=" + id,
+      success: async function (res) {
+        console.log("comment->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+
+        that.setData({
+          commentList: res.data
+        })
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+      complete() {
+        for(var i = 0; i < that.data.commentList.length; i++) {
+          that.data.expandList.push({
+            expanded: false
+          })
+        }
+        that.fetchCommentLikes(userId)
+      }
+    })
+  },
+
+  fetchCommentLikes: function (id) {
+    const that = this
+    var commentIds = []
+    for(let i = 0; i < this.data.commentList.length; i++) {
+      commentIds.push(this.data.commentList[i].commentId)
+    }
+    wx.request({
+      url: URL + "/comment/match/like/getByIdList?userId=" + id,
+      method: 'POST',
+      data: commentIds,
+      success: async function (res) {
+        console.log("likes->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+
+        that.setData({
+          likesList: res.data
+        })
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+      complete() {
+        for(var i = 0; i < that.data.commentList.length; i++) {
+          that.data.expandList.push({
+            expanded: false
+          })
+        }
       }
     })
   },
@@ -340,6 +415,272 @@ Page({
       })
     })
 
+  },
+
+  toggleReply(e) {
+    const index = e.currentTarget.dataset.id;
+    const expandList = this.data.expandList;
+    expandList[index].expanded = !expandList[index].expanded;
+    this.setData({
+      expandList: expandList
+    });
+  },
+
+  inputComment(e) {
+    this.setData({
+      commentText: e.detail.value // 更新评论内容
+    });
+  },
+
+  addComment() {
+    const dataToUpdate = {
+      matchId: this.data.id,
+      content: this.data.commentText,
+      userId: userId,
+    };
+
+    console.log('add comment->')
+    console.log(dataToUpdate)
+
+    var that = this
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/comment/match/addComment', // 后端接口地址
+      method: 'POST', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+
+        this.setData({
+          commentText: '' // 清空输入框内容
+        });
+
+        console.log('评论成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '评论成功'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('评论失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '评论失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      complete(){
+        setTimeout(function () {
+          that.fetchComment(that.data.id)
+        }, 2000);
+      }
+    });
+  },
+
+  deleteComment(e) {
+    const commentId = e.currentTarget.dataset.id
+
+    console.log('delete comment->')
+
+    var that = this
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/comment/match/deleteComment?commentId=' + commentId + '&userId=' + userId, // 后端接口地址
+      method: 'POST', // 请求方法
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+
+        console.log('删除评论成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '删除评论成功'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('删除评论失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '删除评论失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      complete(){
+        setTimeout(function () {
+          that.fetchComment(that.data.id)
+        }, 2000);
+      }
+    });
+  },
+
+  like_comment(e) {
+    console.log(e)
+    const commentId = e.currentTarget.dataset.id; // 获取评论 ID
+    console.log('like comment->')
+    var that = this
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/comment/match/like/doLike?commentId=' + commentId + '&userId=' + userId, // 后端接口地址
+      method: 'POST', // 请求方法
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        this.setData({
+          commentText: '' // 清空输入框内容
+        });
+        console.log('点赞成功', res.data);
+      },
+      fail: err => {
+        console.error('点赞失败', err);
+      },
+      complete(){
+        that.fetchComment(that.data.id)
+      }
+    });
+  },
+
+  unlike_comment(e) {
+    const commentId = e.currentTarget.dataset.id; // 获取评论 ID
+    console.log('unlike comment->')
+    var that = this
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/comment/match/like/cancelLike?commentId=' + commentId + '&userId=' + userId, // 后端接口地址
+      method: 'POST', // 请求方法
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        this.setData({
+          commentText: '' // 清空输入框内容
+        });
+        console.log('取消点赞成功', res.data);
+      },
+      fail: err => {
+        console.error('取消点赞失败', err);
+      },
+      complete(){
+        that.fetchComment(that.data.id)
+      }
+    });
+  },
+
+  inputReply(e) {
+    this.setData({
+      replyText: e.detail.value // 更新评论内容
+    });
+  },
+
+  addReply(e) {
+    // 添加回复到回复列表
+    const index = e.currentTarget.dataset.id;
+    console.log(this.data.commentList[index].commentId)
+    const dataToUpdate = {
+      userId: userId,
+      commentId: this.data.commentList[index].commentId,
+      content: this.data.replyText
+    };
+
+    console.log('add reply->')
+    console.log(dataToUpdate)
+
+    var that = this
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/comment/match/addReply', // 后端接口地址
+      method: 'POST', // 请求方法
+      data: dataToUpdate, // 要发送的数据
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+
+        this.setData({
+          replyText: '' // 清空回复输入框内容
+        });
+
+        console.log('回复成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '回复成功'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('回复失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '回复失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      complete(){
+        that.fetchComment(that.data.id)
+      }
+    });
+  },
+
+  deleteReply(e) {
+    console.log(e)
+    const replyId = e.currentTarget.dataset.id
+
+    console.log('delete comment->')
+
+    var that = this
+    // 发送请求到后端接口
+    wx.request({
+      url: URL + '/comment/match/deleteReply?replyId=' + replyId + '&userId=' + userId, // 后端接口地址
+      method: 'POST', // 请求方法
+      success: res => {
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+
+        console.log('删除回复成功', res.data);
+        // 获取成功信息并显示在 toast 中
+        const successMsg = res.data ? res.data : '删除回复成功'; // 假设后端返回的成功信息在 res.data.message 中
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      fail: err => {
+        console.error('删除回复失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '删除回复失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      complete(){
+        setTimeout(function () {
+          that.fetchComment(that.data.id)
+        }, 2000);
+      }
+    });
   },
 
   // 跳转至裁判页面

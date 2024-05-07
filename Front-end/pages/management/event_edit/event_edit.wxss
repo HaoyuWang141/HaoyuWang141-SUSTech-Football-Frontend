@@ -130,3 +130,33 @@
   font-size: medium;
   max-width: 50%;
 }
+
+.eventType-container {
+  margin-bottom: 3%;
+}
+
+.addStage-Tag{
+  height: 60rpx;
+  width: 200rpx;
+  background-color: #eb903a;
+  border-radius: 60rpx;
+  text-align: center;
+  align-items: center;
+  color: white;
+  font-size: medium;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.stage-container {
+  margin: auto;
+  margin-bottom: 3%;
+}
+
+.select-tag {
+  margin-left: 10%;
+  margin-bottom: 3%;
+  margin-top: 3%;
+}

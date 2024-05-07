@@ -1,19 +1,24 @@
-<!--pages/home/event_hall/event_hall.wxml-->
-<!-- <view class="block-container">
-  <view class="block-main">
-    <view class="search-container">
-      <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
-      <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
-    </view>
-  </view>
-</view> -->
-
 <view class="block-container">
   <view class="block-top">
-    <text class="block-title">赛事大厅</text>
+    <text class="block-title">比赛大厅</text>
+    <text class="block-more" bind:tap="showAll" wx:if="{{searchText!=''}}">显示全部</text>
   </view>
   <view class="block-main">
-    <view class="no-favorite" wx:if="{{eventList.length==0}}">暂无赛事！</view>
-    <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+    <view class="search-container">
+      <input class="search-input" type="text" placeholder="搜索比赛" bindinput="bindInput" value="{{ searchText }}"></input>
+      <button class="search-button" bindtap="search">搜索</button>
+    </view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-main">
+    <view class="no-results-container" wx:if="{{matchList.length==0}}">
+      <view class="image-container">
+        <image src="/assets/no_results.svg"></image>
+      </view>
+      <view class="text">未找到比赛</view>
+    </view>
+    <match-card-big wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-big>
   </view>
 </view>
