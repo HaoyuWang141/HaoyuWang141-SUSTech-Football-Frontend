@@ -1,7 +1,7 @@
 // pages/mine/mine.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+// const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 Page({
 
@@ -10,7 +10,7 @@ Page({
    */
   data: {
     userId: Number,
-    avatarUrl: defaultAvatarUrl,
+    avatarUrl: '',
     nickName: '',
 
     playerId: Number,
@@ -81,10 +81,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.setData({
-      avatarUrl: appInstance.globalData.avatarUrl ?? defaultAvatarUrl,
-      nickName: appInstance.globalData.nickName ?? '',
-    })
   },
 
   /**
@@ -153,7 +149,7 @@ Page({
   fetchUserId(userId) {
     const that = this
     that.setData({
-      userId
+      userId: userId
     })
   },
 
@@ -162,9 +158,11 @@ Page({
 
     const that = this
 
+    that.fetchUserInfo(userId)
+
     //Player相关
     that.fetchPlayerId(userId)
-    
+
     //教练身份
     that.fetchCoachId(userId)
 
@@ -183,6 +181,51 @@ Page({
 
   // ------------------
   // fetch data: player
+  postUserInfo(userId, avatarUrl, nickName) {
+    const that = this
+    console.log('avatarUrl')
+    console.log(avatarUrl)
+    wx.request({
+      url: URL + '/user/update?userId=' + userId + '&avatarUrl=' + avatarUrl + '&nickName=' + nickName,
+      method: 'POST',
+      success(res) {
+        console.log("mine page: postUserInfo->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
+
+  fetchUserInfo(userId) {
+    const that = this
+    wx.request({
+      url: URL + '/user/get?userId=' + userId,
+      method: 'POST',
+      success(res) {
+        console.log("mine page: userInfo->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          nickName: res.data.nickName,
+          avatarUrl: res.data.avatarUrl
+        })
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
+      complete() {}
+    });
+  },
 
   fetchPlayerId(userId) {
     const that = this
@@ -515,7 +558,7 @@ Page({
       },
       complete() {}
     });
-  },  
+  },
 
   fetchManageTeamApplications: function (teamId, teamName) {
     const that = this
@@ -643,7 +686,7 @@ Page({
       },
       complete() {}
     });
-  },  
+  },
 
   fetchManageMatchInvitationTeam: function (matchId) {
     const that = this
@@ -682,8 +725,8 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-        let manageEventIdList =  res.data;
-        let manageEventNumber =  res.data.length;
+        let manageEventIdList = res.data;
+        let manageEventNumber = res.data.length;
         that.setData({
           isEventManager: res.data.length > 0 ? true : false,
           manageEventIdList: res.data,
@@ -702,7 +745,7 @@ Page({
       },
       complete() {}
     });
-  },  
+  },
 
   fetchManageEventInvitationTeam: function (eventId) {
     const that = this
@@ -754,11 +797,11 @@ Page({
     const informs = applications.map(application => {
       const formattedDate = (application.lastUpdated != null) ? new Date(application.lastUpdated).toLocaleString() : ''; // 将时间戳转换为可读日期
       if (application.status == "PENDING") {
-        return{
+        return {
           content: `${application.player.name}（球员）于${formattedDate}对您所管理的球队 ${teamName} (teamId = ${application.teamId})发出了入队申请，请您进行审核`,
           teamId: application.teamId,
           playerId: application.player.playerId
-        } 
+        }
       }
       return null;
     }).filter(inform => inform !== null);
@@ -915,11 +958,11 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return`${teamName} （teamId = ${invitation.teamId}）所邀请 ${invitation.player.name}(球员) 还未被处理您发出的邀请，邀请发起时间：${formattedDate}`
+        return `${teamName} （teamId = ${invitation.teamId}）所邀请 ${invitation.player.name}(球员) 还未被处理您发出的邀请，邀请发起时间：${formattedDate}`
       } else if (invitation.status == "ACCEPTED") {
-        return`${teamName} （teamId = ${invitation.teamId}）所邀请 ${invitation.player.name}(球员) 已经同意加入您的球队，处理时间时间：${formattedDate}`
+        return `${teamName} （teamId = ${invitation.teamId}）所邀请 ${invitation.player.name}(球员) 已经同意加入您的球队，处理时间时间：${formattedDate}`
       } else if (invitation.status == "REJECTED") {
-        return`${teamName} （teamId = ${invitation.teamId}）所邀请 ${invitation.player.name}(球员) 拒绝加入您的球队，处理时间时间：${formattedDate}`
+        return `${teamName} （teamId = ${invitation.teamId}）所邀请 ${invitation.player.name}(球员) 拒绝加入您的球队，处理时间时间：${formattedDate}`
       }
       return null;
     }).filter(inform => inform !== null);
@@ -935,11 +978,11 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return`${invitation.matchId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 还未被处理您发出的邀请，邀请发起时间：${formattedDate}`
+        return `${invitation.matchId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 还未被处理您发出的邀请，邀请发起时间：${formattedDate}`
       } else if (invitation.status == "ACCEPTED") {
-        return`${invitation.matchId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经同意参与您所创建的比赛，处理时间时间：${formattedDate}`
+        return `${invitation.matchId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经同意参与您所创建的比赛，处理时间时间：${formattedDate}`
       } else if (invitation.status == "REJECTED") {
-        return`${invitation.matchId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经拒绝参与您所创建的比赛，处理时间时间：${formattedDate}`
+        return `${invitation.matchId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经拒绝参与您所创建的比赛，处理时间时间：${formattedDate}`
       }
       return null;
     }).filter(inform => inform !== null);
@@ -955,11 +998,11 @@ Page({
     const informs = invitations.map(invitation => {
       const formattedDate = (invitation.lastUpdated != null) ? new Date(invitation.lastUpdated).toLocaleString() : '未知';
       if (invitation.status == "PENDING") {
-        return`${invitation.eventId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 还未被处理您发出的邀请，邀请发起时间：${formattedDate}`
+        return `${invitation.eventId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 还未被处理您发出的邀请，邀请发起时间：${formattedDate}`
       } else if (invitation.status == "ACCEPTED") {
-        return`${invitation.eventId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经同意参与您所创建的赛事，处理时间时间：${formattedDate}`
+        return `${invitation.eventId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经同意参与您所创建的赛事，处理时间时间：${formattedDate}`
       } else if (invitation.status == "REJECTED") {
-        return`${invitation.eventId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经拒绝参与您所创建的赛事，处理时间时间：${formattedDate}`
+        return `${invitation.eventId} 所邀请 ${invitation.team.name}(teamId = ${invitation.teamId}) 已经拒绝参与您所创建的赛事，处理时间时间：${formattedDate}`
       }
       return null;
     }).filter(inform => inform !== null);
@@ -1031,6 +1074,69 @@ Page({
   },
 
   // ------------------
+  uploadImage: function () {
+    var that = this; // 保存当前上下文的this值
+    // 打开相册或相机选择图片
+    wx.chooseMedia({
+      count: 1, // 默认为9，设置为1表示只选择一张图片
+      mediaType: ['image'],
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表
+        console.log(res.tempFiles)
+        var tempFilePath = res.tempFiles[0].tempFilePath;
+        // 选取完成后，上传到服务器
+        wx.showLoading({
+          title: '上传头像，请稍后',
+          mask: true,
+        })
+        wx.uploadFile({
+          url: URL + '/upload', // 你的上传图片的服务器API地址
+          filePath: tempFilePath,
+          name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
+          success: function (uploadRes) {
+            console.log('profile coach register: uploadImage ->')
+            console.log(uploadRes)
+            if (uploadRes.statusCode != 200) {
+              console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
+              wx.showToast({
+                title: '上传头像失败，请检查网络！', // 错误信息文本
+                icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
+                duration: 3000 // 持续时间
+              });
+              return
+            }
+            var filename = uploadRes.data;
+            that.setData({
+              avatarUrl: URL + '/download?filename=' + filename
+            });
+            let avatarUrl = that.data.avatarUrl
+            let userId = that.data.userId
+            let nickName = that.data.nickName
+            that.postUserInfo(userId, avatarUrl, nickName)
+            wx.hideLoading()
+            
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000,
+            });
+           
+          },
+          fail: function (error) {
+            console.log('上传失败', error);
+            wx.hideLoading()
+            wx.showToast({
+              title: '上传头像失败，请检查网络！', // 错误信息文本
+              icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
+              duration: 3000 // 持续时间
+            });
+          }
+        })
+      }
+    })
+  },
 
   onChooseAvatar(e) {
     const {
@@ -1114,7 +1220,7 @@ Page({
       showManageTeamInvitationMatchDot: false
     });
   },
-  
+
   toggleManageTeamInvitationEventInform: function () {
     this.setData({
       showManageTeamInvitationEventInform: !this.data.showManageTeamInvitationEventInform,
@@ -1533,12 +1639,12 @@ Page({
     teamId = Number(teamId)
     matchId = Number(matchId)
     accept = Boolean(accept)
-  
+
     wx.showLoading({
       title: '正在提交',
       mask: true,
     })
-  
+
     wx.request({
       url: URL + '/team/match/replyInvitation?teamId=' + teamId + '&matchId=' + matchId + '&accept=' + accept,
       method: "POST",
@@ -1577,12 +1683,12 @@ Page({
     teamId = Number(teamId)
     eventId = Number(eventId)
     accept = Boolean(accept)
-  
+
     wx.showLoading({
       title: '正在提交',
       mask: true,
     })
-  
+
     wx.request({
       url: URL + '/team/match/replyInvitation?teamId=' + teamId + '&eventId=' + eventId + '&accept=' + accept,
       method: "POST",
@@ -1617,4 +1723,3 @@ Page({
   },
 
 })
-

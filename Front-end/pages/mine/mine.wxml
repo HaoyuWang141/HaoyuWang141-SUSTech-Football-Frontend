@@ -1,11 +1,16 @@
 <!--index.wxml-->
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view style="text-align: center;">
-    <image class="avatar" class="avatar" src="{{avatarUrl}}"></image>
-    <view>{{nickName}}</view>
-  </view>
 
-  <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container1">
+  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
+  <view class="container2">
+    <view class="container3" bindtap="uploadImage">
+      <image class="avatar" src="{{avatarUrl}} " mode="scaleToFill" ></image>
+    </view>
+  </view>
+</view>
+
+  <button open-type="chooseAvatar" bind:tap="onChooseAvatar">
     换头
   </button>
 
@@ -32,13 +37,13 @@
         <view wx:if="{{isPlayer}}">球员: playerId = {{playerId}}</view>
         <view wx:if="{{isCoach}}">教练: coachId = {{coachId}}</view>
         <view wx:if="{{isReferee}}">裁判: refereeId = {{refereeId}}</view>
-        <view wx:if="{{isTeamManager}}"> 球队管理员: teamId = 
+        <view wx:if="{{isTeamManager}}"> 球队管理员: teamId =
           <text wx:for="{{manageTeamIdList}}" wx:key="teamId"> {{item.teamId }} </text>
         </view>
-        <view wx:if="{{isMatchManager}}"> 比赛管理员: matchId = 
+        <view wx:if="{{isMatchManager}}"> 比赛管理员: matchId =
           <text wx:for="{{manageMatchIdList}}" wx:key="matchId"> {{item.matchId}} </text>
         </view>
-        <view wx:if="{{isEventManager}}"> 赛事员管理员: eventId = 
+        <view wx:if="{{isEventManager}}"> 赛事员管理员: eventId =
           <text wx:for="{{manageEventIdList}}" wx:key="eventId"> {{item.eventId}} </text>
         </view>
       </view>
@@ -104,7 +109,7 @@
         </view>
       </view>
       <view class="block-main">
-      <view>球队管理员回复后，您将在此看到通知</view>
+        <view>球队管理员回复后，您将在此看到通知</view>
         <scroll-view scroll-y="true" style="height: {{showApplicationInform ? '200px' : '0'}};" class="notification-box">
           <view class="invitation-item" wx:for="{{applicationInform}}" wx:key="index">
             <text class="invitation-text">{{item}}</text>
@@ -246,9 +251,9 @@
         </view>
       </view>
       <view class="block-main">
-      <view>点击审核可选择接受或拒绝</view>
+        <view>点击审核可选择接受或拒绝</view>
         <scroll-view scroll-y="true" style="height: {{showManageTeamApplicationInform ? '200px' : '0'}};" class="notification-box">
-          <view class="invitation-item" wx:for="{{manageTeamApplicationsInform}}" wx:key="index"  bind:tap="showManageTeamApplicationModal" data-team-id="{{item.teamId}}" data-player-id="{{item.playerId}}"> 
+          <view class="invitation-item" wx:for="{{manageTeamApplicationsInform}}" wx:key="index" bind:tap="showManageTeamApplicationModal" data-team-id="{{item.teamId}}" data-player-id="{{item.playerId}}">
             <text class="invitation-text">{{item.content}}</text>
           </view>
         </scroll-view>
@@ -266,9 +271,9 @@
         </view>
       </view>
       <view class="block-main">
-      <view>点击审核可选择接受或拒绝</view>
+        <view>点击审核可选择接受或拒绝</view>
         <scroll-view scroll-y="true" style="height: {{showManageTeamInvitationMatchInform ? '200px' : '0'}};" class="notification-box">
-          <view class="invitation-item" wx:for="{{manageTeamInvitationMatchInform}}" wx:key="index"  bind:tap="showManageTeamInvitationMatchModal" data-match-id="{{item.matchId}}" data-team-id="{{item.teamId}}"> 
+          <view class="invitation-item" wx:for="{{manageTeamInvitationMatchInform}}" wx:key="index" bind:tap="showManageTeamInvitationMatchModal" data-match-id="{{item.matchId}}" data-team-id="{{item.teamId}}">
             <text class="invitation-text">{{item.content}}</text>
           </view>
         </scroll-view>
@@ -286,9 +291,9 @@
         </view>
       </view>
       <view class="block-main">
-      <view>点击审核可选择接受或拒绝</view>
+        <view>点击审核可选择接受或拒绝</view>
         <scroll-view scroll-y="true" style="height: {{showManageTeamInvitationEventInform ? '200px' : '0'}};" class="notification-box">
-          <view class="invitation-item" wx:for="{{manageTeamInvitationEventInform}}" wx:key="index"  bind:tap="showManageTeamInvitationEventModal" data-event-id="{{item.eventId}}" data-team-id="{{item.teamId}}"> 
+          <view class="invitation-item" wx:for="{{manageTeamInvitationEventInform}}" wx:key="index" bind:tap="showManageTeamInvitationEventModal" data-event-id="{{item.eventId}}" data-team-id="{{item.teamId}}">
             <text class="invitation-text">{{item.content}}</text>
           </view>
         </scroll-view>
@@ -306,7 +311,7 @@
         </view>
       </view>
       <view class="block-main">
-      <view>未对球员发起过任何邀请</view>
+        <view>未对球员发起过任何邀请</view>
         <scroll-view scroll-y="true" style="height: {{showManageTeamInvitationPlayerInform ? '200px' : '0'}};" class="notification-box">
           <view class="invitation-item" wx:for="{{manageTeamInvitationPlayerInform}}" wx:key="index">
             <text class="invitation-text">{{item}}</text>
@@ -326,7 +331,7 @@
         </view>
       </view>
       <view class="block-main">
-      <view>未对球队发起过任何邀请</view>
+        <view>未对球队发起过任何邀请</view>
         <scroll-view scroll-y="true" style="height: {{showManageMatchInvitationTeamInform ? '200px' : '0'}};" class="notification-box">
           <view class="invitation-item" wx:for="{{manageMatchInvitationTeamInform}}" wx:key="index">
             <text class="invitation-text">{{item}}</text>
@@ -346,7 +351,7 @@
         </view>
       </view>
       <view class="block-main">
-      <view>未对球队发起过任何邀请</view>
+        <view>未对球队发起过任何邀请</view>
         <scroll-view scroll-y="true" style="height: {{showManageEventInvitationTeamInform ? '200px' : '0'}};" class="notification-box">
           <view class="invitation-item" wx:for="{{manageEventInvitationTeamInform}}" wx:key="index">
             <text class="invitation-text">{{item}}</text>
