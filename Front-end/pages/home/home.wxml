@@ -53,7 +53,7 @@
 <view class="news-container">
   <swiper class="news-swiper" autoplay interval="5000" duration="500">
     <swiper-item>
-      <news-card title="通知！" img="/assets/通知.png"></news-card>
+      <news-card title="" img="/assets/通知.png"></news-card>
     </swiper-item>
     <!-- <swiper-item>
       <news-card title="" img="/assets/barca.jpg"></news-card>

@@ -89,7 +89,7 @@
   </view>
   <view class="block-main">
     <view style="margin-bottom: 40rpx;">包括进球、助攻、黄牌、红牌、上场、下场</view>
-    <view wx:for="{{match.actions}}" wx:key="index">
+    <view wx:for="{{match.matchPlayerActionList}}" wx:key="index">
       <view>时间：{{item.time}}min</view>
       <view>球队：{{item.teamId == match.homeTeam.teamId ? match.homeTeam.name : match.awayTeam.name}}</view>
       <view>球员：{{item.player.number}}号 {{item.player.name}}</view>
