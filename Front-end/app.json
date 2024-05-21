@@ -47,7 +47,9 @@
     "pages/profile_player/profile_player_register/profile_player_register",
     "pages/profile_player/profile_referee_register/profile_referee_register",
     "pages/profile_player/profile_coach_register/profile_coach_register",
-    "pages/development/development"
+    "pages/development/development",
+    "pages/management/match_new/set_homeTeam/set_homeTeam",
+    "pages/management/match_new/invite_awayTeam/invite_awayTeam"
   ],
   "window": {
     "navigationBarTextStyle": "white",

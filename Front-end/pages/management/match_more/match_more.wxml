@@ -1,17 +1,28 @@
 <!--pages/management/match_more/match_more.wxml-->
-<view class="container">
-  <view style="width: 90%;">
 
-    <view style="text-align: center;">管理的比赛</view>
-
-    <scroll-view scroll-y enable-flex>
-      <view>
-        <match-card-big name="{{newMatch.name}}" group="{{newMatch.group}}" team1="{{newMatch.team1}}" team2="{{newMatch.team2}}" icon1="{{newMatch.icon1}}" icon2="{{newMatch.icon2}}" score1="{{newMatch.score1}}" score2="{{newMatch.score2}}" time="{{newMatch.time}}" hasBegun="{{newMatch.hasBegun}}" bindtap="createNewMatch"></match-card-big>
-      </view>
-
-      <view wx:for="{{matchList}}" wx:key="matchId">
-        <match-card-big name="友谊赛" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-big>
-      </view>
-    </scroll-view>
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">友谊赛管理</text>
+  </view>
+  <view class="block-main">
+    <view>您可以在本页面：</view>
+    <view>- 创建友谊赛</view>
+    <view>- 更改友谊赛信息</view>
   </view>
 </view>
+
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">新建友谊赛</view>
+    <view class="block-more button-custom" bind:tap="createNewMatch">新建</view>
+  </view>
+  <view class="block-main">
+    点击“新建”按钮，填写比赛信息并新建比赛。
+  </view>
+</view>
+
+<scroll-view scroll-y enable-flex>
+  <view wx:for="{{matchList}}" wx:key="matchId">
+    <match-card-big name="友谊赛" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-big>
+  </view>
+</scroll-view>

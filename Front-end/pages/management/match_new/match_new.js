@@ -2,7 +2,10 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-const {formatTime, splitDateTime} = require("../../../utils/timeFormatter")
+const {
+  formatTime,
+  splitDateTime
+} = require("../../../utils/timeFormatter")
 
 Page({
 
@@ -11,17 +14,17 @@ Page({
    */
   data: {
     dateTime: String,
-    date: String,
-    time: String, 
-    name: '友谊赛',
-    homeTeam: "主队",
-    awayTeam: "客队",
+    date: '请选择日期',
+    time: '请选择时间',
+    homeTeam: {name:"未指定", logoUrl:"/assets/newplayer.png"},
+    awayTeam: {name:"未邀请", logoUrl:"/assets/newplayer.png"},
     icon1: '/assets/newplayer.png',
     icon2: '/assets/newplayer.png',
     hasBegun: false,
     modalHidden: true, // 控制模态框显示隐藏
-    array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    array: [
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
   },
 
@@ -29,17 +32,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const now = new Date();
-    console.log(now);
-    let strTimeInfo = formatTime(now)
-    let { strDate, strTime } = splitDateTime(strTimeInfo)
-    console.log("strdate->")
-    console.log(strDate)
-    console.log(strTime)
-    this.setData({
-      date: strDate,
-      time: strTime,
-    })
+    
   },
 
   /**
@@ -107,6 +100,16 @@ Page({
     });
   },
 
+  // 选定主队
+  // 处理邀请队伍
+  inviteHomeTeam: function(e) {
+    wx.navigateTo({
+      url: '/pages/management/match_new/set_homeTeam/set_homeTeam',
+    })
+  },
+
+  // 邀请客队
+
   // 点击确认创建按钮，弹出确认修改模态框
   showCreateModal() {
     var that = this
@@ -124,9 +127,9 @@ Page({
       }
     });
   },
-  
+
   // 处理提交信息修改
-  confirmCreate: function (){
+  confirmCreate: function () {
     var that = this;
     let sqlTimestamp = this.data.date + 'T' + this.data.time + ":00.000+00:00"; // 转换为 ISO 
     that.setData({

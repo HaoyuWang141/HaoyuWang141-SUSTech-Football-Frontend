@@ -10,6 +10,7 @@ App({
     nickName: null,
     avatarUrl: null,
     requestQueue: [],
+    ANONYMITY: "/assets/newplayer.png",
   },
 
   onLaunch() {

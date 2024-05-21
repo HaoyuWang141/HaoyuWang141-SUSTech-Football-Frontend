@@ -57,4 +57,13 @@ page {
   color: #666;
   padding: 5px 0;
 }
+
 /* ---------------------- */
+/* button */
+.button-custom {
+  padding: 10rpx 40rpx;
+  color: white;
+  background-color: #ed6c00;
+  font-weight: bold;
+  border-radius: 20rpx;
+}
