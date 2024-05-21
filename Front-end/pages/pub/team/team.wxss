@@ -50,7 +50,7 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr repeat(5, 2fr);
+  grid-template-columns: 1fr 2fr 1.5fr 1.5fr 2fr 2fr;
   gap: 1rpx 0;
   justify-items: center;
   align-items: center;

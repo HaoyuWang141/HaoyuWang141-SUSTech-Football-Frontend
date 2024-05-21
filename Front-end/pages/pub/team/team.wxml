@@ -59,8 +59,8 @@
           <view class="grid-header grid-item">头像</view>
           <view class="grid-header grid-item">姓名</view>
           <view class="grid-header grid-item">出场数</view>
-          <view class="grid-header grid-item">进球数/助攻数</view>
-          <view class="grid-header grid-item">黄牌数/红牌数</view>
+          <view class="grid-header grid-item">进球/助攻</view>
+          <view class="grid-header grid-item">黄牌/红牌</view>
 
           <!-- 球员信息 -->
           <block wx:for="{{playerList}}" wx:key="unique">
