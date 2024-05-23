@@ -1,6 +1,7 @@
 // pages/management/event_edit/event_edit.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
+const userId = appInstance.globalData.userId
 const {
   formatTime
 } = require("../../../utils/timeFormatter")
@@ -135,55 +136,27 @@ Page({
       },
       complete() {
         // 无论请求成功还是失败都会执行
-        that.initTag();
         wx.hideLoading(); // 关闭加载提示框
       }
     });
   },
 
-  initTag: function () {
-    if(this.data.stageList[0].stageName !== '联赛') {
-      // 初始化groupNumber数组
-      var groupArr = [];
-      for (var i = 2; i <= 8; i++) {
-        groupArr.push(i);
+  // 引入模态框的通用方法
+  showModal: function (title, content, confirmText, confirmColor, cancelText, confirmCallback, cancelCallback) {
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      confirmColor: confirmColor,
+      cancelText: cancelText,
+      success(res) {
+        if (res.confirm) {
+          confirmCallback();
+        } else if (res.cancel) {
+          cancelCallback();
+        }
       }
-
-      // 初始化teamNumber数组
-      var teamArr = [];
-      for (var j = 2; j <= 16; j*=2) {
-        teamArr.push(j);
-      }
-
-      var gNumber = this.data.stageList[0].tags.length
-      var tNumber = 1
-      for(let i = 0; i < this.data.stageList[1].tags.length -1; i++) {
-        tNumber *= 2
-      }
-
-      // 更新data中的数组
-      this.setData({
-        eventType: '杯赛',
-        groupNumber: groupArr,
-        teamNumber: teamArr,
-        gNumber: gNumber,
-        tNumber, tNumber
-      });
-    } else {
-      // 初始化turnNumber数组
-      var turnArr = [];
-      for (var k = 1; k <= 20; k++) {
-        turnArr.push(k);
-      }
-
-      var tuNumber = this.data.stageList[0].tags.length
-      // 更新data中的数组
-      this.setData({
-        eventType: '联赛',
-        turnNumber: turnArr,
-        tuNumber: tuNumber
-      });
-    }
+    });
   },
 
   // 显示赛事名称输入弹窗
@@ -245,21 +218,30 @@ Page({
 
   // 点击确认修改按钮，弹出确认修改模态框
   showConfirmModal() {
-    var that = this
-    wx.showModal({
-      title: '确认修改',
-      content: '确定要进行修改吗？',
-      confirmText: '确认',
-      cancelText: '取消',
-      success(res) {
-        if (res.confirm) {
-          that.confirmEdit() // 点击确认时的回调函数
-        } else if (res.cancel) {
-          () => {} // 点击取消时的回调函数，这里不做任何操作
-        }
-      }
-    });
+    this.showModal(
+      '确认修改',
+      '确定要进行修改吗？',
+      '确认',
+      'black',
+      '取消',
+      this.confirmEdit, // 点击确认时的回调函数
+      () => {} // 点击取消时的回调函数，这里不做任何操作
+    );
   },
+
+  // 点击取消比赛按钮，弹出确认取消模态框
+  showCancelModal() {
+    this.showModal(
+      '确认删除赛事',
+      '确定要删除这项赛事吗？',
+      '确认删除',
+      '#FF0000',
+      '我再想想',
+      this.deleteEvent, // 点击确认取消时的回调函数
+      () => {} // 点击我再想想时的回调函数，这里不做任何操作
+    );
+  },
+
 
   // 处理提交信息修改
   confirmEdit() {
@@ -304,6 +286,55 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '修改失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    });
+  },
+
+  deleteEvent() {
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/event/delete?eventId=' + that.data.eventId + '&userId=' + userId,
+      method: 'DELETE',
+      success(res) {
+        console.log("delete team->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '删除失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+          return
+        }
+        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 2000);
+          }
+        });
+      },
+      fail(err) {
+        console.log('请求失败', err);
+        // 可以显示失败的提示信息，或者做一些错误处理
+      },
+      complete() {
+        // 请求失败的处理逻辑
+        console.error('赛事删除失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '删除失败，请重试',
           icon: 'none',
           duration: 2000
         });

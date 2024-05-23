@@ -42,27 +42,33 @@
     <view class="block-space">
       <picker class="eventType-container" mode="selector" range="{{eventTypeList}}" bindchange="changeEventType">
         <text style="margin-left: 3%;">赛事类型：</text>
-        <text>{{eventType}}</text>
+        <text wx:if="{{eventType === ''}}" class="prompt">{{'点击选择赛事类型'}}</text>
+        <text wx:else="">{{eventType}}</text>
       </picker>
+      <text class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</text>
     </view>
 
     <!-- 赛事阶段 -->
     <view class="block-space">
       <view class="stage-container">
         <text style="margin-left: 3%;">赛事阶段</text>
+        <text wx:if="{{eventType === ''}}" class="prompt">请先选择赛事类型</text>
         <view wx:for="{{stageList}}" wx:key="name">
           <view class="addStage-Tag">{{item.stageName}}</view>
           <picker wx:if="{{item.stageName == '小组赛'}}" class="select-tag" mode="selector" range="{{groupNumber}}" bindchange="groupNumberChange">
             <text>小组总数：</text>
-            <text>{{gNumber}}</text>
+            <text wx:if="{{gNumber === 0}}" class="prompt">{{'点击选择小组总数'}}</text>
+            <text wx:else="">{{gNumber}}</text>
           </picker>
           <picker wx:if="{{item.stageName == '淘汰赛'}}" class="select-tag" mode="selector" range="{{teamNumber}}" bindchange="teamNumberChange">
             <text>出线队伍数：</text>
-            <text>{{tNumber}}</text>
+            <text wx:if="{{tNumber === 0}}" class="prompt">{{'点击选择出线队伍总数'}}</text>
+            <text wx:else="">{{tNumber}}</text>
           </picker>
           <picker wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector" range="{{turnNumber}}" bindchange="turnNumberChange">
             <text>联赛总轮数：</text>
-            <text>{{tuNumber}}</text>
+            <text wx:if="{{tuNumber === 0}}" class="prompt">{{'点击选择联赛总轮数'}}</text>
+            <text wx:else="">{{tuNumber}}</text>
           </picker>
         </view>
       </view>

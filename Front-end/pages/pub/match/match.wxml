@@ -91,8 +91,8 @@
             <view class="comment">{{commentItem.content}}</view>
             <!-- 添加展开按钮 -->
             <view class="expand-conatainer">
-              <view class="expand" wx:if="{{!expandList[commentIndex].expanded}}" bindtap="toggleReply" data-id="{{commentIndex}}">展开回复</view>
-              <view class="expand" wx:if="{{expandList[commentIndex].expanded}}" bindtap="toggleReply" data-id="{{commentIndex}}">收起回复</view>
+              <view class="expand" wx:if="{{!expandList[commentIndex].expanded}}" bindtap="expandReply" data-id="{{commentIndex}}">展开回复</view>
+              <view class="expand" wx:if="{{expandList[commentIndex].expanded}}" bindtap="dropReply" data-id="{{commentIndex}}">收起回复</view>
               <view class="deleteComment" wx:if="{{commentItem.userId == userId}}" bindtap="deleteComment" data-id="{{commentItem.commentId}}">删除评论</view>
             </view>
             

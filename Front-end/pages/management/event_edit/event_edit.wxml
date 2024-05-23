@@ -93,6 +93,7 @@
   <!-- 提交按钮 -->
   <view class="btn-container">
     <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
+    <button class="delete-btn" bindtap="showCancelModal">删除赛事</button>
   </view>
 
 </view>

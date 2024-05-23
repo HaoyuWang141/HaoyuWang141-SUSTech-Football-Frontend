@@ -48,7 +48,12 @@
           <view class="coach-container">
             <view class="text">教练</view>
             <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
-            <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach"></player-card-small>
+            <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach" data-id="{{index}}">
+            <view wx:if="{{isClickCoachList[index].isClicked}}">
+              <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckCoachModal" data-id="{{item.coachId}}"></image>
+              <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeleteCoachModal" data-id="{{item.coachId}}"></image>
+            </view>
+            </player-card-small>
           </view>
         </view>
       </view>
@@ -58,7 +63,12 @@
           <view class="text">队员</view>
           <scroll-view scroll-y enable-flex>
             <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="gotoInvitePlayer" data-id="{{teamId}}"></player-card-small>
-            <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer"></player-card-small>
+            <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer" data-id="{{index}}">
+            <view wx:if="{{isClickPlayerList[index].isClicked}}">
+              <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckPlayerModal" data-id="{{item.playerId}}"></image>
+              <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
+            </view>
+            </player-card-small>
           </scroll-view>
         </view>
       </view>
@@ -68,5 +78,6 @@
     <view class="btn-container">
       <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
     </view>
+
   </view>
 </view>

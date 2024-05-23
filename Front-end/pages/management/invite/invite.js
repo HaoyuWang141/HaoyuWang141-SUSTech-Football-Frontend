@@ -2,7 +2,9 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-
+const {
+  filter
+} = require("../../../utils/searchFilter")
 Page({
 
   /**
@@ -16,6 +18,7 @@ Page({
     blockTitle: '', // block-title 的文本内容
     blockMore: '', // block-more 的文本内容
     allList: [],
+    searchText: '',
   },
 
   /**
@@ -32,7 +35,7 @@ Page({
       case 'player':
         this.setData({
           blockTitle: '球员列表',
-          blockMore: '点击邀请球员',
+          blockMore: '搜索球员',
         });
         break;
       case 'coach':
@@ -173,32 +176,100 @@ Page({
       default:
         url = URL;
     }
-    // 显示加载提示框，提示用户正在加载
+    if(this.data.type !== 'player') {
+      // 显示加载提示框，提示用户正在加载
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      });
+      wx.request({
+        url: url,
+        success(res) {
+          console.log(that.data.type + '->')
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            return
+          }
+          that.setData({
+            allList: res.data,
+          })
+        },
+        fail(err) {
+          console.log("请求失败，错误码为：" + err.statusCode + "；错误信息为：" + err.message)
+        },
+        complete() {
+          // 无论请求成功还是失败都会执行
+          wx.hideLoading(); // 关闭加载提示框
+        }
+      })
+    }
+  },
+
+  fetchSearchPlayer() {
     wx.showLoading({
       title: '加载中',
       mask: true
     });
-    wx.request({
-      url: url,
-      success(res) {
-        console.log(that.data.type + '->')
-        console.log(res.data)
-        if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        that.setData({
-          allList: res.data,
-        })
-      },
-      fail(err) {
-        console.log("请求失败，错误码为：" + err.statusCode + "；错误信息为：" + err.message)
-      },
-      complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
-      }
+    this.setData({
+      allList: [],
     })
+    if(this.data.searchText === ''){
+      wx.hideLoading(); // 关闭加载提示框
+      wx.showToast({
+        title: '输入为空，请重试',
+        icon: 'none',
+        duration: 2000
+      });
+    } else {
+      let that = this
+      wx.request({
+        url: URL + '/player/getAll',
+        success(res) {
+          console.log("invite page: fetch verified player ->")
+          if (res.statusCode != 200) {
+            console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            return
+          }
+          console.log(res.data)
+          let allList = res.data ?? []
+          let filterAllList = []
+          for (let player of allList) {
+            let patterns = [(player.name ? player.name : '')]
+            if (filter(that.data.searchText, patterns)) {
+              filterAllList.push(player)
+            }
+          }
+          that.setData({
+            allList: filterAllList,
+          })
+        },
+        fail: function (err) {
+          console.error('请求失败：', err.statusCode, err.errMsg);
+        },
+        complete(){
+          wx.hideLoading(); // 关闭加载提示框
+          if(that.data.allList.length == 0){
+            wx.showToast({
+              title: '未找到该球员,请重新输入',
+              icon: 'none',
+              duration: 2000
+            });
+          }
+        }
+      })
+    }
+  },
+
+  bindInput: function (e) {
+    this.setData({
+      searchText: e.detail.value,
+    });
+  },
+
+  search: function () {
+    console.log('搜索内容:', this.data.searchText);
+    appInstance.addToRequestQueue(this.fetchSearchPlayer)
   },
 
   selectHomeTeam(e){

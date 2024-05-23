@@ -205,10 +205,12 @@ Page({
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
       complete() {
-        for(var i = 0; i < that.data.commentList.length; i++) {
-          that.data.expandList.push({
-            expanded: false
-          })
+        if(that.data.expandList.length < that.data.commentList.length){
+          for(var i = 0; i < that.data.commentList.length; i++) {
+            that.data.expandList.push({
+              expanded: false
+            })
+          }
         }
         that.fetchCommentLikes(userId)
       }
@@ -241,11 +243,6 @@ Page({
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
       complete() {
-        for(var i = 0; i < that.data.commentList.length; i++) {
-          that.data.expandList.push({
-            expanded: false
-          })
-        }
       }
     })
   },
@@ -417,7 +414,19 @@ Page({
 
   },
 
-  toggleReply(e) {
+  expandReply(e) {
+    const index = e.currentTarget.dataset.id;
+    const expandList = this.data.expandList;
+    for(var i = 0; i < this.data.commentList.length; i++) {
+      expandList[i].expanded = false
+    }
+    expandList[index].expanded = !expandList[index].expanded;
+    this.setData({
+      expandList: expandList
+    });
+  },
+
+  dropReply(e) {
     const index = e.currentTarget.dataset.id;
     const expandList = this.data.expandList;
     expandList[index].expanded = !expandList[index].expanded;

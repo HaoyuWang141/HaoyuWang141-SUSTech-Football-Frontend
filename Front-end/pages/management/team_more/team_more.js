@@ -117,7 +117,7 @@ Page({
       cancelText: '我再想想',
       success(res) {
         if (res.confirm) {
-          that.deleteTeam // 点击确认删除时的回调函数
+          that.deleteTeam() // 点击确认删除时的回调函数
         } else if (res.cancel) {
           () => {} // 点击我再想想时的回调函数，这里不做任何操作
         }
@@ -126,31 +126,48 @@ Page({
   },
 
   deleteTeam() {
-    // 显示加载提示框，提示用户正在加载
-    wx.showLoading({
-      title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
-    });
     var that = this;
     // 模拟网络请求
     wx.request({
-      url: URL + '/team/delete?id=' + that.data.deleteTeamId,
+      url: URL + '/team/delete?teamId=' + that.data.deleteTeamId + '&userId=' + userId,
       method: 'DELETE',
       success(res) {
         console.log("delete team->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '删除失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
           return
         }
+        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              that.fetchData();
+            }, 2000);
+          }
+        });
       },
       fail(err) {
         console.log('请求失败', err);
         // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        // 请求失败的处理逻辑
+        console.error('球队删除失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '删除失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
       }
     });
   },
