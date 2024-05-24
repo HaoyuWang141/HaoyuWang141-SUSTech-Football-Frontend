@@ -162,21 +162,6 @@ Page({
 
     //Player相关
     that.fetchPlayerId(userId)
-
-    //教练身份
-    that.fetchCoachId(userId)
-
-    //裁判身份
-    that.fetchRefereeId(userId)
-
-    //球队管理员身份
-    that.fetchManageTeamList(userId)
-
-    //比赛管理员身份
-    that.fetchManageMatchList(userId)
-
-    //赛事管理员身份
-    that.fetchManageEventList(userId)
   },
 
   // ------------------

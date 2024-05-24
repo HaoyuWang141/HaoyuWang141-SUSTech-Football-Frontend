@@ -1,0 +1,71 @@
+<!--pages/profile_player/playerNotice/playerNoticePage.wxml-->
+<!-- 球员身份：比赛通知 -->
+<scroll-view class="scrollarea" scroll-y type="list">
+<view class="block-container" wx:if="{{isPlayer}}">
+  <view class="block-top" bindtap="togglePlayerMatchInform">
+    <view class="block-title">
+      <text>球员身份：比赛通知</text>
+      <view class="red-dot" wx:if="{{showPlayerMatchDot}}"></view>
+    </view>
+    <view class="block-more">
+      <image class="icon" src="/assets/down333.png" mode="" />
+    </view>
+  </view>
+  <view class="block-main">
+    <view>您两周内的比赛</view>
+    <scroll-view scroll-y="true" style="height: {{showPlayerMatchInform ? '200px' : '0'}};" class="notification-box">
+      <view class="invitation-item" wx:if="{{playerMatchInform.length==0}}">
+        <text class="invitation-text">您近两星期内没有比赛</text>
+      </view>
+      <view class="invitation-item" wx:for="{{playerMatchInform}}" wx:key="index">
+        <text class="invitation-text">{{item}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 球员身份：球队邀请通知 -->
+<view class="block-container" wx:if="{{isPlayer}}">
+  <view class="block-top" bindtap="togglePlayerInvitationInform">
+    <view class="block-title">
+      <text>球员身份：球队邀请通知</text>
+      <view class="red-dot" wx:if="{{showPlayerInvitationDot}}"></view>
+    </view>
+    <view class="block-more">
+      <image class="icon" src="/assets/down333.png" mode="" />
+    </view>
+  </view>
+  <view class="block-main">
+    <view>点击邀请可选择接受或拒绝</view>
+    <scroll-view scroll-y="true" style="height: {{showPlayerInvitationInform ? '200px' : '0'}};" class="notification-box">
+      <view class="invitation-item" wx:if="{{playerInvitationInform.length==0}}">
+        <text class="invitation-text">您还没有收到任何球队发出的邀请，可以尝试申请加入球队</text>
+      </view>
+      <view class="invitation-item" wx:for="{{playerInvitationInform}}" wx:key="index" bind:tap="showPlayerTeamInvitationModal" data-id="{{item.id}}">
+        <text class="invitation-text">{{item.content}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 球员身份：球队申请通知 -->
+<view class="block-container" wx:if="{{isPlayer}}">
+  <view class="block-top" bindtap="toggleApplicationInform">
+    <view class="block-title">
+      <text> 球员身份：球队申请通知</text>
+      <view class="red-dot" wx:if="{{showApplicationDot}}"></view>
+    </view>
+    <view class="block-more">
+      <image class="icon" src="/assets/down333.png" mode="" />
+    </view>
+  </view>
+  <view class="block-main">
+    <view>球队管理员回复后，您将在此看到通知</view>
+    <scroll-view scroll-y="true" style="height: {{showApplicationInform ? '200px' : '0'}};" class="notification-box">
+      <view class="invitation-item" wx:for="{{applicationInform}}" wx:key="index">
+        <text class="invitation-text">{{item}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+</scroll-view>

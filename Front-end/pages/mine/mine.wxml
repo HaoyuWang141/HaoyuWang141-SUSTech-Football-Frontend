@@ -263,7 +263,7 @@
     <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationMatchInform">
         <view class="block-title">
-          <text> 球队管理员身份：球队比赛邀请通知</text>
+          <text> 球队管理员身份：比赛邀请通知</text>
           <view class="red-dot" wx:if="{{showManageTeamInvitationMatchDot}}"></view>
         </view>
         <view class="block-more">
@@ -283,7 +283,7 @@
     <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationEventInform">
         <view class="block-title">
-          <text> 球队管理员身份：球队赛事邀请通知</text>
+          <text> 球队管理员身份：赛事邀请通知</text>
           <view class="red-dot" wx:if="{{showManageTeamInvitationEventDot}}"></view>
         </view>
         <view class="block-more">
@@ -303,7 +303,7 @@
     <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationPlayerInform">
         <view class="block-title">
-          <text> 球队管理者身份：球员邀请通知</text>
+          <text> 球队管理员身份：球员邀请通知</text>
           <view class="red-dot" wx:if="{{showManageTeamInvitationPlayerDot}}"></view>
         </view>
         <view class="block-more">
