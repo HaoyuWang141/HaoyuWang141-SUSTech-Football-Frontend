@@ -2,6 +2,7 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
+const ANONYMITY = appInstance.globalData.ANONYMITY
 const {
   formatTime
 } = require("../../utils/timeFormatter")
@@ -77,14 +78,12 @@ Page({
   },
 
   fetchData: function (userId) {
-    // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
 
     var that = this;
-    // 模拟网络请求
     wx.request({
       url: URL + '/user/getUserManageTeam?userId=' + userId,
       success(res) {
@@ -95,18 +94,15 @@ Page({
           return
         }
        
-        // 基本数据
         that.setData({
           teams: res.data,
         });
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        wx.hideLoading();
       }
     });
 
@@ -124,6 +120,12 @@ Page({
           let date = new Date(match.time)
           match.strTime = formatTime(date)
           match.hasBegun = match.status == 'PENDING' ? false : true
+          match.awayTeamId = match.awayTeamId ?? 0
+          match.awayTeam = match.awayTeam ?? {
+            teamId: 0,
+            name: "客队",
+            logoUrl: ANONYMITY,
+          }
         }
         that.setData({
           matches: matchList,

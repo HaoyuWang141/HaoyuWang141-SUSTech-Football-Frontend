@@ -2,6 +2,7 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
+const ANONYMITY = appInstance.globalData.ANONYMITY
 const {
   formatTime
 } = require("../../../utils/timeFormatter")
@@ -107,6 +108,12 @@ Page({
           let date = new Date(match.time)
           match.strTime = formatTime(date)
           match.hasBegun = match.status == 'PENDING' ? false : true
+          match.awayTeamId = match.awayTeamId ?? 0
+          match.awayTeam = match.awayTeam ?? {
+            teamId: 0,
+            name: "客队",
+            logoUrl: ANONYMITY,
+          }
         }
         that.setData({
           matchList: res.data,
@@ -124,7 +131,7 @@ Page({
   },
 
   // 跳转到编辑比赛页面
-  gotoEditMatch: function(e) {
+  gotoEditMatch: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/match_edit/match_edit?id=' + dataset.id,

@@ -1,63 +1,69 @@
 <!--pages/management/match_new/match_new.wxml-->
-<view class="block-container">
-  <view class="block-top">
-    <text class="block-title">友谊赛创建</text>
-  </view>
-  <view class="block-main">
-    <view>请填写必要的比赛信息，并点击确认创建按钮。</view>
-  </view>
-</view>
-
-<view class="block-container">
-  <view class="block-top">
-    <text class="block-title">日期及时间</text>
-  </view>
-  <view class="block-main">
-    <view>
-      <!-- 比赛日期 -->
-      <picker class="changeInfo-container" mode="date" value="{{date}}" start="2024-01-01" bindchange="bindDateChange">
-        <text>比赛日期：</text>
-        <text>{{date}}</text>
-      </picker>
-
-      <!-- 比赛时间 -->
-      <picker class="changeInfo-container" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
-        <text>比赛时间：</text>
-        <text>{{time}}</text>
-      </picker>
+<view class="container">
+  <view style="width: 95%;">
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">友谊赛创建</text>
+      </view>
+      <view class="block-main">
+        <view>请填写必要的比赛信息，并点击确认创建按钮。</view>
+        <view>客队将在其球队管理员同意比赛后，才会加入比赛。</view>
+      </view>
     </view>
-  </view>
-</view>
 
-<view class="block-container">
-  <view class="block-top">
-    <text class="block-title">选择主队</text>
-    <text class="block-more button-custom" bind:tap="inviteHomeTeam">选择</text>
-  </view>
-  <view class="block-main">
-    <view>主队必须为您管理的球队</view>
-    <view style="margin-top: 20rpx;">您已选择球队：</view>
-    <view style="width: 100%; display: flex; align-items: center; justify-content: center;">
-      <team-card-small name="{{homeTeam.name}}" img="{{homeTeam.logoUrl}}"></team-card-small>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">日期及时间</text>
+      </view>
+      <view class="block-main">
+        <view>
+          <!-- 比赛日期 -->
+          <picker class="changeInfo-container" mode="date" value="{{date}}" start="2024-01-01" bindchange="bindDateChange">
+            <text>比赛日期：</text>
+            <text>{{date}}</text>
+          </picker>
+
+          <!-- 比赛时间 -->
+          <picker class="changeInfo-container" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+            <text>比赛时间：</text>
+            <text>{{time}}</text>
+          </picker>
+        </view>
+      </view>
     </view>
-  </view>
-</view>
 
-<view class="block-container">
-  <view class="block-top">
-    <text class="block-title">邀请客队</text>
-    <text class="block-more button-custom">邀请</text>
-  </view>
-  <view class="block-main">
-    <view>请点击“邀请”按钮，并输入邀请球队id，您可以询问对手球队的管理员以获取id。</view>
-    <view style="margin-top: 20rpx;">您已邀请球队：</view>
-    <view style="width: 100%; display: flex; align-items: center; justify-content: center;">
-      <team-card-small name="{{awayTeam.name}}" img="{{awayTeam.logoUrl}}"></team-card-small>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">选择主队</text>
+        <text class="block-more button-custom" bind:tap="inviteHomeTeam">选择</text>
+      </view>
+      <view class="block-main">
+        <view>主队必须为您管理的球队</view>
+        <view style="margin-top: 20rpx;">您已选择球队：</view>
+        <view style="width: 100%; display: flex; align-items: center; justify-content: center;">
+          <team-card-small name="{{homeTeam.name}}" img="{{homeTeam.logoUrl}}"></team-card-small>
+        </view>
+      </view>
     </view>
-  </view>
-</view>
 
-<!-- 提交按钮 -->
-<view class="btn-container">
-  <button class="confirm-btn" bindtap="showCreateModal">确认创建</button>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">邀请客队</text>
+        <text class="block-more button-custom" bind:tap="openinviteAwayTeamModal">邀请</text>
+      </view>
+      <view class="block-main">
+        <view>请点击“邀请”按钮，并输入邀请球队id，您可以询问对手球队的管理员以获取id。</view>
+        <view style="margin-top: 20rpx;">您已邀请球队：</view>
+        <view style="width: 100%; display: flex; align-items: center; justify-content: center;">
+          <team-card-small name="{{awayTeam.name}}" img="{{awayTeam.logoUrl}}"></team-card-small>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="btn-container" style="margin-bottom: 20rpx;">
+      <button class="confirm-btn" bindtap="showCreateModal">确认创建</button>
+    </view>
+    
+  </view>
 </view>

@@ -2,6 +2,7 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
+const ANONYMITY = appInstance.globalData.ANONYMITY
 const {
   formatTime,
   splitDateTime
@@ -13,26 +14,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dateTime: String,
     date: '请选择日期',
     time: '请选择时间',
-    homeTeam: {name:"未指定", logoUrl:"/assets/newplayer.png"},
-    awayTeam: {name:"未邀请", logoUrl:"/assets/newplayer.png"},
-    icon1: '/assets/newplayer.png',
-    icon2: '/assets/newplayer.png',
-    hasBegun: false,
-    modalHidden: true, // 控制模态框显示隐藏
-    array: [
-      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    ],
+    homeTeam: {
+      teamId: 0,
+      name: "未指定",
+      logoUrl: ANONYMITY,
+    },
+    awayTeam: {
+      teamId: 0,
+      name: "未邀请",
+      logoUrl: ANONYMITY,
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+
   },
 
   /**
@@ -102,16 +102,98 @@ Page({
 
   // 选定主队
   // 处理邀请队伍
-  inviteHomeTeam: function(e) {
+  inviteHomeTeam: function (e) {
     wx.navigateTo({
       url: '/pages/management/match_new/set_homeTeam/set_homeTeam',
     })
   },
 
   // 邀请客队
+  openinviteAwayTeamModal() {
+    const that = this
+    wx.showModal({
+      title: '邀请客队',
+      editable: true,
+      placeholderText: '请输入球队id',
+      complete: (res) => {
+        if (res.confirm) {
+          let teamId = res.content
+          that.fetchAwayTeam(teamId)
+        }
+      }
+    })
+  },
+
+  fetchAwayTeam(teamId) {
+    if (isNaN(teamId) || teamId.trim() === '') {
+      wx.showToast({
+        title: '请输入正确id',
+        icon: 'error',
+      })
+      return
+    }
+    teamId = Number(teamId)
+
+    wx.showLoading({
+      title: '正在查询',
+      mask: true,
+    })
+
+    const that = this
+    wx.request({
+      url: `${URL}/team/get?id=${teamId}`,
+      success(res) {
+        wx.hideLoading()
+        console.log("match_new page: fetchAwayTeam ->")
+        if (res.statusCode != 200) {
+          console.error(res)
+          wx.showToast({
+            title: "查询失败",
+            icon: 'error'
+          })
+          return
+        }
+        console.log(res.data)
+
+        wx.showToast({
+          title: '查询成功',
+          icon: 'success'
+        })
+
+        that.setData({
+          awayTeam: {
+            teamId: res.data.teamId,
+            name: res.data.name,
+            logoUrl: res.data.logoUrl
+          }
+        })
+      },
+      fail(err) {
+        wx.hideLoading()
+        console.error(err)
+        wx.showToast({
+          title: '查询失败',
+          icon: 'error'
+        })
+      }
+    })
+  },
 
   // 点击确认创建按钮，弹出确认修改模态框
   showCreateModal() {
+    let date = this.data.date
+    let time = this.data.time
+    let homeTeamId = Number(this.data.homeTeam.teamId)
+    let awayTeamId = Number(this.data.awayTeam.teamId)
+
+    if (!this.isValidDate(date) || !this.isValidTime(time) || homeTeamId <= 0 || homeTeamId == NaN || awayTeamId <= 0 || awayTeamId == NaN) {
+      wx.showToast({
+        title: "请填写所有数据",
+        icon: "error",
+      });
+      return
+    }
+    
     var that = this
     wx.showModal({
       title: '确认创建',
@@ -120,45 +202,79 @@ Page({
       cancelText: '取消',
       success(res) {
         if (res.confirm) {
-          that.confirmCreate() // 点击确认时的回调函数
+          that.confirmCreate(date, time, homeTeamId, awayTeamId)
         } else if (res.cancel) {
-          () => {} // 点击取消时的回调函数，这里不做任何操作
+          () => {}
         }
       }
     });
   },
 
   // 处理提交信息修改
-  confirmCreate: function () {
-    var that = this;
-    let sqlTimestamp = this.data.date + 'T' + this.data.time + ":00.000+00:00"; // 转换为 ISO 
-    that.setData({
-      dateTime: sqlTimestamp,
-    });
-    // 构造要发送给后端的数据
-    const dataToUpdate = {
-      time: this.data.dateTime
-    };
-    // 发送请求到后端接口
-    var message;
+  confirmCreate(date, time, homeTeamId, awayTeamId) {
+    wx.showLoading({
+      title: '正在创建',
+      mask: true,
+    })
+
+    let that = this
+    console.log(homeTeamId)
     wx.request({
-      url: URL + '/match/create?ownerId=' + userId, // 后端接口地址
-      method: 'POST', // 请求方法
-      data: dataToUpdate, // 要发送的数据
+      url: URL + '/match/create?ownerId=' + userId,
+      method: 'POST',
+      data: {
+        homeTeamId: homeTeamId,
+        time: date + 'T' + time,
+      },
       success: res => {
-        // 请求成功的处理逻辑
-        console.log("dataToUpdate->");
-        console.log(dataToUpdate);
-        console.log('比赛信息更新成功', res.data);
-        // 可以根据后端返回的数据更新页面状态或进行其他操作
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
-        message = successMsg
-        console.log(successMsg)
+        wx.hideLoading()
+        console.log("management/match_new: confirmCreate ->")
+        if (res.statusCode != 200) {
+          console.error(res)
+          wx.showToast({
+            title: "创建失败",
+            icon: 'error'
+          })
+          return
+        }
+        console.log(`created match id: ${res.data}`)
+        let matchId = res.data
+        that.inviteAwayTeam(matchId, awayTeamId)
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error(err);
         wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
+          title: "创建失败",
+          icon: "error",
+        });
+      },
+    });
+  },
+
+  inviteAwayTeam(matchId, awayTeamId) {
+    wx.showLoading({
+      title: '正在创建',
+      mask: true,
+    })
+    wx.request({
+      url: URL + `/match/team/invite?matchId=${matchId}&teamId=${awayTeamId}&isHomeTeam=false`,
+      method: 'POST',
+      success: res => {
+        wx.hideLoading()
+        console.log("management/match_new: inviteAwayTeam ->")
+        if (res.statusCode != 200) {
+          console.error(res)
+          wx.showToast({
+            title: "创建失败",
+            icon: 'error'
+          })
+          return
+        }
+      
+        wx.showToast({
+          title: "创建成功",
+          icon: "success",
           success: function () {
             setTimeout(function () {
               wx.navigateBack({
@@ -169,17 +285,27 @@ Page({
         });
       },
       fail: err => {
-        // 请求失败的处理逻辑
-        console.error('比赛创建失败', err);
-        // 可以显示失败的提示信息或进行其他操作
-        // 显示失败信息
+        wx.hideLoading()
+        console.error(err);
         wx.showToast({
-          title: '创建失败，请重试',
-          icon: 'none',
-          duration: 2000
+          title: "创建失败",
+          icon: "error",
         });
       },
     });
   },
 
+  // 判断日期是否符合 yyyy-mm-dd 格式
+  isValidDate(dateStr) {
+    // 正则表达式，匹配格式为 yyyy-mm-dd
+    var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(dateStr);
+  },
+
+  // 判断时间是否符合 hh:mm 格式
+  isValidTime(timeStr) {
+    // 正则表达式，匹配格式为 hh:mm
+    var timeRegex = /^\d{2}:\d{2}$/;
+    return timeRegex.test(timeStr);
+  },
 })

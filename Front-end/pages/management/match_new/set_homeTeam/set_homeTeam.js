@@ -108,7 +108,7 @@ Page({
     let homeTeam = {}
     for (let team of this.data.teamList) {
       if (team.teamId == homeTeamId) {
-        homeTeam.id = team.id
+        homeTeam.teamId = team.teamId
         homeTeam.name = team.name
         homeTeam.logoUrl = team.logoUrl
         break
