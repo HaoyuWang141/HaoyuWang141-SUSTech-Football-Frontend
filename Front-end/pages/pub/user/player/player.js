@@ -142,6 +142,9 @@ Page({
         that.setData({
           player: player,
         })
+        app.addToRequestQueue(that.fetchPlayerMatches)
+        app.addToRequestQueue(that.fetchPlayerTeams)
+        app.addToRequestQueue(that.fetchPlayerEvents)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);

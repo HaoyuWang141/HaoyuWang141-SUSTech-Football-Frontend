@@ -122,6 +122,8 @@ Page({
         that.setData({
           referee: res.data,
         })
+        app.addToRequestQueue(that.fetchRefereeMatches)
+        app.addToRequestQueue(that.fetchRefereeEvents)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);

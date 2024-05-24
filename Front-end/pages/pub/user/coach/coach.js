@@ -123,6 +123,9 @@ Page({
         that.setData({
           coach: res.data,
         })
+        app.addToRequestQueue(that.fetchCoachMatches)
+        app.addToRequestQueue(that.fetchCoachTeams)
+        app.addToRequestQueue(that.fetchCoachEvents)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
