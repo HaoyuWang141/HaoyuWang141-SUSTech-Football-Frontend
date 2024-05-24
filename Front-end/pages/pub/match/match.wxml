@@ -37,15 +37,15 @@
         <text class="block-more"></text>
       </view>
       <view class="block-main">
-        {{event.eventName}}
+        {{matchEvent.eventName}}
       </view>
-      <block wx:if="{{event.eventName != '友谊赛'}}">
+      <block wx:if="{{matchEvent.stage != null}}">
         <view class="block-top" style="margin-top: 20rpx;">
           <text class="block-title">比赛阶段</text>
           <text class="block-more"></text>
         </view>
         <view class="block-main">
-          {{event.stage}} - {{event.tag}}
+          {{matchEvent.stage}} - {{matchEvent.tag}}
         </view>
       </block>
     </view>

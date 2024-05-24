@@ -63,15 +63,26 @@
   </view>
 </view>
 
-<!-- 比赛状态及进球 -->
+<!-- 比赛状态 -->
 <view class="block-container">
   <view class="block-top">
-    <text class="block-title">比赛状态及进球</text>
+    <text class="block-title">比赛状态</text>
     <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
   </view>
   <view class="block-main">
-    <view style="margin-bottom: 20rpx;">在此设置比赛状态（未开始、正在进行、已结束）及更新比赛分数及点球分数</view>
+    <view style="margin-bottom: 20rpx;">在此设置比赛状态（未开始、正在进行、已结束），三个状态只能依次向后移动不可返回，更新请慎重。</view>
     <view style="margin-bottom: 20rpx;">当前比赛状态为：{{match.strStatus}}</view>
+  </view>
+</view>
+
+<!-- 比赛进球 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">比赛进球</text>
+    <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
+  </view>
+  <view class="block-main">
+    <view style="margin-bottom: 20rpx;">在此更新比赛分数及点球分数</view>
     <view>主队：{{match.homeTeam.name}}</view>
     <view>进球数：{{match.homeTeam.score}}</view>
     <view>点球进球数：{{match.homeTeam.penalty}}</view>
