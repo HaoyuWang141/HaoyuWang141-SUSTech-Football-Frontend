@@ -223,28 +223,30 @@ Page({
     for(let i = 0; i < this.data.commentList.length; i++) {
       commentIds.push(this.data.commentList[i].commentId)
     }
-    wx.request({
-      url: URL + "/comment/match/like/getByIdList?userId=" + id,
-      method: 'POST',
-      data: commentIds,
-      success: async function (res) {
-        console.log("likes->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
+    if(commentIds.length !== 0) {
+      wx.request({
+        url: URL + "/comment/match/like/getByIdList?userId=" + id,
+        method: 'POST',
+        data: commentIds,
+        success: async function (res) {
+          console.log("likes->")
+          if (res.statusCode != 200) {
+            console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            return
+          }
+          console.log(res.data)
 
-        that.setData({
-          likesList: res.data
-        })
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-      complete() {
-      }
-    })
+          that.setData({
+            likesList: res.data
+          })
+        },
+        fail(err) {
+          console.error('请求失败：', err.statusCode, err.errMsg);
+        },
+        complete() {
+        }
+      })
+    }
   },
 
   // 点击不同tab时调用
@@ -422,6 +424,7 @@ Page({
     }
     expandList[index].expanded = !expandList[index].expanded;
     this.setData({
+      replyText: '',
       expandList: expandList
     });
   },
