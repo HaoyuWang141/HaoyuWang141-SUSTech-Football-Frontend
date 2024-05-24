@@ -1,364 +1,103 @@
-const app = getApp()
-const URL = app.globalData.URL
-const {
-  formatTime
-} = require("../../utils/timeFormatter")
+<view class="block-container" wx:if="{{!playerId}}" style="margin-top: 10rpx;">
+  <view class="block-top">
+    <text class="block-title">您还未注册为球员！</text>
+  </view>
+  <view class="block-main">
+    <button bind:tap="gotoRegisterPage" style="background-color: #ed6c00; color: white;">注册</button>
+  </view>
+</view>
 
-Page({
+<view class="container1" wx:if="{{playerId}}">
+  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
+  <view class="container2">
+    <view class="container3">
+      <image class="avatar" src="{{player.photoUrl}}" mode="scaleToFill"></image>
+    </view>
+    <view class="container4">
+      <text class="name">{{player.name}}</text>
+      <text class="id">球员id：{{playerId}}</text>
+    </view>
+  </view>
+</view>
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    playerId: 0,
-    player: null,
-    matchList: [],
-    teamList: [],
-    eventList: [],
-    defaultValue: '暂无',
-  },
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">功能</text>
+  </view>
+  <view class="function-container">
+    <view bindtap="gotoProfileCoachPage" class="function-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">教练主页</text>
+    </view>
+    <view bindtap="gotoProfileRefereePage" class="function-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">裁判主页</text>
+    </view>
+    <view bindtap="openJoinTeamModal" class="function-button" wx:if="{{playerId}}">
+      <image src="/assets/statistic-team.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">加入球队</text>
+    </view>
+    <view bindtap="gotoPlayerNoticePage" class="function-button" wx:if="{{playerId}}">
+      <image src="/assets/notice.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">球员通知</text>
+    </view>
+  </view>
+</view>
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
+<view class="block-container" wx:if="{{playerId}}">
+  <view class="block-top">
+    <text class="block-title">球员信息</text>
+    <text class="block-more" bind:tap="edit_information">编辑</text>
+  </view>
+  <view class="block-main">
+    <view class="info-section">
+      <text>学工号：{{player.identity || defaultValue}}</text>
+      <text>出生日期：{{player.strBirthDate}}</text>
+      <text>身高 (cm)：{{player.height || defaultValue}}</text>
+      <text>体重 (kg)：{{player.weight || defaultValue}}</text>
+      <text>场上位置：{{player.position || defaultValue}}</text>
+      <text>书院：{{player.shuYuan || defaultValue}}</text>
+      <text>院系：{{player.college || defaultValue}}</text>
+      <text>入学年份：{{player.admissionYear || defaultValue}}</text>
+    </view>
+  </view>
+</view>
 
-  },
+<!-- 我的球队 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我的球队</text>
+    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}" wx:if="{{teamList.length!=0}}">查看更多</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{teamList.length==0}}">您还未加入任何球队。</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <team-card-small wx:for="{{teamList}}" wx:key="teamId" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.teamId}}"></team-card-small>
+    </scroll-view>
+  </view>
+</view>
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
+<!-- 我的赛程 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我的赛程</text>
+    <text class="block-more" bind:tap="gotoMatchesPage" data-list="{{matchList}}" wx:if="{{matchList.length!=0}}">查看更多</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{matchList.length==0}}">您目前没有比赛。</view>
+    <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+      <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+    </scroll-view>
+  </view>
+</view>
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-    app.addToRequestQueue(this.fetchPlayerId)
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-    app.addToRequestQueue(this.fetchPlayerId)
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
-
-  // 拉取数据
-  fetchPlayerId(userId) {
-    let that = this
-    wx.request({
-      url: URL + '/user/getPlayerId',
-      data: {
-        userId: userId,
-      },
-      success(res) {
-        console.log("profile player page: fetchPlayerId ->")
-        if (res.statusCode == 404) {
-          console.log("用户未注册")
-          wx.showToast({
-            title: '请先注册为球员',
-            icon: 'none',
-          })
-          return
-        }
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        let playerId = res.data
-        that.setData({
-          playerId: playerId,
-        })
-        that.fetchData(playerId)
-        that.fetchPlayerMatches(playerId)
-        that.fetchPlayerTeams(playerId)
-        that.fetchPlayerEvents(playerId)
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
-
-  fetchData(playerId) {
-    var that = this
-    wx.request({
-      url: URL + '/player/get',
-      data: {
-        id: playerId,
-      },
-      success(res) {
-        console.log("profile player page: fetchData ->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        let player = res.data
-        if (player.birthDate == '' || player.birthDate == null) {
-          player.strBirthDate = '暂无';
-        } else {
-          const date = new Date(player.birthDate);
-          const year = date.getFullYear();
-          const month = date.getMonth() + 1;
-          const day = date.getDate();
-          player.strBirthDate = `${year}-${month}-${day}`;
-        }
-        that.setData({
-          player: player,
-        })
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
-
-  fetchPlayerMatches(playerId) {
-    let that = this
-    wx.request({
-      url: URL + '/player/match/getAll',
-      data: {
-        playerId: playerId,
-      },
-      success(res) {
-        console.log("profile player page: fetchPlayerMatches ->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        let matchList = res.data ?? []
-        for (let match of matchList) {
-          let date = new Date(match.time)
-          match.strTime = formatTime(date)
-          match.hasBegun = match.status == 'PENDING' ? false : true
-        }
-        that.setData({
-          matchList,
-        })
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
-
-  fetchPlayerTeams(playerId) {
-    let that = this
-    wx.request({
-      url: URL + '/player/team/getAll',
-      data: {
-        playerId: playerId,
-      },
-      success(res) {
-        console.log("profile player page: fetchPlayerTeams ->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        let teamList = res.data ?? []
-        that.setData({
-          teamList: teamList,
-        })
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
-
-  fetchPlayerEvents(playerId) {
-    let that = this
-    wx.request({
-      url: URL + '/player/event/getAll',
-      data: {
-        playerId: playerId,
-      },
-      success(res) {
-        console.log("profile player page: fetchPlayerEvents ->")
-        if (res.statusCode != 200) {
-          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        console.log(res.data)
-        let eventList = res.data ?? []
-        that.setData({
-          eventList: eventList,
-        })
-      },
-      fail(err) {
-        console.error('请求失败：', err.statusCode, err.errMsg);
-      },
-    })
-  },
-
-  // 页面跳转
-  edit_information() {
-    let player = this.data.player
-    console.log(player)
-    const queryString = Object.keys(player).map(key => {
-      console.log(key + ": " + encodeURIComponent(player[key]))
-      return `${key}=${encodeURIComponent(player[key])}`
-    }).join('&');
-    console.log("queryString->")
-    console.log(queryString)
-    wx.navigateTo({
-      url: `/pages/profile_player/profile_player_edit/profile_player_edit?${queryString}`
-    })
-  },
-
-  gotoProfileCoachPage() {
-
-    wx.navigateTo({
-      url: '/pages/profile_player/profile_coach/profile_coach',
-    })
-  },
-
-  gotoProfileRefereePage() {
-    wx.navigateTo({
-      url: '/pages/profile_player/profile_referee/profile_referee',
-    })
-  },
-
-  gotoMatchesPage(e) {
-    let matchList = e.currentTarget.dataset.list ?? []
-    let matchIdList = matchList.map(match => match.matchId)
-    wx.navigateTo({
-      url: '/pages/pub/matches/matches?idList=' + matchIdList,
-    })
-  },
-
-  gotoMatchPage: function (e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/pub/match/match?id=' + dataset.id,
-    })
-  },
-
-  gotoTeamsPage(e) {
-    let teamList = e.currentTarget.dataset.list ?? []
-    let teamIdList = teamList.map(team => team.teamId)
-    wx.navigateTo({
-      url: '/pages/pub/teams/teams?idList=' + teamIdList,
-    })
-  },
-
-  gotoTeamPage: function (e) {
-    let id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: '/pages/pub/team/team?id=' + id,
-    })
-  },
-
-  gotoEventPage: function (e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/pub/event/event?id=' + dataset.id,
-    })
-  },
-
-  gotoRegisterPage() {
-    wx.navigateTo({
-      url: './profile_player_register/profile_player_register',
-    })
-  },
-
-  // 加入球队，可以输入id或名称
-  openJoinTeamModal() {
-    const that = this
-    wx.showModal({
-      title: '申请加入球队',
-      editable: true,
-      placeholderText: '请输入球队id',
-      complete: (res) => {
-        if (res.confirm) {
-          let teamId = res.content
-          that.applyToJoinTeam(teamId)
-        }
-      }
-    })
-  },
-
-  applyToJoinTeam(teamId) {
-    if (isNaN(teamId) || teamId.trim() === '') {
-      wx.showToast({
-        title: '输入的不是数字',
-        icon: 'error',
-      })
-      return
-    }
-    teamId = Number(teamId)
-    let playerId = this.data.playerId
-    console.log('playerId:' + playerId)
-    console.log(typeof(playerId))
-    console.log(`playerId: ${playerId}`)
-
-    wx.showLoading({
-      title: '正在发送申请',
-    })
-
-    wx.request({
-      url: `${URL}/player/team/applyToJoin?playerId=${playerId}&teamId=${teamId}`,
-      method: 'POST',
-      success(res) {
-        wx.hideLoading()
-        console.log("profile player page: applyToJoinTeam ->")
-        if (res.statusCode != 200) {
-          console.error(res)
-          wx.showToast({
-            title: res.data,
-            icon: 'error'
-          })
-          return
-        }
-        wx.showToast({
-          title: '已申请',
-          icon: 'success'
-        })
-      },
-      fail(err) {
-        wx.hideLoading()
-        console.error(err)
-        wx.showToast({
-          title: '申请失败',
-          icon: 'error'
-        })
-      }
-    })
-  },
-
-})
+<!-- 我的赛事 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">我的赛事</text>
+  </view>
+  <view class="block-main">
+    <view class="no-favorite" wx:if="{{eventList.length==0}}">您还参加任何赛事。</view>
+    <event-card-big wx:for="{{eventList}}" wx:key="eventId" eventId="{{item.id}}" icon="/assets/cup.svg" name="{{item.name}}" bind:tap="gotoEventPage" data-id="{{item.eventId}}"></event-card-big>
+  </view>
+</view>
