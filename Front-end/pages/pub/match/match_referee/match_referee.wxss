@@ -79,3 +79,37 @@
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+/* circle-component.wxss */
+.process-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 60rpx 0;
+}
+
+.stage-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.line {
+  width: 80rpx;
+  height: 10rpx;
+  margin: 0 40rpx;
+}
+
+.orange {
+  background-color: #ed6c00;
+}
+
+.gray {
+  background-color: #8a8a8a;
+}
+
+.stage-icon {
+  width: 80rpx;
+  height: 80rpx;
+}

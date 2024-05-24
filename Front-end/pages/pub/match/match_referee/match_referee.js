@@ -18,14 +18,10 @@ Page({
     match: Object,
 
     MatchInfoModalIsHidden: true,
-    tmpStrStatus: String,
-    tmpStatus: String,
     tmpHomeTeamScore: Number,
     tmpAwayTeamScore: Number,
     tmpHomeTeamPenalty: Number,
     tmpAwayTeamPenalty: Number,
-    strStatusOptions: ['未开始', '正在进行', '已结束'],
-    statusOptions: ['PENDING', 'ONGOING', 'FINISHED'],
 
     ActionAddModalIsHidden: true,
     tmpTime: Number,
@@ -163,6 +159,64 @@ Page({
   },
 
   // ----------------------------
+  // 更改比赛状态
+  changeMatchStatus(e) {
+    let status = e.currentTarget.dataset.status;
+    wx.showModal({
+      title: '确认更改',
+      content: '您确定更改比赛状态吗？该过程不可逆！',
+      complete: (res) => {
+        if (res.confirm) {
+          this.handleMatchStatusSubmit(status)
+        }
+      }
+    })
+  },
+
+  // 提交比赛状态更新，进行POST请求
+  handleMatchStatusSubmit(status) {
+    let that = this
+    const matchInfo = {
+      matchId: this.data.matchId,
+      status: status,
+      homeTeamScore: this.data.match.homeTeam.score,
+      awayTeamScore: this.data.match.awayTeam.score,
+      homeTeamPenalty: this.data.match.homeTeam.penalty,
+      awayTeamPenalty: this.data.match.awayTeam.penalty,
+    }
+
+    // 日志
+    console.log("match referee: handleMatchStatusSubmit->")
+    console.log(matchInfo);
+
+    wx.showLoading({
+      title: '正在更新',
+    })
+
+    wx.request({
+      url: URL + '/match/referee/updateResult?refereeId=' + that.data.refereeId,
+      method: 'POST',
+      data: matchInfo,
+      success(res) {
+        console.log("match referee: handleMatchStatusSubmit->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("更新成功")
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+      complete() {
+        wx.hideLoading()
+        // 需重新拉取数据
+        that.fetchData(that.data.matchId)
+      }
+    })
+  },
+
+  // ----------------------------
   // Modal 公用的方法
 
   // 处理input输入框
@@ -190,8 +244,6 @@ Page({
   // 显示MatchInfoModal
   showMatchInfoModal: function () {
     this.setData({
-      tmpStrStatus: this.data.match.strStatus,
-      tmpStatus: this.data.match.status,
       tmpHomeTeamScore: this.data.match.homeTeam.score,
       tmpAwayTeamScore: this.data.match.awayTeam.score,
       tmpHomeTeamPenalty: this.data.match.homeTeam.penalty,
@@ -200,26 +252,11 @@ Page({
     });
   },
 
-  // 处理比赛状态更改
-  handleStatusChange: function (e) {
-    const strStatus = this.data.strStatusOptions[e.detail.value];
-    const status = this.data.statusOptions[e.detail.value];
-    this.setData({
-      tmpStrStatus: strStatus,
-      tmpStatus: status,
-    });
-  },
-
   // 验证函数
   validateMatchInfo(matchInfo) {
     // 验证matchId是否为数字
     if (typeof matchInfo.matchId !== 'number') {
       throw new Error("matchId 必须是数字");
-    }
-
-    // 验证status是否为空
-    if (!matchInfo.status) {
-      throw new Error("状态不能为空");
     }
 
     // 验证homeTeamScore是否为数字
@@ -250,7 +287,7 @@ Page({
     let that = this
     const matchInfo = {
       matchId: this.data.matchId,
-      status: this.data.tmpStatus,
+      status: this.data.match.status,
       homeTeamScore: this.data.tmpHomeTeamScore,
       awayTeamScore: this.data.tmpAwayTeamScore,
       homeTeamPenalty: this.data.tmpHomeTeamPenalty,

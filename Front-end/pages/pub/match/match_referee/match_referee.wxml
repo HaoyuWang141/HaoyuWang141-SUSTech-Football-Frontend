@@ -7,7 +7,7 @@
     <text class="block-more"></text>
   </view>
   <view class="block-main">
-    您将作为裁判，在本页面中更新比赛信息，您可以独立更新以下三个模块。
+    您将作为裁判，在本页面中更新比赛信息，您可以独立更新以下模块。
   </view>
 </view>
 
@@ -16,12 +16,14 @@
   <view class="block-top">
     <text class="block-title">球员名单及首发</text>
     <view class="block-more">
-      <text class="button-update-playerList" bind:tap="gotoMatchRefereeUpdatePlayerListPage" data-isHomeTeam="true">更改主队</text>
-      <text class="button-update-playerList" bind:tap="gotoMatchRefereeUpdatePlayerListPage" data-isHomeTeam="false">更改客队</text>
+      <block wx:if="{{match.status == 'PENDING'}}">
+        <text class="button-update-playerList" bind:tap="gotoMatchRefereeUpdatePlayerListPage" data-isHomeTeam="true">更改主队</text>
+        <text class="button-update-playerList" bind:tap="gotoMatchRefereeUpdatePlayerListPage" data-isHomeTeam="false">更改客队</text>
+      </block>
     </view>
   </view>
   <view class="block-main">
-    <view>在此选择比赛球员名单及首发球员</view>
+    <view>在此选择比赛球员名单及首发球员，您只有在比赛开始前才能设置首发。比赛开始后该功能禁用。</view>
 
     <view style="margin-top: 20rpx;">主队：{{match.homeTeam.name}}</view>
     <view class="grid-container">
@@ -67,11 +69,30 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">比赛状态</text>
-    <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
+    <text class="block-more button-update" bind:tap="changeMatchStatus" data-status="ONGOING" wx:if="{{match.status == 'PENDING'}}">开始比赛</text>
+    <text class="block-more button-update" bind:tap="changeMatchStatus" data-status="FINISHED" wx:if="{{match.status == 'ONGOING'}}">结束比赛</text>
   </view>
   <view class="block-main">
-    <view style="margin-bottom: 20rpx;">在此设置比赛状态（未开始、正在进行、已结束），三个状态只能依次向后移动不可返回，更新请慎重。</view>
-    <view style="margin-bottom: 20rpx;">当前比赛状态为：{{match.strStatus}}</view>
+    <view style="margin-bottom: 20rpx;">设置比赛状态（未开始->正在进行->已结束），状态不可重置，更新状态请谨慎。</view>
+    <view class="process-container">
+      <view class="stage-container">
+        <image src="/assets/stage1-a.png" class="stage-icon" />
+        <!-- <view>未开始</view> -->
+      </view>
+      <view class="line {{match.status == 'PENDING' ? 'gray' : 'orange'}}"></view>
+      <view class="stage-container">
+        <image src="/assets/stage2-b.png" wx:if="{{match.status == 'PENDING'}}" class="stage-icon" />
+        <image src="/assets/stage2-a.png" wx:else class="stage-icon" />
+        <!-- <view>正在进行</view> -->
+      </view>
+      <view class="line {{match.status == 'FINISHED' ? 'orange' : 'gray'}}"></view>
+      <view class="stage-container">
+        <image src="/assets/stage3-a.png" wx:if="{{match.status == 'FINISHED'}}" class="stage-icon" />
+        <image src="/assets/stage3-b.png" wx:else class="stage-icon" />
+        <!-- <view>已结束</view> -->
+      </view>
+    </view>
+    <view style="margin-top: 20rpx;">当前比赛状态为：{{match.strStatus}}</view>
   </view>
 </view>
 
@@ -79,7 +100,9 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">比赛进球</text>
-    <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
+    <block wx:if="{{match.status != 'PENDING'}}">
+      <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
+    </block>
   </view>
   <view class="block-main">
     <view style="margin-bottom: 20rpx;">在此更新比赛分数及点球分数</view>
@@ -88,7 +111,7 @@
     <view>点球进球数：{{match.homeTeam.penalty}}</view>
     <view style="margin-top: 20rpx;">客队：{{match.awayTeam.name}}</view>
     <view>进球数：{{match.awayTeam.score}}</view>
-    <view>点球进球数：{{match.awayTeam.score}}</view>
+    <view>点球进球数：{{match.awayTeam.penalty}}</view>
   </view>
 </view>
 
@@ -96,7 +119,9 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">比赛事件</text>
-    <text class="block-more button-update" bind:tap="showActionAddModal">增加</text>
+    <block wx:if="{{match.status != 'PENDING'}}">
+      <text class="block-more button-update" bind:tap="showActionAddModal">增加</text>
+    </block>
   </view>
   <view class="block-main">
     <view style="margin-bottom: 40rpx;">包括进球、助攻、黄牌、红牌、上场、下场</view>
@@ -113,35 +138,26 @@
 
 <!-- 模态框：更新比赛状态及进球 -->
 <modal hidden="{{MatchInfoModalIsHidden}}" title="更新比赛信息" bindconfirm="handleMatchInfoSubmit" bindcancel="handleCancel">
-  <view class="input-container">
-    <view class="input-item">
-      <text>比赛状态:</text>
-      <picker mode="selector" range="{{strStatusOptions}}" bindchange="handleStatusChange">
-        <view>{{tmpStrStatus}}</view>
-      </picker>
-    </view>
+  <view style="margin-top: 20rpx;" class="input-item"><text>主队：{{match.homeTeam.name}}</text></view>
+  <view class="input-item">
+    <text>主队得分:</text>
+    <input type="number" value="{{tmpHomeTeamScore}}" data-name="tmpHomeTeamScore" bindinput="handleInput" />
+  </view>
 
-    <view style="margin-top: 20rpx;" class="input-item"><text>主队：{{match.homeTeam.name}}</text></view>
-    <view class="input-item">
-      <text>主队得分:</text>
-      <input type="number" value="{{tmpHomeTeamScore}}" data-name="tmpHomeTeamScore" bindinput="handleInput" />
-    </view>
+  <view class="input-item">
+    <text>主队点球:</text>
+    <input type="number" value="{{tmpHomeTeamPenalty}}" data-name="tmpHomeTeamPenalty" bindinput="handleInput" />
+  </view>
 
-    <view class="input-item">
-      <text>主队点球:</text>
-      <input type="number" value="{{tmpHomeTeamPenalty}}" data-name="tmpHomeTeamPenalty" bindinput="handleInput" />
-    </view>
+  <view style="margin-top: 20rpx;" class="input-item"><text>客队：{{match.awayTeam.name}}</text></view>
+  <view class="input-item">
+    <text>客队得分:</text>
+    <input type="number" value="{{tmpAwayTeamScore}}" data-name="tmpAwayTeamScore" bindinput="handleInput" />
+  </view>
 
-    <view style="margin-top: 20rpx;" class="input-item"><text>客队：{{match.awayTeam.name}}</text></view>
-    <view class="input-item">
-      <text>客队得分:</text>
-      <input type="number" value="{{tmpAwayTeamScore}}" data-name="tmpAwayTeamScore" bindinput="handleInput" />
-    </view>
-
-    <view class="input-item">
-      <text>客队点球:</text>
-      <input type="number" value="{{tmpAwayTeamPenalty}}" data-name="tmpAwayTeamPenalty" bindinput="handleInput" />
-    </view>
+  <view class="input-item">
+    <text>客队点球:</text>
+    <input type="number" value="{{tmpAwayTeamPenalty}}" data-name="tmpAwayTeamPenalty" bindinput="handleInput" />
   </view>
 </modal>
 
@@ -175,5 +191,3 @@
     </view>
   </view>
 </modal>
-
-
