@@ -9,14 +9,16 @@
   border: none; /* 去除按钮边框 */
   border-radius: 5px; /* 按钮圆角 */
   cursor: pointer; /* 鼠标样式 */
-  margin-bottom: 5%;
+  margin-right: 20rpx;
 }
 
 .check-btn {
-  background-color: rgb(105, 189, 238); /* 按钮背景颜色 */
+  background-color: #2bb7b3; /* 按钮背景颜色 */
   color: white; /* 文字颜色 */
   padding: 5px 10px; /* 按钮内边距 */
   border: none; /* 去除按钮边框 */
   border-radius: 5px; /* 按钮圆角 */
   cursor: pointer; /* 鼠标样式 */
+  margin-bottom: 20rpx;
+  margin-right: 20rpx;
 }

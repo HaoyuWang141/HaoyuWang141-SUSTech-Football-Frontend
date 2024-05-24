@@ -1,9 +1,15 @@
-<!--pages/management/team_more/team_more.wxml-->
-<view class="container">
-  <view style="width: 95%;">
-
-    <view class="title">管理的球队</view>
-
+<view class="block-container">
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">管理的球队</view>
+    </view>
+    <view class="block-main">
+      本页面包含您管理的球队。您可以新建球队也可以编辑、删除已存在的球队。
+    </view>
+  </view>
+</view>
+<!-- <view class="container">
+  <view style="width: 95%;"> -->
     <scroll-view scroll-y enable-flex>
       <!-- 创建球队 -->
       <view>
@@ -14,12 +20,12 @@
         <block wx:for="{{teamList}}" wx:key="teamId">
           <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerList.length}}">
             <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
-              <view class="delete-btn" bindtap="showCancelModal" data-id="{{item.teamId}}">删除</view>
               <view class="check-btn" bindtap="gotoEditTeam" data-id="{{item.teamId}}">编辑</view>
+              <view class="delete-btn" bindtap="showCancelModal" data-id="{{item.teamId}}">删除</view>
             </view>
           </team-card-big>
         </block>
       </view>
     </scroll-view>
-  </view>
-</view>
+  <!-- </view>
+</view> -->
