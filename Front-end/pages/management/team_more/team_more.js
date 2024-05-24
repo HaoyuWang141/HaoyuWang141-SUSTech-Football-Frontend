@@ -2,8 +2,8 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-Page({
 
+Page({
   /**
    * 页面的初始数据
    */
