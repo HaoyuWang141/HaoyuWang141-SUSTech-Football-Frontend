@@ -40,3 +40,10 @@
   width: 40rpx;
   min-width: 0;
 }
+
+.name {
+  max-width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

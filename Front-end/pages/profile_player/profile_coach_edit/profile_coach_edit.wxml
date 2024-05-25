@@ -15,7 +15,7 @@
       <view>姓名</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showNameInput">
-        <view>{{name}}</view>
+        <view class="name">{{name}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -29,7 +29,7 @@
       <view>个人简介</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showBioInput">
-        <view>{{bio}}</view>
+        <view class="name">{{bio}}</view>
         <view class="pointer">></view>
       </view>
     </view>

@@ -47,6 +47,10 @@
 .name {
   font-size: x-large;
   font-weight: bold;
+  max-width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .id {

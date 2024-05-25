@@ -12,10 +12,10 @@
       </view>
     </view>
     <view class="section">
-      <view>姓名</view>
+      <view class="title">姓名</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showNameInput">
-        <view>{{name}}</view>
+        <view class="name">{{name}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -29,7 +29,7 @@
       <view>学工号</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showIdInput">
-        <view>{{identity}}</view>
+        <view class="name">{{identity}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -43,7 +43,7 @@
       <view>身高(cm)</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showHeightInput">
-        <view>{{height}}</view>
+        <view class="name">{{height}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -57,7 +57,7 @@
       <view>体重(kg)</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showWeightInput">
-        <view>{{weight}}</view>
+        <view class="name">{{weight}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -79,7 +79,7 @@
       <view>场上位置</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showPositionInput">
-        <view>{{position}}</view>
+        <view class="name">{{position}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -93,7 +93,7 @@
       <view>书院</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showShuyuanInput">
-        <view>{{shuYuan}}</view>
+        <view class="name">{{shuYuan}}</view>
         <view class="pointer">></view>
       </view>
     </view>
@@ -107,7 +107,7 @@
       <view>院系</view>
       <view style="flex: 1;"></view>
       <view class="edit" bindtap="showCollegeInput">
-        <view>{{college}}</view>
+        <view class="name">{{college}}</view>
         <view class="pointer">></view>
       </view>
     </view>
