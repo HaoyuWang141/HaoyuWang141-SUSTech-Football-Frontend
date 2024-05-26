@@ -279,5 +279,12 @@ Page({
     })
   },
 
+  gotoMatchPage: function (e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/match/match?id=' + dataset.id,
+    })
+  },
+
 })
 

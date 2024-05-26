@@ -1,13 +1,13 @@
 // pages/management/team_more/team_more.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-Page({
+const userId = appInstance.globalData.userId
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    userId: Number,
     deleteTeamId: 0,
     teamList: [],
     isTeamManager: false,
@@ -45,8 +45,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    appInstance.addToRequestQueue(this.fetchData)
-    appInstance.addToRequestQueue(this.fetchUserId)
+    this.fetchData(userId)
   },
 
   /**
@@ -67,8 +66,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    appInstance.addToRequestQueue(this.fetchData)
-    appInstance.addToRequestQueue(this.fetchUserId)
+    this.fetchData(userId)
   },
 
   /**
@@ -84,12 +82,7 @@ Page({
   onShareAppMessage() {
 
   },
-  fetchUserId(userId) {
-    const that = this
-    that.setData({
-      userId: userId
-    })
-  },
+
   fetchData: function (userId) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
@@ -189,7 +182,7 @@ Page({
           duration: 2000,
           success: function () {
             setTimeout(function () {
-              that.fetchData();
+              that.fetchData(userId);
             }, 2000);
           }
         });
@@ -583,7 +576,7 @@ Page({
       },
       complete() {
         wx.hideLoading()
-        that.fetchData(that.data.userId)
+        that.fetchData(userId)
       }
     })
   },
@@ -627,7 +620,7 @@ Page({
       },
       complete() {
         wx.hideLoading()
-        that.fetchData(that.data.userId)
+        that.fetchData(userId)
       }
     })
   },
