@@ -65,3 +65,47 @@
   margin-bottom: 10rpx;
   font-size: small;
 }
+
+.notification-container {
+  margin-bottom: 20px;
+}
+
+.notification-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.red-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  margin-left: 20rpx;
+}
+
+.notification-box {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
+
+.invitation-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.invitation-text {
+  font-size: 16px;
+  color: #333;
+}
+
+.icon {
+  width: 60rpx;
+  height: 60rpx;
+}
