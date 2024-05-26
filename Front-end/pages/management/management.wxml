@@ -36,6 +36,25 @@
 
   <!-- 管理的赛事 -->
   <view class="block-space">
+    <view class="block-container" wx:if="{{isEventManager}}">
+      <view class="block-top" bindtap="toggleManageEventInvitationTeamInform">
+        <view class="block-title">
+          <text> 赛事管理者身份：球队邀请通知</text>
+          <view class="red-dot" wx:if="{{showManageEventInvitationTeamDot}}"></view>
+        </view>
+        <view class="block-more">
+          <image class="icon" src="/assets/down333.png" mode="" />
+        </view>
+      </view>
+      <view class="block-main">
+        <view>未对球队发起过任何邀请</view>
+        <scroll-view scroll-y="true" style="height: {{showManageEventInvitationTeamInform ? '200px' : '0'}};" class="notification-box">
+          <view class="invitation-item" wx:for="{{manageEventInvitationTeamInform}}" wx:key="index">
+            <text class="invitation-text">{{item}}</text>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
     <view class="block-top">
       <view class="block-title">管理的赛事</view>
     </view>

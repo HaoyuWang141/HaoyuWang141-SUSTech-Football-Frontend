@@ -254,6 +254,12 @@ Page({
     })
   },
 
+  gotoPlayerNoticePage() {
+    wx.navigateTo({
+      url: '/pages/profile_player/playerNotice/playerNoticePage',
+    })
+  },
+
   gotoMatchesPage(e) {
     let matchList = e.currentTarget.dataset.list ?? []
     let matchIdList = matchList.map(match => match.matchId)

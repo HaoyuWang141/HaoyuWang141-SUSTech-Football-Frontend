@@ -20,7 +20,25 @@
     点击“新建”按钮，填写比赛信息并新建比赛。
   </view>
 </view>
-
+<view class="block-container" wx:if="{{isMatchManager}}">
+  <view class="block-top" bindtap="toggleManageMatchInvitationTeamInform">
+    <view class="block-title">
+      <text>球队邀请通知</text>
+      <view class="red-dot" wx:if="{{showManageMatchInvitationTeamDot}}"></view>
+    </view>
+    <view class="block-more">
+      <image class="icon" src="/assets/down333.png" mode="" />
+    </view>
+  </view>
+  <view class="block-main">
+    <view>未对球队发起过任何邀请</view>
+    <scroll-view scroll-y="true" style="height: {{showManageMatchInvitationTeamInform ? '200px' : '0'}};" class="notification-box">
+      <view class="invitation-item" wx:for="{{manageMatchInvitationTeamInform}}" wx:key="index">
+        <text class="invitation-text">{{item}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
 <scroll-view scroll-y enable-flex>
   <view wx:for="{{matchList}}" wx:key="matchId">
     <match-card-big name="友谊赛" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bindtap="gotoEditMatch" data-id="{{item.matchId}}"></match-card-big>
