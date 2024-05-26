@@ -1,4 +1,14 @@
 <!-- 球员身份：比赛通知 -->
+<view class="block-container" wx:if="{{isPlayer}}">
+  <view class="block-top" bindtap="toggleCoachInvitationInform">
+    <view class="block-title">
+      <text>球员通知中心</text>
+    </view>
+  </view>
+  <view class="block-main">
+    <view>与您参与的比赛以及球队的相关的通知将在这里展示。</view>
+  </view>
+</view>
 <scroll-view class="scrollarea" scroll-y type="list">
 <view class="block-container" wx:if="{{isPlayer}}">
   <view class="block-top" bindtap="togglePlayerMatchInform">
