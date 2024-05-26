@@ -256,7 +256,7 @@ Page({
 
   gotoPlayerNoticePage() {
     wx.navigateTo({
-      url: '/pages/profile_player/playerNotice/playerNoticePage',
+      url: '/pages/profile_player/player_notice/player_notice',
     })
   },
 
@@ -330,7 +330,7 @@ Page({
     teamId = Number(teamId)
     let playerId = this.data.playerId
     console.log('playerId:' + playerId)
-    console.log(typeof(playerId))
+    console.log(typeof (playerId))
     console.log(`playerId: ${playerId}`)
 
     wx.showLoading({

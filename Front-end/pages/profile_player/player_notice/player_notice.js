@@ -1,4 +1,3 @@
-// pages/mine/mine.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 // const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
@@ -157,61 +156,12 @@ Page({
   fetchData: function (userId) {
 
     const that = this
-
-    that.fetchUserInfo(userId)
-
     //Player相关
     that.fetchPlayerId(userId)
   },
 
   // ------------------
   // fetch data: player
-  postUserInfo(userId, avatarUrl, nickName) {
-    const that = this
-    console.log('avatarUrl')
-    console.log(avatarUrl)
-    wx.request({
-      url: URL + '/user/update?userId=' + userId + '&avatarUrl=' + avatarUrl + '&nickName=' + nickName,
-      method: 'POST',
-      success(res) {
-        console.log("mine page: postUserInfo->")
-        console.log(res.data)
-        if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-      },
-      fail(err) {
-        console.log('请求失败', err);
-      },
-      complete() {}
-    });
-  },
-
-  fetchUserInfo(userId) {
-    const that = this
-    wx.request({
-      url: URL + '/user/get?userId=' + userId,
-      method: 'POST',
-      success(res) {
-        console.log("mine page: userInfo->")
-        console.log(res.data)
-        if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
-          return
-        }
-        that.setData({
-          nickName: res.data.nickName,
-          avatarUrl: res.data.avatarUrl
-        })
-      },
-      fail(err) {
-        console.log('请求失败', err);
-      },
-      complete() {}
-    });
-  },
-
   fetchPlayerId(userId) {
     const that = this
     wx.request({

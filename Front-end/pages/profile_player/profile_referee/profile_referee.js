@@ -263,6 +263,12 @@ Page({
     })
   },
 
+  gotoRefereeNoticePage() {
+    wx.navigateTo({
+      url: '/pages/profile_player/profile_referee_notice/profile_referee_notice',
+    })
+  },
+
   fetchRefereeInvitationsForMatch(refereeId) {
     const that = this
     wx.request({
@@ -460,6 +466,7 @@ Page({
           icon: 'success',
         })
         console.log("回复赛事邀请成功")
+        app.addToRequestQueue(that.fetchRefereeId)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -504,6 +511,7 @@ Page({
           icon: 'success',
         })
         console.log("回复比赛邀请成功")
+        app.addToRequestQueue(that.fetchRefereeId)
       },
       fail(err) {
         console.error('请求失败：', err.statusCode, err.errMsg);

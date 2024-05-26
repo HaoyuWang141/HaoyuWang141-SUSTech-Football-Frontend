@@ -223,6 +223,12 @@ Page({
       url: '/pages/management/team_edit/team_edit?id=' + dataset.id,
     })
   },
+
+  gotoTeamManagerNoticePage() {
+    wx.navigateTo({
+      url: '/pages/management/team_notice/team_notice',
+    })
+  },
   fetchManageTeamApplications: function (teamId, teamName) {
     const that = this
     wx.request({
