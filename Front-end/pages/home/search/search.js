@@ -22,6 +22,27 @@ Page({
     userList: [],
     teamList: [],
 
+    expandNews: true,
+    expandEvent: true,
+    expandMatch: true,
+    expandUser: true,
+    expandTeam: true,
+    newsBound: 3,
+    eventBound: 3,
+    matchBound: 3,
+    userBound: 3,
+    teamBound: 3,
+    newsIdx: 0,
+    eventIdx: 0,
+    matchIdx: 0,
+    userIdx: 0,
+    teamIdx: 0,
+    newsDisplayList: [],
+    eventDisplayList: [],
+    matchDisplayList: [],
+    userDisplayList: [],
+    teamDisplayList: [],
+
     // 搜索相关
     searchPlaceholder: '请输入搜索内容',
     activeIndex: 0,
@@ -146,6 +167,7 @@ Page({
         that.setData({
           eventList: filterEventList,
         })
+        that.updateEventDisplayList()
       },
       fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -178,6 +200,7 @@ Page({
         that.setData({
           matchList: filterMatchList,
         })
+        that.updateMatchDisplayList()
       },
       fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -207,6 +230,7 @@ Page({
         that.setData({
           userList: filterUserList,
         })
+        that.updateUserDisplayList()
       },
       fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -235,6 +259,7 @@ Page({
         that.setData({
           teamList: filterTeamList,
         })
+        that.updateTeamDisplayList()
       },
       fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
@@ -274,6 +299,36 @@ Page({
     app.addToRequestQueue(this.fetchData)
   },
 
+  bindExpandNews: function (e) {
+    this.setData({
+      expandNews: !this.data.expandNews,
+    })
+  },
+
+  bindExpandEvent: function (e) {
+    this.setData({
+      expandEvent: !this.data.expandEvent,
+    })
+  },
+
+  bindExpandMatch: function (e) {
+    this.setData({
+      expandMatch: !this.data.expandMatch,
+    })
+  },
+
+  bindExpandUser: function (e) {
+    this.setData({
+      expandUser: !this.data.expandUser,
+    })
+  },
+
+  bindExpandTeam: function (e) {
+    this.setData({
+      expandTeam: !this.data.expandTeam,
+    })
+  },
+
   ///////////////////////////////////////////////////////////////////////////////
   // 跳转
 
@@ -304,5 +359,84 @@ Page({
       url: '/pages/pub/team/team?id=' + id,
     })
   },
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // 其它
+
+  updateNewsDisplayList() {
+    // TODO
+  },
+  
+  updateEventDisplayList() {
+    var eventBound = this.data.eventBound
+    var eventIdx = this.data.eventIdx
+    var eventDisplayList = this.data.eventDisplayList
+    while (eventIdx < this.data.eventList.length && eventIdx < eventBound) {
+      eventDisplayList.push(this.data.eventList[eventIdx])
+      eventIdx++;
+    }
+    if (eventIdx < this.data.eventList.length) {
+      eventBound += 8;
+    }
+    this.setData({
+      eventBound: eventBound,
+      eventIdx: eventIdx,
+      eventDisplayList: eventDisplayList,
+    });
+  },
+
+  updateMatchDisplayList() {
+    var matchBound = this.data.matchBound;
+    var matchIdx = this.data.matchIdx;
+    var matchDisplayList = this.data.matchDisplayList;
+    while (matchIdx < this.data.matchList.length && matchIdx < matchBound) {
+      matchDisplayList.push(this.data.matchList[matchIdx]);
+      matchIdx++;
+    }
+    if (matchIdx < this.data.matchList.length) {
+      matchBound += 8;
+    }
+    this.setData({
+      matchBound: matchBound,
+      matchIdx: matchIdx,
+      matchDisplayList: matchDisplayList,
+    });
+  },
+  
+  updateUserDisplayList() {
+    var userBound = this.data.userBound;
+    var userIdx = this.data.userIdx;
+    var userDisplayList = this.data.userDisplayList;
+    while (userIdx < this.data.userList.length && userIdx < userBound) {
+      userDisplayList.push(this.data.userList[userIdx]);
+      userIdx++;
+    }
+    if (userIdx < this.data.userList.length) {
+      userBound += 8;
+    }
+    this.setData({
+      userBound: userBound,
+      userIdx: userIdx,
+      userDisplayList: userDisplayList,
+    });
+  },
+  
+  updateTeamDisplayList() {
+    var teamBound = this.data.teamBound;
+    var teamIdx = this.data.teamIdx;
+    var teamDisplayList = this.data.teamDisplayList;
+    while (teamIdx < this.data.teamList.length && teamIdx < teamBound) {
+      teamDisplayList.push(this.data.teamList[teamIdx]);
+      teamIdx++;
+    }
+    if (teamIdx < this.data.teamList.length) {
+      teamBound += 8;
+    }
+    this.setData({
+      teamBound: teamBound,
+      teamIdx: teamIdx,
+      teamDisplayList: teamDisplayList,
+    });
+  }
 
 })

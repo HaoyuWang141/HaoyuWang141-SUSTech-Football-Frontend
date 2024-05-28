@@ -2,10 +2,10 @@
   <image src="https://www.sustech.edu.cn/uploads/images/2022/12/29170519_51471.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
   <view class="container2">
     <view class="container3">
-      <image class="avatar" src="{{coach.photoUrl}}" mode="scaleToFill"></image>
+      <image class="avatar" src="{{coach.photoUrl ? coach.photoUrl : '/assets/newplayer.png'}}" mode="scaleToFill"></image>
     </view>
     <view class="container4">
-      <text class="name">{{coach.name}}</text>
+      <text class="name">{{coach.name ? coach.name : '--'}}</text>
       <text class="id">教练id：{{coachId}}</text>
     </view>
   </view>
