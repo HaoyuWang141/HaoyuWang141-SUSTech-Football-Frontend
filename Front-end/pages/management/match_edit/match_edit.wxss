@@ -108,6 +108,10 @@
   margin-bottom: 5%;
 }
 
+.text {
+  margin: 3%;
+}
+
 .btn-container {
   margin-left: 2%;
   display: flex; /* 将按钮放置在同一行 */

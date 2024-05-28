@@ -11,19 +11,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-    eventId: Number,
     icon: '/assets/cup.svg',    
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
 
-    eventId: Number,
-    name: String,
-    description: String,
-    teamList: Array,
-    matchList: Array,
-    groupList: Array,
-    managerList: Array,
-    stageList: Array,
+    eventId: 0,
+    name: '',
+    description: '',
+    teamList: [],
+    matchList: [],
+    groupList: [],
+    managerList: [],
+    stageList: [],
     eventType: '',
     groupNumber: [],
     teamNumber: [],
@@ -129,6 +128,28 @@ Page({
           managerList: res.data.managerList,
           stageList: res.data.stageList,
         });
+        if(that.data.stageList[0].stageName === '联赛') {
+          const eventType = '联赛';
+          const tuNumber = that.data.stageList[0].tags.length;
+          that.setData({
+            eventType: eventType,
+            tuNumber: tuNumber
+          })
+        } else {
+          const eventType = '杯赛';
+          const gNumber = that.data.stageList[0].tags.length;
+          var tNumber;
+          if(that.data.stageList[1].tags.length === 1) {
+            tNumber = 2;
+          } else {
+            tNumber = 2 ** (that.data.stageList[1].tags.length-1);
+          }
+          that.setData({
+            eventType: eventType,
+            gNumber: gNumber,
+            tNumber: tNumber
+          })
+        }
       },
       fail(err) {
         console.log('请求失败', err);
@@ -172,16 +193,13 @@ Page({
     });
   },
 
-  // 确认更改队名时触发的事件
   confirmChangeEventname: function () {
-    // 这里可以添加逻辑，如检查输入是否合法等
     this.setData({
       name: this.data.newname,
       modalHiddenEname: true
     });
   },
 
-  // 取消更改队名时触发的事件
   cancelChangeEventname: function () {
     this.setData({
       modalHiddenEname: true
@@ -200,33 +218,34 @@ Page({
     });
   },
 
-  // 确认更改队名时触发的事件
   confirmChangeEventdes: function () {
-    // 这里可以添加逻辑，如检查输入是否合法等
     this.setData({
       description: this.data.newdes,
       modalHiddenEdes: true
     });
   },
 
-  // 取消更改队名时触发的事件
   cancelChangeEventdes: function () {
     this.setData({
       modalHiddenEdes: true
     });
   },
 
-  // 点击确认修改按钮，弹出确认修改模态框
   showConfirmModal() {
-    this.showModal(
-      '确认修改',
-      '确定要进行修改吗？',
-      '确认',
-      'black',
-      '取消',
-      this.confirmEdit, // 点击确认时的回调函数
-      () => {} // 点击取消时的回调函数，这里不做任何操作
-    );
+    var that = this
+    wx.showModal({
+      title: '确认修改',
+      content: '确定要进行修改吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.confirmEdit() // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    })
   },
 
   // 点击取消比赛按钮，弹出确认取消模态框

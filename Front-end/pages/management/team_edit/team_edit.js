@@ -11,6 +11,7 @@ Page({
   data: {
     id: 0,
     modalHidden: true, // 控制模态框显示隐藏
+    modalHiddenEdes: true,
     newName: '',   // 用于存放用户输入的新队名
     tempFilePath: '',
     edit: '编辑',
@@ -22,6 +23,7 @@ Page({
     teamId: 0,
     name: '',
     logoUrl: '',
+    description: '',
     playerList: [],
     captainId: 0,
     coachList: [],
@@ -32,6 +34,8 @@ Page({
     selectPlayerId: 0,
     isClickCoachList: [],
     selectCoachId: 0,
+    editPlayerModalHidden: true,
+    newPlayerNumber: '',
   },
 
   /**
@@ -119,6 +123,7 @@ Page({
           managerList: res.data.managerList,
           matchList: res.data.matchList,
           playerList: res.data.playerList,
+          description: res.data.description
         });
         if (res.data.captainId !== null) {
           that.setData({
@@ -217,52 +222,74 @@ Page({
     });
   },
  
-
-  /**
-   * 修改队名
-   */
-  // 点击队名触发的事件，显示模态框
   showNameModal: function () {
     this.setData({
       modalHidden: false
     });
   },
 
-  // 输入框内容改变时触发的事件
+
   changeName: function (e) {
     this.setData({
       newName: e.detail.value
     });
   },
 
-  // 确认更改队名时触发的事件
+  showDesInput: function () {
+    this.setData({
+      modalHiddenEdes: false
+    });
+  },
+
+  changedes: function (e) {
+    this.setData({
+      newdes: e.detail.value
+    });
+  },
+
   confirmChangeName: function () {
-    // 这里可以添加逻辑，如检查输入是否合法等
     this.setData({
       name: this.data.newName,
       modalHidden: true
     });
   },
 
-  // 取消更改队名时触发的事件
   cancelChangeName: function () {
     this.setData({
       modalHidden: true
     });
   },
 
+  confirmChangeEventdes: function () {
+    this.setData({
+      description: this.data.newdes,
+      modalHiddenEdes: true
+    });
+  },
 
-   // 点击确认修改按钮，弹出确认修改模态框
-   showConfirmModal() {
-    this.showModal(
-      '确认修改',
-      '确定要进行修改吗？',
-      '确认',
-      'black',
-      '取消',
-      this.confirmEdit, // 点击确认时的回调函数
-      () => {} // 点击取消时的回调函数，这里不做任何操作
-    );
+  cancelChangeEventdes: function () {
+    this.setData({
+      modalHiddenEdes: true
+    });
+  },
+
+
+  // 点击确认修改按钮，弹出确认修改模态框
+  showConfirmModal() {
+    var that = this
+    wx.showModal({
+      title: '确认修改',
+      content: '确定要进行修改吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.confirmEdit() // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    })
   },
 
   // 点击确认创建按钮，弹出确认修改模态框
@@ -301,10 +328,15 @@ Page({
   managePlayer(e) {
     const index = e.currentTarget.dataset.id;
     const isClickPlayerList = this.data.isClickPlayerList;
+    const isClicked = isClickPlayerList[index].isClicked;
     for(var i = 0; i < this.data.playerList.length; i++) {
       isClickPlayerList[i].isClicked = false
     }
-    isClickPlayerList[index].isClicked = !isClickPlayerList[index].isClicked;
+    if(isClicked == false) {
+      isClickPlayerList[index].isClicked = true;
+    } else {
+      isClickPlayerList[index].isClicked = false;
+    }
     const selectPlayerId = this.data.playerList[index].playerId;
     this.setData({
       isClickPlayerList: isClickPlayerList,
@@ -324,7 +356,7 @@ Page({
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
-            title: '删除失败，请重试',
+            title: res.data,
             icon: 'none',
             duration: 2000
           });
@@ -353,11 +385,11 @@ Page({
         });
       },
       complete() {
-        const isClickPlayerList = this.data.isClickPlayerList;
-        for(var i = 0; i < this.data.playerList.length; i++) {
+        const isClickPlayerList = that.data.isClickPlayerList;
+        for(var i = 0; i < that.data.playerList.length; i++) {
           isClickPlayerList[i].isClicked = false
         }
-        this.setData({
+        that.setData({
           isClickPlayerList: isClickPlayerList,
           selectPlayerId: 0,
         });
@@ -397,13 +429,90 @@ Page({
     );
   },
 
+  // 显示编辑球员号码模态框
+  showEditPlayerModal: function () {
+    this.setData({
+      editPlayerModalHidden: false,
+      newPlayerNumber: '', // 清空之前的输入
+    });
+  },
+
+  // 输入球员号码
+  inputPlayerNumber: function (e) {
+    const value = e.detail.value;
+    this.setData({
+      newPlayerNumber: value,
+    });
+  },
+
+  // 确认修改球员号码
+  confirmEditPlayerNumber: function () {
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/team/player/updateNumber?teamId=' + that.data.teamId + '&playerId=' + that.data.selectPlayerId + '&number=' + that.data.newPlayerNumber,
+      method: 'POST',
+      success(res) {
+        console.log("set team player number->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '设置号码失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+          return
+        }
+        const successMsg = res.data ? res.data : '设置号码成功'; // 假设后端返回的成功信息在 res.
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              that.fetchData(that.data.id);
+            }, 2000);
+          }
+        });
+      },
+      fail(err) {
+        // 请求失败的处理逻辑
+        console.error('设置号码失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '设置失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      complete() {
+        that.setData({
+          editPlayerModalHidden: true,
+        });
+      }
+    });
+  },
+
+  // 取消修改球员号码
+  cancelEditPlayerNumber: function () {
+    this.setData({
+      editPlayerModalHidden: true,
+    });
+  },
+
   manageCoach(e) {
     const index = e.currentTarget.dataset.id;
     const isClickCoachList = this.data.isClickCoachList;
+    const isClicked = isClickCoachList[index].isClicked;
     for(var i = 0; i < this.data.coachList.length; i++) {
       isClickCoachList[i].isClicked = false
     }
-    isClickCoachList[index].isClicked = !isClickCoachList[index].isClicked;
+    if(isClicked == false) {
+      isClickCoachList[index].isClicked = true;
+    } else {
+      isClickCoachList[index].isClicked = false;
+    }
     const selectCoachId = this.data.coachList[index].coachId;
     this.setData({
       isClickCoachList: isClickCoachList,
@@ -463,10 +572,6 @@ Page({
       }
     });
   },
-  
-  manageCaptain() {
-
-  },
 
   confirmEdit() {
     var that = this;
@@ -508,7 +613,8 @@ Page({
           teamId: that.data.teamId,
           name: that.data.name,
           logoUrl: that.data.logoUrl,
-          captainId: that.data.captainId
+          captainId: that.data.captainId,
+          description: that.data.description
         };
         console.log('dataToUpdate->');
         console.log(dataToUpdate);

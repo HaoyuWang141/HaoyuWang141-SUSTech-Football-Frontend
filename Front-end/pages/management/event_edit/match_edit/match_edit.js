@@ -299,15 +299,20 @@ Page({
 
   // 点击确认修改按钮，弹出确认修改模态框
   showConfirmModal() {
-    this.showModal(
-      '确认修改',
-      '确定要进行修改吗？',
-      '确认',
-      'black',
-      '取消',
-      this.confirmEdit, // 点击确认时的回调函数
-      () => {} // 点击取消时的回调函数，这里不做任何操作
-    );
+    var that = this
+    wx.showModal({
+      title: '确认修改',
+      content: '确定要进行修改吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.confirmEdit() // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    })
   },
 
   // 点击取消比赛按钮，弹出确认取消模态框
@@ -387,7 +392,50 @@ Page({
   },
 
   deleteMatch() {
-    
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/match/delete?eventId=' + that.data.eventId + '&matchId=' + that.data.matchId,
+      method: 'DELETE',
+      success(res) {
+        console.log("delete event match->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '删除失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+          return
+        }
+        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+        wx.showToast({
+          title: successMsg,
+          icon: 'none',
+          duration: 2000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 2000);
+          }
+        });
+      },
+      fail(err) {
+        // 请求失败的处理逻辑
+        console.error('赛事比赛删除失败', err);
+        // 显示失败信息
+        wx.showToast({
+          title: '删除失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      },
+      complete() {
+      }
+    });
   },
 
   gotoInviteReferee: function(e) {

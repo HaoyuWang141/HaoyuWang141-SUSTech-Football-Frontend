@@ -450,10 +450,6 @@ Page({
       content: this.data.commentText,
       userId: userId,
     };
-
-    console.log('add comment->')
-    console.log(dataToUpdate)
-
     var that = this
     // 发送请求到后端接口
     wx.request({
@@ -461,16 +457,14 @@ Page({
       method: 'POST', // 请求方法
       data: dataToUpdate, // 要发送的数据
       success: res => {
+        console.log('add comment->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
         this.setData({
           commentText: '' // 清空输入框内容
         });
-
-        console.log('评论成功', res.data);
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '评论成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
@@ -489,30 +483,24 @@ Page({
         });
       },
       complete(){
-        setTimeout(function () {
-          that.fetchComment(that.data.id)
-        }, 2000);
+        that.fetchComment(that.data.id)
       }
     });
   },
 
   deleteComment(e) {
     const commentId = e.currentTarget.dataset.id
-
-    console.log('delete comment->')
-
     var that = this
     // 发送请求到后端接口
     wx.request({
       url: URL + '/comment/match/deleteComment?commentId=' + commentId + '&userId=' + userId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
+        console.log('delete comment->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
-        console.log('删除评论成功', res.data);
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '删除评论成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
@@ -531,9 +519,7 @@ Page({
         });
       },
       complete(){
-        setTimeout(function () {
-          that.fetchComment(that.data.id)
-        }, 2000);
+        that.fetchComment(that.data.id)
       }
     });
   },
@@ -568,13 +554,13 @@ Page({
 
   unlike_comment(e) {
     const commentId = e.currentTarget.dataset.id; // 获取评论 ID
-    console.log('unlike comment->')
     var that = this
     // 发送请求到后端接口
     wx.request({
       url: URL + '/comment/match/like/cancelLike?commentId=' + commentId + '&userId=' + userId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
+        console.log('unlike comment->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
@@ -600,18 +586,12 @@ Page({
   },
 
   addReply(e) {
-    // 添加回复到回复列表
     const index = e.currentTarget.dataset.id;
-    console.log(this.data.commentList[index].commentId)
     const dataToUpdate = {
       userId: userId,
       commentId: this.data.commentList[index].commentId,
       content: this.data.replyText
     };
-
-    console.log('add reply->')
-    console.log(dataToUpdate)
-
     var that = this
     // 发送请求到后端接口
     wx.request({
@@ -619,17 +599,14 @@ Page({
       method: 'POST', // 请求方法
       data: dataToUpdate, // 要发送的数据
       success: res => {
+        console.log('add reply->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
         this.setData({
           replyText: '' // 清空回复输入框内容
         });
-
-        console.log('回复成功', res.data);
-        // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '回复成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
@@ -653,24 +630,18 @@ Page({
   },
 
   deleteReply(e) {
-    console.log(e)
     const replyId = e.currentTarget.dataset.id
-
-    console.log('delete comment->')
-
     var that = this
     // 发送请求到后端接口
     wx.request({
       url: URL + '/comment/match/deleteReply?replyId=' + replyId + '&userId=' + userId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
+        console.log('delete comment->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-
-        console.log('删除回复成功', res.data);
-        // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '删除回复成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
@@ -688,9 +659,7 @@ Page({
         });
       },
       complete(){
-        setTimeout(function () {
-          that.fetchComment(that.data.id)
-        }, 2000);
+        that.fetchComment(that.data.id)
       }
     });
   },

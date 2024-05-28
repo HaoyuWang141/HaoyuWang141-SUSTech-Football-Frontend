@@ -103,6 +103,10 @@
   margin-bottom: 5%;
 }
 
+.text {
+  margin: 3%;
+}
+
 .btn-container {
   margin-left: 2%;
   display: flex; /* 将按钮放置在同一行 */
@@ -113,23 +117,25 @@
 }
 
 .confirm-btn{
-  padding: 10px 20px; /* 按钮内边距 */
   border: none; /* 去除按钮边框 */
-  border-radius: 5px; /* 圆角 */
+  border-radius: 20px; /* 圆角 */
   cursor: pointer; /* 鼠标样式 */
   transition: background-color 0.3s ease; /* 背景色过渡效果 */
   background-color: #eb903a; /* 确认修改按钮背景色 */
   color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 45%;
 }
 
 .delete-btn {
-  padding: 10px 20px; /* 按钮内边距 */
   border: none; /* 去除按钮边框 */
-  border-radius: 5px; /* 圆角 */
+  border-radius: 20px; /* 圆角 */
   cursor: pointer; /* 鼠标样式 */
   transition: background-color 0.3s ease; /* 背景色过渡效果 */
-  background-color: #f44336; /* 取消比赛按钮背景色 */
+  background-color: #eb403a; /* 确认修改按钮背景色 */
   color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 45%;
 }
 
 .confirm-btn:hover{

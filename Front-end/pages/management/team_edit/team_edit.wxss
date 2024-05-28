@@ -10,8 +10,8 @@
 
 .block-space {
   width: 100%;
-  border-bottom: 1px solid rgb(202, 202, 202);
-  margin-bottom: 5%;
+  border-top: 1px solid rgb(202, 202, 202);
+  margin-top: 5%;
 }
 
 .avatar-container {
@@ -45,6 +45,30 @@
   flex-shrink: 0;
 }
 
+.description-container {
+  margin-top: 3%;
+  margin-left: 10rpx;
+}
+
+.description-content {
+  padding: 3%;
+  margin-bottom: 5%;
+}
+
+.description {
+  font-size: small;
+  white-space: normal; /* 允许文本换行 */
+  word-wrap: break-word; /* 单词换行 */
+}
+
+.description-edit {
+  display: inline-block;
+  font-size: small;
+  color: gray;
+  border-bottom: 1px solid gray;
+  margin-left: 3%;
+}
+
 .important-person {
   margin-bottom: 5%;
 }
@@ -60,12 +84,24 @@
 
 .text {
   margin-right: auto;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.title {
+  margin-left: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
 }
 
 .image {
   margin-left: auto;
   width: 120rpx;
   height: 120rpx;
+}
+
+.btn-container {
+  border-top: 1px solid rgb(202, 202, 202);
 }
 
 .confirm-btn{
@@ -83,20 +119,34 @@
 
 .icon_eye {
   background-color: #eb903a;
-  padding: 5rpx;
-  border-radius: 50rpx;
-  width: 50rpx;
-  height: 50rpx;
+  padding: 3rpx;
+  border-radius: 40rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin-top: 5rpx;
-  margin-right: 10rpx;
+  margin-right: 5rpx;
+}
+
+.icon_cloth {
+  background-color: #5bc7f1;
+  padding: 3rpx;
+  border-radius: 40rpx;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 5rpx;
 }
 
 .icon_delete {
   background-color: red;
-  padding: 5rpx;
-  border-radius: 50rpx;
-  width: 50rpx;
-  height: 50rpx;
+  padding: 3rpx;
+  border-radius: 40rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin-top: 5rpx;
-  margin-left: 10rpx;
+  margin-left: 5rpx;
+}
+
+.player-number {
+  font-size: small;
+  color: rgb(102, 98, 98);
 }

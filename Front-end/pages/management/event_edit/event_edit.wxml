@@ -27,7 +27,7 @@
       <text class="description-edit" bindtap="showDesInput">编辑</text>
     </view>
 
-    <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
+    <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes" bindcancel="cancelChangeEventdes">
       <view class="modal-content">
         <text>编辑赛事介绍：</text>
         <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>

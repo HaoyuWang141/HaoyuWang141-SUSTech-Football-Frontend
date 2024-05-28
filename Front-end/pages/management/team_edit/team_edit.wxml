@@ -4,7 +4,7 @@
 
   <view class="block-container">
     <!-- 管理队徽 -->
-    <view class="block-space">
+    <view class="block-space-avatar">
       <view class="avatar-container">
         <view class="text">队徽</view>
         <view class="image-container">
@@ -21,8 +21,6 @@
         <text class="name-edit" >{{edit}}</text>
       </view>
 
-
-      <!-- 管理队名 -->
       <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
         <view class="modal-content">
           <text>请输入新队名：</text>
@@ -31,12 +29,35 @@
       </modal>
     </view>
 
+    <!-- 管理球队简介 -->
+    <view class="block-space">
+      <view class="description-container">
+        <text class="title">球队简介</text>
+        <view class="description-content" bindtap="showDesInput">
+          <text class="description">{{description}}</text>
+          <text class="description-edit">编辑</text>
+        </view>
+      </view>
+
+      <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes" bindcancel="cancelChangeEventdes">
+        <view class="modal-content">
+          <text>编辑球队简介：</text>
+          <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
+        </view>
+      </modal>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="btn-container">
+      <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
+    </view>
+
     <!-- 管理队员 -->
     <view class="team-container">
       <view class="block-space">
         <view class="important-person">
           <view class="captain-container">
-            <view class="text">队长</view>
+            <view class="title">队长</view>
             <player-card-small name="{{selectCaptain.name}}" img="{{selectCaptain.img}}" bindtap="gotoSelectCaptain" data-id="{{teamId}}"></player-card-small>
             <player-card-small wx:if="{{captainId !== 0}}" name="{{captain.name}}" img="{{captain.photoUrl}}" bindtap="manageCaptain"></player-card-small>
           </view>
@@ -46,7 +67,7 @@
       <view class="block-space">
         <view class="important-person">
           <view class="coach-container">
-            <view class="text">教练</view>
+            <view class="title">教练</view>
             <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
             <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach" data-id="{{index}}">
             <view wx:if="{{isClickCoachList[index].isClicked}}">
@@ -60,23 +81,28 @@
 
       <view class="block-space">
         <view class="teammate-container">
-          <view class="text">队员</view>
+          <view class="title">队员</view>
           <scroll-view scroll-y enable-flex>
             <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="gotoInvitePlayer" data-id="{{teamId}}"></player-card-small>
             <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer" data-id="{{index}}">
+            <view wx:if="{{item.number >= 1 && item.number <= 99}}" class="player-number">{{item.number + '号'}}</view>
+            <view wx:else="" class="player-number">{{'暂无号码'}}</view>
             <view wx:if="{{isClickPlayerList[index].isClicked}}">
               <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckPlayerModal" data-id="{{item.playerId}}"></image>
+              <image src="/assets/cloth.png" class="icon_cloth" bind:tap="showEditPlayerModal" data-id="{{item.playerId}}"></image>
               <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
             </view>
             </player-card-small>
           </scroll-view>
         </view>
       </view>
-    </view>
 
-    <!-- 提交按钮 -->
-    <view class="btn-container">
-      <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
+      <modal hidden="{{editPlayerModalHidden}}" bindconfirm="confirmEditPlayerNumber" bindcancel="cancelEditPlayerNumber">
+        <view class="modal-content">
+          <text>请输入球员号码（1-99）：</text>
+          <input placeholder="球员号码" value="{{newPlayerNumber}}" bindinput="inputPlayerNumber" type="number" />
+        </view>
+      </modal>
     </view>
 
   </view>

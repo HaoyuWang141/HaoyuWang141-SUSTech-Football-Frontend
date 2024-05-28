@@ -105,19 +105,30 @@
   margin-bottom: 3%;
 }
 
-.addStage-Tag{
-  height: 60rpx;
-  width: 200rpx;
+.addStage-tag {
+  align-items: center;
+  font-size: medium;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.tag-type{
+  height: 70rpx;
+  width: 300rpx;
   background-color: #eb903a;
-  border-radius: 60rpx;
+  border-radius: 100rpx;
+  padding-left: 25rpx;
+  padding-top: 5rpx;
+  padding-bottom: 5rpx;
   text-align: center;
   align-items: center;
   color: white;
   font-size: medium;
   margin-bottom: 3%;
   margin-top: 3%;
-  margin-right: 5%;
-  margin-left: 5%;
+  margin-left: 3%;
 }
 
 .stage-container {
@@ -126,7 +137,7 @@
 }
 
 .select-tag {
-  margin-left: 10%;
+  margin-left: 3%;
   margin-bottom: 3%;
   margin-top: 3%;
 }

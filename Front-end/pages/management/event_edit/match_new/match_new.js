@@ -236,6 +236,24 @@ Page({
       tag: this.data.tagNameList[e.detail.value],
     });
   },
+
+  // 点击确认修改按钮，弹出确认修改模态框
+  showConfirmModal() {
+    var that = this
+    wx.showModal({
+      title: '确认创建',
+      content: '确定要创建比赛吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.confirmCreate() // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    })
+  },
   
   // 处理提交信息修改
   confirmCreate: function (){

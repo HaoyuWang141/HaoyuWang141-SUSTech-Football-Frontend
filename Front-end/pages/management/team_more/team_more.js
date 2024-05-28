@@ -188,10 +188,6 @@ Page({
         });
       },
       fail(err) {
-        console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
-      },
-      complete() {
         // 请求失败的处理逻辑
         console.error('球队删除失败', err);
         // 显示失败信息
@@ -200,6 +196,8 @@ Page({
           icon: 'none',
           duration: 2000
         });
+      },
+      complete() {
       }
     });
   },
