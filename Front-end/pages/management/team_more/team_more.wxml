@@ -8,105 +8,36 @@
     </view>
   </view>
 </view>
+
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">功能</text>
+  </view>
+  <view class="function-container">
+    <view bindtap="gotoTeamManagerNoticePage" class="function-button">
+      <image src="/assets/notice.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">球队管理者通知</text>
+    </view>
+  </view>
+</view>
 <!-- <view class="container">
   <view style="width: 95%;"> -->
-    <scroll-view scroll-y enable-flex>
-      <!-- 创建球队 -->
-      <view>
-        <team-card-big name="创建新球队" img="/assets/newplayer.png" number="0" bindtap="createNewTeam"></team-card-big>
-      </view>
-      <!-- 球队列表 -->
-      <view class="team-card-container">
-        <block wx:for="{{teamList}}" wx:key="teamId">
-          <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerList.length}}">
-            <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
-              <view class="check-btn" bindtap="gotoEditTeam" data-id="{{item.teamId}}">编辑</view>
-              <view class="delete-btn" bindtap="showCancelModal" data-id="{{item.teamId}}">删除</view>
-            </view>
-          </team-card-big>
-        </block>
-      </view>
-    </scroll-view>
-  <!-- </view>
+<scroll-view scroll-y enable-flex>
+  <!-- 创建球队 -->
+  <view>
+    <team-card-big name="创建新球队" img="/assets/newplayer.png" number="0" bindtap="createNewTeam"></team-card-big>
+  </view>
+  <!-- 球队列表 -->
+  <view class="team-card-container">
+    <block wx:for="{{teamList}}" wx:key="teamId">
+      <team-card-big name="{{item.name}}" img="{{item.logoUrl}}" number="{{item.playerList.length}}">
+        <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
+          <view class="check-btn" bindtap="gotoEditTeam" data-id="{{item.teamId}}">编辑</view>
+          <view class="delete-btn" bindtap="showCancelModal" data-id="{{item.teamId}}">删除</view>
+        </view>
+      </team-card-big>
+    </block>
+  </view>
+</scroll-view>
+<!-- </view>
 </view> -->
-
-<!-- 球队管理员身份：球员申请通知 -->
-<view class="block-container" wx:if="{{isTeamManager}}">
-  <view class="block-top" bindtap="toggleManageTeamApplicationInform">
-    <view class="block-title">
-      <text> 球队管理员身份：球员申请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamApplicationDot}}"></view>
-    </view>
-    <view class="block-more">
-      <image class="icon" src="/assets/down333.png" mode="" />
-    </view>
-  </view>
-  <view class="block-main">
-    <view>点击审核可选择接受或拒绝</view>
-    <scroll-view scroll-y="true" style="height: {{showManageTeamApplicationInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{manageTeamApplicationsInform}}" wx:key="index" bind:tap="showManageTeamApplicationModal" data-team-id="{{item.teamId}}" data-player-id="{{item.playerId}}">
-        <text class="invitation-text">{{item.content}}</text>
-      </view>
-    </scroll-view>
-  </view>
-</view>
-
-<view class="block-container" wx:if="{{isTeamManager}}">
-  <view class="block-top" bindtap="toggleManageTeamInvitationMatchInform">
-    <view class="block-title">
-      <text> 球队管理员身份：比赛邀请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamInvitationMatchDot}}"></view>
-    </view>
-    <view class="block-more">
-      <image class="icon" src="/assets/down333.png" mode="" />
-    </view>
-  </view>
-  <view class="block-main">
-    <view>点击审核可选择接受或拒绝</view>
-    <scroll-view scroll-y="true" style="height: {{showManageTeamInvitationMatchInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{manageTeamInvitationMatchInform}}" wx:key="index" bind:tap="showManageTeamInvitationMatchModal" data-match-id="{{item.matchId}}" data-team-id="{{item.teamId}}">
-        <text class="invitation-text">{{item.content}}</text>
-      </view>
-    </scroll-view>
-  </view>
-</view>
-
-<view class="block-container" wx:if="{{isTeamManager}}">
-  <view class="block-top" bindtap="toggleManageTeamInvitationEventInform">
-    <view class="block-title">
-      <text> 球队管理员身份：赛事邀请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamInvitationEventDot}}"></view>
-    </view>
-    <view class="block-more">
-      <image class="icon" src="/assets/down333.png" mode="" />
-    </view>
-  </view>
-  <view class="block-main">
-    <view>点击审核可选择接受或拒绝</view>
-    <scroll-view scroll-y="true" style="height: {{showManageTeamInvitationEventInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{manageTeamInvitationEventInform}}" wx:key="index" bind:tap="showManageTeamInvitationEventModal" data-event-id="{{item.eventId}}" data-team-id="{{item.teamId}}">
-        <text class="invitation-text">{{item.content}}</text>
-      </view>
-    </scroll-view>
-  </view>
-</view>
-
-<view class="block-container" wx:if="{{isTeamManager}}">
-  <view class="block-top" bindtap="toggleManageTeamInvitationPlayerInform">
-    <view class="block-title">
-      <text> 球队管理员身份：球员邀请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamInvitationPlayerDot}}"></view>
-    </view>
-    <view class="block-more">
-      <image class="icon" src="/assets/down333.png" mode="" />
-    </view>
-  </view>
-  <view class="block-main">
-    <view>未对球员发起过任何邀请</view>
-    <scroll-view scroll-y="true" style="height: {{showManageTeamInvitationPlayerInform ? '200px' : '0'}};" class="notification-box">
-      <view class="invitation-item" wx:for="{{manageTeamInvitationPlayerInform}}" wx:key="index">
-        <text class="invitation-text">{{item}}</text>
-      </view>
-    </scroll-view>
-  </view>
-</view>

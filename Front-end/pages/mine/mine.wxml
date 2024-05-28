@@ -10,10 +10,6 @@
   </view>
 </view>
 
-  <button open-type="chooseAvatar" bind:tap="onChooseAvatar">
-    换头
-  </button>
-
   <view class="container-mine">
     <view class="block-container">
       <view class="block-top">

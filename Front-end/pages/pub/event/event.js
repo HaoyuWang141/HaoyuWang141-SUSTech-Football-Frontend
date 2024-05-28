@@ -85,13 +85,19 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        let matchList = res.data.matchList ?? []
+        for (let match of matchList) {
+          let date = new Date(match.time)
+          match.strTime = formatTime(date)
+          match.hasBegun = match.status == 'PENDING' ? false : true
+        }
         // 基本数据
         that.setData({
           name: res.data.name,
           description: res.data.description,
           managerList: res.data.managerList,
           teamList: res.data.teamList,
-          matchList: res.data.matchList,
+          matchList: matchList,
           groupList: res.data.groupList,
           stageList: res.data.stageList,
         });
@@ -251,7 +257,7 @@ Page({
       return item.id
     });
     wx.navigateTo({
-      url: '../teams/teams?teamIdList=' + teamIdList,
+      url: '../teams/teams?idList=' + teamIdList,
     })
   },
 
@@ -262,7 +268,7 @@ Page({
     console.log("event page: gotoMatchesPage() ->")
     console.log("matchIdList: " + matchIdList)
     wx.navigateTo({
-      url: '../matches/matches?matchIdList=' + matchIdList,
+      url: '../matches/matches?idList=' + matchIdList,
     })
   },
 

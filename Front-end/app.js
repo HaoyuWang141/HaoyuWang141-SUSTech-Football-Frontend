@@ -90,7 +90,7 @@ App({
    * @param {function} task : the func you want to apply with userId
    */
   addToRequestQueue: function (task) {
-    if (this.globalData.userId) {
+    if (this.globalData.userId != null) {
       task(this.globalData.userId);
     } else {
       this.globalData.requestQueue.push(task);
