@@ -19,6 +19,6 @@
       </view>
       <view class="text">未找到用户</view>
     </view>
-    <user-card-big wx:for="{{userList}}" wx:key="userId" name="{{item.nickName ? item.nickName : ''}}" img="{{item.avatarUrl ? item.avatarUrl : ''}}" isPlayer="{{item.playerRole ? true : false}}" isReferee="{{item.refereeRole ? true : false}}" isCoach="{{item.coachRole ? true : false}}" bind:tap="gotoUserPage" data-id="{{item.userId}}"> </user-card-big>
+    <user-card-big wx:for="{{userList}}" wx:key="userId" name="{{item.nickName ? item.nickName : '--'}}" img="{{item.avatarUrl ? item.avatarUrl : '/assets/newplayer.png'}}" isPlayer="{{item.playerRole ? true : false}}" isReferee="{{item.refereeRole ? true : false}}" isCoach="{{item.coachRole ? true : false}}" bind:tap="gotoUserPage" data-id="{{item.userId}}"> </user-card-big>
   </view>
 </view>
