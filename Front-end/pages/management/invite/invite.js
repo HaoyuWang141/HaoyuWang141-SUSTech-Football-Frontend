@@ -314,22 +314,74 @@ Page({
     })
   },
 
-  invite(e) {
-    let url = '';
-    console.log('e.currentTarget.dataset->');
-    console.log(e.currentTarget.dataset);
+  // 点击确认创建按钮，弹出确认修改模态框
+  showConfirmInviteModal(e) {
+    var that = this
+    const id = e.currentTarget.dataset.id
+    let content = ''
     switch (this.data.type) {
       case 'player':
-        url = URL + '/team/player/invite?teamId=' + this.data.id + "&playerId=" + e.currentTarget.dataset.id;
+        content = '确定要邀请该球员吗？';
         break;
       case 'coach':
-        url = URL + '/team/coach/invite?teamId=' + this.data.id + "&coachId=" + e.currentTarget.dataset.id;
+        content = '确定要邀请该教练吗？';
         break;
       case 'referee':
-        url = URL + '/match/referee/invite?matchId=' + this.data.id + "&refereeId=" + e.currentTarget.dataset.id;
+        content = '确定要邀请该裁判吗？';
         break;
       case 'team':
-        url = URL + '/event/team/invite?eventId=' + this.data.id + '&teamId=' + e.currentTarget.dataset.id;
+        content = '确定要邀请该球队吗？';
+        break;
+      default:;
+    }
+    wx.showModal({
+      title: '确认邀请',
+      content: content,
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.invite(id) // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    });
+  },
+
+  // 点击确认创建按钮，弹出确认修改模态框
+  showConfirmSelectModal(e) {
+    var that = this
+    const id = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '确认邀请',
+      content: '确定要选择该球员做队长吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.selectCaptain(id) // 点击确认时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击取消时的回调函数，这里不做任何操作
+        }
+      }
+    });
+  },
+
+  invite(id) {
+    let url = '';
+    switch (this.data.type) {
+      case 'player':
+        url = URL + '/team/player/invite?teamId=' + this.data.id + "&playerId=" + id;
+        break;
+      case 'coach':
+        url = URL + '/team/coach/invite?teamId=' + this.data.id + "&coachId=" + id;
+        break;
+      case 'referee':
+        url = URL + '/match/referee/invite?matchId=' + this.data.id + "&refereeId=" + id;
+        break;
+      case 'team':
+        url = URL + '/event/team/invite?eventId=' + this.data.id + '&teamId=' + id;
         break;
       default:
         url = URL;
@@ -359,13 +411,13 @@ Page({
     });
   },
 
-  selectCaptain(e) {
+  selectCaptain(id) {
     const that = this;
     this.setData({
-      captainId: e.target.dataset.id,
+      captainId: id,
     })
     wx.request({
-      url: URL + '/team/captain/updateByPlayerId?teamId=' + that.data.id + '&captainId=' + e.currentTarget.dataset.id,
+      url: URL + '/team/captain/updateByPlayerId?teamId=' + that.data.id + '&captainId=' + id,
       method: 'POST',
       success: res => {
         console.log('成功设置队长', res.data);

@@ -19,20 +19,20 @@
             <view class="text">未找到球员</view>
           </view>
           <scroll-view scroll-y enable-flex>
-            <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.playerId}}">
+            <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="showConfirmInviteModal" data-id="{{item.playerId}}">
             </player-card-small>
           </scroll-view>
         </view>
         <scroll-view scroll-y enable-flex wx:if="{{type === 'coach'}}">
-          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.coachId}}">
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="showConfirmInviteModal" data-id="{{item.coachId}}">
           </player-card-small>
         </scroll-view>
         <scroll-view scroll-y enable-flex wx:if="{{type === 'referee'}}">
-          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="invite" data-id="{{item.refereeId}}" >
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="showConfirmInviteModal" data-id="{{item.refereeId}}" >
           </player-card-small>
         </scroll-view>
         <scroll-view scroll-y enable-flex wx:if="{{type === 'team'}}">
-          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="invite" data-id="{{item.teamId}}">
+          <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="showConfirmInviteModal" data-id="{{item.teamId}}">
           </team-card-small>
         </scroll-view>
         <scroll-view scroll-x enable-flex wx:if="{{type === 'hometeam-match'}}">
@@ -48,7 +48,7 @@
           <team-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="selectAwayTeam" data-id="{{item.teamId}}"></team-card-small>
         </scroll-view>
         <scroll-view scroll-y enable-flex wx:if="{{type === 'captain'}}">
-          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="selectCaptain" data-id="{{item.playerId}}">
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="showConfirmSelectModal" data-id="{{item.playerId}}">
           </player-card-small>
         </scroll-view>
       </view>
