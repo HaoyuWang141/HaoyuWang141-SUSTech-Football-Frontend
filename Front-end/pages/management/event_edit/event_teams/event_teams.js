@@ -11,14 +11,24 @@ Page({
     id: 0,
     eventId: 0,
     teamList: [],
-    deleteTeamId: 0
+    groupList: [],
+    deleteTeamId: 0,
+    deleteGroupId: 0,
+    groupNameList: [],
+    groupTeamList: [],
+    noGroupTeamList: [],
+    selectedGroupIndex: 0, // 选择的组别索引
+    groupModalHidden: true, // 控制分组确认模态框显示隐藏
+    currentTeamId: 0, // 当前选择分组的球队ID
+    currentGroupId: 0,
+    currentTeamName: '',
+    showPicker: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
       id: options.id
     })
@@ -97,8 +107,38 @@ Page({
         that.setData({
           eventId: res.data.eventId,
           teamList: res.data.teamList,
+          groupList: res.data.groupList
         });
-
+        let groupNameList = []
+        let groupTeamList = []
+        for (let i = 0; i < res.data.groupList.length; i++) {
+          groupNameList.push(res.data.groupList[i].name);
+          for (let j = 0; j < res.data.groupList[i].teamList.length; j++){
+            groupTeamList.push(res.data.groupList[i].teamList[j].team)
+          }
+        }
+        that.setData({
+          groupNameList: groupNameList,
+          groupTeamList: groupTeamList
+        });
+        let teamList = res.data.teamList
+        let noGroupTeamList = []
+        for (let i = 0; i < teamList.length; i++) {
+          var hasGruop = false
+          for (let j = 0; j < groupTeamList.length; j++) {
+            if (teamList[i].id === groupTeamList[j].id) {
+              hasGruop = true
+              break
+            }
+          }
+          if (!hasGruop) {
+            noGroupTeamList.push(teamList[i])
+            console.log(teamList[i])
+          }
+        }
+        that.setData({
+          noGroupTeamList: noGroupTeamList
+        })
       },
       fail(err) {
         console.log('请求失败', err);
@@ -114,7 +154,8 @@ Page({
   // 点击取消比赛按钮，弹出确认取消模态框
   showCancelModal(e) {
     this.setData({
-      deleteTeamId: e.currentTarget.dataset.id
+      deleteTeamId: e.currentTarget.dataset.teamid,
+      deleteGroupId: e.currentTarget.dataset.groupid
     }) 
     var that = this
     wx.showModal({
@@ -133,49 +174,280 @@ Page({
     });
   },
 
-  deleteTeam() {
-    var that = this;
-    // 模拟网络请求
-    wx.request({
-      url: URL + '/event/team/delete?eventId=' + that.data.eventId + '&teamId=' + that.data.deleteTeamId,
-      method: 'DELETE',
+  // 显示选择组别的picker
+  selectGroup: function (e) {
+    console.log(e)
+    const teamId = e.currentTarget.dataset.id;
+    const name = e.currentTarget.dataset.name;
+    const currentGroupId = e.currentTarget.dataset.groupid
+    this.setData({
+      currentTeamId: teamId,
+      currentTeamName: name,
+      currentGroupId: currentGroupId,
+      showPicker: true
+    });
+  },
+
+  // 处理组别选择变化
+  onGroupChange: function (e) {
+    this.setData({
+      selectedGroupIndex: e.detail.value,
+    });
+    this.showSelectConfirmModal();
+  },
+
+  // 点击取消比赛按钮，弹出确认取消模态框
+  showSelectConfirmModal() {
+    var that = this
+    wx.showModal({
+      title: '确认分配小组',
+      content: '确定将球队' + that.data.currentTeamName + '分配到' + that.data.groupNameList[that.data.selectedGroupIndex] + '吗？',
+      confirmText: '确认分配',
+      cancelText: '我再想想',
       success(res) {
-        console.log("delete event team->")
-        console.log(res.data)
-        if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+        if (res.confirm) {
+          that.confirmGroupAssignment() // 点击确认删除时的回调函数
+        } else if (res.cancel) {
+          () => {} // 点击我再想想时的回调函数，这里不做任何操作
+        }
+      }
+    });
+  },
+
+  // 确认分配组别
+  confirmGroupAssignment: function () {
+    const teamId = this.data.currentTeamId
+    const groupId = this.data.groupList[this.data.selectedGroupIndex].groupId
+    var that = this
+    let isInGroup = true
+    for (let i = 0; i < this.data.noGroupTeamList.length; i++){
+      if (teamId === this.data.noGroupTeamList[i].id) {
+        isInGroup = false
+        break
+      }
+    }
+    if (isInGroup) {
+      wx.request({
+        url: URL + '/event/group/deleteTeam?groupId=' + that.data.currentGroupId + '&teamId=' + teamId,
+        method: 'DELETE',
+        success(res) {
+          console.log("delete event group team->")
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            wx.showToast({
+              title: '删除失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+            return
+          }
+          wx.request({
+            url: URL + '/event/group/addTeam?groupId=' + groupId + '&teamId=' + teamId,
+            method: 'POST',
+            success(res) {
+              console.log("gruop addTeam->")
+              console.log(res.data)
+              if (res.statusCode !== 200) {
+                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                wx.showToast({
+                  title: '分配失败，请重试',
+                  icon: 'none',
+                  duration: 2000
+                });
+                return
+              }
+              const successMsg = res.data ? res.data : '分配成功'; // 假设后端返回的成功信息在 res.
+              wx.showToast({
+                title: successMsg,
+                icon: 'none',
+                duration: 2000,
+              });
+            },
+            fail(err) {
+              // 请求失败的处理逻辑
+              console.error('赛事球队分配小组失败', err);
+              // 显示失败信息
+              wx.showToast({
+                title: '分配失败，请重试',
+                icon: 'none',
+                duration: 2000
+              });
+            },
+            complete() {
+              that.fetchData(that.data.id);
+            }
+          });
+        },
+        fail(err) {
+          // 请求失败的处理逻辑
+          console.error('赛事小组球队删除失败', err);
+          // 显示失败信息
           wx.showToast({
             title: '删除失败，请重试',
             icon: 'none',
             duration: 2000
           });
-          return
+        },
+        complete() {
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
-        wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
-            setTimeout(function () {
-              that.fetchData(that.data.id);
-            }, 2000);
+      });
+    } else {
+      // 模拟网络请求
+      wx.request({
+        url: URL + '/event/group/addTeam?groupId=' + groupId + '&teamId=' + teamId,
+        method: 'POST',
+        success(res) {
+          console.log("gruop addTeam->")
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            wx.showToast({
+              title: '分配失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+            return
           }
-        });
-      },
-      fail(err) {
-        // 请求失败的处理逻辑
-        console.error('赛事球队删除失败', err);
-        // 显示失败信息
-        wx.showToast({
-          title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
-        });
-      },
-      complete() {
-      }
-    });
+          const successMsg = res.data ? res.data : '分配成功'; // 假设后端返回的成功信息在 res.
+          wx.showToast({
+            title: successMsg,
+            icon: 'none',
+            duration: 2000,
+          });
+        },
+        fail(err) {
+          // 请求失败的处理逻辑
+          console.error('赛事球队分配小组失败', err);
+          // 显示失败信息
+          wx.showToast({
+            title: '分配失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+        },
+        complete() {
+          that.fetchData(that.data.id);
+        }
+      });
+    }
+  },
+
+  deleteTeam() {
+    var that = this;
+    // 模拟网络请求
+    if(this.data.groupId === 0){
+      wx.request({
+        url: URL + '/event/team/delete?eventId=' + that.data.eventId + '&teamId=' + that.data.deleteTeamId,
+        method: 'DELETE',
+        success(res) {
+          console.log("delete event team->")
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            wx.showToast({
+              title: '删除失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+            return
+          }
+          const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+          wx.showToast({
+            title: successMsg,
+            icon: 'none',
+            duration: 2000,
+            success: function () {
+              setTimeout(function () {
+                that.fetchData(that.data.id);
+              }, 2000);
+            }
+          });
+        },
+        fail(err) {
+          // 请求失败的处理逻辑
+          console.error('赛事球队删除失败', err);
+          // 显示失败信息
+          wx.showToast({
+            title: '删除失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+        },
+        complete() {
+        }
+      });
+    } else {
+      wx.request({
+        url: URL + '/event/group/deleteTeam?groupId=' + that.data.deleteGroupId + '&teamId=' + that.data.deleteTeamId,
+        method: 'DELETE',
+        success(res) {
+          console.log("delete event group team->")
+          console.log(res.data)
+          if (res.statusCode !== 200) {
+            console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            wx.showToast({
+              title: '删除失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+            return
+          }
+          wx.request({
+            url: URL + '/event/team/delete?eventId=' + that.data.eventId + '&teamId=' + that.data.deleteTeamId,
+            method: 'DELETE',
+            success(res) {
+              console.log("delete event team->")
+              console.log(res.data)
+              if (res.statusCode !== 200) {
+                console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                wx.showToast({
+                  title: '删除失败，请重试',
+                  icon: 'none',
+                  duration: 2000
+                });
+                return
+              }
+              const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+              wx.showToast({
+                title: successMsg,
+                icon: 'none',
+                duration: 2000,
+                success: function () {
+                  setTimeout(function () {
+                    that.fetchData(that.data.id);
+                  }, 2000);
+                }
+              });
+            },
+            fail(err) {
+              // 请求失败的处理逻辑
+              console.error('赛事球队删除失败', err);
+              // 显示失败信息
+              wx.showToast({
+                title: '删除失败，请重试',
+                icon: 'none',
+                duration: 2000
+              });
+            },
+            complete() {
+            }
+          });
+        },
+        fail(err) {
+          // 请求失败的处理逻辑
+          console.error('赛事小组球队删除失败', err);
+          // 显示失败信息
+          wx.showToast({
+            title: '删除失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+        },
+        complete() {
+        }
+      });
+    }
   },
 
   gotoInviteTeam: function(e){

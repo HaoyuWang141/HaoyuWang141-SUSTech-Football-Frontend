@@ -10,14 +10,43 @@
       </view>
 
       <view class="team-card-container" >
-        <block wx:for="{{teamList}}" wx:key="teamId">
-          <team-card-big name="{{item.name}}" img="{{item.logo}}" number="{{item.playerCount}}">
-          <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
-            <view class="delete-btn" bindtap="showCancelModal" data-id="{{item.id}}">删除</view>
-            <view class="check-btn" bindtap="gotoTeamPage" data-id="{{item.id}}">查看</view>
+        <view wx:for="{{groupList}}" class="group-team" wx:for-item="groupItem">
+          <view class="group-name">{{groupItem.name}}</view>
+          <block wx:for="{{groupItem.teamList}}" wx:for-item="teamItem" wx:key="index">
+            <team-card-big name="{{teamItem.team.name}}" img="{{teamItem.team.logo}}" number="{{teamItem.team.playerCount}}">
+              <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
+                <view class="delete-btn" bindtap="showCancelModal" data-teamid="{{teamItem.team.id}}" data-groupId="{{groupItem.groupId}}">删除</view>
+                <view class="check-btn" bindtap="gotoTeamPage" data-id="{{teamItem.team.id}}">查看</view>
+                <picker mode="selector" range="{{groupNameList}}" bindchange="onGroupChange" value="{{selectedGroupIndex}}">
+                  <view class="edit-btn" bindtap="selectGroup" data-id="{{teamItem.team.id}}" data-name="{{teamItem.team.name}}" data-groupId="{{groupItem.groupId}}">分组</view>
+                </picker>
+              </view>
+            </team-card-big>
+          </block>
+        </view>
+
+        <view wx:if="{{noGroupTeamList.length > 0}}" class="group-team">
+          <view class="group-name">{{'未分组'}}</view>
+          <block wx:for="{{noGroupTeamList}}" wx:key="teamId">
+            <team-card-big name="{{item.name}}" img="{{item.logo}}" number="{{item.playerCount}}">
+              <view style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 30rpx;">
+                <view class="delete-btn" bindtap="showCancelModal" data-teamid="{{item.id}}" data-groupId="{{0}}">删除</view>
+                <view class="check-btn" bindtap="gotoTeamPage" data-id="{{item.id}}">查看</view>
+                <picker mode="selector" range="{{groupNameList}}" bindchange="onGroupChange" value="{{selectedGroupIndex}}">
+                  <view class="edit-btn" bindtap="selectGroup" data-id="{{item.id}}" data-name="{{item.name}}" data-groupId="{{0}}">分组</view>
+                </picker>
+              </view>
+            </team-card-big>
+          </block>
+        </view>
+
+        <!-- 确认分组模态框 -->
+        <modal hidden="{{groupModalHidden}}" bindconfirm="confirmGroupAssignment" bindcancel="cancelGroupAssignment" confirmText="确认" cancelText="取消">
+          <view class="modal-content">
+            <text>确定将球队分配到组别 {{groupNameList[selectedGroupIndex]}} 吗？</text>
           </view>
-          </team-card-big>
-        </block>
+        </modal>
+        
       </view>
     </scroll-view>
     
