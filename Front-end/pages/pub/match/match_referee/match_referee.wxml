@@ -100,7 +100,7 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">比赛进球</text>
-    <block wx:if="{{match.status != 'PENDING'}}">
+    <block wx:if="{{match.status == 'ONGOING'}}">
       <text class="block-more button-update" bind:tap="showMatchInfoModal">更新</text>
     </block>
   </view>
@@ -119,7 +119,7 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">比赛事件</text>
-    <block wx:if="{{match.status != 'PENDING'}}">
+    <block wx:if="{{match.status == 'ONGOING'}}">
       <text class="block-more button-update" bind:tap="showActionAddModal">增加</text>
     </block>
   </view>

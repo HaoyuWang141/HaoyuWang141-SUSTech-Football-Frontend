@@ -224,7 +224,7 @@ Page({
       method: 'POST',
       data: {
         homeTeamId: homeTeamId,
-        time: date + 'T' + time,
+        time: date + 'T' + time + ':00+08:00',
       },
       success: res => {
         wx.hideLoading()
