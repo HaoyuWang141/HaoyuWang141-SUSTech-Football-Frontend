@@ -321,7 +321,7 @@ Page({
     });
   },
 
-  inputEventDes: function (e) {
+  inputTeamDes: function (e) {
     this.setData({
       description: e.detail.value,
     });

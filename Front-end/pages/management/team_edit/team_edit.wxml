@@ -28,11 +28,14 @@
 
     <!-- 管理球队简介 -->
     <view class="block-space">
-      <view class="description-container" bindtap="showDesInput">
+      <view class="description-container">
         <view class="text">球队简介</view>
         <view class="description-content">
           <textarea class="description" bindinput="inputTeamDes" value="{{description}}"></textarea>
         </view>
+      </view>
+      <view class="btn-container">
+        <button class="confirm-btn" bindtap="updateTeamInfo">确认修改</button>
       </view>
     </view>
 
