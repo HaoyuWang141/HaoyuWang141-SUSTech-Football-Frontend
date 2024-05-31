@@ -464,5 +464,12 @@ Page({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'referee',
     })
   },
+  
+  gotoRefereePage: function (e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/pub/user/referee/referee?id=' + id,
+    })
+  }
 
 })

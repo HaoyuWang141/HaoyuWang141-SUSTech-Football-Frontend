@@ -7,34 +7,18 @@
       <view class="image-container">
         <image src="{{icon}}" mode="scaleToFill" class="image"></image>
       </view>
-      <view class="text-container" bindtap="showNameInput">
-        <text class="text">{{name}}</text>
-        <text class="name-edit">编辑</text>
+      <view class="text-container">
+        <input class="text" bindinput="inputEventName" placeholder="请输入赛事名" style="flex: 1;"></input>
       </view>
-
-      <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
-        <view class="modal-content">
-          <text>请输入赛事名称：</text>
-          <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
-        </view>
-      </modal>
     </view> 
   </view>
 
   <view class="block-space">
     <view class="discription-container">
       <text style="margin-left: 3%;">赛事简介</text>
-      <view class="description-content" >
-        <text class="description" >{{description}}</text>
-        <text class="description-edit" bindtap="showDesInput">编辑</text>
+      <view class="description-content">
+        <textarea class="description" bindinput="inputEventDes" placeholder="请输入赛事简介"></textarea>
       </view>
-
-      <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
-        <view class="modal-content">
-          <text>编辑赛事介绍：</text>
-          <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
-        </view>
-      </modal>
     </view>
   </view>
 
@@ -45,13 +29,13 @@
       <text wx:if="{{eventType === ''}}" class="prompt">{{'点击选择赛事类型'}}</text>
       <text wx:else="">{{eventType}}</text>
     </picker>
-    <text class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</text>
+    <view class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</view>>
   </view>
 
   <!-- 赛事阶段 -->
   <view class="block-space">
     <view class="stage-container">
-      <text style="margin-left: 3%;">赛事阶段</text>
+      <text style="margin-left: 3%;">赛事阶段：</text>
       <text wx:if="{{eventType === ''}}" class="prompt">请先选择赛事类型</text>
       <view wx:for="{{stageList}}" wx:key="name">
         <view class="addStage-tag">{{item.stageName}}</view>

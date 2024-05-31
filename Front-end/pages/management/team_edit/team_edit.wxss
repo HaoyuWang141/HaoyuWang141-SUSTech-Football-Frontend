@@ -41,7 +41,7 @@
 
 .description-container {
   margin-top: 3%;
-  margin-left: 10rpx;
+  margin-left: 3%;
 }
 
 .description-content {
@@ -51,8 +51,10 @@
 
 .description {
   font-size: small;
-  white-space: normal; /* 允许文本换行 */
-  word-wrap: break-word; /* 单词换行 */
+  width: 100%; /* 调整宽度 */
+  height: 80px; /* 调整高度 */
+  resize: none; /* 禁止用户手动调整文本区域大小 */
+  overflow: auto; /* 当内容超出时显示滚动条 */
 }
 
 .description-edit {
@@ -68,7 +70,6 @@
 }
 
 .team-container {
-  margin: 10rpx;
   width: 100%;
 }
 

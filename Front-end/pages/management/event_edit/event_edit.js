@@ -277,28 +277,9 @@ Page({
     });
   },
 
-  showDesInput: function () {
+  inputEventDes: function (e) {
     this.setData({
-      modalHiddenEdes: false
-    });
-  },
-
-  changedes: function (e) {
-    this.setData({
-      newdes: e.detail.value
-    });
-  },
-
-  confirmChangeEventdes: function () {
-    this.setData({
-      description: this.data.newdes,
-      modalHiddenEdes: true
-    });
-  },
-
-  cancelChangeEventdes: function () {
-    this.setData({
-      modalHiddenEdes: true
+      description: e.detail.value,
     });
   },
 
