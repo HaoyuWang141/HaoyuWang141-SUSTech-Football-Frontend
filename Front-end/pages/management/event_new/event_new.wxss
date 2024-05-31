@@ -1,11 +1,13 @@
 /* pages/management/event_new/event_new.wxss */
 .block-container {
-  padding: 10rpx;
-  border: 1rpx solid #cccccc;
-  background-color: white;
-  border-radius: 20rpx;
+  padding: 30rpx;
+  border: 1rpx solid #cccccc; /* Light grey border */
+  background-color: white; /* Light grey background */
+  border-radius: 30rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2); /* 卡片阴影 */
   margin-bottom: 20rpx;
-  width: 95%;
+  margin: 10rpx; /* 外边距，根据需要调整 */
+  width: 90%;
 }
 
 .block-space {
@@ -106,29 +108,12 @@
 }
 
 .addStage-tag {
-  align-items: center;
-  font-size: medium;
-  margin-bottom: 3%;
-  margin-top: 3%;
-  margin-right: 5%;
-  margin-left: 5%;
-}
-
-.tag-type{
-  height: 70rpx;
-  width: 300rpx;
-  background-color: #eb903a;
-  border-radius: 100rpx;
-  padding-left: 25rpx;
-  padding-top: 5rpx;
-  padding-bottom: 5rpx;
-  text-align: center;
-  align-items: center;
+  padding: 10rpx 40rpx;
   color: white;
-  font-size: medium;
-  margin-bottom: 3%;
-  margin-top: 3%;
-  margin-left: 3%;
+  background-color: #ed6c00;
+  font-weight: bold;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
 }
 
 .stage-container {
@@ -137,14 +122,15 @@
 }
 
 .select-tag {
-  margin-left: 3%;
+  margin-left: 10%;
   margin-bottom: 3%;
   margin-top: 3%;
 }
 
 .prompt {
-  margin-left: 3%;
+  margin-left: 1%;
   color: rgb(145, 143, 143);
+  font-size: medium;
 }
 
 .hint {
