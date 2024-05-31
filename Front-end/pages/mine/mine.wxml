@@ -33,7 +33,7 @@
         <view wx:if="{{isPlayer}}">球员: playerId = {{playerId}}</view>
         <view wx:if="{{isCoach}}">教练: coachId = {{coachId}}</view>
         <view wx:if="{{isReferee}}">裁判: refereeId = {{refereeId}}</view>
-        <view wx:if="{{isTeamManager}}"> 球队管理员: teamId =
+        <!-- <view wx:if="{{isTeamManager}}"> 球队管理员: teamId =
           <text wx:for="{{manageTeamIdList}}" wx:key="teamId"> {{item.teamId }} </text>
         </view>
         <view wx:if="{{isMatchManager}}"> 比赛管理员: matchId =
@@ -41,7 +41,7 @@
         </view>
         <view wx:if="{{isEventManager}}"> 赛事员管理员: eventId =
           <text wx:for="{{manageEventIdList}}" wx:key="eventId"> {{item.eventId}} </text>
-        </view>
+        </view> -->
       </view>
     </view>
 

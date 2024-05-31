@@ -16,7 +16,7 @@
   <view class="function-container">
     <view bindtap="gotoTeamManagerNoticePage" class="function-button">
       <image src="/assets/notice.png" mode="scaleToFill" class="function-image" />
-      <text class="function-text">球队管理者通知</text>
+      <text class="function-text">球队通知</text>
     </view>
   </view>
 </view>
