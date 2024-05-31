@@ -1,7 +1,7 @@
 <!--pages/management/event_edit/match_new/match_new.wxml-->
 <view class="block-container">
 
-  <view style="text-align: center;">比赛创建</view>
+  <view style="text-align: center;">赛事比赛创建</view>
 
   <!-- 比赛信息卡片 -->
   <view class="match-card-container">
