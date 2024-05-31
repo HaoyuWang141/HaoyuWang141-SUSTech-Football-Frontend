@@ -1,59 +1,65 @@
 <!--pages/management/team_edit/team_edit.wxml-->
 <view class="container">
-  <view style="text-align: center;">球队管理</view>
-
   <view class="block-container">
     <!-- 管理队徽 -->
     <view class="block-space-avatar">
-      <view class="avatar-container">
+      <view class="info-container">
         <view class="text">队徽</view>
-        <view class="image-container">
-          <image src="{{logoUrl ? logoUrl : (tempFilePath ? tempFilePath : '/assets/newplayer.png')}}" class="image" bindtap="uploadLogo"/>
+        <view>
+          <image src="{{logoUrl ? logoUrl : (tempFilePath ? tempFilePath : '/assets/newplayer.png')}}" class="image" bindtap="chooseLogo" />
         </view>
       </view>
     </view>
 
     <!-- 管理队名 -->
     <view class="block-space">
-      <view class="teamname-container" bindtap="showNameModal">
+      <view class="info-container" bindtap="showNameModal">
         <view class="text">队名</view>
-        <text class="teamname" >{{name}}</text>
-        <text class="name-edit" >{{edit}}</text>
+        <view>{{name}}</view>
       </view>
 
-      <modal hidden="{{modalHidden}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
+      <modal hidden="{{modalHidden_name}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
         <view class="modal-content">
           <text>请输入新队名：</text>
-          <input placeholder="新队名" value="{{newName}}" bindinput="changeName"/>
+          <input placeholder="新队名" value="{{newName}}" bindinput="changeName" />
         </view>
       </modal>
     </view>
 
     <!-- 管理球队简介 -->
     <view class="block-space">
-      <view class="description-container">
-        <text class="title">球队简介</text>
-        <view class="description-content" bindtap="showDesInput">
-          <text class="description">{{description}}</text>
-          <text class="description-edit">编辑</text>
+      <view class="description-container" bindtap="showDesInput">
+        <view class="text">球队简介</view>
+        <view class="description-content">
+          <text class="description">{{description ? description : "暂无简介"}}</text>
         </view>
       </view>
 
-      <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes" bindcancel="cancelChangeEventdes">
+      <modal hidden="{{modalHidden_description}}" bindconfirm="confirmChangeDescription" bindcancel="cancelChangeDescription">
         <view class="modal-content">
           <text>编辑球队简介：</text>
-          <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
+          <input placeholder="球队简介" value="{{description}}" bindinput="changedes" />
         </view>
       </modal>
     </view>
 
-    <!-- 提交按钮 -->
-    <view class="btn-container">
-      <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
-    </view>
-
     <!-- 管理队员 -->
     <view class="team-container">
+      <view class="block-space">
+        <view class="important-person">
+          <view class="coach-container">
+            <view class="title">教练</view>
+            <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
+            <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach" data-id="{{index}}">
+              <view wx:if="{{isClickCoachList[index].isClicked}}">
+                <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckCoachModal" data-id="{{item.coachId}}"></image>
+                <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeleteCoachModal" data-id="{{item.coachId}}"></image>
+              </view>
+            </player-card-small>
+          </view>
+        </view>
+      </view>
+
       <view class="block-space">
         <view class="important-person">
           <view class="captain-container">
@@ -65,35 +71,53 @@
       </view>
 
       <view class="block-space">
-        <view class="important-person">
-          <view class="coach-container">
-            <view class="title">教练</view>
-            <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
-            <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach" data-id="{{index}}">
-            <view wx:if="{{isClickCoachList[index].isClicked}}">
-              <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckCoachModal" data-id="{{item.coachId}}"></image>
-              <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeleteCoachModal" data-id="{{item.coachId}}"></image>
-            </view>
-            </player-card-small>
-          </view>
-        </view>
-      </view>
-
-      <view class="block-space">
         <view class="teammate-container">
-          <view class="title">队员</view>
-          <scroll-view scroll-y enable-flex>
-            <player-card-small name="{{invitePlayer.name}}" img="{{invitePlayer.img}}" bindtap="gotoInvitePlayer" data-id="{{teamId}}"></player-card-small>
-            <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer" data-id="{{index}}">
-            <view wx:if="{{item.number >= 1 && item.number <= 99}}" class="player-number">{{item.number + '号'}}</view>
-            <view wx:else="" class="player-number">{{'暂无号码'}}</view>
-            <view wx:if="{{isClickPlayerList[index].isClicked}}">
-              <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckPlayerModal" data-id="{{item.playerId}}"></image>
-              <image src="/assets/cloth.png" class="icon_cloth" bind:tap="showEditPlayerModal" data-id="{{item.playerId}}"></image>
-              <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
+          <view class="block-top" style="margin-top: 20rpx;">
+            <view class="title">队员</view>
+            <view class="block-more">
+              <text class="button-custom" style="margin-right: 20rpx" bind:tap="gotoInvitePlayer" data-id="{{teamId}}">邀请球员</text>
             </view>
+          </view>
+
+          <view class="table">
+            <!-- 表头 -->
+            <view class="row header">
+              <view class="cell"></view>
+              <view class="cell">球员</view>
+              <view class="cell">查看</view>
+              <view class="cell">号码</view>
+              <view class="cell">删除</view>
+            </view>
+
+            <!-- 球员信息 -->
+            <view class="row" wx:for="{{playerList}}" wx:key="index">
+              <view class="cell">{{item.number}}</view>
+              <view class="cell table" style="max-width: 250rpx;">
+                <image src="{{item.photoUrl}}" class="player-avatar cell"></image>
+                <text class="cell player-name">{{item.name}}</text>
+              </view>
+              <view class="cell">
+                <image src="/assets/eye.png" class="icon_eye" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}"></image>
+              </view>
+              <view class="cell">
+                <image src="/assets/cloth.png" class="icon_cloth" bind:tap="showEditPlayerModal" data-id="{{item.playerId}}"></image>
+              </view>
+              <view class="cell">
+                <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
+              </view>
+            </view>
+          </view>
+          <!-- <scroll-view scroll-y enable-flex>
+            <player-card-small wx:for="{{playerList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="managePlayer" data-id="{{index}}">
+              <view wx:if="{{item.number >= 1 && item.number <= 99}}" class="player-number">{{item.number + '号'}}</view>
+              <view wx:else="" class="player-number">{{'暂无号码'}}</view>
+              <view wx:if="{{isClickPlayerList[index].isClicked}}">
+                <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckPlayerModal" data-id="{{item.playerId}}"></image>
+                <image src="/assets/cloth.png" class="icon_cloth" bind:tap="showEditPlayerModal" data-id="{{item.playerId}}"></image>
+                <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
+              </view>
             </player-card-small>
-          </scroll-view>
+          </scroll-view> -->
         </view>
       </view>
 

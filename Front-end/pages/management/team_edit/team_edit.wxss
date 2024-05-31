@@ -14,15 +14,9 @@
   margin-top: 5%;
 }
 
-.avatar-container {
+.info-container {
   display: flex; /* 使用 Flexbox 布局 */
   justify-content: space-around; /* 水平对齐，元素间距会自动填充 */
-  margin: 10rpx;
-  padding: 20rpx;
-  width: 90%;
-}
-
-.teamname-container {
   margin: 10rpx;
   padding: 20rpx;
   width: 90%;
@@ -149,4 +143,20 @@
 .player-number {
   font-size: small;
   color: rgb(102, 98, 98);
+}
+
+.player-name {
+  font-size: small;
+  max-width: 150rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-avatar {
+  width: 50rpx;
+  min-width: 50rpx;
+  max-width: 50rpx;
+  height: 50rpx;
+  border-radius: 20rpx;
 }

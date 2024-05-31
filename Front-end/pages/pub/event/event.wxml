@@ -100,7 +100,7 @@
             <!-- 表内容 -->
             <view class="row" wx:for="{{item.teamList}}" wx:for-item="teamInfo" wx:key="index">
               <view class="cell">
-                <view class="cell-team ">
+                <view class="cell-team">
                   <image class="cell-team-icon" src="{{teamInfo.team.logo}}" mode="scaleToFill" />{{teamInfo.team.name}}
                 </view>
               </view>

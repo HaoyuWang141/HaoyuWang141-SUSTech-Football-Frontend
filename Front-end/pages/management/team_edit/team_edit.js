@@ -10,20 +10,28 @@ Page({
    */
   data: {
     id: 0,
-    modalHidden: true, // 控制模态框显示隐藏
-    modalHiddenEdes: true,
-    newName: '',   // 用于存放用户输入的新队名
-    tempFilePath: '',
-    edit: '编辑',
-    invitePlayer: { name: '邀请新队员', img: '/assets/newplayer.png' },
-    selectCaptain: {name: '选择队长', img: '/assets/newplayer.png'},
-    inviteCoach: {name: '邀请教练', img: '/assets/newplayer.png'},
+    modalHidden_name: true, // 控制模态框显示隐藏
+    modalHidden_description: true,
+    invitePlayer: {
+      name: '邀请新队员',
+      img: '/assets/newplayer.png'
+    },
+    selectCaptain: {
+      name: '选择队长',
+      img: '/assets/newplayer.png'
+    },
+    inviteCoach: {
+      name: '邀请教练',
+      img: '/assets/newplayer.png'
+    },
     captain: [],
 
     teamId: 0,
     name: '',
+    newName: '',
     logoUrl: '',
     description: '',
+    newdes: "",
     playerList: [],
     captainId: 0,
     coachList: [],
@@ -99,6 +107,7 @@ Page({
 
   },
 
+  // 拉取数据
   fetchData: function (id) {
     wx.showLoading({
       title: '加载中',
@@ -135,15 +144,15 @@ Page({
         console.log('请求失败', err);
       },
       complete() {
-        if(that.data.isClickPlayerList.length < that.data.playerList.length){
-          for(var i = 0; i < that.data.playerList.length; i++) {
+        if (that.data.isClickPlayerList.length < that.data.playerList.length) {
+          for (var i = 0; i < that.data.playerList.length; i++) {
             that.data.isClickPlayerList.push({
               isClicked: false
             })
           }
         }
-        if(that.data.isClickCoachList.length < that.data.coachList.length){
-          for(var i = 0; i < that.data.coachList.length; i++) {
+        if (that.data.isClickCoachList.length < that.data.coachList.length) {
+          for (var i = 0; i < that.data.coachList.length; i++) {
             that.data.isClickCoachList.push({
               isClicked: false
             })
@@ -156,7 +165,7 @@ Page({
   },
 
   fetchCaptain() {
-    if(this.data.captainId === 0 || this.data.captainId === null){
+    if (this.data.captainId === 0 || this.data.captainId === null) {
       return;
     }
     var that = this;
@@ -181,10 +190,49 @@ Page({
     })
   },
 
-  /**
-   * 修改队徽
-   */
-  uploadLogo: function () {
+  // 上传数据进行更新
+  updateTeamInfo() {
+    // 构造要发送给后端的数据
+    const dataToUpdate = {
+      teamId: this.data.teamId,
+      name: this.data.name,
+      logoUrl: this.data.logoUrl,
+      captainId: this.data.captainId,
+      description: this.data.description
+    };
+    console.log('dataToUpdate->');
+    console.log(dataToUpdate);
+
+    wx.showLoading({
+      title: '上传中',
+      mask: true,
+    })
+
+    wx.request({
+      url: URL + '/team/update?managerId=' + userId,
+      method: 'PUT',
+      data: dataToUpdate,
+      success: res => {
+        wx.hideLoading()
+        console.log('球队信息修改成功', res.data);
+        wx.showToast({
+          title: "修改成功",
+          icon: 'none',
+        });
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error('球队信息修改失败', err);
+        wx.showToast({
+          title: '修改失败',
+          icon: "error",
+        });
+      }
+    });
+  },
+
+  // 选择队徽
+  chooseLogo: function () {
     var that = this;
     // 打开相册或相机选择图片
     wx.chooseMedia({
@@ -194,14 +242,103 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表
-        console.log(res.tempFiles)
-        that.setData({
-          tempFilePath: res.tempFiles[0].tempFilePath,
-        });
+        let tempFilePath = res.tempFiles[0].tempFilePath
         console.log('tempFilePath->');
-        console.log(that.data.tempFilePath);
+        console.log(tempFilePath);
+        that.uploadLogo(tempFilePath)
       }
     })
+  },
+
+  // 上传队徽图片至服务器并获得URL
+  uploadLogo(tempFilePath) {
+    var that = this;
+    wx.uploadFile({
+      url: URL + '/upload', // 你的上传图片的服务器API地址
+      filePath: tempFilePath,
+      name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
+      success: function (uploadRes) {
+        console.log('Create Team: uploadLogo ->')
+        console.log(uploadRes)
+        if (uploadRes.statusCode != 200) {
+          console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
+          wx.showToast({
+            title: '上传头像失败',
+            icon: "error",
+          });
+          return
+        }
+        var filename = uploadRes.data;
+        that.setData({
+          logoUrl: URL + '/download?filename=' + filename
+        });
+        console.log("logoUrl->")
+        console.log(that.data.logoUrl)
+        that.updateTeamInfo()
+      },
+      fail: function (error) {
+        console.log('上传失败', error);
+        wx.hideLoading()
+        wx.showToast({
+          title: '上传头像失败，请检查网络！',
+          icon: "error"
+        });
+      },
+    })
+  },
+
+  // 更改队名
+  showNameModal: function () {
+    this.setData({
+      modalHidden_name: false
+    });
+  },
+
+  changeName: function (e) {
+    this.setData({
+      newName: e.detail.value
+    });
+  },
+
+  confirmChangeName: function () {
+    this.setData({
+      name: this.data.newName,
+      modalHidden_name: true
+    });
+    this.updateTeamInfo()
+  },
+
+  cancelChangeName: function () {
+    this.setData({
+      modalHidden_name: true
+    });
+  },
+
+  // 更改球队描述
+  showDesInput: function () {
+    this.setData({
+      modalHidden_description: false
+    });
+  },
+
+  changedes: function (e) {
+    this.setData({
+      newdes: e.detail.value
+    });
+  },
+
+  confirmChangeDescription: function () {
+    this.setData({
+      description: this.data.newdes,
+      modalHidden_description: true
+    });
+    this.updateTeamInfo()
+  },
+
+  cancelChangeDescription: function () {
+    this.setData({
+      modalHidden_description: true
+    });
   },
 
   // 引入模态框的通用方法
@@ -221,78 +358,7 @@ Page({
       }
     });
   },
- 
-  showNameModal: function () {
-    this.setData({
-      modalHidden: false
-    });
-  },
 
-
-  changeName: function (e) {
-    this.setData({
-      newName: e.detail.value
-    });
-  },
-
-  showDesInput: function () {
-    this.setData({
-      modalHiddenEdes: false
-    });
-  },
-
-  changedes: function (e) {
-    this.setData({
-      newdes: e.detail.value
-    });
-  },
-
-  confirmChangeName: function () {
-    this.setData({
-      name: this.data.newName,
-      modalHidden: true
-    });
-  },
-
-  cancelChangeName: function () {
-    this.setData({
-      modalHidden: true
-    });
-  },
-
-  confirmChangeEventdes: function () {
-    this.setData({
-      description: this.data.newdes,
-      modalHiddenEdes: true
-    });
-  },
-
-  cancelChangeEventdes: function () {
-    this.setData({
-      modalHiddenEdes: true
-    });
-  },
-
-
-  // 点击确认修改按钮，弹出确认修改模态框
-  showConfirmModal() {
-    var that = this
-    wx.showModal({
-      title: '确认修改',
-      content: '确定要进行修改吗？',
-      confirmText: '确认',
-      cancelText: '取消',
-      success(res) {
-        if (res.confirm) {
-          that.confirmEdit() // 点击确认时的回调函数
-        } else if (res.cancel) {
-          () => {} // 点击取消时的回调函数，这里不做任何操作
-        }
-      }
-    })
-  },
-
-  // 点击确认创建按钮，弹出确认修改模态框
   showCheckPlayerModal(e) {
     var that = this
     const id = e.currentTarget.dataset.id
@@ -311,7 +377,6 @@ Page({
     });
   },
 
-  // 点击确认修改按钮，弹出确认修改模态框
   showDeletePlayerModal() {
     this.showModal(
       '确认移除',
@@ -329,10 +394,10 @@ Page({
     const index = e.currentTarget.dataset.id;
     const isClickPlayerList = this.data.isClickPlayerList;
     const isClicked = isClickPlayerList[index].isClicked;
-    for(var i = 0; i < this.data.playerList.length; i++) {
+    for (var i = 0; i < this.data.playerList.length; i++) {
       isClickPlayerList[i].isClicked = false
     }
-    if(isClicked == false) {
+    if (isClicked == false) {
       isClickPlayerList[index].isClicked = true;
     } else {
       isClickPlayerList[index].isClicked = false;
@@ -386,7 +451,7 @@ Page({
       },
       complete() {
         const isClickPlayerList = that.data.isClickPlayerList;
-        for(var i = 0; i < that.data.playerList.length; i++) {
+        for (var i = 0; i < that.data.playerList.length; i++) {
           isClickPlayerList[i].isClicked = false
         }
         that.setData({
@@ -505,10 +570,10 @@ Page({
     const index = e.currentTarget.dataset.id;
     const isClickCoachList = this.data.isClickCoachList;
     const isClicked = isClickCoachList[index].isClicked;
-    for(var i = 0; i < this.data.coachList.length; i++) {
+    for (var i = 0; i < this.data.coachList.length; i++) {
       isClickCoachList[i].isClicked = false
     }
-    if(isClicked == false) {
+    if (isClicked == false) {
       isClickCoachList[index].isClicked = true;
     } else {
       isClickCoachList[index].isClicked = false;
@@ -562,7 +627,7 @@ Page({
       },
       complete() {
         const isClickCoachList = this.data.isClickCoachList;
-        for(var i = 0; i < this.data.coachList.length; i++) {
+        for (var i = 0; i < this.data.coachList.length; i++) {
           isClickCoachList[i].isClicked = false
         }
         this.setData({
@@ -573,97 +638,14 @@ Page({
     });
   },
 
-  confirmEdit() {
-    var that = this;
-    wx.uploadFile({
-      url: URL + '/upload', // 你的上传图片的服务器API地址
-      filePath: that.data.tempFilePath,
-      name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
-      success: function (uploadRes) {
-        console.log('Create Team: uploadLogo ->')
-        console.log(uploadRes)
-        if (uploadRes.statusCode != 200) {
-          console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
-          wx.showToast({
-            title: '上传头像失败，请检查网络！', // 错误信息文本
-            icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-            duration: 2000 // 持续时间
-          });
-          return
-        }
-        var filename = uploadRes.data;
-        that.setData({
-          logoUrl: URL + '/download?filename=' + filename
-        });
-        console.log("logoUrl->")
-        console.log(that.data.logoUrl)
-      },
-      fail: function (error) {
-        console.log('上传失败', error);
-        wx.hideLoading()
-        wx.showToast({
-          title: '上传头像失败，请检查网络！', // 错误信息文本
-          icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-          duration: 2000 // 持续时间
-        });
-      },
-      complete: function(){
-        // 构造要发送给后端的数据
-        const dataToUpdate = {
-          teamId: that.data.teamId,
-          name: that.data.name,
-          logoUrl: that.data.logoUrl,
-          captainId: that.data.captainId,
-          description: that.data.description
-        };
-        console.log('dataToUpdate->');
-        console.log(dataToUpdate);
-        // 发送请求到后端接口
-        wx.request({
-          url: URL + '/team/update?managerId=' + userId, // 后端接口地址
-          method: 'PUT', // 请求方法
-          data: dataToUpdate, // 要发送的数据
-          success: res => {
-            // 请求成功的处理逻辑
-            console.log('球队信息修改成功', res.data);
-            // 获取成功信息并显示在 toast 中
-            const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
-            wx.showToast({
-              title: successMsg,
-              icon: 'none',
-              duration: 2000,
-              success: function () {
-                setTimeout(function () {
-                  wx.navigateBack({
-                    delta: 1,
-                  })
-                }, 1000);
-              }
-            });
-          },
-          fail: err => {
-            // 请求失败的处理逻辑
-            console.error('球队信息修改失败', err);
-            // 显示失败信息
-            wx.showToast({
-              title: '修改失败，请重试',
-              icon: 'none',
-              duration: 2000
-            });
-          }
-        });
-      }
-    })
-  },
-
-  gotoInvitePlayer: function(e) {
+  gotoInvitePlayer: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'player',
     })
   },
 
-  gotoSelectCaptain: function(e) {
+  gotoSelectCaptain: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       //url: '/pages/management/team_edit/select_captain/select_captain?id=' + dataset.id,
@@ -671,22 +653,24 @@ Page({
     })
   },
 
-  gotoInviteCoach: function(e) {
+  gotoInviteCoach: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'coach',
     })
   },
 
-  gotoPlayerPage: function(id) {
+  gotoPlayerPage: function (e) {
+    const id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: '/pages/pub/user/player/player?id=' + id,
     })
   },
 
-  gotoCoachPage: function(id) {
+  gotoCoachPage: function (id) {
     wx.navigateTo({
       url: '/pages/pub/user/coach/coach?id=' + id,
     })
   },
+
 })
