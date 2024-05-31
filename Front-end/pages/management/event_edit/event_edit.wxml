@@ -74,7 +74,7 @@
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small wx:for="{{teamList}}" wx:key="id" name="{{item.name}}" img="{{item.logo}}" bind:tap="gotoTeamPage" data-id="{{item.id}}"></team-card-small>
+        <team-card-small wx:for="{{teamList}}" wx:key="id" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.id}}"></team-card-small>
       </scroll-view>
     </view>
   </view>
