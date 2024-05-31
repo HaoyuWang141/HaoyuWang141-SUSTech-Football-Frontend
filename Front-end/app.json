@@ -53,7 +53,8 @@
     "pages/profile_player/profile_referee_notice/profile_referee_notice",
     "pages/profile_player/profile_coach_notice/profile_coach_notice",
     "pages/management/team_notice/team_notice",
-    "pages/news/news"
+    "pages/news/news",
+    "pages/pub/team/retired_players/retired_players"
   ],
   "window": {
     "navigationBarTextStyle": "white",

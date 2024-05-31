@@ -31,6 +31,22 @@
         {{description}}
       </view>
     </view>
+
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title"></text>
+      </view>
+      <view class="function-container">
+        <view bindtap="gotoHonorPage" class="function-button">
+          <image src="/assets/event.png" mode="scaleToFill" class="function-image" />
+          <text class="function-text">荣誉墙</text>
+        </view>
+        <view bindtap="gotoRetiredPlayersPage" class="function-button">
+          <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
+          <text class="function-text">退役球员</text>
+        </view>
+      </view>
+    </view>
   </view>
 
   <view wx:if="{{activeIndex == 1}}">
@@ -66,7 +82,7 @@
           <!-- 球员信息 -->
           <view class="row" wx:for="{{playerList}}" wx:key="unique">
             <view class="cell">{{item.number}}</view>
-            <view class="cell table" style="max-width: 250rpx;">
+            <view class="cell table" style="max-width: 250rpx;" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}">
               <image src="{{item.photoUrl}}" class="player-avatar cell"></image>
               <text class="cell player-name">{{item.name}}</text>
             </view>

@@ -91,10 +91,11 @@
         </view>
       </view>
 
+      <!-- 现役球员 -->
       <view class="block-space">
         <view class="teammate-container">
           <view class="block-top" style="margin-top: 20rpx;">
-            <view class="title">队员</view>
+            <view class="title">现役队员</view>
             <view class="block-more">
               <text class="button-custom" style="margin-right: 20rpx" bind:tap="gotoInvitePlayer" data-id="{{teamId}}">邀请球员</text>
             </view>
@@ -118,13 +119,13 @@
                 <text class="cell player-name">{{item.name}}</text>
               </view>
               <view class="cell">
-                <image src="/assets/eye.png" class="icon_eye" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}"></image>
+                <image src="/assets/eye.png" class="icon icon_eye" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}"></image>
               </view>
               <view class="cell">
-                <image src="/assets/cloth.png" class="icon_cloth" bind:tap="showEditPlayerModal" data-id="{{item.playerId}}"></image>
+                <image src="/assets/cloth.png" class="icon icon_cloth" bind:tap="showEditPlayerModal" data-id="{{item.playerId}}"></image>
               </view>
               <view class="cell">
-                <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
+                <image src="/assets/delete.png" class="icon icon_delete" bind:tap="showDeletePlayerModal" data-id="{{item.playerId}}"></image>
               </view>
             </view>
           </view>
@@ -139,6 +140,45 @@
               </view>
             </player-card-small>
           </scroll-view> -->
+        </view>
+      </view>
+
+      <!-- 退役球员 -->
+      <view class="block-space">
+        <view class="teammate-container">
+          <view class="block-top" style="margin-top: 20rpx;">
+            <view class="title">退役球员</view>
+            <view class="block-more">
+              <text class="button-custom" style="margin-right: 20rpx" bind:tap="gotoInvitePlayer" data-id="{{teamId}}">退役球员</text>
+            </view>
+          </view>
+
+          <view>该功能尚未完成！</view>
+
+          <!-- <view class="table"> -->
+            <!-- 表头 -->
+            <!-- <view class="row header">
+              <view class="cell"></view>
+              <view class="cell">球员</view>
+              <view class="cell">查看</view>
+              <view class="cell">恢复现役</view>
+            </view> -->
+
+            <!-- 球员信息 -->
+            <!-- <view class="row" wx:for="{{playerList}}" wx:key="index">
+              <view class="cell">{{item.number}}</view>
+              <view class="cell table" style="max-width: 250rpx;">
+                <image src="{{item.photoUrl}}" class="player-avatar cell"></image>
+                <text class="cell player-name">{{item.name}}</text>
+              </view>
+              <view class="cell">
+                <image src="/assets/eye.png" class="icon icon_eye" bind:tap="gotoPlayerPage" data-id="{{item.playerId}}"></image>
+              </view>
+              <view class="cell">
+                <image src="/assets/rehire.png" class="icon icon_rehire" bind:tap="" data-id="{{item.playerId}}"></image>
+              </view>
+            </view> -->
+          <!-- </view> -->
         </view>
       </view>
 

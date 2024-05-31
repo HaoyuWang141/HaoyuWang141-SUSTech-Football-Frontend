@@ -20,6 +20,7 @@
   </view>
 </view>
 
+<!-- 功能 -->
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">功能</text>

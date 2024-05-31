@@ -111,33 +111,33 @@
   margin-bottom: 5%;
 }
 
-.icon_eye {
-  background-color: #eb903a;
-  padding: 3rpx;
-  border-radius: 40rpx;
+.icon {
+  padding: 5rpx;
+  border-radius: 20rpx;
   width: 40rpx;
   height: 40rpx;
   margin-top: 5rpx;
   margin-right: 5rpx;
 }
 
+.icon_eye {
+  background-color: #eb903a;
+}
+
 .icon_cloth {
-  background-color: #5bc7f1;
-  padding: 3rpx;
-  border-radius: 40rpx;
-  width: 40rpx;
-  height: 40rpx;
-  margin-top: 5rpx;
+  background-color: #51b0d6;
 }
 
 .icon_delete {
   background-color: red;
-  padding: 3rpx;
-  border-radius: 40rpx;
-  width: 40rpx;
-  height: 40rpx;
-  margin-top: 5rpx;
-  margin-left: 5rpx;
+}
+
+.icon_retire {
+  background-color: rgb(197, 209, 24);
+}
+
+.icon_rehire {
+  background-color: rgb(201, 107, 209);
 }
 
 .player-number {

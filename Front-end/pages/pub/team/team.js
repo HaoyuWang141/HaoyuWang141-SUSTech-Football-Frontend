@@ -20,6 +20,7 @@ Page({
     matchList: Array,
     activeIndex: 0,
     favorited: Boolean,
+    description: "",
   },
 
   /**
@@ -112,7 +113,8 @@ Page({
           captainId: res.data.captainId,
           coachList: res.data.coachList,
           playerList: res.data.playerList,
-          matchList: matchList
+          matchList: matchList,
+          description: res.data.description
         })
       },
       fail(err) {
@@ -156,8 +158,27 @@ Page({
   gotoPlayerPage: function (e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/pub/player/player?id=' + id
+      url: '/pages/pub/user/player/player?id=' + id
     })
+  },
+
+  gotoHonorPage() {
+    let teamId = this.data.teamId
+    wx.showToast({
+      title: '功能尚未完善',
+      icon: "error"
+    })
+  },
+
+  gotoRetiredPlayersPage() {
+    let teamId = this.data.teamId
+    wx.showToast({
+      title: '功能尚未完善',
+      icon: "error"
+    })
+    // wx.navigateTo({
+    //   url: `/pages/pub/team/retired_players/retired_players?teamId=${teamId}`,
+    // })
   },
 
   // 获取用户是否关注该比赛
