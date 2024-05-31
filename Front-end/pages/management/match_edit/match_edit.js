@@ -59,11 +59,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
       matchId: options.id
     })
-    this.fetchData(options.id);
   },
 
   /**
@@ -77,10 +75,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    console.log('homeTeamId->')
-    console.log(this.data.homeTeamId)
-    console.log('awayTeamId->')
-    console.log(this.data.awayTeamId)
     this.fetchData();
   },
 
@@ -398,7 +392,6 @@ Page({
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
-
       }
     });
   },

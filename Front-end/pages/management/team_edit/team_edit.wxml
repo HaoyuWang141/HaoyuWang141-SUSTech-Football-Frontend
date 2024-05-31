@@ -43,8 +43,28 @@
       </modal>
     </view>
 
+    <!-- 管理员 -->
+    <view class="block-space">
+      <view class="important-person">
+        <view class="coach-container">
+          <view class="title">球队管理员</view>
+          <player-card-small name="{{inviteManager.name}}" img="{{inviteManager.img}}" bindtap="showInviteManagerModal"></player-card-small>
+          <player-card-small wx:for="{{managerList}}" wx:key="index" name="{{item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}">
+          </player-card-small>
+        </view>
+      </view>
+
+      <modal hidden="{{modalHidden_inviteManager}}" bindconfirm="confirmInviteManager" bindcancel="cancelInviteManager">
+        <view class="modal-content">
+          <text>请输入被邀请者的userId：</text>
+          <input bindinput="inputManagerId" placeholder="输入 userId" type="number" />
+        </view>
+      </modal>
+    </view>
+
     <!-- 管理队员 -->
     <view class="team-container">
+      <!-- 教练 -->
       <view class="block-space">
         <view class="important-person">
           <view class="coach-container">
@@ -60,6 +80,7 @@
         </view>
       </view>
 
+      <!-- 队长 -->
       <view class="block-space">
         <view class="important-person">
           <view class="captain-container">

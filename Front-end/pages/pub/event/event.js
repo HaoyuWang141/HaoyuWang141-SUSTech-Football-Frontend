@@ -117,10 +117,14 @@ Page({
             firstStage = false
           }
         }
-        console.log("multiArray->")
+        console.log("intialized multiArray->")
         console.log(multiArray)
+        let multiIndex = [0, 0]
+        console.log("intialized multiIndex->")
+        console.log(multiIndex)
         that.setData({
-          multiArray: multiArray
+          multiArray,
+          multiIndex
         })
 
         // --- 赛事统计 ---
@@ -291,7 +295,7 @@ Page({
     for (let match of matches) {
       let date = new Date(match.time)
       match.strTime = formatTime(date)
-      match.hasBegun = new Date() > date
+      match.hasBegun = match.status === "PENDING" ? false : true
     }
     this.setData({
       multiIndex: e.detail.value,
@@ -319,7 +323,6 @@ Page({
         }
       }
       data.multiIndex[1] = 0;
-      console.log(data.multiIndex);
     }
     this.setData(data);
   },

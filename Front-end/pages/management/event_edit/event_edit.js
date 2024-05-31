@@ -11,7 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    icon: '/assets/cup.svg',    
+    icon: '/assets/cup.svg',
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
 
@@ -30,6 +30,14 @@ Page({
     gNumber: 0,
     tNumber: 0,
     tuNumber: 0,
+
+    inviteManager: {
+      name: '邀请管理员',
+      img: '/assets/newplayer.png'
+    },
+    managerList: [],
+    modalHidden_inviteManager: true,
+    inviteManagerId: -1,
   },
 
   /**
@@ -128,7 +136,7 @@ Page({
           managerList: res.data.managerList,
           stageList: res.data.stageList,
         });
-        if(that.data.stageList[0].stageName === '联赛') {
+        if (that.data.stageList[0].stageName === '联赛') {
           const eventType = '联赛';
           const tuNumber = that.data.stageList[0].tags.length;
           that.setData({
@@ -139,10 +147,10 @@ Page({
           const eventType = '杯赛';
           const gNumber = that.data.stageList[0].tags.length;
           var tNumber;
-          if(that.data.stageList[1].tags.length === 1) {
+          if (that.data.stageList[1].tags.length === 1) {
             tNumber = 2;
           } else {
-            tNumber = 2 ** (that.data.stageList[1].tags.length-1);
+            tNumber = 2 ** (that.data.stageList[1].tags.length - 1);
           }
           that.setData({
             eventType: eventType,
@@ -158,6 +166,69 @@ Page({
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
+      }
+    });
+  },
+
+  // 赛事管理员
+  showInviteManagerModal: function () {
+    this.setData({
+      modalHidden_inviteManager: false
+    });
+  },
+
+  inputManagerId: function (e) {
+    this.setData({
+      inviteManagerId: e.detail.value
+    });
+  },
+
+  confirmInviteManager: function () {
+    this.setData({
+      modalHidden_inviteManager: true
+    });
+    this.inviteEventManager(this.data.eventId, this.data.inviteManagerId)
+  },
+
+  cancelInviteManager: function () {
+    this.setData({
+      modalHidden_inviteManager: true
+    });
+  },
+
+  inviteEventManager(eventId, managerId) {
+    wx.showLoading({
+      title: '上传中',
+      mask: true,
+    })
+    let that = this
+    wx.request({
+      url: `${URL}/event/manager/invite?eventId=${eventId}&managerId=${managerId}`,
+      method: 'POST',
+      success: res => {
+        wx.hideLoading()
+        console.log('event edit page: inviteEventManager ->');
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: res.data,
+            icon: "error",
+          });
+          return
+        }
+        wx.showToast({
+          title: "邀请成功",
+          icon: "success",
+        });
+        that.fetchData(that.data.id)
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error('邀请管理员失败', err);
+        wx.showToast({
+          title: '邀请失败',
+          icon: "error",
+        });
       }
     });
   },
@@ -275,7 +346,7 @@ Page({
       managerList: this.data.managerList,
       stageList: this.data.stageList,
     };
-  
+
     // 发送请求到后端接口
     wx.request({
       url: URL + '/event/update', // 后端接口地址
@@ -361,35 +432,44 @@ Page({
     });
   },
 
-  gotoTeamPage: function(e) {
+  // 页面跳转
+
+  gotoUserPage: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/user/user?id=' + dataset.id,
+    })
+  },
+
+  gotoTeamPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/team/team?id=' + dataset.id,
     })
   },
 
-  gotoMatchPage: function(e) {
+  gotoMatchPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/match/match?id=' + dataset.id,
     })
   },
 
-  gotoTeams: function(e) {
+  gotoTeams: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/event_edit/event_teams/event_teams?id=' + dataset.id,
     })
   },
 
-  gotoMatches: function(e) {
+  gotoMatches: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/event_edit/event_matches/event_matches?id=' + dataset.id,
     })
   },
 
-  goToCreateMatch: function(e) {
+  goToCreateMatch: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/event_edit/match_new/match_new?id=' + dataset.id,
