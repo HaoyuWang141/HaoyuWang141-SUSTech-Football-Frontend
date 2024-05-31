@@ -32,7 +32,7 @@ Page({
     this.setData({
       id: options.id
     })
-    this.fetchData(options.id);
+    this.fetchData(this.data.id);
   },
 
   /**

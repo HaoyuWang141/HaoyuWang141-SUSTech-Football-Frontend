@@ -50,11 +50,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
     this.setData({
       id: options.id
     })
-    this.fetchData(options.id);
+    this.fetchData(this.data.id);
   },
 
   /**
