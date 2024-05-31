@@ -1,24 +1,18 @@
 <button bind:tap="login">获取User</button>
 <!-- <button bind:tap="gotoExample">gotoExample</button> -->
 
-<view class="block-container">
-  <view class="block-top">
-    <text class="block-title">通知！</text>
-  </view>
-  <view class="block-main">
-    <text>目前为测试阶段，随时删库跑路，详情见右下角</text><text style="font-weight: bold; color: #ed6c00;">“开发”</text>
-  </view>
-</view>
-
+<!-- 校训图片 -->
 <view style="background-color: white; text-align: center;">
   <image src="/assets/sustech-motto.png" mode="aspectFit" style="width: 80%;height: 200rpx;" />
 </view>
 
+<!-- 搜索 -->
 <view class="search-container">
   <input class="search-input" type="text" placeholder="请输入搜索内容" bindinput="bindInput" value="{{ searchText }}"></input>
   <button class="search-button" wx:if="{{ searchText }}" bindtap="search">搜索</button>
 </view>
 
+<!-- 大厅 -->
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">大厅</text>
@@ -46,6 +40,16 @@
         <text class="hall-text">新闻</text>
       </view>
     </view>
+  </view>
+</view>
+
+<!-- 通知 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">通知！</text>
+  </view>
+  <view class="block-main">
+    <text>目前为测试阶段，随时删库跑路，详情见右下角</text><text style="font-weight: bold; color: #ed6c00;">“开发”</text>
   </view>
 </view>
 

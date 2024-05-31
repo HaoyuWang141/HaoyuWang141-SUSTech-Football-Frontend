@@ -6,16 +6,16 @@
       <view class="image-container">
         <image src="{{icon}}" mode="scaleToFill" class="image"></image>
       </view>
-      <view class="text-container" >
+      <view class="text-container">
         <text class="text">{{name}}</text>
         <text class="name-edit" bindtap="showNameInput">编辑</text>
       </view>
     </view>
 
-    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
+    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname" bindcancel="cancelChangeEventname">
       <view class="modal-content">
         <text>编辑赛事名称：</text>
-        <input placeholder="赛事名称" value="{{newTeamname}}" bindinput="changename"/>
+        <input placeholder="赛事名称" value="{{newTeamname}}" bindinput="changename" />
       </view>
     </modal>
   </view>
@@ -30,7 +30,7 @@
     <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes" bindcancel="cancelChangeEventdes">
       <view class="modal-content">
         <text>编辑赛事介绍：</text>
-        <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
+        <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes" />
       </view>
     </modal>
   </view>
@@ -48,7 +48,7 @@
     <view class="stage-container">
       <text style="margin-left: 3%;">赛事阶段</text>
       <view wx:for="{{stageList}}" wx:key="name">
-        <view class="addStage-Tag">{{item.stageName}}</view>
+        <view class="button-custom" style="margin-top: 20rpx;">{{item.stageName}}</view>
         <view wx:if="{{item.stageName == '小组赛' || item.stageName == '小组赛阶段'}}" class="select-tag" mode="selector">
           <text>小组总数：</text>
           <text>{{gNumber}}</text>
@@ -66,9 +66,11 @@
   </view>
 
   <view class="block-space">
-    <view class="block-top" >
+    <view class="block-top">
       <text class="block-title">参赛球队</text>
-      <text class="block-more" bindtap="gotoTeams" data-id="{{eventId}}">查看更多</text>
+      <view class="block-more" bindtap="gotoTeams" data-id="{{eventId}}">
+        <text class="button-custom">球队管理 ></text>
+      </view>
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
@@ -80,11 +82,13 @@
   <view class="block-space">
     <view class="block-top">
       <text class="block-title">比赛赛程</text>
-      <text class="block-more" bindtap="gotoMatches" data-id="{{eventId}}">查看更多</text>
+      <view class="block-more" bindtap="gotoMatches" data-id="{{eventId}}">
+        <text class="button-custom">比赛管理 ></text>
+      </view>
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small name="创建比赛" stage="" tag="" team1="主队" team2="客队" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" score1="" score2="" penalty1="" penalty2="" time="2024-3-15 19:49" bind:tap="goToCreateMatch" data-id="{{eventId}}" > </match-card-small>
+        <match-card-small name="创建比赛" stage="" tag="" team1="主队" team2="客队" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" score1="" score2="" penalty1="" penalty2="" time="2024-3-15 19:49" bind:tap="goToCreateMatch" data-id="{{eventId}}"> </match-card-small>
         <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="{{item.matchEvent.matchStage + ' ' + item.matchEvent.matchTag}}" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
       </scroll-view>
     </view>

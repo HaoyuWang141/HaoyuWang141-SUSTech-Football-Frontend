@@ -12,7 +12,7 @@
   <view class="block-space">
     <view class="block-top">
       <view class="block-title">管理的球队</view>
-      <view class="block-more" bindtap="gotoTeams" data-id="5">查看详情</view>
+      <view class="block-more button-custom" bindtap="gotoTeams" data-id="5">球队管理 ></view>
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
@@ -25,7 +25,7 @@
   <view class="block-space">
     <view class="block-top">
       <view class="block-title">管理的比赛</view>
-      <view class="block-more" bindtap="gotoMatches" data-id="5">查看详情</view>
+      <view class="block-more button-custom" bindtap="gotoMatches" data-id="5">比赛管理 ></view>
     </view>
     <view class="block-main">
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">

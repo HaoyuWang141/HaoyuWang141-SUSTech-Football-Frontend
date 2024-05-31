@@ -1,10 +1,13 @@
 <view class="block-container">
   <view class="block-space">
     <view class="block-top">
-      <view class="block-title">管理的球队</view>
+      <view class="block-title">球队管理</view>
     </view>
     <view class="block-main">
-      本页面包含您管理的球队。您可以新建球队也可以编辑、删除已存在的球队。
+      <view>您可以在本页面：</view>
+      <view>- 查看球队相关的通知</view>
+      <view>- 创建新球队</view>
+      <view>- 编辑或删除您的球队</view>
     </view>
   </view>
 </view>
@@ -18,15 +21,19 @@
       <image src="/assets/notice.png" mode="scaleToFill" class="function-image" />
       <text class="function-text">球队通知</text>
     </view>
+    <view bindtap="createNewTeam" class="function-button">
+      <image src="/assets/statistic-team.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">新建球队</text>
+    </view>
   </view>
 </view>
 <!-- <view class="container">
   <view style="width: 95%;"> -->
 <scroll-view scroll-y enable-flex>
   <!-- 创建球队 -->
-  <view>
+  <!-- <view>
     <team-card-big name="创建新球队" img="/assets/newplayer.png" number="0" bindtap="createNewTeam"></team-card-big>
-  </view>
+  </view> -->
   <!-- 球队列表 -->
   <view class="team-card-container">
     <block wx:for="{{teamList}}" wx:key="teamId">
