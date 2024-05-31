@@ -75,7 +75,31 @@ Page({
     this.setData({
       newsList: [],
     })
-    //TODO
+    // let that = this
+    // wx.request({
+    //   url: URL + '',
+    //   success(res) {
+    //     console.log("home page: fetch news ->")
+    //     if (res.statusCode != 200) {
+    //       console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+    //       return
+    //     }
+    //     console.log(res.data)
+    //     let newsList = res.data ?? []
+    //     let filterNewsList = []
+    //     for (let news of NewsList) {
+    //       if (filter(that.data.searchText, [news.title])) {
+    //         filterNewsList.push(news)
+    //       }
+    //     }
+    //     that.setData({
+    //       newsList: filterNewsList,
+    //     })
+    //   },
+    //   fail: function (err) {
+    //     console.error('请求失败：', err.statusCode, err.errMsg);
+    //   },
+    // })
   },
 
   // 监听

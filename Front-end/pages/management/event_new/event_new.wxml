@@ -1,81 +1,80 @@
 <!--pages/management/event_new/event_new.wxml-->
-<view class="container">
-  <view class="block-container">
 
-    <view class="block-space">
-      <view class="title-container">
-        <view class="image-container">
-          <image src="{{icon}}" mode="scaleToFill" class="image"></image>
-        </view>
-        <view class="text-container" bindtap="showNameInput">
-          <text class="text">{{name}}</text>
-          <text class="name-edit">编辑</text>
-        </view>
+<view class="block-container">
 
-        <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
-          <view class="modal-content">
-            <text>请输入赛事名称：</text>
-            <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
-          </view>
-        </modal>
-      </view> 
+  <view class="block-space">
+    <view class="title-container">
+      <view class="image-container">
+        <image src="{{icon}}" mode="scaleToFill" class="image"></image>
+      </view>
+      <view class="text-container" bindtap="showNameInput">
+        <text class="text">{{name}}</text>
+        <text class="name-edit">编辑</text>
+      </view>
+
+      <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname"       bindcancel="cancelChangeEventname">
+        <view class="modal-content">
+          <text>请输入赛事名称：</text>
+          <input placeholder="名称" value="{{newTeamname}}" bindinput="changename"/>
+        </view>
+      </modal>
+    </view> 
+  </view>
+
+  <view class="block-space">
+    <view class="discription-container">
+      <text style="margin-left: 3%;">赛事简介</text>
+      <view class="description-content" >
+        <text class="description" >{{description}}</text>
+        <text class="description-edit" bindtap="showDesInput">编辑</text>
+      </view>
+
+      <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
+        <view class="modal-content">
+          <text>编辑赛事介绍：</text>
+          <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
+        </view>
+      </modal>
     </view>
+  </view>
 
-    <view class="block-space">
-      <view class="discription-container">
-        <text style="margin-left: 3%;">赛事简介</text>
-        <view class="description-content" >
-          <text class="description" >{{description}}</text>
-          <text class="description-edit" bindtap="showDesInput">编辑</text>
-        </view>
+  <!-- 赛事类型 -->
+  <view class="block-space">
+    <picker class="eventType-container" mode="selector" range="{{eventTypeList}}" bindchange="changeEventType">
+      <text style="margin-left: 3%;">赛事类型：</text>
+      <text wx:if="{{eventType === ''}}" class="prompt">{{'点击选择赛事类型'}}</text>
+      <text wx:else="">{{eventType}}</text>
+    </picker>
+    <text class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</text>
+  </view>
 
-        <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes"       bindcancel="cancelChangeEventdes">
-          <view class="modal-content">
-            <text>编辑赛事介绍：</text>
-            <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes"/>
-          </view>
-        </modal>
+  <!-- 赛事阶段 -->
+  <view class="block-space">
+    <view class="stage-container">
+      <text style="margin-left: 3%;">赛事阶段</text>
+      <text wx:if="{{eventType === ''}}" class="prompt">请先选择赛事类型</text>
+      <view wx:for="{{stageList}}" wx:key="name">
+        <view class="addStage-tag">{{item.stageName}}</view>
+        <picker wx:if="{{item.stageName == '小组赛'}}" class="select-tag" mode="selector" range="{{groupNumber}}" bindchange="groupNumberChange">
+          <text>小组总数：</text>
+          <text wx:if="{{gNumber === 0}}" class="prompt">{{'点击选择小组总数'}}</text>
+          <text wx:else="">{{gNumber}}</text>
+        </picker>
+        <picker wx:if="{{item.stageName == '淘汰赛'}}" class="select-tag" mode="selector" range="{{teamNumber}}" bindchange="teamNumberChange">
+          <text>出线队伍数：</text>
+          <text wx:if="{{tNumber === 0}}" class="prompt">{{'点击选择出线队伍总数'}}</text>
+          <text wx:else="">{{tNumber}}</text>
+        </picker>
+        <picker wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector" range="{{turnNumber}}" bindchange="turnNumberChange">
+          <text>联赛总轮数：</text>
+          <text wx:if="{{tuNumber === 0}}" class="prompt">{{'点击选择联赛总轮数'}}</text>
+          <text wx:else="">{{tuNumber}}</text>
+        </picker>
       </view>
     </view>
+  </view>
 
-    <!-- 赛事类型 -->
-    <view class="block-space">
-      <picker class="eventType-container" mode="selector" range="{{eventTypeList}}" bindchange="changeEventType">
-        <text style="margin-left: 3%;">赛事类型：</text>
-        <text wx:if="{{eventType === ''}}" class="prompt">{{'点击选择赛事类型'}}</text>
-        <text wx:else="">{{eventType}}</text>
-      </picker>
-      <text class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</text>
-    </view>
-
-    <!-- 赛事阶段 -->
-    <view class="block-space">
-      <view class="stage-container">
-        <text style="margin-left: 3%;">赛事阶段</text>
-        <text wx:if="{{eventType === ''}}" class="prompt">请先选择赛事类型</text>
-        <view wx:for="{{stageList}}" wx:key="name">
-          <view class="addStage-tag">{{item.stageName}}</view>
-          <picker wx:if="{{item.stageName == '小组赛'}}" class="select-tag" mode="selector" range="{{groupNumber}}" bindchange="groupNumberChange">
-            <text class="tag-type">小组总数：</text>
-            <text wx:if="{{gNumber === 0}}" class="prompt">{{'点击选择小组总数'}}</text>
-            <text wx:else="">{{gNumber}}</text>
-          </picker>
-          <picker wx:if="{{item.stageName == '淘汰赛'}}" class="select-tag" mode="selector" range="{{teamNumber}}" bindchange="teamNumberChange">
-            <text class="tag-type">出线队伍数：</text>
-            <text wx:if="{{tNumber === 0}}" class="prompt">{{'点击选择出线队伍总数'}}</text>
-            <text wx:else="">{{tNumber}}</text>
-          </picker>
-          <picker wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector" range="{{turnNumber}}" bindchange="turnNumberChange">
-            <text class="tag-type">联赛总轮数：</text>
-            <text wx:if="{{tuNumber === 0}}" class="prompt">{{'点击选择联赛总轮数'}}</text>
-            <text wx:else="">{{tuNumber}}</text>
-          </picker>
-        </view>
-      </view>
-    </view>
-
-    <view class="btn-container">
-      <button class="confirm-btn" bindtap="showCreateModal">确认创建</button>
-    </view>
+  <view class="btn-container">
+    <button class="confirm-btn" bindtap="showCreateModal">确认创建</button>
   </view>
 </view>

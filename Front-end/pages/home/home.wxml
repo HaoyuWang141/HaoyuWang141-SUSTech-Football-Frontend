@@ -71,6 +71,32 @@
     </block>
   </swiper>
 </view> -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">新闻</text>
+  </view>
+  <view class="news-container">
+    <swiper class="news-swiper" autoplay interval="5000" duration="500" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
+      <block wx:for="{{newsList}}" wx:key="index">
+        <swiper-item bind:tap="gotoNews" data-url="{{item.url}}">
+          <image src="{{item.img}}" class="swiper-img" mode="aspectFit"></image>
+          <view class="news-title">{{item.title}}</view>
+        </swiper-item>
+      </block>
+    </swiper>
+
+    <!-- 左右切换按钮 -->
+    <view class="prev-btn" bindtap="prevSwiper">＜</view>
+    <view class="next-btn" bindtap="nextSwiper">＞</view>
+    <!-- 小圆点指示器 -->
+    <view class="indicator">
+      <block wx:for="{{newsList}}" wx:key="index">
+        <view class="dot {{currentSwiperIndex === index ? 'active' : ''}}"></view>
+      </block>
+    </view>
+
+  </view>
+</view>
 
 <!-- 关注的比赛 -->
 <view class="block-container">
