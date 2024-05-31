@@ -74,7 +74,7 @@
       <view class="comment-container">
         <view class="input-container">
           <input class="input" type="text" placeholder="请输入评论内容" bindinput="inputComment" value="{{ commentText }}"></input>
-        </view> 
+        </view>
         <button class="button" bindtap="addComment">评论</button>
       </view>
 
@@ -82,10 +82,10 @@
         <view class="user-comment" wx:for="{{commentList}}" wx:key="name" wx:for-index="commentIndex" wx:for-item="commentItem">
           <view class="user-container">
             <view class="avatar-name">
-              <image src="{{commentItem.user.avatarUrl}}" class="img"/>
+              <image src="{{commentItem.user.avatarUrl}}" class="img" />
               <view class="name">{{commentItem.user.nickName}}</view>
-              <image wx:if="{{likesList[commentIndex].hasLiked}}" src="/assets/liked.png" class="liked-img" bindtap="unlike_comment" data-id="{{commentItem.commentId}}"/>
-              <image wx:else src="/assets/like.png" class="like-img" bind:tap="like_comment" data-id="{{commentItem.commentId}}"/>
+              <image wx:if="{{likesList[commentIndex].hasLiked}}" src="/assets/liked.png" class="liked-img" bindtap="unlike_comment" data-id="{{commentItem.commentId}}" />
+              <image wx:else src="/assets/like.png" class="like-img" bind:tap="like_comment" data-id="{{commentItem.commentId}}" />
               <view class="like">{{likesList[commentIndex].likeNum}}</view>
             </view>
             <view class="comment">{{commentItem.content}}</view>
@@ -95,17 +95,17 @@
               <view class="expand" wx:if="{{expandList[commentIndex].expanded}}" bindtap="dropReply" data-id="{{commentIndex}}">收起回复</view>
               <view class="deleteComment" wx:if="{{commentItem.userId == userId}}" bindtap="deleteComment" data-id="{{commentItem.commentId}}">删除评论</view>
             </view>
-            
+
             <view class="reply-container" wx:if="{{expandList[commentIndex].expanded}}">
               <view class="reply-input-container">
                 <view class="input-container">
                   <input class="input" type="text" placeholder="请输入回复内容" bindinput="inputReply" value="{{ replyText }}"></input>
-                </view> 
+                </view>
                 <button class="button" bindtap="addReply" data-id="{{commentIndex}}">回复</button>
               </view>
               <view wx:for="{{commentItem.replyList}}" wx:key="name" wx:for-index="replyIndex" wx:for-item="replyItem">
                 <view class="avatar-name">
-                  <image src="{{replyItem.user.avatarUrl}}" class="img"/>
+                  <image src="{{replyItem.user.avatarUrl}}" class="img" />
                   <view class="name">{{replyItem.user.nickName}}</view>
                   <view class="deleteReply" wx:if="{{replyItem.userId == userId}}" bindtap="deleteReply" data-id="{{replyItem.replyId}}">删除回复</view>
                 </view>
@@ -143,6 +143,9 @@
   <view wx:if="{{activeIndex == 2}}">
     <view class="block-container">
       <view class="block-main">
+        <view wx:if="{{matchPlayerActionList.length == 0}}" style="margin: 0 20rpx;">
+          <text>暂无进球、助攻或红黄牌信息</text>
+        </view>
         <view wx:for="{{matchPlayerActionList}}" wx:key="index">
           <view>时间：{{item.time}}min: </view>
           <view>球队：{{item.teamId == homeTeam.teamId ? homeTeam.name : awayTeam.name}}</view>

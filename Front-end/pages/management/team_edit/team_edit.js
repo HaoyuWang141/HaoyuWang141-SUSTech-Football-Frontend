@@ -12,6 +12,10 @@ Page({
     id: 0,
     modalHidden_name: true, // 控制模态框显示隐藏
     modalHidden_description: true,
+    inviteManager: {
+      name: '邀请管理员',
+      img: '/assets/newplayer.png'
+    },
     invitePlayer: {
       name: '邀请新队员',
       img: '/assets/newplayer.png'
@@ -44,6 +48,9 @@ Page({
     selectCoachId: 0,
     editPlayerModalHidden: true,
     newPlayerNumber: '',
+    managerList: [],
+    modalHidden_inviteManager: true,
+    inviteManagerId: -1,
   },
 
   /**
@@ -131,7 +138,8 @@ Page({
           managerList: res.data.managerList,
           matchList: res.data.matchList,
           playerList: res.data.playerList,
-          description: res.data.description
+          description: res.data.description,
+          managerList: res.data.managerList
         });
         if (res.data.captainId !== null) {
           that.setData({
@@ -340,6 +348,69 @@ Page({
     });
   },
 
+  // 球队管理员
+  showInviteManagerModal: function () {
+    this.setData({
+      modalHidden_inviteManager: false
+    });
+  },
+
+  inputManagerId: function (e) {
+    this.setData({
+      inviteManagerId: e.detail.value
+    });
+  },
+
+  confirmInviteManager: function () {
+    this.setData({
+      modalHidden_inviteManager: true
+    });
+    this.inviteTeamManager(this.data.teamId, this.data.inviteManagerId)
+  },
+
+  cancelInviteManager: function () {
+    this.setData({
+      modalHidden_inviteManager: true
+    });
+  },
+
+  inviteTeamManager(teamId, managerId) {
+    wx.showLoading({
+      title: '上传中',
+      mask: true,
+    })
+    let that = this
+    wx.request({
+      url:  `${URL}/team/manager/invite?managerId=${managerId}&teamId=${teamId}`,
+      method: 'POST',
+      success: res => {
+        wx.hideLoading()
+        console.log('team edit page: inviteTeamManager ->');
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: res.data,
+            icon: "error",
+          });
+          return
+        }
+        wx.showToast({
+          title: "邀请成功",
+          icon: "success",
+        });
+        that.fetchData(that.data.id)
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error('要请管理员失败', err);
+        wx.showToast({
+          title: '邀请失败',
+          icon: "error",
+        });
+      }
+    });
+  },
+
   // 引入模态框的通用方法
   showModal: function (title, content, confirmText, confirmColor, cancelText, confirmCallback, cancelCallback) {
     wx.showModal({
@@ -421,31 +492,26 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: res.data,
-            icon: 'none',
-            duration: 2000
+            icon: "error",
           });
           return
         }
         const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
+          icon: "success",
           success: function () {
             setTimeout(function () {
               that.fetchData(that.data.id);
-            }, 2000);
+            }, 1000);
           }
         });
       },
       fail(err) {
-        // 请求失败的处理逻辑
         console.error('球员删除失败', err);
-        // 显示失败信息
         wx.showToast({
-          title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          title: '删除失败',
+          icon: "error",
         });
       },
       complete() {
@@ -635,6 +701,15 @@ Page({
         });
       }
     });
+  },
+
+  // 页面跳转
+
+  gotoUserPage: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/user/user?id=' + dataset.id,
+    })
   },
 
   gotoInvitePlayer: function (e) {

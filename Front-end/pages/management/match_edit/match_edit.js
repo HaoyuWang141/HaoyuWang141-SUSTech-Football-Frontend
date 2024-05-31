@@ -62,7 +62,6 @@ Page({
     this.setData({
       matchId: options.id
     })
-    this.fetchData();
   },
 
   /**
@@ -393,7 +392,6 @@ Page({
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
-
       }
     });
   },
