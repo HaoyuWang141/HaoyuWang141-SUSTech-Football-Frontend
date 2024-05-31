@@ -17,12 +17,19 @@ Page({
     userList: [],
     teamList: [],
     eventList: [],
+    newsList: [
+      {url: 'https://mp.weixin.qq.com/s/r6u14fRKytUs15NsA4VAPA', img: '/assets/news1.jpg', title: '南方科技大学第八届“书院杯”足球赛顺利举办'},
+      {url: 'https://mp.weixin.qq.com/s/5KGveHjUeyG3RC2otzJEtA', img: '/assets/news2.png', title: '四星致诚'},
+      {url: 'https://mp.weixin.qq.com/s/k2GceIOHC80c1d36ss4aLw', img: '/assets/news3.png', title: '南方科技大学男子足球队荣获2023年深圳市大中小学生校园足球比赛（大学组）冠军'},
+    ],
+    currentSwiperIndex: 0, // 当前显示的新闻索引
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+
   },
 
   /**
@@ -40,6 +47,7 @@ Page({
     app.addToRequestQueue(this.fetchFavorateUser)
     app.addToRequestQueue(this.fetchFavorateTeam)
     app.addToRequestQueue(this.fetchFavorateEvent)
+    // app.addToRequestQueue(this.fetchNews)
   },
 
   /**
@@ -64,6 +72,7 @@ Page({
     app.addToRequestQueue(this.fetchFavorateUser)
     app.addToRequestQueue(this.fetchFavorateTeam)
     app.addToRequestQueue(this.fetchFavorateEvent)
+    // app.addToRequestQueue(this.fetchNews)
   },
 
   /**
@@ -191,6 +200,28 @@ Page({
       },
     })
   },
+
+  // fetchNews(id) {
+  //   let that = this
+  //   wx.request({
+  //     url: URL + '',
+  //     success(res) {
+  //       console.log("home page: fetchNews: news ->")
+  //       if (res.statusCode != 200) {
+  //         console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+  //         return
+  //       }
+  //       console.log(res.data)
+  //       let newsList = res.data ?? []
+  //       that.setData({
+  //         newsList: newsList,
+  //       })
+  //     },
+  //     fail: function(err) {
+  //       console.error('请求失败：', err.statusCode, err.errMsg);
+  //     },
+  //   })
+  // },
 
   ///////////////////////////////////////////////////////////////////////////////
   // 页面跳转
@@ -322,6 +353,36 @@ Page({
 
   login() {
     app.userLogin()
-  }
+  },
 
+  ///////////////////////////////////////////////////
+  //新闻
+  onSwiperChange: function (e) {
+    this.setData({
+      currentSwiperIndex: e.detail.current,
+    });
+  },
+
+  prevSwiper: function () {
+    let currentIndex = this.data.currentSwiperIndex;
+    currentIndex = (currentIndex - 1 + this.data.newsList.length) % this.data.newsList.length;
+    this.setData({
+      currentSwiperIndex: currentIndex,
+    });
+  },
+
+  nextSwiper: function () {
+    let currentIndex = this.data.currentSwiperIndex;
+    currentIndex = (currentIndex + 1) % this.data.newsList.length;
+    this.setData({
+      currentSwiperIndex: currentIndex,
+    });
+  },
+
+  gotoNews: function (e) {
+    const url = e.currentTarget.dataset.url
+    wx.navigateTo({
+      url: '/pages/news/news?url=' + url,
+    })
+  },
 })

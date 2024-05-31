@@ -52,7 +52,8 @@
     "pages/profile_player/player_notice/player_notice",
     "pages/profile_player/profile_referee_notice/profile_referee_notice",
     "pages/profile_player/profile_coach_notice/profile_coach_notice",
-    "pages/management/team_notice/team_notice"
+    "pages/management/team_notice/team_notice",
+    "pages/news/news"
   ],
   "window": {
     "navigationBarTextStyle": "white",
