@@ -35,10 +35,10 @@
         <image src="/assets/user.png" mode="scaleToFill" class="hall-image" />
         <text class="hall-text">用户</text>
       </view>
-      <view bindtap="gotoNewsHallPage" class="hall-button">
+      <!-- <view bindtap="gotoNewsHallPage" class="hall-button">
         <image src="/assets/news.png" mode="scaleToFill" class="hall-image" />
         <text class="hall-text">新闻</text>
-      </view>
+      </view> -->
     </view>
   </view>
 </view>

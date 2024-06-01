@@ -321,30 +321,9 @@ Page({
     });
   },
 
-  // 更改球队描述
-  showDesInput: function () {
+  inputTeamDes: function (e) {
     this.setData({
-      modalHidden_description: false
-    });
-  },
-
-  changedes: function (e) {
-    this.setData({
-      newdes: e.detail.value
-    });
-  },
-
-  confirmChangeDescription: function () {
-    this.setData({
-      description: this.data.newdes,
-      modalHidden_description: true
-    });
-    this.updateTeamInfo()
-  },
-
-  cancelChangeDescription: function () {
-    this.setData({
-      modalHidden_description: true
+      description: e.detail.value,
     });
   },
 

@@ -23,16 +23,8 @@
   <view class="block-space">
     <text style="margin-left: 3%;">赛事简介</text>
     <view class="description-content">
-      <text class="description">{{description}}</text>
-      <text class="description-edit" bindtap="showDesInput">编辑</text>
+      <textarea class="description" bindinput="inputEventDes" value="{{description}}"></textarea>
     </view>
-
-    <modal hidden="{{modalHiddenEdes}}" bindconfirm="confirmChangeEventdes" bindcancel="cancelChangeEventdes">
-      <view class="modal-content">
-        <text>编辑赛事介绍：</text>
-        <input placeholder="赛事介绍" value="{{newTeamdes}}" bindinput="changedes" />
-      </view>
-    </modal>
   </view>
 
   <!-- 管理员 -->
