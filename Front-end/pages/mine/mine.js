@@ -1,7 +1,7 @@
 // pages/mine/mine.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-// const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 Page({
 
@@ -127,7 +127,6 @@ Page({
   onPullDownRefresh() {
     appInstance.addToRequestQueue(this.fetchData)
     appInstance.addToRequestQueue(this.fetchUserId)
-    wx.stopPullDownRefresh()
   },
 
   /**
@@ -1075,70 +1074,6 @@ Page({
   },
 
   // ------------------
-  uploadImage: function () {
-    var that = this; // 保存当前上下文的this值
-    // 打开相册或相机选择图片
-    wx.chooseMedia({
-      count: 1, // 默认为9，设置为1表示只选择一张图片
-      mediaType: ['image'],
-      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
-        // 返回选定照片的本地文件路径列表
-        console.log(res.tempFiles)
-        var tempFilePath = res.tempFiles[0].tempFilePath;
-        // 选取完成后，上传到服务器
-        wx.showLoading({
-          title: '上传头像，请稍后',
-          mask: true,
-        })
-        wx.uploadFile({
-          url: URL + '/upload', // 你的上传图片的服务器API地址
-          filePath: tempFilePath,
-          name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
-          success: function (uploadRes) {
-            console.log('profile coach register: uploadImage ->')
-            console.log(uploadRes)
-            if (uploadRes.statusCode != 200) {
-              console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
-              wx.showToast({
-                title: '上传头像失败，请检查网络！', // 错误信息文本
-                icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-                duration: 3000 // 持续时间
-              });
-              return
-            }
-            var filename = uploadRes.data;
-            that.setData({
-              avatarUrl: URL + '/download?filename=' + filename
-            });
-            let avatarUrl = that.data.avatarUrl
-            let userId = that.data.userId
-            let nickName = that.data.nickName
-            that.postUserInfo(userId, avatarUrl, nickName)
-            wx.hideLoading()
-            
-            wx.showToast({
-              title: '上传成功',
-              icon: 'success',
-              duration: 2000,
-            });
-           
-          },
-          fail: function (error) {
-            console.log('上传失败', error);
-            wx.hideLoading()
-            wx.showToast({
-              title: '上传头像失败，请检查网络！', // 错误信息文本
-              icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-              duration: 3000 // 持续时间
-            });
-          }
-        })
-      }
-    })
-  },
-
   onChooseAvatar(e) {
     const {
       avatarUrl
@@ -1146,6 +1081,7 @@ Page({
     this.setData({
       avatarUrl: avatarUrl,
     })
+    var that = this;
     appInstance.globalData.avatarUrl = avatarUrl
     // 或者使用异步方式保存
     wx.setStorage({
@@ -1156,6 +1092,49 @@ Page({
       },
       fail: function (e) {
         console.error('保存用户头像URL到本地存储失败', e);
+      }
+    });
+    wx.uploadFile({
+      url: URL + '/upload', // 你的上传图片的服务器API地址
+      filePath: avatarUrl,
+      name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
+      success: function (uploadRes) {
+        console.log('profile coach register: uploadImage ->')
+        console.log(uploadRes)
+        if (uploadRes.statusCode != 200) {
+          console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
+          wx.showToast({
+            title: '上传头像失败，请检查网络！', // 错误信息文本
+            icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
+            duration: 3000 // 持续时间
+          });
+          return
+        }
+        var filename = uploadRes.data;
+        that.setData({
+          avatarUrl: URL + '/download?filename=' + filename
+        });
+        let avatarUrl = that.data.avatarUrl
+        let userId = that.data.userId
+        let nickName = that.data.nickName
+        that.postUserInfo(userId, avatarUrl, nickName)
+        wx.hideLoading()
+        
+        wx.showToast({
+          title: '上传成功',
+          icon: 'success',
+          duration: 2000,
+        });
+       
+      },
+      fail: function (error) {
+        console.log('上传失败', error);
+        wx.hideLoading()
+        wx.showToast({
+          title: '上传头像失败，请检查网络！', // 错误信息文本
+          icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
+          duration: 3000 // 持续时间
+        });
       }
     });
   },
