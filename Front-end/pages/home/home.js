@@ -18,9 +18,9 @@ Page({
     teamList: [],
     eventList: [],
     newsList: [
-      {url: 'https://mp.weixin.qq.com/s/r6u14fRKytUs15NsA4VAPA', img: '/assets/news1.jpg', title: '南方科技大学第八届“书院杯”足球赛顺利举办'},
-      {url: 'https://mp.weixin.qq.com/s/5KGveHjUeyG3RC2otzJEtA', img: '/assets/news2.png', title: '四星致诚'},
-      {url: 'https://mp.weixin.qq.com/s/k2GceIOHC80c1d36ss4aLw', img: '/assets/news3.png', title: '南方科技大学男子足球队荣获2023年深圳市大中小学生校园足球比赛（大学组）冠军'},
+      {url: 'https://mp.weixin.qq.com/s/r6u14fRKytUs15NsA4VAPA', img: 'https://haoyu-wang141.top:8085/download?filename=3a26b5f0-5e38-48c5-b28a-fd38fc6e51db.jpg', title: '南方科技大学第八届“书院杯”足球赛顺利举办'},
+      {url: 'https://mp.weixin.qq.com/s/5KGveHjUeyG3RC2otzJEtA', img: 'https://haoyu-wang141.top:8085/download?filename=0e3a73b8-c46e-4b09-97fb-1406f45bb604.png', title: '四星致诚'},
+      {url: 'https://mp.weixin.qq.com/s/k2GceIOHC80c1d36ss4aLw', img: 'https://haoyu-wang141.top:8085/download?filename=20f6e008-b9d2-4331-9bba-5124dc49b4bb.png', title: '南方科技大学男子足球队荣获2023年深圳市大中小学生校园足球比赛（大学组）冠军'},
     ],
     currentSwiperIndex: 0, // 当前显示的新闻索引
   },
