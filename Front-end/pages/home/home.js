@@ -364,22 +364,6 @@ Page({
     });
   },
 
-  prevSwiper: function () {
-    let currentIndex = this.data.currentSwiperIndex;
-    currentIndex = (currentIndex - 1 + this.data.newsList.length) % this.data.newsList.length;
-    this.setData({
-      currentSwiperIndex: currentIndex,
-    });
-  },
-
-  nextSwiper: function () {
-    let currentIndex = this.data.currentSwiperIndex;
-    currentIndex = (currentIndex + 1) % this.data.newsList.length;
-    this.setData({
-      currentSwiperIndex: currentIndex,
-    });
-  },
-
   gotoNews: function (e) {
     const url = e.currentTarget.dataset.url
     wx.navigateTo({

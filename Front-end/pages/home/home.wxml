@@ -75,19 +75,16 @@
   <view class="block-top">
     <text class="block-title">新闻</text>
   </view>
-  <view class="news-container">
-    <view class="prev-btn" bindtap="prevSwiper">＜</view>
-    <view class="news-cover-container">
-      <swiper class="news-swiper" autoplay interval="5000" duration="500" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
-        <block wx:for="{{newsList}}" wx:key="index">
-          <swiper-item bind:tap="gotoNews" data-url="{{item.url}}">
-            <image src="{{item.img}}" class="swiper-img" mode="aspectFit"></image>
-            <view class="news-title">{{item.title}}</view>
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
-    <view class="next-btn" bindtap="nextSwiper">＞</view>
+
+  <view class="news-cover-container">
+    <swiper class="news-swiper" autoplay interval="5000" duration="500" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
+      <block wx:for="{{newsList}}" wx:key="index">
+        <swiper-item bind:tap="gotoNews" data-url="{{item.url}}">
+          <image src="{{item.img}}" class="swiper-img" mode="aspectFit"></image>
+          <view class="news-title">{{item.title}}</view>
+        </swiper-item>
+      </block>
+    </swiper>
   </view>
 
   <!-- 小圆点指示器 -->
