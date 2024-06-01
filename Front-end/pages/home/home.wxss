@@ -57,11 +57,6 @@
 }
 
 /* news */
-.news-container{
-  display: flex;
-  align-items: center;
-}
-
 .news-cover-container {
   width: 98%;
   height: 500rpx; /* 设置图片窗口的固定高度 */
@@ -100,28 +95,6 @@
   font-size: x-small;
   margin-left: 20rpx;
   margin-right: 20rpx;
-}
-
-/* 左右切换按钮 */
-.prev-btn, .next-btn {
-  position: relative;
-  top: 147%;
-  transform: translateY(-50%);
-  width: 60rpx;
-  height: 60rpx;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  text-align: center;
-  border-radius: 60rpx;
-  z-index: 10; /* 确保按钮在图片上层 */
-}
-
-.prev-btn {
-  left: 10rpx;
-}
-
-.next-btn {
-  right: 10rpx;
 }
 
 /* 小圆点指示器 */
