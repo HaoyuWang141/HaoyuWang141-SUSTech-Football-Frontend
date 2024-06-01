@@ -57,7 +57,12 @@
 }
 
 /* news */
-.news-container {
+.news-container{
+  display: flex;
+  align-items: center;
+}
+
+.news-cover-container {
   width: 98%;
   height: 500rpx; /* 设置图片窗口的固定高度 */
   display: flex;
@@ -99,7 +104,7 @@
 
 /* 左右切换按钮 */
 .prev-btn, .next-btn {
-  position: absolute;
+  position: relative;
   top: 147%;
   transform: translateY(-50%);
   width: 60rpx;
@@ -112,20 +117,20 @@
 }
 
 .prev-btn {
-  left: 37rpx;
+  left: 10rpx;
 }
 
 .next-btn {
-  right: 37rpx;
+  right: 10rpx;
 }
 
 /* 小圆点指示器 */
 .indicator {
-  position: absolute;
-  top: 168%;
   right: 45%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  margin-top: 2%;
 }
 
 .dot {
