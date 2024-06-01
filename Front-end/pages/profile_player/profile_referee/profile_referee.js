@@ -75,6 +75,7 @@ Page({
    */
   onPullDownRefresh() {
     app.addToRequestQueue(this.fetchRefereeId)
+    wx.stopPullDownRefresh()
   },
 
   /**

@@ -67,6 +67,7 @@ Page({
    */
   onPullDownRefresh() {
     app.addToRequestQueue(this.fetchCoachId)
+    wx.stopPullDownRefresh()
   },
 
   /**

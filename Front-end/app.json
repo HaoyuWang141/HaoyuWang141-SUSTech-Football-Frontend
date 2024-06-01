@@ -48,7 +48,6 @@
     "pages/profile_player/profile_coach_register/profile_coach_register",
     "pages/development/development",
     "pages/management/match_new/set_homeTeam/set_homeTeam",
-    "pages/management/match_new/invite_awayTeam/invite_awayTeam",
     "pages/profile_player/player_notice/player_notice",
     "pages/profile_player/profile_referee_notice/profile_referee_notice",
     "pages/profile_player/profile_coach_notice/profile_coach_notice",

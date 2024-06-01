@@ -11,6 +11,29 @@
   </view>
 </view>
 
+<!-- 直播及回放 -->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">直播及回放</text>
+    <text class="block-more button-custom" bind:tap="showAddSourceModal">添加</text>
+  </view>
+  <view class="block-main">
+    <view>您可以添加或删除直播源或回放源，只需输入其直播名称和网址即可。</view>
+    <view style="margin-top: 20rpx;">直播：</view>
+    <view style="margin-top: 20rpx;" wx:for="{{liveList}}" wx:key="index">
+      <text class="videoOrLive" >{{item.liveName}}</text>
+      <text class="videoOrLive_goto" bind:tap="goToLiveOrVideo" data-url="{{item.liveUrl}}">跳转</text>
+      <text class="videoOrLive_delete" bind:tap="showDeleteSourceDialog" data-id="{{item.liveId}}" data-type="live">删除</text>
+    </view>
+    <view style="margin-top: 20rpx;">回放：</view>
+    <view style="margin-top: 20rpx;" wx:for="{{videoList}}" wx:key="index">
+      <text class="videoOrLive" >{{item.videoName}}</text>
+      <text class="videoOrLive_goto" bind:tap="goToLiveOrVideo" data-url="{{item.videoUrl}}">跳转</text>
+      <text class="videoOrLive_delete" bind:tap="showDeleteSourceDialog" data-id="{{item.videoId}}" data-type="video">删除</text>
+    </view>
+  </view>
+</view>
+
 <!-- 球员名单及首发 -->
 <view class="block-container">
   <view class="block-top">
@@ -135,6 +158,26 @@
     </view>
   </view>
 </view>
+
+<!-- 模态框：添加直播源或视频源 -->
+<modal hidden="{{modalHidden_source}}" title="增加源" bindconfirm="handleSubmit_source" bindcancel="handleCancel">
+  <view class="input-item" style="margin-top: 20rpx;">
+    <text>选择直播或回放：</text>
+    <picker mode="selector" range="{{sourceOptions}}" bindchange="handleSourceTypeChange">
+      <view>{{source.type}}</view>
+    </picker>
+  </view>
+
+  <view class="input-item">
+    <text>源名称：</text>
+    <input placeholder="源名称" value="{{source.name}}" bindinput="handleInputSourceNameChange" />
+  </view>
+
+  <view class="input-item">
+    <text>URL：</text>
+    <input placeholder="URL" value="{{source.url}}" bindinput="handleInputSourceUrlChange" />
+  </view>
+</modal>
 
 <!-- 模态框：更新比赛状态及进球 -->
 <modal hidden="{{MatchInfoModalIsHidden}}" title="更新比赛信息" bindconfirm="handleMatchInfoSubmit" bindcancel="handleCancel">

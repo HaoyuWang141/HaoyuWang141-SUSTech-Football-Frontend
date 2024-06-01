@@ -105,6 +105,7 @@ Page({
   onPullDownRefresh() {
     this.fetchData(options.id)
     this.isFavorite(userId, options.id)
+    wx.stopPullDownRefresh()
   },
 
   /**

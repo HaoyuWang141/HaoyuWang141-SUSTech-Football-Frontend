@@ -127,6 +127,7 @@ Page({
   onPullDownRefresh() {
     appInstance.addToRequestQueue(this.fetchData)
     appInstance.addToRequestQueue(this.fetchUserId)
+    wx.stopPullDownRefresh()
   },
 
   /**

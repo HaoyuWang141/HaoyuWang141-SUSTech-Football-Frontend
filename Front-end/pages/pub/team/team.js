@@ -67,6 +67,7 @@ Page({
   onPullDownRefresh() {
     this.fetchData(this.data.id);
     this.isFavorite(userId, this.data.id)
+    wx.stopPullDownRefresh()
   },
 
   /**

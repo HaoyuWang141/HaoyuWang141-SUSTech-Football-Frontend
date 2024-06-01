@@ -32,6 +32,17 @@ Page({
     playerOptions: Array,
     strActionOptions: ['进球', '助攻', '黄牌', '红牌', '上场', '下场'],
     actionOptions: ['GOAL', 'ASSIST', 'YELLOW_CARD', 'RED_CARD', 'ON', 'OFF'],
+
+    liveList: [],
+    videoList: [],
+
+    modalHidden_source: true,
+    sourceOptions: ['直播', '回放'],
+    source: {
+      type: "请选择",
+      name: "",
+      url: "",
+    },
   },
 
   /**
@@ -65,6 +76,8 @@ Page({
    */
   onShow() {
     this.fetchData(this.data.matchId)
+    this.fetchLiveList(this.data.matchId)
+    this.fetchVideoList(this.data.matchId)
   },
 
   /**
@@ -86,6 +99,9 @@ Page({
    */
   onPullDownRefresh() {
     this.fetchData(this.data.matchId)
+    this.fetchLiveList(this.data.matchId)
+    this.fetchVideoList(this.data.matchId)
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -105,7 +121,7 @@ Page({
   // ----------------------------
 
   // 获取比赛数据
-  fetchData: function (matchId) {
+  fetchData(matchId) {
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -144,6 +160,48 @@ Page({
       },
       complete() {
         wx.hideLoading();
+      }
+    })
+  },
+
+  fetchLiveList(matchId) {
+    const that = this
+    wx.request({
+      url: `${URL}/match/live/getAll?matchId=${matchId}`,
+      success: function (res) {
+        console.log("match referee page: fetchLiveList->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        that.setData({
+          liveList: res.data
+        })
+      },
+      fail(err) {
+        console.log("请求失败，错误码为：" + err.statusCode + "；错误信息为：" + err.message)
+      }
+    })
+  },
+
+  fetchVideoList(matchId) {
+    const that = this
+    wx.request({
+      url: `${URL}/match/video/getAll?matchId=${matchId}`,
+      success: function (res) {
+        console.log("match referee page: fetchVideoList->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log(res.data)
+        that.setData({
+          videoList: res.data
+        })
+      },
+      fail(err) {
+        console.log("请求失败，错误码为：" + err.statusCode + "；错误信息为：" + err.message)
       }
     })
   },
@@ -235,6 +293,7 @@ Page({
     this.setData({
       MatchInfoModalIsHidden: true,
       ActionAddModalIsHidden: true,
+      modalHidden_source: true,
     });
   },
 
@@ -551,5 +610,152 @@ Page({
       }
     })
   },
+
+  // ----------------------------
+  // 直播和回放
+  goToLiveOrVideo: function (e) {
+    const url = e.currentTarget.dataset.url
+    wx.navigateTo({
+      url: '/pages/pub/live/live?url=' + url,
+    })
+  },
+
+  showAddSourceModal() {
+    this.setData({
+      modalHidden_source: false
+    })
+  },
+
+  handleSourceTypeChange(e) {
+    let source = this.data.source
+    source.type = this.data.sourceOptions[e.detail.value]
+    this.setData({
+      source
+    });
+  },
+
+  handleInputSourceNameChange(e) {
+    let source = this.data.source
+    console.log(source)
+    source.name = e.detail.value
+    this.setData({
+      source
+    })
+  },
+
+  handleInputSourceUrlChange(e) {
+    let source = this.data.source
+    source.url = e.detail.value
+    this.setData({
+      source
+    })
+  },
+
+  handleSubmit_source() {
+    const that = this
+    let matchId = this.data.matchId
+    let type = this.data.source.type
+    let name = this.data.source.name
+    let url = this.data.source.url
+
+    // 日志
+    console.log("match referee: handleSubmit_source ->")
+    if (type === "直播") {
+      type = "live"
+    }
+    if (type === "回放") {
+      type = "video"
+    }
+    if (type !== "live" && type !== "video") {
+      console.error(`${type} is invalid!`)
+      return
+    }
+    if (name.length > 10) {
+      wx.showToast({
+        title: '命名过长！',
+        icon: "error"
+      })
+      return
+    }
+    console.log(`${name}: ${url}`);
+
+    wx.showLoading({
+      title: '正在添加',
+      mask: true,
+    })
+    wx.request({
+      url: `${URL}/match/${type}/add?matchId=${matchId}&${type}Name=${name}&${type}Url=${url}`,
+      method: 'POST',
+      success(res) {
+        console.log("match referee: handleSubmit_source->")
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("更新成功")
+        that.setData({
+          modalHidden_source: true,
+        });
+      },
+      fail(err) {
+        console.error('请求失败：', err.statusCode, err.errMsg);
+      },
+      complete() {
+        wx.hideLoading()
+        that.fetchLiveList(that.data.matchId)
+        that.fetchVideoList(that.data.matchId)
+        that.setData({
+          source: {
+            type: "请选择",
+            name: "",
+            url: "",
+          },
+        })
+      }
+    })
+  },
+
+  showDeleteSourceDialog(e) {
+    let sourceId = e.currentTarget.dataset.id
+    let type = e.currentTarget.dataset.type
+
+    wx.showModal({
+      title: '确认删除',
+      content: '您确定删除该直播或回放吗？',
+      confirmText: '确认删除',
+      confirmColor: '#FF0000',
+      complete: (res) => {
+        if (res.confirm) {
+          console.log("match referee: showDeleteSourceDialog ->")
+          console.log(`delete ${type}: ${sourceId}`);
+          wx.showLoading({
+            title: '正在删除',
+          })
+          const that = this
+          wx.request({
+            url: `${URL}/match/${type}/delete?${type}Id=${sourceId}`,
+            method: 'DELETE',
+            success(res) {
+              console.log(`match referee: showDeleteSourceDialog delete ${type} ->`)
+              if (res.statusCode != 200) {
+                console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+                return
+              }
+              console.log("删除成功")
+            },
+            fail(err) {
+              console.error(`请求失败：${err.statusCode}, ${err.errMsg}`);
+            },
+            complete() {
+              wx.hideLoading()
+              that.fetchLiveList(that.data.matchId)
+              that.fetchVideoList(that.data.matchId)
+            }
+          })
+        }
+      }
+    })
+  },
+
 
 })

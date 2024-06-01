@@ -223,6 +223,7 @@ Page({
    */
   onPullDownRefresh() {
     this.fetchData(this.data.id)
+    wx.stopPullDownRefresh()
   },
 
   /**

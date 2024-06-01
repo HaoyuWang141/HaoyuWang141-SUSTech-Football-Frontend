@@ -17,10 +17,21 @@ Page({
     userList: [],
     teamList: [],
     eventList: [],
-    newsList: [
-      {url: 'https://mp.weixin.qq.com/s/r6u14fRKytUs15NsA4VAPA', img: '/assets/news1.jpg', title: '南方科技大学第八届“书院杯”足球赛顺利举办'},
-      {url: 'https://mp.weixin.qq.com/s/5KGveHjUeyG3RC2otzJEtA', img: '/assets/news2.png', title: '四星致诚'},
-      {url: 'https://mp.weixin.qq.com/s/k2GceIOHC80c1d36ss4aLw', img: '/assets/news3.png', title: '南方科技大学男子足球队荣获2023年深圳市大中小学生校园足球比赛（大学组）冠军'},
+    newsList: [{
+        url: 'https://mp.weixin.qq.com/s/r6u14fRKytUs15NsA4VAPA',
+        img: '/assets/news1.jpg',
+        title: '南方科技大学第八届“书院杯”足球赛顺利举办'
+      },
+      {
+        url: 'https://mp.weixin.qq.com/s/5KGveHjUeyG3RC2otzJEtA',
+        img: '/assets/news2.png',
+        title: '四星致诚'
+      },
+      {
+        url: 'https://mp.weixin.qq.com/s/k2GceIOHC80c1d36ss4aLw',
+        img: '/assets/news3.png',
+        title: '南方科技大学男子足球队荣获2023年深圳市大中小学生校园足球比赛（大学组）冠军'
+      },
     ],
     currentSwiperIndex: 0, // 当前显示的新闻索引
   },
@@ -73,6 +84,7 @@ Page({
     app.addToRequestQueue(this.fetchFavorateTeam)
     app.addToRequestQueue(this.fetchFavorateEvent)
     // app.addToRequestQueue(this.fetchNews)
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -91,7 +103,7 @@ Page({
 
   /////////////////////////////////////
   // 网络传输
-  
+
   fetchFavorateMatch(id) {
     let that = this
     wx.request({
@@ -117,7 +129,7 @@ Page({
           matchList,
         })
       },
-      fail: function(err) {
+      fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
@@ -143,7 +155,7 @@ Page({
           userList: userList,
         })
       },
-      fail: function(err) {
+      fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
@@ -169,7 +181,7 @@ Page({
           teamList: teamList,
         })
       },
-      fail: function(err) {
+      fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
@@ -195,7 +207,7 @@ Page({
           eventList: eventList,
         })
       },
-      fail: function(err) {
+      fail: function (err) {
         console.error('请求失败：', err.statusCode, err.errMsg);
       },
     })
@@ -225,7 +237,7 @@ Page({
 
   ///////////////////////////////////////////////////////////////////////////////
   // 页面跳转
-  
+
   gotoExample() {
     wx.navigateTo({
       url: '/pages/example/example',
@@ -278,7 +290,7 @@ Page({
     })
   },
 
-  gotoTeamPage: function(e) {
+  gotoTeamPage: function (e) {
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: '/pages/pub/team/team?id=' + id,
@@ -292,38 +304,38 @@ Page({
     })
   },
 
-  gotoUserPage: function(e) {
+  gotoUserPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/user?id=' + dataset.id,
     })
   },
 
-  gotoEventHallPage: function(e) {
+  gotoEventHallPage: function (e) {
     wx.navigateTo({
       url: './event_hall/event_hall',
     })
   },
 
-  gotoMatchHallPage: function(e) {
+  gotoMatchHallPage: function (e) {
     wx.navigateTo({
       url: './match_hall/match_hall',
     })
   },
 
-  gotoTeamHallPage: function(e) {
+  gotoTeamHallPage: function (e) {
     wx.navigateTo({
       url: './team_hall/team_hall',
     })
   },
 
-  gotoUserHallPage: function(e) {
+  gotoUserHallPage: function (e) {
     wx.navigateTo({
       url: './user_hall/user_hall',
     })
   },
 
-  gotoNewsHallPage: function(e) {
+  gotoNewsHallPage: function (e) {
     wx.navigateTo({
       url: './news_hall/news_hall',
     })

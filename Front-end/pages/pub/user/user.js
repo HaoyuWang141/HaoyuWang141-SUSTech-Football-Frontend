@@ -56,6 +56,7 @@ Page({
    */
   onPullDownRefresh() {
     app.addToRequestQueue(this.fetchData)
+    wx.stopPullDownRefresh()
   },
 
   /**

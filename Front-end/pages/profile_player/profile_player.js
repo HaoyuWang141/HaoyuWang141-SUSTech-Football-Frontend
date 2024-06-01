@@ -58,6 +58,7 @@ Page({
    */
   onPullDownRefresh() {
     app.addToRequestQueue(this.fetchPlayerId)
+    wx.stopPullDownRefresh()
   },
 
   /**
