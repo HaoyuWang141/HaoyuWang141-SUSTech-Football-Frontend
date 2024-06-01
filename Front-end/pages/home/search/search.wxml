@@ -1,12 +1,12 @@
 <view class="search-container">
   <input class="search-input" type="text" placeholder="{{searchPlaceholder}}" bindinput="bindInput" value="{{ searchText }}"></input>
   <button class="search-button" bindtap="search">搜索</button>
-  <picker wx:if="{{type=='全部'}}" class="filter-picker-unselected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
+  <!-- <picker wx:if="{{type=='全部'}}" class="filter-picker-unselected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
     <image class="icon" src="/assets/filter.svg"></image>
   </picker>
   <picker wx:if="{{type!='全部'}}" class="filter-picker-selected" bindchange="bindTypeChange" range="{{filterTypes}}" mode="selector">
     <image class="icon" src="/assets/filter.svg"></image>
-  </picker>
+  </picker> -->
 </view>
 
 <view class="container">
