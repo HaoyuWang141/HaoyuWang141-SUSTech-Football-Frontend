@@ -1,14 +1,17 @@
 <!--pages/profile_player/profile_player_register/profile_player_register.wxml-->
 <view class="container">
   <view style="width: 95%;">
-    <view class="block-container" bindtap="uploadImage">
+    <view class="block-container">
       <view class="block-top">
         <view class="block-title">
           <text style="color: red;">* </text>
           <text>头像</text>
         </view>
-        <image wx:if="{{photoUrl}}" class="avatar" src="{{photoUrl}}" mode="aspectFill"></image>
-        <text wx:else class="block-more">></text>
+        <view class="block-more">
+          <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="uploadImage">
+            <image class="avatar" src="{{photoUrl}}" mode="scaleToFill"></image>
+          </button>
+        </view>
       </view>
     </view>
 
@@ -30,11 +33,3 @@
     <button class="button" bindtap="submit">注册</button>
   </view>
 </view>
-
-<!-- <view class="block-container">
-  <view class="block-top">
-    <view class="block-title"></view>
-    <view class="block-more"></view>
-  </view>
-  <view class="block-main"></view>
-</view> -->

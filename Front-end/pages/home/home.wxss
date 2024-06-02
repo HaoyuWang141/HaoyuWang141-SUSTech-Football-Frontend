@@ -12,20 +12,28 @@
   box-shadow: 0 -10rpx 60rpx rgba(237, 108, 0, 0.8);
   height: 100rpx;
 }
+
 .search-container .search-input {
-    flex: 1; /* 让搜索框占据剩余空间 */
-    height: 100%; /* 让搜索框与容器高度一致 */
+  flex: 1;
+  /* 让搜索框占据剩余空间 */
+  height: 100%;
+  /* 让搜索框与容器高度一致 */
 }
+
 .search-container .search-button {
-    height: 80%; /* 让按钮与容器高度一致 */
-    width: 20%;
-    font-size: small;
-    font-weight: normal;
-    color: white;
-    background-color: rgb(237, 108, 0);
-    margin-left: 10rpx; /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
-    padding: 0 10rpx; /* 设置按钮的左右内边距 */
-    line-height: 80rpx; /* 设置按钮的行高，使文本垂直居中 */
+  height: 80%;
+  /* 让按钮与容器高度一致 */
+  width: 20%;
+  font-size: small;
+  font-weight: normal;
+  color: white;
+  background-color: rgb(237, 108, 0);
+  margin-left: 10rpx;
+  /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
+  padding: 0 10rpx;
+  /* 设置按钮的左右内边距 */
+  line-height: 80rpx;
+  /* 设置按钮的行高，使文本垂直居中 */
 }
 
 .hall-bar {
@@ -34,22 +42,26 @@
   background-color: white;
   padding: 10px 0;
 }
+
 .hall-button {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20rpx;
 }
+
 .hall-image {
   width: 90rpx;
   height: 90rpx;
   margin-bottom: 10rpx;
 }
+
 .event-hall-image {
   width: 87rpx;
   height: 90rpx;
   margin-bottom: 10rpx;
 }
+
 .hall-text {
   font-size: small;
   font-weight: bold;
@@ -58,14 +70,8 @@
 
 /* news */
 .news-cover-container {
-  width: 98%;
-  height: 500rpx; /* 设置图片窗口的固定高度 */
-  display: flex;
-  justify-content: center;
-  border-radius: 10rpx;
-  border: 8rpx solid rgba(237, 108, 0, 0.3);
-  box-shadow: 10rpx 10rpx 40rpx rgba(237, 108, 0, 0.5);
-  padding-top: 20rpx;
+  width: 100%;
+  height: 600rpx;
 }
 
 
@@ -78,23 +84,23 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .swiper-img {
-  margin-left: 5%;
   width: 90%;
   height: 75%;
-  object-fit: contain; /* 确保整个封面显示出来 */
+  object-fit: contain;
+  /* 确保整个封面显示出来 */
 }
 
-.news-title {
+.swiper-title {
   color: black;
   text-align: center;
-  font-size: x-small;
-  margin-left: 20rpx;
-  margin-right: 20rpx;
+  font-size: small;
+  margin-top: 10rpx;
 }
 
 /* 小圆点指示器 */
@@ -120,42 +126,49 @@
 
 /* match */
 .match-container {
-    margin-top: 30rpx;
+  margin-top: 30rpx;
 }
 
 /* player */
 .player-container {
-    margin-top: 30rpx;
+  margin-top: 30rpx;
 }
 
 /* team */
 .team-container {
-    margin-top: 30rpx;
+  margin-top: 30rpx;
 }
 
 /* event */
 .event-container {
-    margin-top: 30rpx;  
+  margin-top: 30rpx;
 }
 
 /* more-bar */
 .more-bar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 80rpx; /* 调整容器的高度 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 80rpx;
+  /* 调整容器的高度 */
 }
+
 .more-bar .more-label {
-    height: 60rpx;
-    width: 200rpx;
+  height: 60rpx;
+  width: 200rpx;
 }
+
 .more-bar .more-button {
-    height: 60rpx;
-    width: 120rpx;
-    font-size: 40%; /* 设置按钮文本的大小 */
-    margin-left: 330rpx; /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
-    padding: 0 10rpx; /* 设置按钮的左右内边距 */
-    line-height: 65rpx; /* 设置按钮的行高，使文本垂直居中 */
+  height: 60rpx;
+  width: 120rpx;
+  font-size: 40%;
+  /* 设置按钮文本的大小 */
+  margin-left: 330rpx;
+  /* 添加左侧间距，使搜索框和按钮之间有一定的间距 */
+  padding: 0 10rpx;
+  /* 设置按钮的左右内边距 */
+  line-height: 65rpx;
+  /* 设置按钮的行高，使文本垂直居中 */
 }
 
 /* 未关注任何X时样式 */
@@ -174,5 +187,3 @@
   font-weight: bold;
   border-radius: 20rpx;
 }
-
-  

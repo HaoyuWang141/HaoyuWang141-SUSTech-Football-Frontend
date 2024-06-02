@@ -20,12 +20,6 @@
   position: relative;
 }
 
-.picture{
-  width: 160rpx;
-  height: 160rpx;
-  border-radius: 50%;
-}
-
 .pointer{
   margin-left:30rpx;
 }

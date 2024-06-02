@@ -1,17 +1,13 @@
-<!--index.wxml-->
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container1">
-  <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
-  <view class="container2">
-    <view class="container3">
-       <image class="avatar" src="{{avatarUrl}}" mode="scaleToFill"></image>
+    <image src="https://www.sustech.edu.cn/uploads/images/2023/09/22155528_95528.jpg" mode="scaleToFill" style="height: 400rpx; width: 100%;" />
+    <view class="container2">
+      <view class="container3">
+        <image class="avatar" src="{{avatarUrl}}" mode="scaleToFill"></image>
+      </view>
+      <view class="center-bold">{{nickName}}</view>
     </view>
-    <view class="center-bold">昵称：{{nickName}}</view>
   </view>
-  <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-  更换头像
-  </button>
-</view>
 
   <view class="container-mine">
     <view class="block-container">
@@ -22,7 +18,15 @@
         <!-- <text class="block-more">查看更多</text> -->
       </view>
       <view class="block-main">
-        用户id同时作为球队、比赛、赛事管理者的唯一标识
+        <view style="margin-bottom: 40rpx;">用户id同时作为球队、比赛、赛事管理者的唯一标识</view>
+        <view class="function-container">
+          <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" size="mini" class="button-custom">
+            <text>更换头像</text>
+          </button>
+          <button size="mini" bind:tap="openChangeNickNameModal" class="button-custom">
+            <text>更改昵称</text>
+          </button>
+        </view>
       </view>
     </view>
 

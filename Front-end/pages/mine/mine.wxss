@@ -37,7 +37,7 @@
     position: absolute;
     left: 250rpx;
     padding: 30rpx;
-    font-size: 36rpx;
+    font-size: large;
   }
 
   .avatar {
@@ -46,8 +46,32 @@
     border-radius: 40rpx;
   }
 
+  .function-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20rpx;
+  }
+
+  .function-container {
+    display: flex;
+  }
+
+  .function-image {
+    width: 90rpx;
+    height: 90rpx;
+    margin-bottom: 10rpx;
+  }
+
+  .function-text {
+    font-size: small;
+    font-weight: normal;
+    color: #666;
+  }
+
   .container-mine {
     padding: 0 20rpx;
+    margin-top: 30rpx;
   }
 
   .notification-container {

@@ -127,6 +127,7 @@ Page({
   onPullDownRefresh() {
     appInstance.addToRequestQueue(this.fetchData)
     appInstance.addToRequestQueue(this.fetchUserId)
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -195,12 +196,41 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        that.setData({
+          avatarUrl,
+          nickName
+        })
       },
       fail(err) {
         console.log('请求失败', err);
       },
       complete() {}
     });
+  },
+
+  // 加入球队，可以输入id或名称
+  openChangeNickNameModal() {
+    const that = this
+    wx.showModal({
+      title: '更改昵称',
+      editable: true,
+      placeholderText: '10字以内',
+      complete: (res) => {
+        if (res.confirm) {
+          let avatarUrl = that.data.avatarUrl
+          let userId = that.data.userId
+          let nickName = res.content
+          if (nickName.length > 10) {
+            wx.showToast({
+              title: '昵称过长！',
+              icon: 'error'
+            })
+            return
+          }
+          that.postUserInfo(userId, avatarUrl, nickName)
+        }
+      }
+    })
   },
 
   fetchUserInfo(userId) {

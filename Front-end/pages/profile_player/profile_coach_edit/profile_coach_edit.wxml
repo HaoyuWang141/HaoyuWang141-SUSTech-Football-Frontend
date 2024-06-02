@@ -6,9 +6,10 @@
     <view class="section0">
       <view>头像</view>
       <view style="flex: 1;"></view>
-      <view class="edit" bindtap="uploadImage">
-        <image class="picture" src="{{photoUrl}}"></image>
-        <view class="pointer">></view>
+      <view class="edit">
+        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="uploadImage">
+          <image class="avatar" src="{{photoUrl}}" mode="scaleToFill"></image>
+        </button>
       </view>
     </view>
     <view class="section">
@@ -19,10 +20,10 @@
         <view class="pointer">></view>
       </view>
     </view>
-    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeName"       bindcancel="cancelChangeName">
+    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
       <view class="modal-content">
         <text>请输入姓名：</text>
-        <input placeholder="姓名" bindinput="changename"/>
+        <input placeholder="姓名" bindinput="changename" />
       </view>
     </modal>
     <view class="section">
@@ -33,10 +34,10 @@
         <view class="pointer">></view>
       </view>
     </view>
-    <modal hidden="{{modalHiddenBio}}" bindconfirm="confirmChangeBio"       bindcancel="cancelChangeBio">
+    <modal hidden="{{modalHiddenBio}}" bindconfirm="confirmChangeBio" bindcancel="cancelChangeBio">
       <view class="modal-content">
         <text>请输入个人简介：</text>
-        <input placeholder="个人简介" bindinput="changebio"/>
+        <input placeholder="个人简介" bindinput="changebio" />
       </view>
     </modal>
     <button class="button" bindtap="submit">提交</button>

@@ -19,12 +19,7 @@
   text-align: end;
   color: #99949d;
   position: relative;
-}
-
-.picture{
-  width: 160rpx;
-  height: 160rpx;
-  border-radius: 50%;
+  align-items: center;
 }
 
 .pointer{

@@ -1,4 +1,4 @@
-<!-- <button bind:tap="login">获取User</button> -->
+<button bind:tap="login">获取User</button>
 <!-- <button bind:tap="gotoExample">gotoExample</button> -->
 
 <!-- 校训图片 -->
@@ -31,27 +31,42 @@
         <image src="/assets/team.png" mode="scaleToFill" class="hall-image" />
         <text class="hall-text">球队</text>
       </view>
-      <view bindtap="gotoUserHallPage" class="hall-button">
+      <!-- <view bindtap="gotoUserHallPage" class="hall-button">
         <image src="/assets/user.png" mode="scaleToFill" class="hall-image" />
         <text class="hall-text">用户</text>
-      </view>
+      </view> -->
       <!-- <view bindtap="gotoNewsHallPage" class="hall-button">
         <image src="/assets/news.png" mode="scaleToFill" class="hall-image" />
         <text class="hall-text">新闻</text>
       </view> -->
     </view>
   </view>
+  <view class="block-top">
+    <text class="block-title">快捷功能</text>
+  </view>
+  <view class="block-main">
+    <view class="hall-bar">
+      <view bindtap="gotoProfilePlayerPage" class="hall-button">
+        <image src="/assets/football_selected.png" mode="scaleToFill" class="event-hall-image" />
+        <text class="hall-text">我是球员</text>
+      </view>
+      <view bindtap="gotoProfileRefereePage" class="hall-button">
+        <image src="/assets/referee.png" mode="scaleToFill" class="hall-image" />
+        <text class="hall-text">我是裁判</text>
+      </view>
+    </view>
+  </view>
 </view>
 
 <!-- 通知 -->
-<view class="block-container">
+<!-- <view class="block-container">
   <view class="block-top">
     <text class="block-title">通知！</text>
   </view>
   <view class="block-main">
     <text>目前为测试阶段，随时删库跑路，详情见右下角</text><text style="font-weight: bold; color: #ed6c00;">“开发”</text>
   </view>
-</view>
+</view> -->
 
 <!-- 新闻 -->
 <!-- <view class="news-container">
@@ -75,23 +90,24 @@
   <view class="block-top">
     <text class="block-title">新闻</text>
   </view>
+  <view class="block-main">
+    <view class="news-cover-container">
+      <swiper class="news-swiper" autoplay interval="5000" duration="500" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
+        <block wx:for="{{newsList}}" wx:key="index">
+          <swiper-item bind:tap="gotoNews" data-url="{{item.url}}" class="swiper-item">
+            <image src="{{item.img}}" class="swiper-img" mode="aspectFit"></image>
+            <view class="swiper-title">{{item.title}}</view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
 
-  <view class="news-cover-container">
-    <swiper class="news-swiper" autoplay interval="5000" duration="500" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
+    <!-- 小圆点指示器 -->
+    <view class="indicator">
       <block wx:for="{{newsList}}" wx:key="index">
-        <swiper-item bind:tap="gotoNews" data-url="{{item.url}}">
-          <image src="{{item.img}}" class="swiper-img" mode="aspectFit"></image>
-          <view class="news-title">{{item.title}}</view>
-        </swiper-item>
+        <view class="dot {{currentSwiperIndex === index ? 'active' : ''}}"></view>
       </block>
-    </swiper>
-  </view>
-
-  <!-- 小圆点指示器 -->
-  <view class="indicator">
-    <block wx:for="{{newsList}}" wx:key="index">
-      <view class="dot {{currentSwiperIndex === index ? 'active' : ''}}"></view>
-    </block>
+    </view>
   </view>
 </view>
 
@@ -110,7 +126,7 @@
 </view>
 
 <!-- 关注的用户 -->
-<view class="block-container">
+<!-- <view class="block-container">
   <view class="block-top">
     <text class="block-title">关注的用户</text>
   </view>
@@ -120,7 +136,7 @@
       <user-card-small wx:for="{{userList}}" wx:key="userId" name="{{item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}"></user-card-small>
     </scroll-view>
   </view>
-</view>
+</view> -->
 
 <!-- 关注的球队 -->
 <view class="block-container">

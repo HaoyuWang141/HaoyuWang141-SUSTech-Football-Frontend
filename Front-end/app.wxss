@@ -91,3 +91,17 @@ page {
   text-align: center;
   white-space: nowrap;
 }
+
+/* avatar */
+.avatar-wrapper {
+  padding: 0;
+  width: 150rpx !important;
+  height: 150rpx;
+  border-radius: 50%;
+}
+
+.avatar {
+  display: block;
+  width: 150rpx;
+  height: 150rpx;
+}

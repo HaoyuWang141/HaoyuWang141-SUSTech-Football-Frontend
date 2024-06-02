@@ -103,4 +103,43 @@ App({
       task(this.globalData.userId);
     }
   },
+
+  onChooseAvatar(avatarUrl, callback) {
+    let URL = this.globalData.URL
+    wx.uploadFile({
+      url: URL + '/upload', // 你的上传图片的服务器API地址
+      filePath: avatarUrl,
+      name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
+      success: function (uploadRes) {
+        wx.hideLoading()
+        console.log('uploadImage ->')
+        console.log(uploadRes)
+        if (uploadRes.statusCode != 200) {
+          console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
+          wx.showToast({
+            title: '上传头像失败，请检查网络！', // 错误信息文本
+            icon: "error", // 'none' 表示不显示图标，其他值如'success'、'loading'
+            duration: 1000 // 持续时间
+          });
+          return
+        }
+        let filename = uploadRes.data;
+        let url = URL + '/download?filename=' + filename
+        callback(url)
+        wx.showToast({
+          title: '上传成功',
+          icon: 'success',
+        });
+      },
+      fail: function (error) {
+        wx.hideLoading()
+        console.log('上传失败', error);
+        wx.showToast({
+          title: '上传头像失败，请检查网络！', // 错误信息文本
+          icon: "error", // 'none' 表示不显示图标，其他值如'success'、'loading'
+          duration: 1000 // 持续时间
+        });
+      }
+    });
+  },
 })

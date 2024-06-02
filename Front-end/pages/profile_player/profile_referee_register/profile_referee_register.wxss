@@ -35,16 +35,6 @@ textarea {
   width: 100%;
 }
 
-image {
-  width: 100px;
-  height: 100px;
-}
-
-.avatar {
-  width: 200rpx;
-  height: 200rpx;
-}
-
 .button {
   display: block;
   background-color: #ed6c00;

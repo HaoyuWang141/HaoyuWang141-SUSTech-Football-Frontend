@@ -6,9 +6,10 @@
     <view class="section0">
       <view>头像</view>
       <view style="flex: 1;"></view>
-      <view class="edit" bindtap="uploadImage">
-        <image class="picture" src="{{photoUrl}}"></image>
-        <view class="pointer">></view>
+      <view class="edit">
+        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="uploadImage">
+          <image class="avatar" src="{{photoUrl}}" mode="scaleToFill"></image>
+        </button>
       </view>
     </view>
     <view class="section">

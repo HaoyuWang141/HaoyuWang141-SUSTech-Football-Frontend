@@ -132,15 +132,11 @@ Page({
               });
               return
             }
-            var filename = uploadRes.data;
-            that.setData({
-              photoUrl: URL + '/download?filename=' + filename
-            });
+
             wx.hideLoading()
             wx.showToast({
               title: '上传成功',
               icon: 'success',
-              duration: 2000,
             });
           },
           fail: function (error) {
@@ -387,7 +383,7 @@ Page({
           admissionYear: this.data.admissionYear,
           userId: app.globalData.userId,
         },
-        success (res) {
+        success(res) {
           console.log('profile player register: submit ->')
           if (res.statusCode != 200) {
             console.error('更新球员失败' + res.statusCode + ' ' + res.data)
@@ -461,4 +457,15 @@ Page({
     return true;
   },
 
+  uploadImage(e) {
+    const {
+      avatarUrl
+    } = e.detail
+    const that = this
+    app.onChooseAvatar(avatarUrl, (url) => {
+      that.setData({
+        photoUrl: url
+      });
+    })
+  },
 })
