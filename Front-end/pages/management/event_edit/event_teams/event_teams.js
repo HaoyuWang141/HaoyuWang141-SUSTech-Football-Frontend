@@ -12,6 +12,7 @@ Page({
     eventId: 0,
     teamList: [],
     groupList: [],
+    stageList: [],
     deleteTeamId: 0,
     deleteGroupId: 0,
     groupNameList: [],
@@ -107,7 +108,8 @@ Page({
         that.setData({
           eventId: res.data.eventId,
           teamList: res.data.teamList,
-          groupList: res.data.groupList
+          groupList: res.data.groupList,
+          stageList: res.data.stageList
         });
         let groupNameList = []
         let groupTeamList = []
