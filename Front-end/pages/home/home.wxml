@@ -1,4 +1,4 @@
-<button bind:tap="login">获取User</button>
+<!-- <button bind:tap="login">获取User</button> -->
 <!-- <button bind:tap="gotoExample">gotoExample</button> -->
 
 <!-- 校训图片 -->
