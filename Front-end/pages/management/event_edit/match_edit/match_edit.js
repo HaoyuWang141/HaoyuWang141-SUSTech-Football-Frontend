@@ -368,6 +368,11 @@ Page({
       success: res => {
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '修改失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
           return
         }
         console.log('赛事比赛信息修改成功', res.data);
@@ -388,6 +393,9 @@ Page({
           duration: 2000
         });
       },
+      complete() {
+        wx.hideLoading();
+      }
     });
   },
 

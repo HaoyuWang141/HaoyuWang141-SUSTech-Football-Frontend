@@ -47,17 +47,27 @@
           <text>{{strTime}}</text>
         </picker>
 
-        <!-- 比赛阶段 -->
-        <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}"  bindchange="bindStageChange">
-          <text>比赛阶段：</text>
-          <text>{{stage}}</text>
-        </picker>
+        <view wx:if="{{stageList.length > 1}}">
+          <!-- 比赛阶段 -->
+          <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}"  bindchange="bindStageChange">
+            <text>比赛阶段：</text>
+            <text>{{stage}}</text>
+          </picker>
 
-        <!-- 比赛组别 -->
-        <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
-          <text>比赛组别：</text>
-          <text>{{tag}}</text>
-        </picker>
+          <!-- 比赛组别 -->
+          <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+            <text>比赛组别：</text>
+            <text>{{tag}}</text>
+          </picker>
+        </view>
+
+        <view wx:if="{{stageList.length === 1}}">
+          <!-- 比赛轮数 -->
+          <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+            <text>比赛轮数：</text>
+            <text>{{tag}}</text>
+          </picker>
+        </view>
 
         <block wx:if="{{hasBegun}}">
           <!-- 比分 -->

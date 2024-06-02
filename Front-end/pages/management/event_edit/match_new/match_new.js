@@ -131,6 +131,12 @@ Page({
         });
         console.log('stageList->');
         console.log(that.data.stageList);
+        if (that.data.stageList.length === 1) {
+          const tagNameList = that.data.stageList[0].tags.map(tag => tag.tagName);
+          that.setData({
+            tagNameList: tagNameList
+          })
+        }
       },
       fail(err) {
         console.log('请求失败', err);
