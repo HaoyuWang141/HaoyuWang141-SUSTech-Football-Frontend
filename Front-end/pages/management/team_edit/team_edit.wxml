@@ -68,8 +68,8 @@
             <player-card-small name="{{inviteCoach.name}}" img="{{inviteCoach.img}}" bindtap="gotoInviteCoach" data-id="{{teamId}}"></player-card-small>
             <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach" data-id="{{index}}">
               <view wx:if="{{isClickCoachList[index].isClicked}}">
-                <image src="/assets/eye.png" class="icon_eye" bind:tap="showCheckCoachModal" data-id="{{item.coachId}}"></image>
-                <image src="/assets/delete.png" class="icon_delete" bind:tap="showDeleteCoachModal" data-id="{{item.coachId}}"></image>
+                <image src="/assets/eye.png" class="icon icon_eye" bind:tap="showCheckCoachModal" data-id="{{item.coachId}}"></image>
+                <image src="/assets/delete.png" class="icon icon_delete" bind:tap="showDeleteCoachModal" data-id="{{item.coachId}}"></image>
               </view>
             </player-card-small>
           </view>

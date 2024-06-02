@@ -426,7 +426,11 @@ Page({
     });
   },
 
-  showDeletePlayerModal() {
+  showDeletePlayerModal (e) {
+    const id = e.currentTarget.dataset.id
+    this.setData({
+      selectPlayerId: id
+    })
     this.showModal(
       '确认移除',
       '确定要移除该球员吗？',
@@ -539,10 +543,12 @@ Page({
   },
 
   // 显示编辑球员号码模态框
-  showEditPlayerModal: function () {
+  showEditPlayerModal: function (e) {
+    const id = e.currentTarget.dataset.id
     this.setData({
       editPlayerModalHidden: false,
       newPlayerNumber: '', // 清空之前的输入
+      selectPlayerId: id
     });
   },
 
