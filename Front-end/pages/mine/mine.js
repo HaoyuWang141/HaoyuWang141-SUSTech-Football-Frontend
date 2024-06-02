@@ -208,7 +208,7 @@ Page({
     });
   },
 
-  // 加入球队，可以输入id或名称
+  // 更改昵称
   openChangeNickNameModal() {
     const that = this
     wx.showModal({

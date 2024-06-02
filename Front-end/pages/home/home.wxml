@@ -92,7 +92,7 @@
   </view>
   <view class="block-main">
     <view class="news-cover-container">
-      <swiper class="news-swiper" autoplay interval="5000" duration="500" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
+      <swiper class="news-swiper" bindchange="onSwiperChange" current="{{currentSwiperIndex}}">
         <block wx:for="{{newsList}}" wx:key="index">
           <swiper-item bind:tap="gotoNews" data-url="{{item.url}}" class="swiper-item">
             <image src="{{item.img}}" class="swiper-img" mode="aspectFit"></image>

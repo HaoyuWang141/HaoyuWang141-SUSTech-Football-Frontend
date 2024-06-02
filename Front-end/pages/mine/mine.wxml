@@ -53,7 +53,7 @@
     </view>
 
     <!-- 球员身份：比赛通知 -->
-    <view class="block-container" wx:if="{{isPlayer}}">
+    <!-- <view class="block-container" wx:if="{{isPlayer}}">
       <view class="block-top" bindtap="togglePlayerMatchInform">
         <view class="block-title">
           <text>球员身份：比赛通知</text>
@@ -74,7 +74,7 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
     <!-- 球员身份：球队邀请通知 -->
     <view class="block-container" wx:if="{{isPlayer}}">
@@ -101,7 +101,7 @@
     </view>
 
     <!-- 球员身份：球队申请通知 -->
-    <view class="block-container" wx:if="{{isPlayer}}">
+    <!-- <view class="block-container" wx:if="{{isPlayer}}">
       <view class="block-top" bindtap="toggleApplicationInform">
         <view class="block-title">
           <text> 球员身份：球队申请通知</text>
@@ -119,7 +119,7 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
     <!-- 教练身份：球队邀请通知 -->
     <view class="block-container" wx:if="{{isCoach}}">
@@ -146,7 +146,7 @@
     </view>
 
     <!-- 教练身份：比赛通知 -->
-    <view class="block-container" wx:if="{{isCoach}}">
+    <!-- <view class="block-container" wx:if="{{isCoach}}">
       <view class="block-top" bindtap="toggleCoachMatchInform">
         <view class="block-title">
           <text>教练身份：比赛通知</text>
@@ -167,10 +167,10 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
     <!-- 裁判身份：赛事邀请通知 -->
-    <view class="block-container" wx:if="{{isReferee}}">
+    <!-- <view class="block-container" wx:if="{{isReferee}}">
       <view class="block-top" bindtap="toggleRefereeInvitationInformForEvent">
         <view class="block-title">
           <text>裁判身份：赛事邀请通知</text>
@@ -192,7 +192,7 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
     <!-- 裁判身份：比赛邀请通知 -->
     <view class="block-container" wx:if="{{isReferee}}">
@@ -219,7 +219,7 @@
     </view>
 
     <!-- 裁判身份：比赛通知 -->
-    <view class="block-container" wx:if="{{isReferee}}">
+    <!-- <view class="block-container" wx:if="{{isReferee}}">
       <view class="block-top" bindtap="toggleRefereeMatchInform">
         <view class="block-title">
           <text>裁判身份：比赛通知</text>
@@ -240,7 +240,7 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
     <!-- 球队管理员身份：球员申请通知 -->
     <view class="block-container" wx:if="{{isTeamManager}}">
@@ -263,10 +263,11 @@
       </view>
     </view>
 
+    <!-- 球队管理员身份：比赛邀请通知 -->
     <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationMatchInform">
         <view class="block-title">
-          <text> 球队管理员身份：比赛邀请通知</text>
+          <text>球队管理员身份：比赛邀请通知</text>
           <view class="red-dot" wx:if="{{showManageTeamInvitationMatchDot}}"></view>
         </view>
         <view class="block-more">
@@ -283,10 +284,11 @@
       </view>
     </view>
 
+    <!-- 球队管理员身份：赛事邀请通知 -->
     <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationEventInform">
         <view class="block-title">
-          <text> 球队管理员身份：赛事邀请通知</text>
+          <text>球队管理员身份：赛事邀请通知</text>
           <view class="red-dot" wx:if="{{showManageTeamInvitationEventDot}}"></view>
         </view>
         <view class="block-more">
@@ -303,10 +305,11 @@
       </view>
     </view>
 
-    <view class="block-container" wx:if="{{isTeamManager}}">
+    <!-- 球队管理员身份：邀请球员反馈 -->
+    <!-- <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationPlayerInform">
         <view class="block-title">
-          <text> 球队管理员身份：球员邀请通知</text>
+          <text> 球队管理员身份：邀请球员反馈</text>
           <view class="red-dot" wx:if="{{showManageTeamInvitationPlayerDot}}"></view>
         </view>
         <view class="block-more">
@@ -321,12 +324,13 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
-    <view class="block-container" wx:if="{{isMatchManager}}">
+    <!-- 比赛管理者身份：邀请球队反馈 -->
+    <!-- <view class="block-container" wx:if="{{isMatchManager}}">
       <view class="block-top" bindtap="toggleManageMatchInvitationTeamInform">
         <view class="block-title">
-          <text> 比赛管理者身份：球队邀请通知</text>
+          <text>比赛管理者身份：邀请球队反馈</text>
           <view class="red-dot" wx:if="{{showManageMatchInvitationTeamDot}}"></view>
         </view>
         <view class="block-more">
@@ -341,12 +345,13 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
 
-    <view class="block-container" wx:if="{{isEventManager}}">
+    <!-- 赛事管理者身份：邀请球队反馈 -->
+    <!-- <view class="block-container" wx:if="{{isEventManager}}">
       <view class="block-top" bindtap="toggleManageEventInvitationTeamInform">
         <view class="block-title">
-          <text> 赛事管理者身份：球队邀请通知</text>
+          <text>赛事管理者身份：邀请球队反馈</text>
           <view class="red-dot" wx:if="{{showManageEventInvitationTeamDot}}"></view>
         </view>
         <view class="block-more">
@@ -361,6 +366,6 @@
           </view>
         </scroll-view>
       </view>
-    </view>
+    </view> -->
   </view>
 </scroll-view>
