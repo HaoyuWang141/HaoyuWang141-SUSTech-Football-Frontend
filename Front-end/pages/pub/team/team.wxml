@@ -28,7 +28,7 @@
         <text class="block-more"></text>
       </view>
       <view class="block-main">
-        {{description}}
+        {{description === null? '暂无简介' : description}}
       </view>
     </view>
 

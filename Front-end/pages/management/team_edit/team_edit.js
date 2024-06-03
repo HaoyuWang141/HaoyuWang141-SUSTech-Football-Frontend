@@ -408,7 +408,7 @@ Page({
     });
   },
 
-  showCheckPlayerModal(e) {
+  showCheckPlayerModal (e) {
     var that = this
     const id = e.currentTarget.dataset.id
     wx.showModal({
@@ -511,7 +511,7 @@ Page({
   },
 
   // 点击确认创建按钮，弹出确认修改模态框
-  showCheckCoachModal(e) {
+  showCheckCoachModal (e) {
     var that = this
     const id = e.currentTarget.dataset.id
     wx.showModal({
@@ -530,7 +530,7 @@ Page({
   },
 
   // 点击确认修改按钮，弹出确认修改模态框
-  showDeleteCoachModal() {
+  showDeleteCoachModal () {
     this.showModal(
       '确认移除',
       '确定要移除该教练吗？',

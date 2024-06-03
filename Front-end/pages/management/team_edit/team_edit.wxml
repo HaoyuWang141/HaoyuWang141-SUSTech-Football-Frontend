@@ -47,7 +47,7 @@
           <view class="coach-container">
             <view class="title">球队管理员</view>
             <player-card-small name="{{inviteManager.name}}" img="{{inviteManager.img}}" bindtap="showInviteManagerModal"></player-card-small>
-            <player-card-small wx:for="{{managerList}}" wx:key="index" name="{{item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}">
+            <player-card-small wx:for="{{managerList}}" wx:key="index" name="{{item.nickName === null? '未命名' : item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}">
             </player-card-small>
           </view>
         </view>
