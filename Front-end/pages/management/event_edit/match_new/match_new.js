@@ -270,23 +270,30 @@ Page({
     });
     // 发送请求到后端接口
     wx.request({
-      url: URL + '/event/match/add?eventId=' + that.data.eventId + "&stage=" + that.data.stage + "&tag=" + that.data.tag + "&time=" + that.data.dateTime + "&homeTeamId=" + that.data.homeTeamId + "&awayTeamId=" + that.data.awayTeamId, // 后端接口地址
+      url: URL + '/event/match/add?eventId=' + that.data.eventId + "&stage=" + '联赛' + "&tag=" + that.data.tag + "&time=" + that.data.dateTime + "&homeTeamId=" + that.data.homeTeamId + "&awayTeamId=" + that.data.awayTeamId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
         // 请求成功的处理逻辑
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '创建失败，请重试',
+            icon: 'error',
+          });
+          return
+        }
         console.log('赛事比赛创建成功', res.data);
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
+          icon: 'success',
           success: function () {
             setTimeout(function () {
               wx.navigateBack({
                 delta: 1,
               })
-            }, 2000);
+            }, 1000);
           }
         });
       },
@@ -296,8 +303,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '创建失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
     });

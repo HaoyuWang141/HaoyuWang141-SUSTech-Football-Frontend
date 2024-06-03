@@ -36,7 +36,7 @@
           </player-card-small>
         </scroll-view>
         <scroll-view scroll-y enable-flex wx:if="{{type === 'event_match_referee'}}">
-          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="showConfirmInviteModal" data-id="{{item.refereeId}}" >
+          <player-card-small wx:for="{{allList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="showConfirmInviteModal" data-id="{{item.refereeId}}">
           </player-card-small>
         </scroll-view>
         <scroll-view scroll-y enable-flex wx:if="{{type === 'team'}}">

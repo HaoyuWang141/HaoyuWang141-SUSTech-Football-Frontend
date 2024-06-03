@@ -160,15 +160,18 @@ Page({
 
   deleteTeam() {
     var that = this;
-    // 模拟网络请求
+    wx.showLoading({
+      title: '删除中',
+      mask: true,
+    })
     wx.request({
       url: URL + '/team/delete?teamId=' + that.data.deleteTeamId + '&userId=' + userId,
       method: 'DELETE',
       success(res) {
+        wx.hideLoading()
         console.log("delete team->")
-        console.log(res.data)
         if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
             icon: "error",
@@ -182,17 +185,13 @@ Page({
         });
       },
       fail(err) {
-        // 请求失败的处理逻辑
+        wx.hideLoading()
         console.error('球队删除失败', err);
-        // 显示失败信息
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
-      complete() {
-      }
     });
   },
 

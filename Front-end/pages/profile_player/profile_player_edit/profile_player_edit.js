@@ -127,8 +127,8 @@ Page({
               console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
               wx.showToast({
                 title: '上传头像失败，请检查网络！', // 错误信息文本
-                icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-                duration: 3000 // 持续时间
+                icon: 'error', // 'none' 表示不显示图标，其他值如'success'、'loading'
+                duration: 2000 // 持续时间
               });
               return
             }
@@ -144,8 +144,8 @@ Page({
             wx.hideLoading()
             wx.showToast({
               title: '上传头像失败，请检查网络！', // 错误信息文本
-              icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-              duration: 3000 // 持续时间
+              icon: 'error', // 'none' 表示不显示图标，其他值如'success'、'loading'
+              duration: 2000 // 持续时间
             });
           }
         })

@@ -65,6 +65,7 @@ Page({
     this.setData({
       matchId: options.id
     })
+    this.fetchData();
   },
 
   /**
@@ -174,8 +175,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '请求失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {
@@ -390,8 +390,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '修改失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
     });
@@ -414,8 +413,7 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }

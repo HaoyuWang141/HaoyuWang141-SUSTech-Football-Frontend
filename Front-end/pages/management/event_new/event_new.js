@@ -163,7 +163,7 @@ Page({
       tuNumber: tuNumber
     });
   },
-
+  
   // 点击确认创建按钮，弹出确认修改模态框
   showCreateModal() {
     var that = this
@@ -189,7 +189,7 @@ Page({
     if (that.data.eventType !== '杯赛' && that.data.eventType !== '联赛') {
       wx.showToast({
         title: '请选择赛事类型',
-        icon: "error",
+        icon: 'error',
       });
     } else if (that.data.gNumber === 0 && that.data.eventType === '杯赛') {
       wx.showToast({
@@ -228,7 +228,7 @@ Page({
           tags: [] // 可根据需要自定义
         };
 
-        switch (that.data.tNumber) {
+        switch (that.data.tNumber) { 
           case 2:
             eliminationStage.tags.push({
               tagName: '决赛',

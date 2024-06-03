@@ -89,7 +89,7 @@ Page({
           console.log("用户未注册")
           wx.showToast({
             title: '请先注册为球员',
-            icon: 'none',
+            icon: 'error',
           })
           return
         }

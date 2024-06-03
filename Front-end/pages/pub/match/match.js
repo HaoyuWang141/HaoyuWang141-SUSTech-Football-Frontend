@@ -536,13 +536,18 @@ Page({
         console.log('delete comment->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '删除评论失败，请重试',
+            icon: 'error',
+            duration: 2000
+          });
           return
         }
         // 获取成功信息并显示在 toast 中
         const successMsg = res.data ? res.data : '删除评论成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
+          icon: 'success',
           duration: 2000
         });
       },
@@ -551,7 +556,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '删除评论失败，请重试',
-          icon: 'none',
+          icon: 'error',
           duration: 2000
         });
       },
@@ -639,6 +644,11 @@ Page({
         console.log('add reply->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '回复失败，请重试',
+            icon: 'error',
+            duration: 2000
+          });
           return
         }
         this.setData({
@@ -647,7 +657,7 @@ Page({
         const successMsg = res.data ? res.data : '回复成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
+          icon: 'success',
           duration: 2000
         });
       },
@@ -656,7 +666,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '回复失败，请重试',
-          icon: 'none',
+          icon: 'error',
           duration: 2000
         });
       },
@@ -676,12 +686,17 @@ Page({
         console.log('delete comment->')
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '删除回复失败，请重试',
+            icon: 'error',
+            duration: 2000
+          });
           return
         }
         const successMsg = res.data ? res.data : '删除回复成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
+          icon: 'success',
           duration: 2000
         });
       },
@@ -690,7 +705,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '删除回复失败，请重试',
-          icon: 'none',
+          icon: 'error',
           duration: 2000
         });
       },

@@ -270,6 +270,7 @@ Page({
           })
           return
         }
+      
         wx.navigateBack({
           success: () => {
             setTimeout(function () {

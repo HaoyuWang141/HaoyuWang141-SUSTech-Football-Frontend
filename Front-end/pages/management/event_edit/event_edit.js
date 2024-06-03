@@ -30,7 +30,6 @@ Page({
     gNumber: 0,
     tNumber: 0,
     tuNumber: 0,
-
     inviteManager: {
       name: '邀请管理员',
       img: '/assets/newplayer.png'
@@ -243,7 +242,7 @@ Page({
           title: "邀请成功",
           icon: "success",
         });
-        that.fetchData(that.data.id)
+        that.fetchData()
       },
       fail: err => {
         wx.hideLoading()
@@ -424,17 +423,14 @@ Page({
         // 可以显示失败的提示信息，或者做一些错误处理
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {}
     });
   },
 
-  // 页面跳转
-
-  gotoUserPage: function (e) {
+  gotoUserPage: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/user?id=' + dataset.id,

@@ -29,7 +29,7 @@
       <text wx:if="{{eventType === ''}}" class="prompt">{{'点击选择赛事类型'}}</text>
       <text wx:else="">{{eventType}}</text>
     </picker>
-    <view class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</view>>
+    <view class="hint">注意：赛事类型和赛事阶段数据创建后不可更改，请谨慎选择！！！</view>
   </view>
 
   <!-- 赛事阶段 -->
