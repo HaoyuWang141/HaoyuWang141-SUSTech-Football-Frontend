@@ -73,7 +73,7 @@ Page({
 
   /**
    * 上传队徽图片
-   */
+   */ 
   uploadLogo: function () {
     var that = this;
     // 打开相册或相机选择图片
@@ -119,7 +119,7 @@ Page({
     });
   },
 
-  confirmCreate() {
+  confirmCreate(){
     var that = this;
     wx.showLoading({
       title: '上传中',
@@ -131,7 +131,6 @@ Page({
       filePath: that.data.tempFilePath,
       name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
       success(uploadRes) {
-        wx.hideLoading()
         console.log('team_new page: confirmCreate uploadFile ->')
         if (uploadRes.statusCode != 200) {
           console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
@@ -147,7 +146,7 @@ Page({
         });
         that.createNewTeam()
       },
-      fail(error) {
+      fail (error) {
         wx.hideLoading()
         console.log('上传失败', error);
         wx.showToast({
@@ -202,6 +201,4 @@ Page({
       },
     });
   },
-
-
 })

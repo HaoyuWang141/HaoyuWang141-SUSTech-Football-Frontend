@@ -171,21 +171,15 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+        const successMsg = res.data ? res.data : '删除成功';
+        that.fetchData(userId)
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
-            setTimeout(function () {
-              that.fetchData(userId);
-            }, 2000);
-          }
+          icon: 'success',
         });
       },
       fail(err) {
@@ -194,8 +188,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {

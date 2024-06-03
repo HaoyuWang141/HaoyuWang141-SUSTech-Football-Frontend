@@ -30,7 +30,6 @@ Page({
     gNumber: 0,
     tNumber: 0,
     tuNumber: 0,
-
     inviteManager: {
       name: '邀请管理员',
       img: '/assets/newplayer.png'
@@ -243,7 +242,7 @@ Page({
           title: "邀请成功",
           icon: "success",
         });
-        that.fetchData(that.data.id)
+        that.fetchData()
       },
       fail: err => {
         wx.hideLoading()
@@ -350,7 +349,7 @@ Page({
       managerList: this.data.managerList,
       stageList: this.data.stageList,
     };
-
+  
     // 发送请求到后端接口
     wx.request({
       url: URL + '/event/update', // 后端接口地址
@@ -363,16 +362,9 @@ Page({
         const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
-              })
-            }, 1000);
-          }
+          icon: 'success',
         });
+        that.fetchData();
       },
       fail: err => {
         // 请求失败的处理逻辑
@@ -380,8 +372,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '修改失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       }
     });
@@ -400,22 +391,20 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }
         const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
+          icon: 'success',
           success: function () {
             setTimeout(function () {
               wx.navigateBack({
                 delta: 1,
               })
-            }, 2000);
+            }, 1000);
           }
         });
       },
@@ -424,16 +413,13 @@ Page({
         // 可以显示失败的提示信息，或者做一些错误处理
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {
       }
     });
   },
-
-  // 页面跳转
 
   gotoUserPage: function(e) {
     const dataset = e.currentTarget.dataset

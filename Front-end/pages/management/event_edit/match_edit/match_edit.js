@@ -370,8 +370,7 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '修改失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }
@@ -380,8 +379,7 @@ Page({
         const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000
+          icon: 'success',
         });
       },
       fail: err => {
@@ -389,8 +387,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '修改失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {
@@ -412,22 +409,20 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }
         const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
+          icon: 'success',
           success: function () {
             setTimeout(function () {
               wx.navigateBack({
                 delta: 1,
               })
-            }, 2000);
+            }, 1000);
           }
         });
       },
@@ -437,8 +432,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {

@@ -221,10 +221,18 @@ Page({
       data: dataToUpdate,
       success: res => {
         wx.hideLoading()
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '修改失败',
+            icon: "error",
+          });
+          return
+        }
         console.log('球队信息修改成功', res.data);
         wx.showToast({
           title: "修改成功",
-          icon: 'none',
+          icon: 'success',
         });
       },
       fail: err => {
@@ -381,7 +389,7 @@ Page({
       },
       fail: err => {
         wx.hideLoading()
-        console.error('要请管理员失败', err);
+        console.error('邀请管理员失败', err);
         wx.showToast({
           title: '邀请失败',
           icon: "error",
@@ -479,15 +487,11 @@ Page({
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+        const successMsg = res.data ? res.data : '删除成功';
+        that.fetchData(that.data.id);
         wx.showToast({
           title: successMsg,
           icon: "success",
-          success: function () {
-            setTimeout(function () {
-              that.fetchData(that.data.id);
-            }, 1000);
-          }
         });
       },
       fail(err) {
@@ -511,7 +515,7 @@ Page({
   },
 
   // 点击确认创建按钮，弹出确认修改模态框
-  showCheckCoachModal (e) {
+  showCheckCoachModal(e) {
     var that = this
     const id = e.currentTarget.dataset.id
     wx.showModal({
@@ -530,7 +534,7 @@ Page({
   },
 
   // 点击确认修改按钮，弹出确认修改模态框
-  showDeleteCoachModal () {
+  showDeleteCoachModal() {
     this.showModal(
       '确认移除',
       '确定要移除该教练吗？',
@@ -578,7 +582,7 @@ Page({
           });
           return
         }
-        const successMsg = res.data ? res.data : '设置号码成功'; // 假设后端返回的成功信息在 res.
+        const successMsg = res.data ? res.data : '设置号码成功'; // 假设后端返回的成功信息在 res.data
         that.fetchData(that.data.id);
         wx.showToast({
           title: successMsg,
@@ -641,21 +645,15 @@ Page({
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
+        const successMsg = res.data ? res.data : '删除成功';
+        that.fetchData(that.data.id)
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
-            setTimeout(function () {
-              that.fetchData(that.data.id);
-            }, 2000);
-          }
+          icon: 'success',
         });
       },
       fail(err) {
@@ -664,8 +662,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete() {
@@ -680,8 +677,6 @@ Page({
       }
     });
   },
-
-  // 页面跳转
 
   gotoUserPage: function(e) {
     const dataset = e.currentTarget.dataset

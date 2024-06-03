@@ -245,8 +245,7 @@ Page({
       wx.hideLoading(); // 关闭加载提示框
       wx.showToast({
         title: '输入为空，请重试',
-        icon: 'none',
-        duration: 2000
+        icon: 'error',
       });
     } else {
       let that = this
@@ -279,8 +278,7 @@ Page({
           if(that.data.allList.length == 0){
             wx.showToast({
               title: '未找到该球员,请重新输入',
-              icon: 'none',
-              duration: 2000
+              icon: 'error',
             });
           }
         }
@@ -434,8 +432,7 @@ Page({
         const successMsg = res.data ? res.data : '邀请成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000
+          icon: 'success',
         });
       },
       fail: err => {
@@ -443,8 +440,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '请求失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       }
     });
@@ -464,8 +460,7 @@ Page({
         const successMsg = res.data ? res.data : '设置成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
           title: successMsg,
-          icon: 'none',
-          duration: 2000,
+          icon: 'success',
           success: function () {
             setTimeout(function () {
               wx.navigateBack({
@@ -480,8 +475,7 @@ Page({
         // 显示失败信息
         wx.showToast({
           title: '设置失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
     });
