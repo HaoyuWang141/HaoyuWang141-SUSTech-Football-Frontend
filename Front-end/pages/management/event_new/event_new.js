@@ -191,14 +191,19 @@ Page({
         title: '请选择赛事类型',
         icon: "error",
       });
-    } else if ((that.data.gNumber === 0 || that.data.tNumber === 0) && that.data.eventType === '杯赛') {
+    } else if (that.data.gNumber === 0 && that.data.eventType === '杯赛') {
       wx.showToast({
-        title: '请选择小组数和出线队伍数',
+        title: '请选择小组数量',
+        icon: "error",
+      });
+    } else if (that.data.tNumber === 0 && that.data.eventType === '杯赛') {
+      wx.showToast({
+        title: '请选择出线数量',
         icon: "error",
       });
     } else if (that.data.tuNumber === 0 && that.data.eventType === '联赛') {
       wx.showToast({
-        title: '请选择联赛总轮数',
+        title: '请选择联赛轮数',
         icon: "error",
       });
     } else {

@@ -97,7 +97,6 @@ Page({
     })
   },
   fetchData: function (userId) {
-    // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
       mask: true

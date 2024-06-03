@@ -279,7 +279,7 @@ Page({
               })
             }, 500)
           }
-        });
+        })
       },
       fail: err => {
         wx.hideLoading()

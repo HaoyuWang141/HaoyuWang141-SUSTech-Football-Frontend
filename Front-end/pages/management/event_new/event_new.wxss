@@ -110,9 +110,8 @@
 }
 
 .prompt {
-  margin-left: 1%;
   color: rgb(145, 143, 143);
-  font-size: medium;
+  font-size: small;
 }
 
 .hint {

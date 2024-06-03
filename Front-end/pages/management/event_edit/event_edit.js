@@ -339,7 +339,6 @@ Page({
 
   // 处理提交信息修改
   confirmEdit() {
-    // 构造要发送给后端的数据
     const dataToUpdate = {
       eventId: this.data.eventId,
       name: this.data.name,
@@ -351,37 +350,43 @@ Page({
       stageList: this.data.stageList,
     };
 
-    // 发送请求到后端接口
+    wx.showLoading({
+      title: '修改中',
+      mask: true
+    })
+
     wx.request({
-      url: URL + '/event/update', // 后端接口地址
-      method: 'PUT', // 请求方法
-      data: dataToUpdate, // 要发送的数据
+      url: URL + '/event/update',
+      method: 'PUT',
+      data: dataToUpdate,
       success: res => {
-        // 请求成功的处理逻辑
+        wx.hideLoading()
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '修改失败',
+            icon: "error",
+          })
+          return
+        }
         console.log('赛事信息更新成功', res.data);
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
-        wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
+        wx.navigateBack({
+          success: () => {
             setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+              wx.showToast({
+                title: "修改成功",
+                icon: "success",
               })
-            }, 1000);
+            }, 500)
           }
-        });
+        })
       },
       fail: err => {
-        // 请求失败的处理逻辑
+        wx.hideLoading()
         console.error('赛事信息更新失败', err);
-        // 显示失败信息
         wx.showToast({
           title: '修改失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       }
     });
@@ -394,30 +399,25 @@ Page({
       url: URL + '/event/delete?eventId=' + that.data.eventId + '&userId=' + userId,
       method: 'DELETE',
       success(res) {
-        console.log("delete team->")
-        console.log(res.data)
+        console.log("event edit page: deleteEvent ->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
             title: '删除失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: 'error',
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
-        wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
+        wx.navigateBack({
+          success: () => {
             setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+              wx.showToast({
+                title: "删除成功",
+                icon: "success",
               })
-            }, 2000);
+            }, 500)
           }
-        });
+        })
       },
       fail(err) {
         console.log('请求失败', err);
@@ -428,14 +428,13 @@ Page({
           duration: 2000
         });
       },
-      complete() {
-      }
+      complete() {}
     });
   },
 
   // 页面跳转
 
-  gotoUserPage: function(e) {
+  gotoUserPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/user?id=' + dataset.id,
@@ -477,14 +476,14 @@ Page({
     })
   },
 
-  gotoInviteReferee: function(e) {
+  gotoInviteReferee: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'event_referee',
     })
   },
 
-  gotoRefereePage: function(e) {
+  gotoRefereePage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/referee/referee?id=' + dataset.id,

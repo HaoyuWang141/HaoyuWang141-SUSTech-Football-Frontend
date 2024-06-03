@@ -2,7 +2,10 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-const {formatTime, splitDateTime} = require("../../../utils/timeFormatter")
+const {
+  formatTime,
+  splitDateTime
+} = require("../../../utils/timeFormatter")
 
 Page({
 
@@ -32,16 +35,14 @@ Page({
     homeTeamPenalty: 0,
     awayTeamPenalty: 0,
     matchPlayerActionList: [],
-    refereeList: [
-      {
-        refereeId: 0,
-        name: "",
-        photoUrl: "",
-        bio: "",
-        userId: 0,
-        matchList: []
-      }
-    ],
+    refereeList: [{
+      refereeId: 0,
+      name: "",
+      photoUrl: "",
+      bio: "",
+      userId: 0,
+      matchList: []
+    }],
     matchEvent: {
       eventId: 0,
       matchStage: "",
@@ -50,10 +51,12 @@ Page({
     },
     status: '',
     modalHidden: true, // 控制模态框显示隐藏
-    array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
+    array: [
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    ]
   },
-  
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -135,7 +138,10 @@ Page({
         var date = new Date(res.data.time)
         let strTimeInfo = formatTime(date)
         let hasBegun = res.data.status != "PENDING"
-        let { strDate, strTime } = splitDateTime(strTimeInfo)
+        let {
+          strDate,
+          strTime
+        } = splitDateTime(strTimeInfo)
         console.log(res.data.time)
         console.log(date)
         console.log(strTimeInfo)
@@ -175,7 +181,7 @@ Page({
       complete() {
         // 无论请求成功还是失败都会执行
         wx.hideLoading(); // 关闭加载提示框
-        if (that.data.tempHomeTeamId !== 0){
+        if (that.data.tempHomeTeamId !== 0) {
           console.log('homeTeamId');
           console.log(that.data.tempHomeTeamId);
           wx.request({
@@ -204,8 +210,8 @@ Page({
             }
           });
         }
-        
-        if (that.data.tempAwayTeamId !== 0){
+
+        if (that.data.tempAwayTeamId !== 0) {
           console.log('awayTeamId');
           console.log(that.data.tempAwayTeamId)
           wx.request({
@@ -325,17 +331,15 @@ Page({
 
   // 处理提交信息修改
   confirmEdit() {
-    // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
     var that = this;
     let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+00:00"; // 转换为 ISO 
     that.setData({
       time: sqlTimestamp,
     });
-    // 构造要发送给后端的数据
     const dataToUpdate = {
       matchId: this.data.matchId,
       time: this.data.time,
@@ -354,33 +358,34 @@ Page({
     };
     console.log('dataToUpdate->');
     console.log(dataToUpdate);
-    // 发送请求到后端接口
     wx.request({
-      url: URL + '/match/update?managerId=' + userId, // 后端接口地址
-      method: 'PUT', // 请求方法
-      data: dataToUpdate, // 要发送的数据
+      url: URL + '/match/update?managerId=' + userId,
+      method: 'PUT',
+      data: dataToUpdate,
       success: res => {
+        wx.hideLoading()
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: '修改失败',
+            icon: "error",
+          })
           return
         }
         console.log('比赛信息更新成功', res.data);
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
-        wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
+        wx.navigateBack({
+          success: () => {
             setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+              wx.showToast({
+                title: "修改成功",
+                icon: "success",
               })
-            }, 1000);
+            }, 500)
           }
-        });
+        })
       },
       fail: err => {
+        wx.hideLoading()
         console.error('比赛信息修改失败', err);
         // 显示失败信息
         wx.showToast({
@@ -389,20 +394,20 @@ Page({
           duration: 2000
         });
       },
-      complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
-      }
     });
   },
 
   deleteMatch() {
     var that = this;
-    // 模拟网络请求
+    wx.showLoading({
+      title: '删除中',
+      mask: true
+    })
     wx.request({
       url: URL + '/match/delete?matchId=' + that.data.matchId + '&userId=' + userId,
       method: 'DELETE',
       success(res) {
+        wx.hideLoading()
         console.log("delete match->")
         console.log(res.data)
         if (res.statusCode !== 200) {
@@ -414,57 +419,50 @@ Page({
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
-        wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000,
-          success: function () {
+        wx.navigateBack({
+          success: () => {
             setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+              wx.showToast({
+                title: "删除成功",
+                icon: "success",
               })
-            }, 2000);
+            }, 500)
           }
-        });
+        })
       },
       fail(err) {
-        // 请求失败的处理逻辑
+        wx.hideLoading()
         console.error('友谊赛删除失败', err);
-        // 显示失败信息
         wx.showToast({
           title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: "error",
         });
       },
-      complete() {
-      }
     });
   },
 
   // 处理邀请队伍
-  inviteHomeTeam: function(e) {
-    const dataset = e.currentTarget.dataset 
+  inviteHomeTeam: function (e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'hometeam-match',
     })
   },
 
-  inviteAwayTeam: function(e) {
-    const dataset = e.currentTarget.dataset 
+  inviteAwayTeam: function (e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'awayteam-match',
     })
   },
 
-  gotoInviteReferee: function(e) {
+  gotoInviteReferee: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'referee',
     })
   },
-  
+
   gotoRefereePage: function (e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
