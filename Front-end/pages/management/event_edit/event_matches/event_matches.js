@@ -32,7 +32,6 @@ Page({
     this.setData({
       eventId: parseInt(options.id),
     })
-    this.fetchData();
   },
 
   /**
