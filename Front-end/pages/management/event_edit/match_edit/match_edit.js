@@ -449,7 +449,14 @@ Page({
   gotoInviteReferee: function(e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'referee',
+      url: '/pages/management/invite/invite?matchId=' + dataset.matchid + '&eventId=' + dataset.eventid + '&type=' + 'event_match_referee',
+    })
+  },
+
+  gotoRefereePage: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/user/referee/referee?id=' + dataset.id,
     })
   },
 

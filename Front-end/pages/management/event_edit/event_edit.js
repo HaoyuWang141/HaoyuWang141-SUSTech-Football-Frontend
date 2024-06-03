@@ -38,6 +38,7 @@ Page({
     managerList: [],
     modalHidden_inviteManager: true,
     inviteManagerId: -1,
+    refereeList: []
   },
 
   /**
@@ -161,12 +162,34 @@ Page({
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
         // 无论请求成功还是失败都会执行
+        that.fetchReferee();
         wx.hideLoading(); // 关闭加载提示框
       }
+    });
+  },
+
+  fetchReferee: function () {
+    var that = this;
+    // 模拟网络请求
+    wx.request({
+      url: URL + '/event/referee/getAll?eventId=' + that.data.eventId,
+      success(res) {
+        console.log("event referee->")
+        console.log(res.data)
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        that.setData({
+          refereeList: res.data
+        });
+      },
+      fail(err) {
+        console.log('请求失败', err);
+      },
     });
   },
 
@@ -451,6 +474,20 @@ Page({
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/event_edit/match_new/match_new?id=' + dataset.id,
+    })
+  },
+
+  gotoInviteReferee: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'event_referee',
+    })
+  },
+
+  gotoRefereePage: function(e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/pub/user/referee/referee?id=' + dataset.id,
     })
   },
 

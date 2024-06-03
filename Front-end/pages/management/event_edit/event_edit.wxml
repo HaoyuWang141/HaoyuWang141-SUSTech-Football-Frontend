@@ -44,6 +44,16 @@
     </modal>
   </view>
 
+  <view class="block-space">
+    <view class="important-person">
+      <view class="title">裁判</view>
+      <scroll-view scroll-y enable-flex>
+        <player-card-small name="邀请裁判" img="/assets/newplayer.png" bindtap="gotoInviteReferee" data-id="{{eventId}}"></player-card-small>
+        <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="gotoRefereePage" data-id="{{item.refereeId}}"></player-card-small>
+      </scroll-view>
+    </view>
+  </view>
+
   <!-- 赛事类型 -->
   <view class="block-space">
     <view class="eventType-container" mode="selector">
