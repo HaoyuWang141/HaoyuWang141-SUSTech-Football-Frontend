@@ -93,7 +93,7 @@
             <view class="expand-conatainer">
               <view class="expand" wx:if="{{!expandList[commentIndex].expanded}}" bindtap="expandReply" data-id="{{commentIndex}}">展开回复</view>
               <view class="expand" wx:if="{{expandList[commentIndex].expanded}}" bindtap="dropReply" data-id="{{commentIndex}}">收起回复</view>
-              <view class="deleteComment" wx:if="{{commentItem.userId == userId}}" bindtap="deleteComment" data-id="{{commentItem.commentId}}">删除评论</view>
+              <view class="deleteComment" wx:if="{{commentItem.userId == userId}}" bindtap="showDeleteCommentModal" data-id="{{commentItem.commentId}}">删除评论</view>
             </view>
 
             <view class="reply-container" wx:if="{{expandList[commentIndex].expanded}}">
@@ -107,7 +107,7 @@
                 <view class="avatar-name">
                   <image src="{{replyItem.user.avatarUrl}}" class="img" />
                   <view class="name">{{replyItem.user.nickName}}</view>
-                  <view class="deleteReply" wx:if="{{replyItem.userId == userId}}" bindtap="deleteReply" data-id="{{replyItem.replyId}}">删除回复</view>
+                  <view class="deleteReply" wx:if="{{replyItem.userId == userId}}" bindtap="showDeleteReplyModal" data-id="{{replyItem.replyId}}">删除回复</view>
                 </view>
                 <view class="reply">{{replyItem.content}}</view>
               </view>

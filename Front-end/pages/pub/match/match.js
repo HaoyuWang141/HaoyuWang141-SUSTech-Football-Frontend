@@ -226,9 +226,8 @@ Page({
     }
     if(commentIds.length !== 0) {
       wx.request({
-        url: URL + "/comment/match/like/getByIdList?userId=" + id,
+        url: URL + "/comment/match/like/getByIdList?userId=" + id + '&commentIds=' + commentIds,
         method: 'POST',
-        data: commentIds,
         success: async function (res) {
           console.log("likes->")
           if (res.statusCode != 200) {
@@ -489,8 +488,45 @@ Page({
     });
   },
 
-  deleteComment(e) {
+  showDeleteCommentModal(e) {
     const commentId = e.currentTarget.dataset.id
+    var that = this
+    wx.showModal({
+      title: '确认删除评论',
+      content: '确定要删除这条评论吗？',
+      confirmText: '确认删除',
+      confirmColor: '#FF0000',
+      cancelText: '我再想想',
+      success(res) {
+        if (res.confirm) {
+          that.deleteComment(commentId);
+        } else if (res.cancel) {
+          () => {}
+        }
+      }
+    });
+  },
+
+  showDeleteReplyModal(e) {
+    const replyId = e.currentTarget.dataset.id
+    var that = this
+    wx.showModal({
+      title: '确认删除回复',
+      content: '确定要删除这条回复吗？',
+      confirmText: '确认删除',
+      confirmColor: '#FF0000',
+      cancelText: '我再想想',
+      success(res) {
+        if (res.confirm) {
+          that.deleteReply(replyId);
+        } else if (res.cancel) {
+          () => {}
+        }
+      }
+    });
+  },
+
+  deleteComment(commentId) {
     var that = this
     // 发送请求到后端接口
     wx.request({
@@ -630,8 +666,7 @@ Page({
     });
   },
 
-  deleteReply(e) {
-    const replyId = e.currentTarget.dataset.id
+  deleteReply(replyId) {
     var that = this
     // 发送请求到后端接口
     wx.request({
