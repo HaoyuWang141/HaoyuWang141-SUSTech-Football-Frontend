@@ -193,7 +193,7 @@ Page({
       });
       return
     }
-    
+
     var that = this
     wx.showModal({
       title: '确认创建',
@@ -218,7 +218,6 @@ Page({
     })
 
     let that = this
-    console.log(homeTeamId)
     wx.request({
       url: URL + '/match/create?ownerId=' + userId,
       method: 'POST',
@@ -233,7 +232,7 @@ Page({
           console.error(res)
           wx.showToast({
             title: "创建失败",
-            icon: 'error'
+            icon: "error"
           })
           return
         }
@@ -271,16 +270,14 @@ Page({
           })
           return
         }
-      
-        wx.showToast({
-          title: "创建成功",
-          icon: "success",
-          success: function () {
+        wx.navigateBack({
+          success: () => {
             setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+              wx.showToast({
+                title: "创建成功",
+                icon: "success",
               })
-            }, 2000);
+            }, 500)
           }
         });
       },

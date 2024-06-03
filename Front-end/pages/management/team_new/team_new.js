@@ -10,7 +10,7 @@ Page({
    */
   data: {
     teamId: 0,
-    logoUrl: '', 
+    logoUrl: '',
     tempFilePath: '',
     teamname: '',
   },
@@ -73,7 +73,7 @@ Page({
 
   /**
    * 上传队徽图片
-  */ 
+   */
   uploadLogo: function () {
     var that = this;
     // 打开相册或相机选择图片
@@ -119,22 +119,25 @@ Page({
     });
   },
 
-  confirmCreate(){
-    console.log('create')
+  confirmCreate() {
     var that = this;
+    wx.showLoading({
+      title: '上传中',
+      mask: true
+    })
+    // 首先上传图片
     wx.uploadFile({
       url: URL + '/upload', // 你的上传图片的服务器API地址
       filePath: that.data.tempFilePath,
       name: 'file', // 必须填写，因为后台需要根据name键来获取文件内容
-      success (uploadRes) {
-        console.log('Create Team: uploadLogo ->')
-        console.log(uploadRes)
+      success(uploadRes) {
+        wx.hideLoading()
+        console.log('team_new page: confirmCreate uploadFile ->')
         if (uploadRes.statusCode != 200) {
           console.error("请求失败，状态码为：" + uploadRes.statusCode + "; 错误信息为：" + uploadRes.data)
           wx.showToast({
-            title: '上传头像失败，请检查网络！', // 错误信息文本
-            icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-            duration: 2000 // 持续时间
+            title: '上传队徽失败',
+            icon: "error"
           });
           return
         }
@@ -142,60 +145,63 @@ Page({
         that.setData({
           logoUrl: URL + '/download?filename=' + filename
         });
-        console.log("logoUrl->")
-        console.log(that.data.logoUrl)
+        that.createNewTeam()
       },
-      fail (error) {
-        console.log('上传失败', error);
+      fail(error) {
         wx.hideLoading()
+        console.log('上传失败', error);
         wx.showToast({
-          title: '上传头像失败，请检查网络！', // 错误信息文本
-          icon: 'none', // 'none' 表示不显示图标，其他值如'success'、'loading'
-          duration: 2000 // 持续时间
-        });
-      },
-      complete (){
-        // 构造要发送给后端的数据
-        const dataToUpdate = {
-          name: that.data.teamname,
-          logoUrl: that.data.logoUrl,
-        };
-        // 发送请求到后端接口
-        wx.request({
-          url: URL + '/team/create?ownerId=' + userId, // 后端接口地址
-          method: 'POST', // 请求方法
-          data: dataToUpdate, // 要发送的数据
-          success: res => {
-            // 请求成功的处理逻辑
-            console.log("dataToUpdate->");
-            console.log(dataToUpdate);
-            console.log('球队创建成功', res.data);
-            const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
-            wx.showToast({
-              title: successMsg,
-              icon: 'none',
-              duration: 2000,
-              success: function () {
-                setTimeout(function () {
-                  wx.navigateBack({
-                    delta: 1,
-                  })
-                }, 2000);
-              }
-            });
-          },
-          fail: err => {
-            // 请求失败的处理逻辑
-            console.error('球队创建失败', err);
-            // 显示失败信息
-            wx.showToast({
-              title: '创建失败，请重试',
-              icon: 'none',
-              duration: 2000
-            });
-          },
+          title: '上传队徽失败，请检查网络！',
+          icon: "error"
         });
       }
     })
   },
+
+  createNewTeam() {
+    wx.showLoading({
+      title: '正在创建',
+      mask: true
+    })
+    wx.request({
+      url: URL + '/team/create?ownerId=' + userId,
+      method: 'POST',
+      data: {
+        name: this.data.teamname,
+        logoUrl: this.data.logoUrl,
+      },
+      success: res => {
+        wx.hideLoading()
+        console.log('team_new page: createNewTeam ->')
+        if (res.statusCode != 200) {
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          wx.showToast({
+            title: "创建失败",
+            icon: "error"
+          });
+          return
+        }
+        wx.navigateBack({
+          success: () => {
+            setTimeout(() => {
+              wx.showToast({
+                title: "创建成功",
+                icon: "success",
+              });
+            }, 500);
+          }
+        })
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error(err);
+        wx.showToast({
+          title: '创建失败，请重试',
+          icon: "error",
+        });
+      },
+    });
+  },
+
+
 })

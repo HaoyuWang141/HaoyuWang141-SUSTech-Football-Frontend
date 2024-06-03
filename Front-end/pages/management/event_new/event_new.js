@@ -15,7 +15,7 @@ Page({
     modalHiddenEname: true, // 控制模态框显示隐藏
     modalHiddenEdes: true,
 
-    teamList : [],
+    teamList: [],
     eventId: 0,
     stageList: [],
     eventType: '',
@@ -40,10 +40,9 @@ Page({
 
     // 初始化teamNumber数组
     var teamArr = [];
-    for (var j = 2; j <= 16; j*=2) {
+    for (var j = 2; j <= 16; j *= 2) {
       teamArr.push(j);
     }
-
 
     // 初始化turnNumber数组
     var turnArr = [];
@@ -70,7 +69,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    
+
   },
 
   /**
@@ -123,10 +122,19 @@ Page({
   changeEventType: function (e) {
     const eventType = this.data.eventTypeList[e.detail.value]
     var stageList
-    if(eventType == '杯赛') {
-      stageList = [{stageName: '小组赛', tags: []}, {stageName: '淘汰赛', tags: []}]
-    } else if(eventType == '联赛') {
-      stageList = [{stageName: '联赛', tags: []}]
+    if (eventType == '杯赛') {
+      stageList = [{
+        stageName: '小组赛',
+        tags: []
+      }, {
+        stageName: '淘汰赛',
+        tags: []
+      }]
+    } else if (eventType == '联赛') {
+      stageList = [{
+        stageName: '联赛',
+        tags: []
+      }]
     }
     this.setData({
       eventType: eventType,
@@ -155,7 +163,7 @@ Page({
       tuNumber: tuNumber
     });
   },
-  
+
   // 点击确认创建按钮，弹出确认修改模态框
   showCreateModal() {
     var that = this
@@ -174,27 +182,24 @@ Page({
     });
   },
 
-  confirmCreate: function (){
+  confirmCreate: function () {
     var that = this;
     var stageList = [];
     // 根据不同的eventType设置不同的stageList
-    if ( that.data.eventType !== '杯赛' && that.data.eventType !== '联赛') {
+    if (that.data.eventType !== '杯赛' && that.data.eventType !== '联赛') {
       wx.showToast({
         title: '请选择赛事类型',
-        icon: 'none',
-        duration: 2000
+        icon: "error",
       });
-    } else if ((that.data.gNumber === 0 || that.data.tNumber === 0) &&  that.data.eventType === '杯赛') {
+    } else if ((that.data.gNumber === 0 || that.data.tNumber === 0) && that.data.eventType === '杯赛') {
       wx.showToast({
         title: '请选择小组数和出线队伍数',
-        icon: 'none',
-        duration: 2000
+        icon: "error",
       });
-    } else if (that.data.tuNumber === 0  &&  that.data.eventType === '联赛') {
+    } else if (that.data.tuNumber === 0 && that.data.eventType === '联赛') {
       wx.showToast({
         title: '请选择联赛总轮数',
-        icon: 'none',
-        duration: 2000
+        icon: "error",
       });
     } else {
       if (that.data.eventType === '杯赛') {
@@ -218,7 +223,7 @@ Page({
           tags: [] // 可根据需要自定义
         };
 
-        switch(that.data.tNumber) { 
+        switch (that.data.tNumber) {
           case 2:
             eliminationStage.tags.push({
               tagName: '决赛',
@@ -226,65 +231,50 @@ Page({
             })
             break
           case 4:
-            eliminationStage.tags.push(
-              {
-                tagName: '决赛',
-                matches: []
-              },
-              {
-                tagName: '三四名决赛',
-                matches: []
-              },
-              {
-                tagName: '半决赛',
-                matches: []
-              }
-            )
-          break
+            eliminationStage.tags.push({
+              tagName: '决赛',
+              matches: []
+            }, {
+              tagName: '三四名决赛',
+              matches: []
+            }, {
+              tagName: '半决赛',
+              matches: []
+            })
+            break
           case 8:
-            eliminationStage.tags.push(
-              {
-                tagName: '决赛',
-                matches: []
-              },
-              {
-                tagName: '三四名决赛',
-                matches: []
-              },
-              {
-                tagName: '半决赛',
-                matches: []
-              },
-              {
-                tagName: '四分之一决赛',
-                matches: []
-              }
-            )
+            eliminationStage.tags.push({
+              tagName: '决赛',
+              matches: []
+            }, {
+              tagName: '三四名决赛',
+              matches: []
+            }, {
+              tagName: '半决赛',
+              matches: []
+            }, {
+              tagName: '四分之一决赛',
+              matches: []
+            })
             break
           case 16:
-            eliminationStage.tags.push(
-              {
-                tagName: '决赛',
-                matches: []
-              },
-              {
-                tagName: '三四名决赛',
-                matches: []
-              },
-              {
-                tagName: '半决赛',
-                matches: []
-              },
-              {
-                tagName: '四分之一决赛',
-                matches: []
-              },
-              {
-                tagName: '八分之一决赛',
-                matches: []
-              }
-            )
-            break   
+            eliminationStage.tags.push({
+              tagName: '决赛',
+              matches: []
+            }, {
+              tagName: '三四名决赛',
+              matches: []
+            }, {
+              tagName: '半决赛',
+              matches: []
+            }, {
+              tagName: '四分之一决赛',
+              matches: []
+            }, {
+              tagName: '八分之一决赛',
+              matches: []
+            })
+            break
           default:
             break
         }
@@ -316,38 +306,43 @@ Page({
         description: this.data.description,
         stageList: stageList,
       };
-      console.log(dataToUpdate)
+      wx.showLoading({
+        title: '正在创建',
+        mask: true
+      })
       // 发送请求到后端接口
       wx.request({
         url: URL + '/event/create?ownerId=' + userId, // 后端接口地址
         method: 'POST', // 请求方法
         data: dataToUpdate, // 要发送的数据
         success: res => {
-          // 请求成功的处理逻辑
-          // 获取成功信息并显示在 toast 中
-          const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
-          wx.showToast({
-            title: successMsg,
-            icon: 'none',
-            duration: 2000,
-            success: function () {
+          wx.hideLoading()
+          console.log('event_new page: confirmCreate ->')
+          if (res.statusCode != 200) {
+            console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+            wx.showToast({
+              title: "创建失败",
+              icon: "error"
+            });
+            return
+          }
+          wx.navigateBack({
+            success: () => {
               setTimeout(function () {
-                wx.navigateBack({
-                  delta: 1,
+                wx.showToast({
+                  title: "创建成功",
+                  icon: "success",
                 })
-              }, 2000);
+              }, 500)
             }
           });
         },
         fail: err => {
-          // 请求失败的处理逻辑
+          wx.hideLoading()
           console.error('赛事创建失败', err);
-          // 可以显示失败的提示信息或进行其他操作
-          // 显示失败信息
           wx.showToast({
             title: '创建失败，请重试',
-            icon: 'none',
-            duration: 2000
+            icon: "error",
           });
         },
       });
