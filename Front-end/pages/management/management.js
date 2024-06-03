@@ -121,8 +121,6 @@ Page({
     wx.request({
       url: URL + '/user/getUserManageMatch?userId=' + userId,
       success(res) {
-        console.log("match->")
-        console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
@@ -144,7 +142,6 @@ Page({
         });
         console.log('matches->');
         console.log(that.data.matches);
-
       },
       fail(err) {
         console.log('请求失败', err);

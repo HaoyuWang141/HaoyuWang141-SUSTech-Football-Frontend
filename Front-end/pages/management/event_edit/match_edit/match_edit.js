@@ -135,7 +135,7 @@ Page({
         }
         var date = new Date(res.data.time)
         let strTimeInfo = formatTime(date)
-        let hasBegun = new Date() > date
+        let hasBegun = res.data.status != "PENDING"
         let { strDate, strTime } = splitDateTime(strTimeInfo)
         console.log(res.data.time)
         console.log(date)
