@@ -465,21 +465,16 @@ Page({
         this.setData({
           commentText: '' // 清空输入框内容
         });
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '评论成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
-          title: successMsg,
-          icon: 'none',
-          duration: 2000
+          title: '评论成功',
+          icon: 'success',
         });
       },
       fail: err => {
         console.error('评论失败', err);
-        // 显示失败信息
         wx.showToast({
           title: '评论失败，请重试',
-          icon: 'none',
-          duration: 2000
+          icon: 'error',
         });
       },
       complete(){
@@ -537,27 +532,22 @@ Page({
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
-            title: '删除评论失败，请重试',
+            title: '删除失败',
             icon: 'error',
-            duration: 2000
           });
           return
         }
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '删除评论成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
-          title: successMsg,
+          title: '删除成功',
           icon: 'success',
-          duration: 2000
         });
       },
       fail: err => {
         console.error('删除评论失败', err);
         // 显示失败信息
         wx.showToast({
-          title: '删除评论失败，请重试',
+          title: '删除失败',
           icon: 'error',
-          duration: 2000
         });
       },
       complete(){
@@ -645,29 +635,25 @@ Page({
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
-            title: '回复失败，请重试',
+            title: '回复失败',
             icon: 'error',
-            duration: 2000
           });
           return
         }
         this.setData({
           replyText: '' // 清空回复输入框内容
         });
-        const successMsg = res.data ? res.data : '回复成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
-          title: successMsg,
+          title: '回复成功',
           icon: 'success',
-          duration: 2000
         });
       },
       fail: err => {
         console.error('回复失败', err);
         // 显示失败信息
         wx.showToast({
-          title: '回复失败，请重试',
+          title: '回复失败',
           icon: 'error',
-          duration: 2000
         });
       },
       complete(){
@@ -687,26 +673,21 @@ Page({
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
-            title: '删除回复失败，请重试',
+            title: '删除失败',
             icon: 'error',
-            duration: 2000
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除回复成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
-          title: successMsg,
+          title: '删除成功',
           icon: 'success',
-          duration: 2000
         });
       },
       fail: err => {
         console.error('删除回复失败', err);
-        // 显示失败信息
         wx.showToast({
-          title: '删除回复失败，请重试',
+          title: '删除失败',
           icon: 'error',
-          duration: 2000
         });
       },
       complete(){
