@@ -100,7 +100,7 @@
 
     <!-- 现役球员 -->
     <view class="block-space">
-      <view class="block-top" style="margin-top: 20rpx">
+      <view class="block-top" style="margin-top: 20rpx; margin-left: 25rpx;">
         <view class="block-title">现役队员</view>
         <view class="block-more">
           <text class="button-custom" style="margin-right: 20rpx" bind:tap="gotoInvitePlayer" data-id="{{teamId}}">邀请球员</text>

@@ -9,9 +9,13 @@
 } */
 
 .block-space {
-  width: 100%;
   border-top: 1px solid rgb(202, 202, 202);
   margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid #cccccc;
+  background-color: white;
+  border-radius: 20rpx;
+  padding: 5rpx;
 }
 
 .info-container {
@@ -117,7 +121,7 @@
 }
 
 .icon_eye {
-  background-color: #eb903a;
+  background-color: #eb6c00;
 }
 
 .icon_cloth {
