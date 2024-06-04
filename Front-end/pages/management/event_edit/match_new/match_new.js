@@ -281,7 +281,7 @@ Page({
     })
     // 发送请求到后端接口
     wx.request({
-      url: URL + '/event/match/add?eventId=' + that.data.eventId + "&stage=" + '联赛' + "&tag=" + that.data.tag + "&time=" + that.data.dateTime + "&homeTeamId=" + that.data.homeTeamId + "&awayTeamId=" + that.data.awayTeamId, // 后端接口地址
+      url: URL + '/event/match/add?eventId=' + that.data.eventId + "&stage=" + that.data.stage + "&tag=" + that.data.tag + "&time=" + that.data.dateTime + "&homeTeamId=" + that.data.homeTeamId + "&awayTeamId=" + that.data.awayTeamId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
         wx.hideLoading()
