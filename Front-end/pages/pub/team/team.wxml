@@ -24,6 +24,15 @@
   <view wx:if="{{activeIndex == 0}}">
     <view class="block-container">
       <view class="block-top">
+        <view class="block-title">球队id：<text style="font-size: x-large; color: #ed6c00;">{{id}}</text></view>
+      </view>
+      <view class="block-main">
+        球队id是唯一标识符，您可以根据球队id加入球队。
+      </view>
+    </view>
+
+    <view class="block-container">
+      <view class="block-top">
         <text class="block-title">球队简介</text>
         <text class="block-more"></text>
       </view>
@@ -34,7 +43,7 @@
 
     <view class="block-container">
       <view class="block-top">
-        <text class="block-title"></text>
+        <text class="block-title">功能</text>
       </view>
       <view class="function-container">
         <view bindtap="gotoHonorPage" class="function-button">
