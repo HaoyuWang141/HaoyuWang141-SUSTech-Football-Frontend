@@ -1,1 +1,6 @@
-<web-view id="webview" src="{{url}}"></web-view>
+<!-- <web-view id="webview" src="{{url}}"></web-view> -->
+<view>
+因为个人小程序不支持html页面，所以您只能手动跳转该链接：
+
+{{url}}
+</view>

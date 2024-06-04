@@ -1,6 +1,18 @@
 <!--pages/management/team_edit/team_edit.wxml-->
 <view class="container">
   <view class="block-container">
+    <view class="block-top">
+      <view class="block-title">
+        <text>球队id：</text>
+        <text style="color: #ed6c00; font-size: x-large;">{{teamId}}</text>
+      </view>
+    </view>
+    <view class="block-main">
+      <text>球队id是您球队的标识符，它是唯一的。球员可以通过搜索球队id加入您的球队。</text>
+    </view>
+  </view>
+
+  <view class="block-container">
     <!-- 管理队徽 -->
     <view class="block-space-avatar">
       <view class="info-container">
@@ -152,16 +164,16 @@
           <view>该功能尚未完成！</view>
 
           <!-- <view class="table"> -->
-            <!-- 表头 -->
-            <!-- <view class="row header">
+          <!-- 表头 -->
+          <!-- <view class="row header">
               <view class="cell"></view>
               <view class="cell">球员</view>
               <view class="cell">查看</view>
               <view class="cell">恢复现役</view>
             </view> -->
 
-            <!-- 球员信息 -->
-            <!-- <view class="row" wx:for="{{playerList}}" wx:key="index">
+          <!-- 球员信息 -->
+          <!-- <view class="row" wx:for="{{playerList}}" wx:key="index">
               <view class="cell">{{item.number}}</view>
               <view class="cell table" style="max-width: 250rpx;">
                 <image src="{{item.photoUrl}}" class="player-avatar cell"></image>

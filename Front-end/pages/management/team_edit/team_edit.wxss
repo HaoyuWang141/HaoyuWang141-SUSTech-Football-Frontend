@@ -1,12 +1,12 @@
 /* pages/management/team_edit/team_edit.wxss */
-.block-container {
+/* .block-container {
   padding: 5rpx;
   border: 1rpx solid #cccccc;
   background-color: white;
   border-radius: 20rpx;
   margin-bottom: 20rpx;
   width: 95%;
-}
+} */
 
 .block-space {
   width: 100%;
