@@ -1,122 +1,135 @@
 <!--pages/management/event_edit/event_edit.wxml-->
-<view class="block-container">
-
-  <view class="block-space">
-    <view class="title-container">
-      <view class="image-container">
-        <image src="{{icon}}" mode="scaleToFill" class="image"></image>
-      </view>
-      <view class="text-container">
-        <text class="text">{{name}}</text>
-        <text class="name-edit" bindtap="showNameInput">编辑</text>
-      </view>
-    </view>
-
-    <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname" bindcancel="cancelChangeEventname">
-      <view class="modal-content">
-        <text>编辑赛事名称：</text>
-        <input placeholder="赛事名称" value="{{newTeamname}}" bindinput="changename" />
-      </view>
-    </modal>
-  </view>
-
-  <view class="block-space">
-    <text style="margin-left: 3%;">赛事简介</text>
-    <view class="description-content">
-      <textarea class="description" bindinput="inputEventDes" value="{{description}}"></textarea>
-    </view>
-  </view>
-
-  <!-- 管理员 -->
-  <view class="block-space">
-    <view class="important-person">
-      <view class="title">赛事管理员</view>
-      <player-card-small name="{{inviteManager.name}}" img="{{inviteManager.img}}" bindtap="showInviteManagerModal"></player-card-small>
-      <player-card-small wx:for="{{managerList}}" wx:key="index" name="{{item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}">
-      </player-card-small>
-    </view>
-
-    <modal hidden="{{modalHidden_inviteManager}}" bindconfirm="confirmInviteManager" bindcancel="cancelInviteManager">
-      <view class="modal-content">
-        <text>请输入被邀请者的userId：</text>
-        <input bindinput="inputManagerId" placeholder="输入 userId" type="number" />
-      </view>
-    </modal>
-  </view>
-
-  <view class="block-space">
-    <view class="important-person">
-      <view class="title">裁判</view>
-      <scroll-view scroll-y enable-flex>
-        <player-card-small name="邀请裁判" img="/assets/newplayer.png" bindtap="gotoInviteReferee" data-id="{{eventId}}"></player-card-small>
-        <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="gotoRefereePage" data-id="{{item.refereeId}}"></player-card-small>
-      </scroll-view>
-    </view>
-  </view>
-
-  <!-- 赛事类型 -->
-  <view class="block-space">
-    <view class="eventType-container" mode="selector">
-      <text style="margin-left: 3%;">赛事类型：</text>
-      <text>{{eventType}}</text>
-    </view>
-  </view>
-
-  <!-- 赛事阶段 -->
-  <view class="block-space">
-    <view class="stage-container">
-      <text style="margin-left: 3%;">赛事阶段</text>
-      <view wx:for="{{stageList}}" wx:key="name">
-        <view class="button-custom" style="margin-top: 20rpx;">{{item.stageName}}</view>
-        <view wx:if="{{item.stageName == '小组赛' || item.stageName == '小组赛阶段'}}" class="select-tag" mode="selector">
-          <text>小组总数：</text>
-          <text>{{gNumber}}</text>
+<view class="container">
+  <view style="width: 95%;">
+    <view class="block-container">
+      <view class="block-space">
+        <view class="title-container">
+          <view class="image-container">
+            <image src="{{icon}}" mode="scaleToFill" class="image"></image>
+          </view>
+          <view class="text-container">
+            <text class="text">{{name}}</text>
+            <text class="name-edit" bindtap="showNameInput">编辑</text>
+          </view>
         </view>
-        <view wx:if="{{item.stageName == '淘汰赛' || item.stageName == '淘汰赛阶段'}}" class="select-tag" mode="selector">
-          <text>出线队伍数：</text>
-          <text>{{tNumber}}</text>
+
+        <modal hidden="{{modalHiddenEname}}" bindconfirm="confirmChangeEventname" bindcancel="cancelChangeEventname">
+          <view class="modal-content">
+            <text>编辑赛事名称：</text>
+            <input placeholder="20字以内" value="{{newTeamname}}" bindinput="changename" />
+          </view>
+        </modal>
+      </view>
+
+      <view class="block-space">
+        <text style="margin-left: 3%;">赛事简介</text>
+        <view class="description-content">
+          <textarea class="description" bindinput="inputEventDes" value="{{description}}"></textarea>
         </view>
-        <view wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector">
-          <text>联赛总轮数：</text>
-          <text>{{tuNumber}}</text>
+      </view>
+
+      <!-- 提交按钮 -->
+      <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
+    </view>
+
+    <!-- 赛事类型、stage&tag -->
+    <view class="block-container">
+      <view class="block-top">
+        <view class="block-title">赛事类型：{{eventType}}</view>
+        <view class="block-more" style="color: darkred; font-weight: bold;">不可更改！</view>
+      </view>
+      <view class="block-main">
+        <!-- 赛事阶段 -->
+        <view class="stage-container">
+          <view wx:for="{{stageList}}" wx:key="name">
+            <view class="button-custom" style="margin-top: 20rpx;">{{item.stageName}}</view>
+            <view wx:if="{{item.stageName == '小组赛' || item.stageName == '小组赛阶段'}}" class="select-tag" mode="selector">
+              <text>小组总数：</text>
+              <text>{{gNumber}}</text>
+            </view>
+            <view wx:if="{{item.stageName == '淘汰赛' || item.stageName == '淘汰赛阶段'}}" class="select-tag" mode="selector">
+              <text>出线队伍数：</text>
+              <text>{{tNumber}}</text>
+            </view>
+            <view wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector">
+              <text>联赛总轮数：</text>
+              <text>{{tuNumber}}</text>
+            </view>
+          </view>
         </view>
       </view>
     </view>
-  </view>
 
-  <view class="block-space">
-    <view class="block-top">
-      <text class="block-title">参赛球队</text>
-      <view class="block-more" bindtap="gotoTeams" data-id="{{eventId}}">
-        <text class="button-custom">球队管理 ></text>
+    <!-- 管理员 -->
+    <view class="block-container">
+      <view class="block-top">
+        <view class="block-title">赛事管理员</view>
+        <view class="block-more">
+          <text class="button-custom" bind:tap="showInviteManagerModal">邀请</text>
+        </view>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <player-card-small wx:for="{{managerList}}" wx:key="index" name="{{item.nickName}}" img="{{item.avatarUrl}}" bind:tap="gotoUserPage" data-id="{{item.userId}}">
+          </player-card-small>
+        </scroll-view>
       </view>
     </view>
-    <view class="block-main">
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <team-card-small wx:for="{{teamList}}" wx:key="id" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.id}}"></team-card-small>
-      </scroll-view>
-    </view>
-  </view>
 
-  <view class="block-space">
-    <view class="block-top">
-      <text class="block-title">比赛赛程</text>
-      <view class="block-more" bindtap="gotoMatches" data-id="{{eventId}}">
-        <text class="button-custom">比赛管理 ></text>
+    <view class="block-container">
+      <view class="block-top">
+        <view class="block-title">赛事裁判</view>
+        <view class="block-more">
+          <text class="button-custom" bind:tap="gotoInviteReferee" data-id="{{eventId}}">邀请</text>
+        </view>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="gotoRefereePage" data-id="{{item.refereeId}}"></player-card-small>
+        </scroll-view>
       </view>
     </view>
-    <view class="block-main">
-      <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <match-card-small name="创建比赛" team1="主队" team2="客队" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" time="2024-00-00 00:00" bind:tap="goToCreateMatch" data-id="{{eventId}}"> </match-card-small>
-        <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="{{item.stage + ' ' + item.tag}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-small>
-      </scroll-view>
-    </view>
-  </view>
 
-  <!-- 提交按钮 -->
-  <view class="btn-container">
-    <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">参赛球队</text>
+        <view class="block-more" bindtap="gotoTeams" data-id="{{eventId}}">
+          <text class="button-custom">球队管理 ></text>
+        </view>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <team-card-small wx:for="{{teamList}}" wx:key="id" name="{{item.name}}" img="{{item.logoUrl}}" bind:tap="gotoTeamPage" data-id="{{item.id}}"></team-card-small>
+        </scroll-view>
+      </view>
+    </view>
+
+    <view class="block-container">
+      <view class="block-top">
+        <text class="block-title">比赛赛程</text>
+        <view class="block-more" bindtap="gotoMatches" data-id="{{eventId}}">
+          <text class="button-custom">比赛管理 ></text>
+        </view>
+      </view>
+      <view class="block-main">
+        <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
+          <match-card-small name="创建比赛" team1="主队" team2="客队" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" time="2024-00-00 00:00" bind:tap="goToCreateMatch" data-id="{{eventId}}"> </match-card-small>
+          <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="{{item.stage + ' ' + item.tag}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-small>
+        </scroll-view>
+      </view>
+    </view>
+
+
+
+    <!-- 删除按钮 -->
     <button class="delete-btn" bindtap="showCancelModal">删除赛事</button>
   </view>
-
 </view>
+
+<!-- modal: 邀请赛事管理员 -->
+<modal hidden="{{modalHidden_inviteManager}}" bindconfirm="confirmInviteManager" bindcancel="cancelInviteManager">
+  <view class="modal-content">
+    <text>请输入被邀请者的userId：</text>
+    <input bindinput="inputManagerId" placeholder="输入 userId" type="number" />
+  </view>
+</modal>

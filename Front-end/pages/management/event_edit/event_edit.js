@@ -287,6 +287,14 @@ Page({
   },
 
   confirmChangeEventname: function () {
+    let name = this.data.newname
+    if (name.length > 20) {
+      wx.showToast({
+        title: '名称不应长于20字',
+        icon: 'none',
+      })
+      return
+    }
     this.setData({
       name: this.data.newname,
       modalHiddenEname: true
@@ -369,15 +377,9 @@ Page({
           return
         }
         console.log('赛事信息更新成功', res.data);
-        wx.navigateBack({
-          success: () => {
-            setTimeout(function () {
-              wx.showToast({
-                title: "修改成功",
-                icon: "success",
-              })
-            }, 500)
-          }
+        wx.showToast({
+          title: "修改成功",
+          icon: "success",
         })
       },
       fail: err => {
@@ -430,7 +432,7 @@ Page({
     });
   },
 
-  gotoUserPage: function(e) {
+  gotoUserPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/user?id=' + dataset.id,

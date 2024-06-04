@@ -1,6 +1,18 @@
 <!--pages/profile_player/profile_player_register/profile_player_register.wxml-->
 <view class="container">
   <view style="width: 95%;">
+
+    <view class="block-container" style="border: solid darkred 5rpx;">
+      <view class="block-top">
+        <view class="block-title">
+          <text style="color: darkred; font-size: large;">注意：</text>
+        </view>
+      </view>
+      <view class="block-main" style="color: darkred; font-size: normal; font-weight: bold;">
+        以下信息用于您的信息展示页面。注册意味着您同意展示您的头像、姓名以及其他个人信息。
+      </view>
+    </view>
+    
     <view class="block-container">
       <view class="block-top">
         <view class="block-title">
