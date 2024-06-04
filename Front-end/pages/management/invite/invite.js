@@ -203,7 +203,7 @@ Page({
       default:
         url = URL;
     }
-    if(this.data.type !== 'player') {
+    if (this.data.type !== 'player') {
       // 显示加载提示框，提示用户正在加载
       wx.showLoading({
         title: '加载中',
@@ -241,7 +241,7 @@ Page({
     this.setData({
       allList: [],
     })
-    if(this.data.searchText === ''){
+    if (this.data.searchText === '') {
       wx.hideLoading(); // 关闭加载提示框
       wx.showToast({
         title: '输入为空，请重试',
@@ -273,9 +273,9 @@ Page({
         fail: function (err) {
           console.error('请求失败：', err.statusCode, err.errMsg);
         },
-        complete(){
+        complete() {
           wx.hideLoading(); // 关闭加载提示框
-          if(that.data.allList.length == 0){
+          if (that.data.allList.length == 0) {
             wx.showToast({
               title: '未找到该球员,请重新输入',
               icon: 'error',
@@ -297,7 +297,7 @@ Page({
     appInstance.addToRequestQueue(this.fetchSearchPlayer)
   },
 
-  selectHomeTeam(e){
+  selectHomeTeam(e) {
     const homeTeamId = e.target.dataset.id;
     this.setData({
       homeTeamId: homeTeamId,
@@ -306,7 +306,7 @@ Page({
     this.homeTeamBack();
   },
 
-  selectAwayTeam(e){
+  selectAwayTeam(e) {
     const awayTeamId = e.target.dataset.id;
     this.setData({
       awayTeamId: awayTeamId,
@@ -315,28 +315,24 @@ Page({
     this.awayTeamBack();
   },
 
-  homeTeamBack(){
+  homeTeamBack() {
     console.log('Back->');
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       tempHomeTeamId: this.data.homeTeamId,
     })
-    wx.navigateBack({
-      delta: 1,
-    })
+    wx.navigateBack()
   },
 
-  awayTeamBack(){
+  awayTeamBack() {
     console.log('Back->');
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       tempAwayTeamId: this.data.awayTeamId,
     })
-    wx.navigateBack({
-      delta: 1,
-    })
+    wx.navigateBack()
   },
 
   // 点击确认创建按钮，弹出确认修改模态框
@@ -363,7 +359,8 @@ Page({
       case 'team':
         content = '确定要邀请该球队吗？';
         break;
-      default:;
+      default:
+        ;
     }
     wx.showModal({
       title: '确认邀请',
@@ -455,20 +452,22 @@ Page({
       url: URL + '/team/captain/updateByPlayerId?teamId=' + that.data.id + '&captainId=' + id,
       method: 'POST',
       success: res => {
+        console.log("manager invite page: selectCaptain ->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
         console.log('成功设置队长', res.data);
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '设置成功'; // 假设后端返回的成功信息在 res.data.message 中
-        wx.showToast({
-          title: successMsg,
-          icon: 'success',
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+        wx.navigateBack({
+          success: () => {
+            setTimeout(() => {
+              wx.showToast({
+                title: '设置成功',
+                icon: 'success',
               })
-            }, 1000);
+            }, 500)
           }
-        });
+        })
       },
       fail: err => {
         console.error('设置失败', err);

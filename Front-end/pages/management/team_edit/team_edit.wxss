@@ -11,7 +11,7 @@
 .block-space {
   width: 100%;
   border-top: 1px solid rgb(202, 202, 202);
-  margin-top: 5%;
+  margin-top: 20rpx;
 }
 
 .info-container {
@@ -100,7 +100,7 @@
   border-radius: 20px; /* 圆角 */
   cursor: pointer; /* 鼠标样式 */
   transition: background-color 0.3s ease; /* 背景色过渡效果 */
-  background-color: #eb903a; /* 确认修改按钮背景色 */
+  background-color: #eb6c00; /* 确认修改按钮背景色 */
   color: white; /* 文字颜色 */
   font-size: medium;
   max-width: 50%;
