@@ -1,12 +1,4 @@
 /* pages/management/match_edit/match_edit.wxss */
-.block-container {
-  padding: 5rpx;
-  border: 1rpx solid #cccccc;
-  background-color: white;
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  width: 95%;
-}
 
 .section-header {
   text-align: center;
@@ -18,7 +10,8 @@
 }
 
 .match-card-container {
-  margin-top: 10rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
   text-align: center;
 }
 
@@ -87,7 +80,8 @@
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 10rpx;
-  margin-top: 2%;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 .changeInfo-container {
@@ -130,6 +124,7 @@
   color: white; /* 文字颜色 */
   font-size: medium;
   max-width: 45%;
+  margin-top: 20rpx;
 }
 
 .delete-btn {

@@ -68,7 +68,7 @@ Page({
       case 'event_match_referee':
         this.setData({
           blockTitle: '裁判列表',
-          blockMore: '点击邀请裁判',
+          blockMore: '点击设置裁判',
         });
         break;
       case 'team':
@@ -358,7 +358,7 @@ Page({
         content = '确定要邀请该裁判吗？';
         break;
       case 'event_match_referee':
-        content = '确定要邀请该裁判吗？';
+        content = '确定要设置该裁判吗？';
         break;
       case 'team':
         content = '确定要邀请该球队吗？';
@@ -415,7 +415,7 @@ Page({
         url = URL + '/event/referee/invite?eventId=' + this.data.id + "&refereeId=" + id;
         break;
       case 'event_match_referee':
-        url = URL + '/match/referee/invite?matchId=' + this.data.matchId + "&refereeId=" + id;
+        url = `${URL}/event/match/setReferee?eventId=${this.data.eventId}&matchId=${this.data.matchId}&refereeId=${id}`;
         break;
       case 'team':
         url = URL + '/event/team/invite?eventId=' + this.data.id + '&teamId=' + id;

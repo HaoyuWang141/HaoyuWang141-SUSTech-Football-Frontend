@@ -1,7 +1,10 @@
 // pages/management/event_edit/match_new/match_new.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
-const {formatTime, splitDateTime} = require("../../../../utils/timeFormatter")
+const {
+  formatTime,
+  splitDateTime
+} = require("../../../../utils/timeFormatter")
 
 Page({
 
@@ -12,7 +15,7 @@ Page({
     eventId: 0,
     dateTime: '',
     date: '',
-    time: '', 
+    time: '',
     stage: '',
     tag: '',
     stageList: [],
@@ -28,8 +31,9 @@ Page({
     awayTeamLogoUrl: '/assets/newplayer.png',
     hasBegun: false,
     modalHidden: true, // 控制模态框显示隐藏
-    array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    array: [
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
   },
 
@@ -41,7 +45,10 @@ Page({
     const now = new Date();
     console.log(now);
     let strTimeInfo = formatTime(now)
-    let { strDate, strTime } = splitDateTime(strTimeInfo)
+    let {
+      strDate,
+      strTime
+    } = splitDateTime(strTimeInfo)
     console.log("strdate->")
     console.log(strDate)
     console.log(strTime)
@@ -148,7 +155,7 @@ Page({
       }
     });
 
-    if (this.data.tempHomeTeamId !== 0){
+    if (this.data.tempHomeTeamId !== 0) {
       console.log('homeTeamId');
       console.log(that.data.tempHomeTeamId);
       wx.request({
@@ -177,8 +184,8 @@ Page({
         }
       });
     }
-    
-    if (this.data.tempAwayTeamId !== 0){
+
+    if (this.data.tempAwayTeamId !== 0) {
       console.log('awayTeamId');
       console.log(that.data.tempAwayTeamId)
       wx.request({
@@ -225,7 +232,7 @@ Page({
     });
   },
 
-  bindStageChange: function (e){
+  bindStageChange: function (e) {
     // 更新页面上的比赛阶段显示
     const selectedStage = this.data.stageList.find(stage => stage.stageName === this.data.stageNameList[e.detail.value]);
     const tagNameList = selectedStage.tags.map(tag => tag.tagName);
@@ -235,8 +242,8 @@ Page({
       tagNameList: tagNameList,
     });
   },
-  
-  bindTagChange: function (e){
+
+  bindTagChange: function (e) {
     // 更新页面上的比赛组别显示
     this.setData({
       tag: this.data.tagNameList[e.detail.value],
@@ -260,20 +267,25 @@ Page({
       }
     })
   },
-  
+
   // 处理提交信息修改
-  confirmCreate: function (){
+  confirmCreate: function () {
     var that = this;
     let sqlTimestamp = this.data.date + ' ' + this.data.time + ":00.000"; // 转换为 ISO 
     that.setData({
       dateTime: sqlTimestamp,
     });
+    wx.showLoading({
+      title: '正在创建',
+      mask: true,
+    })
     // 发送请求到后端接口
     wx.request({
       url: URL + '/event/match/add?eventId=' + that.data.eventId + "&stage=" + '联赛' + "&tag=" + that.data.tag + "&time=" + that.data.dateTime + "&homeTeamId=" + that.data.homeTeamId + "&awayTeamId=" + that.data.awayTeamId, // 后端接口地址
       method: 'POST', // 请求方法
       success: res => {
-        // 请求成功的处理逻辑
+        wx.hideLoading()
+        console.log("event_edit=>match_new page: confirmCreate ->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
@@ -282,25 +294,22 @@ Page({
           });
           return
         }
-        console.log('赛事比赛创建成功', res.data);
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '创建成功'; // 假设后端返回的成功信息在 res.data.message 中
-        wx.showToast({
-          title: successMsg,
-          icon: 'success',
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+        console.log('赛事比赛创建成功');
+        const successMsg = res.data ? res.data : '创建成功';
+        wx.navigateBack({
+          success: () => {
+            setTimeout(() => {
+              wx.showToast({
+                title: "创建成功",
+                icon: "success",
               })
-            }, 1000);
+            }, 500)
           }
-        });
+        })
       },
       fail: err => {
-        // 请求失败的处理逻辑
+        wx.hideLoading()
         console.error('赛事比赛创建失败', err);
-        // 显示失败信息
         wx.showToast({
           title: '创建失败，请重试',
           icon: 'error',
@@ -309,15 +318,15 @@ Page({
     });
   },
 
-  inviteHomeTeam: function(e) {
-    const dataset = e.currentTarget.dataset 
+  inviteHomeTeam: function (e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'hometeam-event-match',
     })
   },
 
-  inviteAwayTeam: function(e) {
-    const dataset = e.currentTarget.dataset 
+  inviteAwayTeam: function (e) {
+    const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'awayteam-event-match',
     })

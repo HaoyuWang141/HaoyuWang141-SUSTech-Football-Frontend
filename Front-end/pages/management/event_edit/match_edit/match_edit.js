@@ -2,7 +2,10 @@
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
-const {formatTime, splitDateTime} = require("../../../../utils/timeFormatter")
+const {
+  formatTime,
+  splitDateTime
+} = require("../../../../utils/timeFormatter")
 
 Page({
 
@@ -32,16 +35,14 @@ Page({
     homeTeamPenalty: 0,
     awayTeamPenalty: 0,
     matchPlayerActionList: [],
-    refereeList: [
-      {
-        refereeId: 0,
-        name: "",
-        photoUrl: "",
-        bio: "",
-        userId: 0,
-        matchList: []
-      }
-    ],
+    refereeList: [{
+      refereeId: 0,
+      name: "",
+      photoUrl: "",
+      bio: "",
+      userId: 0,
+      matchList: []
+    }],
     matchEvent: {
       eventId: 0,
       matchStage: "",
@@ -49,11 +50,16 @@ Page({
       eventName: ""
     },
     status: '',
+    strStatus: '暂无',
     modalHidden: true, // 控制模态框显示隐藏
-    array: [['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], 
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']]
+    array: [
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    ],
+    strStatusArray: ["未开始", "正在进行", "已结束"],
+    statusArray: ["PENDING", "ONGOING", "FINISHED"]
   },
-  
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -136,10 +142,20 @@ Page({
         var date = new Date(res.data.time)
         let strTimeInfo = formatTime(date)
         let hasBegun = res.data.status != "PENDING"
-        let { strDate, strTime } = splitDateTime(strTimeInfo)
-        console.log(res.data.time)
-        console.log(date)
-        console.log(strTimeInfo)
+        let strStatus = ""
+        if (res.data.status == "PENDING") {
+          strStatus = "未开始"
+        } else if (res.data.status == "ONGOING") {
+          strStatus = "正在进行"
+        } else if (res.data.status == "FINISHED") {
+          strStatus = "已结束"
+        } else {
+          strStatus = "未定义"
+        }
+        let {
+          strDate,
+          strTime
+        } = splitDateTime(strTimeInfo)
         // 基本数据
         that.setData({
           hasBegun: hasBegun,
@@ -162,7 +178,8 @@ Page({
           tag: res.data.matchEvent.tag,
           matchEvent: res.data.matchEvent,
           eventId: res.data.matchEvent.eventId,
-          status: res.data.status
+          status: res.data.status,
+          strStatus: strStatus
         });
       },
       fail(err) {
@@ -177,11 +194,11 @@ Page({
     });
   },
 
-  load: function(eventId){
+  load: function (eventId) {
     // 显示加载提示框，提示用户正在加载
     wx.showLoading({
       title: '加载中',
-      mask: true 
+      mask: true
     });
     var that = this;
     // 模拟网络请求
@@ -253,28 +270,28 @@ Page({
     });
   },
 
-  bindStageChange: function (e){
+  bindStageChange: function (e) {
     // 更新页面上的比赛阶段显示
     const selectedStage = this.data.stageList.find(stage => stage.stageName === this.data.stageNameList[e.detail.value]);
     const tagNameList = selectedStage.tags.map(tag => tag.tagName);
     const matchEvent = this.data.matchEvent
     matchEvent.matchStage = this.data.stageNameList[e.detail.value],
-    this.setData({
-      stage: this.data.stageNameList[e.detail.value],
-      tag: "",
-      tagNameList: tagNameList,
-      matchEvent: matchEvent
-    });
+      this.setData({
+        stage: this.data.stageNameList[e.detail.value],
+        tag: "",
+        tagNameList: tagNameList,
+        matchEvent: matchEvent
+      });
   },
-  
-  bindTagChange: function (e){
+
+  bindTagChange: function (e) {
     // 更新页面上的比赛组别显示
     const matchEvent = this.data.matchEvent
     matchEvent.matchTag = this.data.tagNameList[e.detail.value],
-    this.setData({
-      tag: this.data.tagNameList[e.detail.value],
-      matchEvent: matchEvent
-    });
+      this.setData({
+        tag: this.data.tagNameList[e.detail.value],
+        matchEvent: matchEvent
+      });
   },
 
   // 处理比分选择器选择完成事件
@@ -294,6 +311,15 @@ Page({
     this.setData({
       homeTeamPenalty: this.data.array[0][value[0]],
       awayTeamPenalty: this.data.array[0][value[1]]
+    });
+  },
+
+  // 处理比赛状态选择器选择完成事件
+  bindPickerChangeStatus(e) {
+    const value = e.detail.value;
+    this.setData({
+      status: this.data.statusArray[value],
+      strStatus: this.data.strStatusArray[value],
     });
   },
 
@@ -330,42 +356,34 @@ Page({
 
   // 处理提交信息修改
   confirmEdit() {
-    // 显示加载提示框，提示用户正在加载
-    wx.showLoading({
-      title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
-    });
-
-    let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+00:00"; // 转换为 ISO 
-    this.setData({
-      time: sqlTimestamp,
-    });
+    let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+08:00";
 
     // 构造要发送给后端的数据
     const dataToUpdate = {
       matchId: this.data.matchId,
-      time: this.data.time,
-      homeTeam: this.data.homeTeam,
-      awayTeam: this.data.awayTeam,
       homeTeamId: this.data.homeTeamId,
       awayTeamId: this.data.awayTeamId,
+      time: sqlTimestamp,
+      status: this.data.status,
       homeTeamScore: this.data.homeTeamScore,
       awayTeamScore: this.data.awayTeamScore,
       homeTeamPenalty: this.data.homeTeamPenalty,
       awayTeamPenalty: this.data.awayTeamPenalty,
-      status: this.data.status,
-      refereeList: this.data.refereeList,
-      matchPlayerActionList: this.data.matchPlayerActionList,
-      matchEvent: this.data.matchEvent
     };
     console.log('dataToUpdate->');
     console.log(dataToUpdate);
-    // 发送请求到后端接口
+
+    wx.showLoading({
+      title: '更新中',
+      mask: true // 创建一个蒙层，防止用户操作
+    });
     wx.request({
-      url: URL + '/match/update?managerId=' + userId, // 后端接口地址
+      url: `${URL}/event/match/update?eventId=${this.data.eventId}&managerId=${userId}`,
       method: 'PUT', // 请求方法
       data: dataToUpdate, // 要发送的数据
       success: res => {
+        wx.hideLoading()
+        console.log("event_edit match_edit page: confirmEdit ->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
@@ -375,14 +393,13 @@ Page({
           return
         }
         console.log('赛事比赛信息修改成功', res.data);
-        // 获取成功信息并显示在 toast 中
-        const successMsg = res.data ? res.data : '修改成功'; // 假设后端返回的成功信息在 res.data.message 中
         wx.showToast({
-          title: successMsg,
+          title: '修改成功',
           icon: 'success',
         });
       },
       fail: err => {
+        wx.hideLoading()
         console.error('赛事比赛信息修改失败', err);
         // 显示失败信息
         wx.showToast({
@@ -390,64 +407,59 @@ Page({
           icon: 'error',
         });
       },
-      complete() {
-        wx.hideLoading();
-      }
     });
   },
 
   deleteMatch() {
     var that = this;
-    // 模拟网络请求
+    wx.showLoading({
+      title: '删除中',
+      mask: true,
+    })
     wx.request({
-      url: URL + '/match/delete?eventId=' + that.data.eventId + '&matchId=' + that.data.matchId,
+      url: URL + '/event/match/delete?eventId=' + that.data.eventId + '&matchId=' + that.data.matchId,
       method: 'DELETE',
       success(res) {
-        console.log("delete event match->")
-        console.log(res.data)
+        wx.hideLoading()
+        console.log("event_edit=>match_edit page: deleteMatch->")
         if (res.statusCode !== 200) {
-          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
-            title: '删除失败，请重试',
+            title: '删除失败',
             icon: 'error',
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功'; // 假设后端返回的成功信息在 res.
-        wx.showToast({
-          title: successMsg,
-          icon: 'success',
-          success: function () {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
+        wx.navigateBack({
+          success: () => {
+            setTimeout(() => {
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
               })
-            }, 1000);
+            }, 500)
           }
-        });
+        })
       },
       fail(err) {
-        // 请求失败的处理逻辑
+        wx.hideLoading()
         console.error('赛事比赛删除失败', err);
-        // 显示失败信息
         wx.showToast({
-          title: '删除失败，请重试',
+          title: '删除失败',
           icon: 'error',
         });
       },
-      complete() {
-      }
     });
   },
 
-  gotoInviteReferee: function(e) {
+  gotoInviteReferee: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/management/invite/invite?matchId=' + dataset.matchid + '&eventId=' + dataset.eventid + '&type=' + 'event_match_referee',
     })
   },
 
-  gotoRefereePage: function(e) {
+  gotoRefereePage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/referee/referee?id=' + dataset.id,

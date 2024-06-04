@@ -1,12 +1,12 @@
 /* pages/management/event_edit/match_edit/match_edit.wxss */
-.block-container {
+/* .block-container {
   padding: 5rpx;
   border: 1rpx solid #cccccc;
   background-color: white;
   border-radius: 20rpx;
   margin-bottom: 20rpx;
   width: 95%;
-}
+} */
 
 .section-header {
   text-align: center;
@@ -90,7 +90,6 @@
   padding: 20rpx;
   width: 90%;
   border-bottom: 1px solid rgb(202, 202, 202);
-  margin-top: 3%;
 }
 
 .team-container {
@@ -125,6 +124,7 @@
   color: white; /* 文字颜色 */
   font-size: medium;
   max-width: 45%;
+  margin-top: 40rpx;
 }
 
 .delete-btn {

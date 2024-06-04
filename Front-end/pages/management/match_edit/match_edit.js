@@ -336,7 +336,7 @@ Page({
       mask: true
     });
     var that = this;
-    let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+00:00"; // 转换为 ISO 
+    let sqlTimestamp = this.data.strDate + 'T' + this.data.strTime + ":00.000+08:00"; // 转换为 ISO 
     that.setData({
       time: sqlTimestamp,
     });

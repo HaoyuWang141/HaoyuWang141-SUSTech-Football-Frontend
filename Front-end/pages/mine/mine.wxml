@@ -170,7 +170,7 @@
     </view> -->
 
     <!-- 裁判身份：赛事邀请通知 -->
-    <!-- <view class="block-container" wx:if="{{isReferee}}">
+    <view class="block-container" wx:if="{{isReferee}}">
       <view class="block-top" bindtap="toggleRefereeInvitationInformForEvent">
         <view class="block-title">
           <text>裁判身份：赛事邀请通知</text>
@@ -192,7 +192,7 @@
           </view>
         </scroll-view>
       </view>
-    </view> -->
+    </view>
 
     <!-- 裁判身份：比赛邀请通知 -->
     <view class="block-container" wx:if="{{isReferee}}">
