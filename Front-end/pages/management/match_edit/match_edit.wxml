@@ -1,6 +1,6 @@
 <!--pages/management/match_edit/match_edit.wxml-->
 <view class="container">
-  <view style="width: 95%;">
+  <view style="width: 99%;">
     <view class="section-header">
       <view style="background-color: white;">
         <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
@@ -33,6 +33,9 @@
     </view>
 
     <view class="info-container">
+      <view class="block-top">
+        <view class="title">更改比赛信息</view>
+      </view>
       <!-- 修改信息区域 -->
       <view class="manage-info">
         <!-- 比赛日期 -->

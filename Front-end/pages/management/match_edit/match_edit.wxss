@@ -10,9 +10,12 @@
 }
 
 .match-card-container {
+  width: 98%;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
+  margin-left: 7rpx;
   text-align: center;
+  justify-content: center;
 }
 
 .match-card {
@@ -76,12 +79,26 @@
 }
 
 .info-container {
+  width: 95%;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
   padding: 10rpx;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
+  margin-left: 8rpx;
+}
+
+.title {
+  margin-left: 20rpx;  
+  margin-top: 20rpx;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  align-items: center;
 }
 
 .changeInfo-container {
