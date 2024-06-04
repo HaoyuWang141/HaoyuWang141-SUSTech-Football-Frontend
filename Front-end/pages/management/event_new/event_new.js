@@ -163,7 +163,7 @@ Page({
       tuNumber: tuNumber
     });
   },
-  
+
   // 点击确认创建按钮，弹出确认修改模态框
   showCreateModal() {
     var that = this
@@ -183,6 +183,14 @@ Page({
   },
 
   confirmCreate: function () {
+    if (this.data.name.length > 20) {
+      wx.showToast({
+        title: '赛事名称过长',
+        icon: 'error',
+      })
+      return
+    }
+
     var that = this;
     var stageList = [];
     // 根据不同的eventType设置不同的stageList
@@ -228,7 +236,7 @@ Page({
           tags: [] // 可根据需要自定义
         };
 
-        switch (that.data.tNumber) { 
+        switch (that.data.tNumber) {
           case 2:
             eliminationStage.tags.push({
               tagName: '决赛',
@@ -303,7 +311,6 @@ Page({
         // 将联赛阶段加入stageList
         stageList.push(leagueStage);
       }
-
 
       // 构造要发送给后端的数据
       const dataToUpdate = {

@@ -2,6 +2,15 @@
 <view class="container">
   <view style="width: 95%;">
     <view class="block-container">
+      <view class="block-top">
+        <view class="block-title">赛事编辑</view>
+      </view>
+      <view class="block-main">
+        您可以在此页面编辑赛事信息、邀请赛事管理员及赛事裁判、管理球队及比赛。请注意，赛事类型及相关的内容不可更改！
+      </view>
+    </view>
+
+    <view class="block-container">
       <view class="block-space">
         <view class="title-container">
           <view class="image-container">
