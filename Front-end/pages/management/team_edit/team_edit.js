@@ -199,6 +199,14 @@ Page({
 
   // 上传数据进行更新
   updateTeamInfo() {
+    if (this.data.name.length > 15) {
+      wx.showToast({
+        title: '队名过长',
+        icon: 'error',
+      })
+      return
+    }
+
     // 构造要发送给后端的数据
     const dataToUpdate = {
       teamId: this.data.teamId,

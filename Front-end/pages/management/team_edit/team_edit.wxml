@@ -34,7 +34,7 @@
         <modal hidden="{{modalHidden_name}}" bindconfirm="confirmChangeName" bindcancel="cancelChangeName">
           <view class="modal-content">
             <text>请输入新队名：</text>
-            <input placeholder="新队名" value="{{newName}}" bindinput="changeName" />
+            <input placeholder="15字以内" value="{{newName}}" bindinput="changeName" />
           </view>
         </modal>
       </view>

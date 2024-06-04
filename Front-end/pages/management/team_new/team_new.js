@@ -158,6 +158,13 @@ Page({
   },
 
   createNewTeam() {
+    if (this.data.teamname.length > 15) {
+      wx.showToast({
+        title: '队名过长',
+        icon: 'error',
+      })
+      return
+    }
     wx.showLoading({
       title: '正在创建',
       mask: true

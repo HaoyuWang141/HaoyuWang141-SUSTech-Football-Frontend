@@ -15,7 +15,7 @@
     <view class="block-space">
       <view class="teamname-container">
         <view class="text">队名</view>
-        <input class="teamname" bindinput="inputTeamname" placeholder="请输入队名" style="flex: 1; text-align: right;"></input>
+        <input class="teamname" bindinput="inputTeamname" placeholder="请输入队名（15字以内）" style="flex: 1; text-align: right;"></input>
       </view>
     </view>
 
