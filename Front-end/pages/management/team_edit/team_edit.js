@@ -674,11 +674,11 @@ Page({
         });
       },
       complete() {
-        const isClickCoachList = this.data.isClickCoachList;
-        for (var i = 0; i < this.data.coachList.length; i++) {
+        const isClickCoachList = that.data.isClickCoachList;
+        for (var i = 0; i < that.data.coachList.length; i++) {
           isClickCoachList[i].isClicked = false
         }
-        this.setData({
+        that.setData({
           isClickCoachList: isClickCoachList,
           selectCoachId: 0
         });
