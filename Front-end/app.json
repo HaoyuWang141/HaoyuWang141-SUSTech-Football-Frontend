@@ -13,6 +13,7 @@
     "pages/profile_player/profile_player_edit/profile_player_edit",
     "pages/profile_player/profile_referee/profile_referee",
     "pages/profile_player/profile_referee_edit/profile_referee_edit",
+    "pages/profile_player/profile_referee_register/profile_referee_register",
     "pages/management/management",
     "pages/management/team_edit/team_edit",
     "pages/management/team_new/team_new",

@@ -277,6 +277,7 @@ Page({
       url: '../profile_coach_register/profile_coach_register',
     })
   },
+
   gotoCoachNoticePage() {
     wx.navigateTo({
       url: '/pages/profile_player/profile_coach_notice/profile_coach_notice',
