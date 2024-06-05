@@ -259,7 +259,6 @@ Page({
   },
 
   gotoRegisterPage() {
-    console.log("11111")
     wx.navigateTo({
       url: '/pages/profile_player/profile_referee_register/profile_referee_register',
     })
