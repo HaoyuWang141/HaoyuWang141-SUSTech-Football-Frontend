@@ -49,14 +49,6 @@ Page({
     showPlayerMatchDot: false,
     showCoachMatchDot: false,
     showRefereeMatchDot: false,
-    showPlayerInvitationDot: false,
-    showCoachInvitationDot: false,
-    showRefereeInvitationDotForMatch: false,
-    showRefereeInvitationDotForEvent: false,
-    showApplicationDot: false,
-    showManageTeamApplicationDot: false,
-    showManageTeamInvitationMatchDot: false,
-    showManageTeamInvitationEventDot: false,
     showManageTeamInvitationPlayerDot: false,
     showManageMatchInvitationTeamDot: false,
     showManageEventInvitationTeamDot: false,
@@ -816,10 +808,8 @@ Page({
       }
       return `您对${application.team.name}（球队）的申请${stadus}：${formattedDate}`
     });
-    let showDot = informs.length > 0 ? true : false;
     this.setData({
       applicationInform: informs,
-      showApplicationDot: showDot,
     });
   },
 
@@ -835,10 +825,8 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    let showDot = informs.length > 0 ? true : false;
     this.setData({
       manageTeamApplicationsInform: this.data.manageTeamApplicationsInform.concat(informs),
-      showManageTeamApplicationDot: showDot
     });
   },
 
@@ -861,10 +849,8 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    let showDot = informs.length > 0 ? true : false;
     this.setData({
       refereeInvitationInformForMatch: informs,
-      showRefereeInvitationDotForMatch: showDot,
     });
   },
 
@@ -883,10 +869,8 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    let showDot = informs.length > 0 ? true : false;
     this.setData({
       refereeInvitationInformForEvent: informs,
-      showRefereeInvitationDotForEvent: showDot
     });
   },
 
@@ -908,7 +892,6 @@ Page({
     let showDot = informs.length > 0 ? true : false;
     this.setData({
       coachInvitationInform: informs,
-      showCoachInvitationDot: showDot
     });
   },
 
@@ -928,10 +911,8 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    let showDot = informs.length > 0 ? true : false;
     that.setData({
       playerInvitationInform: informs,
-      showPlayerInvitationDot: showDot
     });
   },
 
@@ -952,10 +933,8 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    let showDot = informs.length > 0 ? true : false;
     that.setData({
       manageTeamInvitationMatchInform: this.data.manageTeamInvitationMatchInform.concat(informs),
-      showManageTeamInvitationMatchDot: showDot
     });
   },
 
@@ -976,10 +955,8 @@ Page({
       }
       return null;
     }).filter(inform => inform !== null);
-    let showDot = informs.length > 0 ? true : false;
     that.setData({
       manageTeamInvitationEventInform: this.data.manageTeamInvitationEventInform.concat(informs),
-      showManageTeamInvitationEventDot: showDot
     });
   },
 
@@ -1199,42 +1176,36 @@ Page({
   togglePlayerInvitationInform: function () {
     this.setData({
       showPlayerInvitationInform: !this.data.showPlayerInvitationInform,
-      showPlayerInvitationDot: false
     });
   },
 
   toggleCoachInvitationInform: function () {
     this.setData({
       showCoachInvitationInform: !this.data.showCoachInvitationInform,
-      showCoachInvitationDot: false
     });
   },
 
   toggleRefereeInvitationInformForMatch: function () {
     this.setData({
       showRefereeInvitationInformForMatch: !this.data.showRefereeInvitationInformForMatch,
-      showRefereeInvitationDotForMatch: false
     });
   },
 
   toggleRefereeInvitationInformForEvent: function () {
     this.setData({
       showRefereeInvitationInformForEvent: !this.data.showRefereeInvitationInformForEvent,
-      showRefereeInvitationDotForEvent: false
     });
   },
 
   toggleManageTeamInvitationMatchInform: function () {
     this.setData({
       showManageTeamInvitationMatchInform: !this.data.showManageTeamInvitationMatchInform,
-      showManageTeamInvitationMatchDot: false
     });
   },
 
   toggleManageTeamInvitationEventInform: function () {
     this.setData({
       showManageTeamInvitationEventInform: !this.data.showManageTeamInvitationEventInform,
-      showManageTeamInvitationEventDot: false
     });
   },
 
@@ -1264,7 +1235,6 @@ Page({
   toggleApplicationInform: function () {
     this.setData({
       showApplicationInform: !this.data.showApplicationInform,
-      showApplicationDot: false
     });
   },
 
@@ -1274,7 +1244,6 @@ Page({
   toggleManageTeamApplicationInform: function () {
     this.setData({
       showManageTeamApplicationInform: !this.data.showManageTeamApplicationInform,
-      showManageTeamApplicationDot: false
     });
   },
   // ------------------
@@ -1439,6 +1408,7 @@ Page({
       url: URL + '/player/team/replyInvitation?playerId=' + playerId + '&teamId=' + teamId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: player Reply Team Invitation ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1455,6 +1425,7 @@ Page({
         console.log("回复球队邀请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg)
         wx.showToast({
           title: '回复失败',
@@ -1462,7 +1433,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchPlayerTeamInvitations(that.data.playerId)
       }
     })
@@ -1483,6 +1453,7 @@ Page({
       url: URL + '/coach/team/replyInvitation?coachId=' + coachId + '&teamId=' + teamId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: coach Reply Team Invitation ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1499,6 +1470,7 @@ Page({
         console.log("回复球队邀请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg)
         wx.showToast({
           title: '回复失败',
@@ -1506,7 +1478,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchCoachTeamInvitations(that.data.coachId)
       }
     })
@@ -1527,6 +1498,7 @@ Page({
       url: URL + '/referee/event/replyInvitation?refereeId=' + refereeId + '&eventId=' + eventId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: referee Reply Event Invitation ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1543,6 +1515,7 @@ Page({
         console.log("回复赛事邀请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg);
         wx.showToast({
           title: '回复失败',
@@ -1550,7 +1523,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchRefereeInvitationsForEvent(that.data.refereeId)
       }
     })
@@ -1571,6 +1543,7 @@ Page({
       url: URL + '/referee/match/replyInvitation?refereeId=' + refereeId + '&matchId=' + matchId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: referee Reply Match Invitation ->")
         if (res.statusCode != 200) {
           console.error("请求失败" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1587,6 +1560,7 @@ Page({
         console.log("回复比赛邀请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg);
         wx.showToast({
           title: '回复失败',
@@ -1594,7 +1568,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchRefereeInvitationsForMatch(that.data.refereeId)
       }
     })
@@ -1615,6 +1588,7 @@ Page({
       url: URL + '/team/player/replyApplication?teamId=' + teamId + '&playerId=' + playerId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: Team Reply Player Application ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1631,6 +1605,7 @@ Page({
         console.log("回复球员申请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg)
         wx.showToast({
           title: '回复失败',
@@ -1638,7 +1613,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchManageTeamList(that.data.userId)
       }
     })
@@ -1659,6 +1633,7 @@ Page({
       url: URL + '/team/match/replyInvitation?teamId=' + teamId + '&matchId=' + matchId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: Team Reply Match Invitation ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1675,6 +1650,7 @@ Page({
         console.log("回复比赛邀请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg)
         wx.showToast({
           title: '回复失败',
@@ -1682,7 +1658,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchManageTeamList(that.data.userId)
       }
     })
@@ -1703,6 +1678,7 @@ Page({
       url: URL + '/team/event/replyInvitation?teamId=' + teamId + '&eventId=' + eventId + '&accept=' + accept,
       method: "POST",
       success(res) {
+        wx.hideLoading()
         console.log("mine page: Team Reply Event Invitation ->")
         if (res.statusCode != 200) {
           console.error("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -1719,6 +1695,7 @@ Page({
         console.log("回复赛事邀请成功")
       },
       fail(err) {
+        wx.hideLoading()
         console.error('请求失败：', err.statusCode, err.errMsg)
         wx.showToast({
           title: '回复失败',
@@ -1726,7 +1703,6 @@ Page({
         })
       },
       complete() {
-        wx.hideLoading()
         that.fetchManageTeamList(that.data.userId)
       }
     })

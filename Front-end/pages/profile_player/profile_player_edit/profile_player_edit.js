@@ -27,6 +27,7 @@ Page({
     modalHiddenPosition: true,
     modalHiddenShuyuan: true,
     modalHiddenCollege: true,
+    shuYuanOptions: ['无书院/不愿透露', '致仁书院', '树仁书院', '致诚书院', '树礼书院', '树德书院', '致新书院']
   },
 
   /**
@@ -283,29 +284,10 @@ Page({
     });
   },
 
-  showShuyuanInput: function () {
+  // 处理书院选择
+  bindShuYuanChange: function (e) {
     this.setData({
-      modalHiddenShuyuan: false
-    });
-  },
-
-  confirmChangeShuyuan: function () {
-    // 这里可以添加逻辑，如检查输入是否合法等
-    this.setData({
-      shuYuan: this.data.newshuyuan,
-      modalHiddenShuyuan: true
-    });
-  },
-
-  cancelChangeShuyuan: function () {
-    this.setData({
-      modalHiddenShuyuan: true
-    });
-  },
-
-  changeshuyuan: function (e) {
-    this.setData({
-      newshuyuan: e.detail.value
+      shuYuan: this.data.shuYuanOptions[e.detail.value]
     });
   },
 

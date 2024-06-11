@@ -21,10 +21,10 @@
     </view>
   </view>
 
-  <!-- 管理的比赛 -->
+  <!-- 管理的友谊赛 -->
   <view class="block-space">
     <view class="block-top">
-      <view class="block-title">管理的比赛</view>
+      <view class="block-title">管理的友谊赛</view>
       <view class="block-more button-custom" bindtap="gotoMatches" data-id="5">比赛管理 ></view>
     </view>
     <view class="block-main">
@@ -39,7 +39,7 @@
     <view class="block-container" wx:if="{{isEventManager}}">
       <view class="block-top" bindtap="toggleManageEventInvitationTeamInform">
         <view class="block-title">
-          <text> 赛事管理者身份：球队邀请通知</text>
+          <text>邀请球队参加赛事 - 回复</text>
           <view class="red-dot" wx:if="{{showManageEventInvitationTeamDot}}"></view>
         </view>
         <view class="block-more">
@@ -47,7 +47,8 @@
         </view>
       </view>
       <view class="block-main">
-        <view>未对球队发起过任何邀请</view>
+        <view wx:if="{{manageEventInvitationTeamInform == 0}}">未对球队发起过任何邀请</view>
+        <view wx:else>展开查看详情</view>
         <scroll-view scroll-y="true" style="height: {{showManageEventInvitationTeamInform ? '200px' : '0'}};" class="notification-box">
           <view class="invitation-item" wx:for="{{manageEventInvitationTeamInform}}" wx:key="index">
             <text class="invitation-text">{{item}}</text>

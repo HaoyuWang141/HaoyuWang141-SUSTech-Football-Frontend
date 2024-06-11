@@ -13,8 +13,8 @@
 <view class="block-container" wx:if="{{isTeamManager}}">
   <view class="block-top" bindtap="toggleManageTeamApplicationInform">
     <view class="block-title">
-      <text> 球员申请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamApplicationDot}}"></view>
+      <text>球员申请入队通知</text>
+      <view class="red-dot" wx:if="{{manageTeamApplicationsInform.length > 0}}"></view>
     </view>
     <view class="block-more">
       <image class="icon" src="/assets/down333.png" mode="" />
@@ -33,8 +33,8 @@
 <view class="block-container" wx:if="{{isTeamManager}}">
   <view class="block-top" bindtap="toggleManageTeamInvitationMatchInform">
     <view class="block-title">
-      <text> 比赛邀请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamInvitationMatchDot}}"></view>
+      <text>友谊赛邀请通知</text>
+      <view class="red-dot" wx:if="{{manageTeamInvitationMatchInform.length > 0}}"></view>
     </view>
     <view class="block-more">
       <image class="icon" src="/assets/down333.png" mode="" />
@@ -54,7 +54,7 @@
   <view class="block-top" bindtap="toggleManageTeamInvitationEventInform">
     <view class="block-title">
       <text> 赛事邀请通知</text>
-      <view class="red-dot" wx:if="{{showManageTeamInvitationEventDot}}"></view>
+      <view class="red-dot" wx:if="{{manageTeamInvitationEventInform.length>0}}"></view>
     </view>
     <view class="block-more">
       <image class="icon" src="/assets/down333.png" mode="" />
@@ -73,7 +73,7 @@
 <view class="block-container" wx:if="{{isTeamManager}}">
   <view class="block-top" bindtap="toggleManageTeamInvitationPlayerInform">
     <view class="block-title">
-      <text> 球员邀请通知</text>
+      <text>邀请球员入队 - 回复</text>
       <view class="red-dot" wx:if="{{showManageTeamInvitationPlayerDot}}"></view>
     </view>
     <view class="block-more">

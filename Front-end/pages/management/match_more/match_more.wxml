@@ -23,7 +23,7 @@
 <view class="block-container" wx:if="{{isMatchManager}}">
   <view class="block-top" bindtap="toggleManageMatchInvitationTeamInform">
     <view class="block-title">
-      <text>球队邀请通知</text>
+      <text>邀请球队参加比赛 - 回复</text>
       <view class="red-dot" wx:if="{{showManageMatchInvitationTeamDot}}"></view>
     </view>
     <view class="block-more">
@@ -31,7 +31,8 @@
     </view>
   </view>
   <view class="block-main">
-    <view>未对球队发起过任何邀请</view>
+    <view wx:if="{{manageMatchInvitationTeamInform.length == 0}}">未对球队发起过任何邀请</view>
+    <view wx:else>展开查看详情</view>
     <scroll-view scroll-y="true" style="height: {{showManageMatchInvitationTeamInform ? '200px' : '0'}};" class="notification-box">
       <view class="invitation-item" wx:for="{{manageMatchInvitationTeamInform}}" wx:key="index">
         <text class="invitation-text">{{item}}</text>

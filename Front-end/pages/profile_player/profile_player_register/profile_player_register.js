@@ -15,9 +15,10 @@ Page({
     weight: '', // 体重
     position: '', // 场上位置
     identity: '', // 学工号
-    shuYuan: '', // 书院
+    shuYuan: '请选择书院', // 书院
     college: '', // 院系
     admissionYear: '请选择入学年份', // 入学年份
+    shuYuanOptions: ['无书院/不愿透露', '致仁书院', '树仁书院', '致诚书院', '树礼书院', '树德书院', '致新书院']
   },
 
   /**
@@ -129,10 +130,10 @@ Page({
     });
   },
 
-  // 处理书院输入
-  inputShuYuan: function (e) {
+  // 处理书院选择
+  bindShuYuanChange: function (e) {
     this.setData({
-      shuYuan: e.detail.value
+      shuYuan: this.data.shuYuanOptions[e.detail.value]
     });
   },
 

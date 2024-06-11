@@ -59,7 +59,7 @@
       <view class="block-top input-container">
         <view class="block-title"><text style="color: red;">* </text>出生日期：</view>
         <view class="block-more">
-          <picker mode="date" bindchange="bindDateChange">
+          <picker class="picker-continer" mode="date" bindchange="bindDateChange">
             <view>{{birthDate}}</view>
           </picker>
         </view>
@@ -75,7 +75,9 @@
       <view class="block-top input-container">
         <view class="block-title">书院：</view>
         <view class="block-more">
-          <input type="text" placeholder="请输入书院" bindinput="inputShuYuan" />
+          <picker class="picker-continer" bindchange="bindShuYuanChange" range="{{shuYuanOptions}}">
+            <text>{{shuYuan}}</text>
+          </picker>
         </view>
       </view>
 
@@ -88,9 +90,11 @@
 
       <view class="block-top input-container">
         <view class="block-title"><text style="color: red;">* </text>入学年份：</view>
-        <picker mode="date" fields="year" bindchange="bindAdmissionYearChange">
-          <text>{{admissionYear}}</text>
-        </picker>
+        <view class="block-more">
+          <picker class="picker-continer" mode="date" fields="year" bindchange="bindAdmissionYearChange">
+            <text>{{admissionYear}}</text>
+          </picker>
+        </view>
       </view>
 
       <button class="button" bindtap="submit">注册</button>

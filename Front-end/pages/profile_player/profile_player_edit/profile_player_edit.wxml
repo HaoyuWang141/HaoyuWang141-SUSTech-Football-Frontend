@@ -93,17 +93,11 @@
     <view class="section">
       <view>书院</view>
       <view style="flex: 1;"></view>
-      <view class="edit" bindtap="showShuyuanInput">
-        <view class="name">{{shuYuan}}</view>
-        <view class="pointer">></view>
-      </view>
+      <picker class="edit" bindchange="bindShuYuanChange" range="{{shuYuanOptions}}">
+        <text class="name">{{shuYuan}}</text>
+        <text class="pointer">></text>
+      </picker>
     </view>
-    <modal hidden="{{modalHiddenShuyuan}}" bindconfirm="confirmChangeShuyuan" bindcancel="cancelChangeShuyuan">
-      <view class="modal-content">
-        <text>请输入书院：</text>
-        <input placeholder="书院" bindinput="changeshuyuan" />
-      </view>
-    </modal>
     <view class="section">
       <view>院系</view>
       <view style="flex: 1;"></view>
@@ -122,7 +116,7 @@
       <view>入学年份</view>
       <view style="flex: 1;"></view>
       <picker class="edit" mode="date" fields="year" bindchange="bindAdmissionYearChange">
-        <text>{{admissionYear}}</text>
+        <text class="name">{{admissionYear}}</text>
         <text class="pointer">></text>
       </picker>
     </view>
