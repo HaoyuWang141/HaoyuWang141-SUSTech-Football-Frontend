@@ -12,7 +12,7 @@
       
       <view class="team-card-container" >
         <view wx:if="{{stageList.length > 1}}">
-          <view wx:for="{{groupList}}" class="group-team" wx:for-item="groupItem">
+          <view wx:for="{{groupList}}" class="group-team" wx:for-item="groupItem" wx:key="index">
             <view class="group-name">{{groupItem.name}}</view>
             <block wx:for="{{groupItem.teamList}}" wx:for-item="teamItem" wx:key="index">
               <team-card-big name="{{teamItem.team.name}}" img="{{teamItem.team.logoUrl}}" number="{{teamItem.team.playerCount}}">
