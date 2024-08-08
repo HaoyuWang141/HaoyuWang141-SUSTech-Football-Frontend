@@ -54,13 +54,12 @@ Page({
       },
       success: (res) => {
         if (res.statusCode == 200 && res.data == true) {
-          wx.showToast({
-            title: '登录成功',
-            icon: 'success'
-          });
-          wx.navigateBack()
-          wx.navigateTo({
-            url: '../sport_center/sport_center?username=' + username
+          wx.navigateBack({
+            complete: () => {
+              wx.navigateTo({
+                url: '/pages/mine/sport_center/sport_center?username=' + username,
+              });
+            }
           });
         } else {
           wx.showToast({

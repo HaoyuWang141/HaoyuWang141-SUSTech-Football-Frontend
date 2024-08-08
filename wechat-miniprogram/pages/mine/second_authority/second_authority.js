@@ -109,7 +109,7 @@ Page({
       url: `${URL}/authority/second/update`,
       method: 'PUT',
       data: {
-        authority_id: authority_id,
+        authorityId: authorityId,
         username: username,
         password: newPassword
       },

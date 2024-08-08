@@ -24,17 +24,20 @@ Page({
       username: event.detail.value
     });
   },
-  
+
   // 处理密码输入
   onPasswordInput(event) {
     this.setData({
       password: event.detail.value
     });
   },
-  
+
   // 处理登录操作
   onLogin() {
-    const { username, password } = this.data;
+    const {
+      username,
+      password
+    } = this.data;
 
     if (!username || !password) {
       wx.showToast({
@@ -54,14 +57,12 @@ Page({
       },
       success: (res) => {
         if (res.statusCode == 200 && res.data != -1) {
-          wx.showToast({
-            title: '登录成功',
-            icon: 'success'
-          });
-          let authorityId = res.data
-          wx.navigateBack()
-          wx.navigateTo({
-            url: '/pages/mine/second_authority/second_authority?authorityId=' + authorityId
+          wx.navigateBack({
+            complete: () => {
+              wx.navigateTo({
+                url: `/pages/mine/second_authority/second_authority?authorityId=${res.data}&username=${username}`,
+              });
+            }
           });
         } else {
           wx.showToast({
