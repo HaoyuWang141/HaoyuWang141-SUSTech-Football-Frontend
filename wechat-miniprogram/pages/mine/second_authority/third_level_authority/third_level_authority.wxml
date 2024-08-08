@@ -1,0 +1,38 @@
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">
+      三级权限管理
+    </view>
+    <view class="block-more button-custom" bind:tap="showCreateModal">新建</view>
+  </view>
+
+  <view class="block-main">
+    <view class="table">
+      <view class="row">
+        <view class="cell header">user ID</view>
+        <view class="cell header">头像</view>
+        <view class="cell header">姓名</view>
+        <view class="cell header">操作</view>
+      </view>
+      <block wx:for="{{thirdAuthorityList}}" wx:key="authorityId">
+        <view class="row">
+          <view class="cell">{{item.userId}}</view>
+          <view class="cell">
+            <image src="{{item.user.avatarUrl}}" mode="" />
+          </view>
+          <view class="cell">{{item.user.nickName}}</view>
+          <view class="cell">
+            <text class="button-delete" bindtap="showDeleteConfirmation" data-id="{{item.authorityId}}">删除</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<!-- 创建用户模态框 -->
+<modal hidden="{{!isCreateModalVisible}}" bindconfirm="createUser" bindcancel="closeModal">
+  <view class="modal-content" catchtap="preventModalClose">
+    <input placeholder="用户Id" bindinput="onUserIdInput" value="{{newUserId}}"/>
+  </view>
+</modal>

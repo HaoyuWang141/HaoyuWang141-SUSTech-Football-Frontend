@@ -4,76 +4,23 @@ const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    authorityLevel: 0,
+    authorityId: 0,
     teamId: 0,
     logoUrl: '',
     tempFilePath: '',
     teamname: '',
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
-
+    this.setData({
+      authorityLevel: options.authorityLevel,
+      authorityId: options.authorityId,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
-
-  /**
-   * 上传队徽图片
-   */ 
+  // 上传队徽图片
   uploadLogo: function () {
     var that = this;
     // 打开相册或相机选择图片
@@ -92,9 +39,7 @@ Page({
     })
   },
 
-  /**
-   * 输入队名
-   */
+  // 输入队名
   inputTeamname: function (e) {
     this.setData({
       teamname: e.detail.value
@@ -165,12 +110,16 @@ Page({
       })
       return
     }
+
+    let createAuthorityLevel = this.data.authorityLevel
+    let createAuthorityId = this.data.authorityId
+
     wx.showLoading({
       title: '正在创建',
       mask: true
     })
     wx.request({
-      url: URL + '/team/create?ownerId=' + userId,
+      url: `${URL}/team/create?ownerId=${userId}&createAuthorityLevel=${createAuthorityLevel}&createAuthorityId=${createAuthorityId}`,
       method: 'POST',
       data: {
         name: this.data.teamname,

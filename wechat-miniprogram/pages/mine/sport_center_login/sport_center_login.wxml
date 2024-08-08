@@ -1,0 +1,13 @@
+<view class="login-container">
+  <view class="login-form">
+    <view class="form-item">
+      <text class="label">用户名</text>
+      <input class="input" type="text" placeholder="请输入用户名" bindinput="onUsernameInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">密码</text>
+      <input class="input" type="password" placeholder="请输入密码" bindinput="onPasswordInput" />
+    </view>
+    <button class="button-custom" bindtap="onLogin">登录</button>
+  </view>
+</view>

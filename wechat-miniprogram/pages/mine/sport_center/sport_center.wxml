@@ -1,0 +1,52 @@
+<!-- pages/management/management.wxml -->
+<view class="block-container">
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">引导</view>
+    </view>
+    <view class="block-main">
+      <view>
+        本页面为“体育中心”管理页面，具有最高权限，功能包含：全部球队的管理、全部比赛的管理、全部赛事的管理和二级权限的管理（通过指定用户名、密码进行授权）。
+      </view>
+      <view style="margin-top: 40rpx;">
+        二级权限（用户名+密码登录）：可以创建球队、创建友谊赛、创建赛事；管理自己创建的内容；授予三级权限（通过指定用户ID进行授予）
+      </view>
+      <view style="margin-top: 40rpx;">
+        三级权限（无需手动输入用户名或密码）：可以创建球队、创建友谊赛；管理自己创建的内容；不允许创建赛事。
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能 -->
+  <view class="function-container">
+    <view bindtap="gotoTeamsPage" class="function-button">
+      <image src="/assets/team.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">球队管理</text>
+    </view>
+    <view bindtap="gotoMatchesPage" class="function-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">友谊赛</text>
+    </view>
+    <view bindtap="gotoEventsPage" class="function-button">
+      <image src="/assets/event.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">赛事管理</text>
+    </view>
+  </view>
+  <view class="function-container">
+    <view bindtap="gotoSecondLevelAuthorityPage" class="function-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">二级权限</text>
+    </view>
+    <view bindtap="showChangePasswordModal" class="function-button">
+      <image src="/assets/password.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">更改密码</text>
+    </view>
+  </view>
+</view>
+
+<modal hidden="{{!isChangePasswordModalVisible}}" bindconfirm="updatePassword" bindcancel="closeModal">
+  <view class="modal-content">
+    <input placeholder="新密码" password="true" bindinput="onNewPasswordInput" value="{{newPassword}}" />
+    <input placeholder="重复输入" password="true" bindinput="onRepeatedPasswordInput" value="{{repatedPassword}}" />
+  </view>
+</modal>

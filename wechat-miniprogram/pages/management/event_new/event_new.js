@@ -9,6 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    authorityLevel: 0,
+    authorityId: 0,
     icon: '/assets/cup.svg',
     name: '创建新赛事名称',
     description: '编辑赛事简介',
@@ -52,59 +54,12 @@ Page({
 
     // 更新data中的数组
     this.setData({
+      authorityLevel: options.authorityLevel,
+      authorityId: options.authorityId,
       groupNumber: groupArr,
       teamNumber: teamArr,
       turnNumber: turnArr
     });
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
   },
 
   inputEventName: function (e) {
@@ -322,11 +277,10 @@ Page({
         title: '正在创建',
         mask: true
       })
-      // 发送请求到后端接口
       wx.request({
-        url: URL + '/event/create?ownerId=' + userId, // 后端接口地址
-        method: 'POST', // 请求方法
-        data: dataToUpdate, // 要发送的数据
+        url: `${URL}/event/create?ownerId=${userId}&authorityLevel=${this.data.authorityLevel}&authorityId=${this.data.authorityLevel}`,
+        method: 'POST',
+        data: dataToUpdate,
         success: res => {
           wx.hideLoading()
           console.log('event_new page: confirmCreate ->')

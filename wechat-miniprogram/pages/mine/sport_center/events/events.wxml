@@ -1,0 +1,10 @@
+  <!-- 管理的赛事 -->
+  <view class="block-container">
+    <view class="block-top">
+      <view class="block-title">全部赛事</view>
+      <view class="block-more button-custom" bindtap="gotoEventNewPage">新建赛事</view>
+    </view>
+    <view class="block-main">
+      <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.eventId}}" icon="/assets/cup.svg" name="{{item.name}}" bindtap="gotoEventEditPage" data-id="{{item.eventId}}"></event-card-big>
+    </view>
+  </view>

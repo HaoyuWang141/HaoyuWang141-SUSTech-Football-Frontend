@@ -36,6 +36,10 @@
 
   <!-- 管理的赛事 -->
   <view class="block-space">
+    <view class="block-top" style="margin: 40rpx 0;">
+      <view class="block-title">管理的赛事</view>
+      <view class="block-more button-custom" bindtap="gotoNewEvent">新建赛事</view>
+    </view>
     <view class="block-container" wx:if="{{isEventManager}}">
       <view class="block-top" bindtap="toggleManageEventInvitationTeamInform">
         <view class="block-title">
@@ -56,11 +60,7 @@
         </scroll-view>
       </view>
     </view>
-    <view class="block-top">
-      <view class="block-title">管理的赛事</view>
-    </view>
     <view class="block-main">
-      <event-card-big eventId="{{newEvent.id}}" icon="{{newEvent.icon}}" name="{{newEvent.name}}" bindtap="gotoNewEvent"></event-card-big>
       <event-card-big wx:for="{{events}}" wx:key="index" eventId="{{item.eventId}}" icon="/assets/cup.svg" name="{{item.name}}" bindtap="gotoEditEvent" data-id="{{item.eventId}}"></event-card-big>
     </view>
   </view>

@@ -75,6 +75,7 @@ App({
       success(res) {
         console.log(res.data)
         that.globalData.userId = res.data.userId
+        // that.globalData.userId = 2
         that.globalData.nickName = res.data.nickName
 
         that.processRequestQueue()

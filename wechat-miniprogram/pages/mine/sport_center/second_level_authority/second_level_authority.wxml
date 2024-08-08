@@ -1,0 +1,46 @@
+<view class="block-container">
+  <view class="block-top">
+    <view class="block-title">
+      二级权限管理
+    </view>
+    <view class="block-more button-custom" bind:tap="showCreateModal">新建</view>
+  </view>
+
+  <view class="block-main">
+    <view class="table">
+      <block wx:for="{{users}}" wx:key="username">
+        <view class="row">
+          <view class="cell username-container">{{item.username}}</view>
+          <view class="cell button-container">
+            <text class="button-check" bindtap="showCheckModal" data-id="{{item.authorityId}}">查看</text>
+            <text class="button-update" bindtap="showUpdateModal" data-username="{{item.username}}">更改</text>
+            <text class="button-delete" bindtap="showDeleteConfirmation" data-id="{{item.authorityId}}">删除</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<!-- 创建用户模态框 -->
+<modal hidden="{{!isCreateModalVisible}}" bindconfirm="createUser" bindcancel="closeModal">
+  <view class="modal-content" catchtap="preventModalClose">
+    <input placeholder="用户名" bindinput="onUsernameInput" value="{{username}}" />
+    <input placeholder="密码" password="true" bindinput="onPasswordInput" value="{{password}}" />
+  </view>
+</modal>
+
+<!-- 查看用户信息模态框 -->
+<modal hidden="{{!isCheckModalVisible}}" bindtap="closeModal" no-cancel>
+  <view class="modal-content" catchtap="preventModalClose">
+    <view>用户名: {{checkedUser.username}}</view>
+    <view>密码: {{checkedUser.password}}</view>
+  </view>
+</modal>
+
+<!-- 更新用户密码模态框 -->
+<modal hidden="{{!isUpdateModalVisible}}" bindconfirm="updateUser" bindcancel="closeModal">
+  <view class="modal-content" catchtap="preventModalClose">
+    <input placeholder="密码" password="true" bindinput="onPasswordInput" value="{{password}}" />
+  </view>
+</modal>

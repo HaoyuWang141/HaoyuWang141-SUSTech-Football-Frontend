@@ -224,7 +224,7 @@ Page({
     })
 
     wx.request({
-      url: URL + '/team/update?managerId=' + userId,
+      url: URL + '/team/update',
       method: 'PUT',
       data: dataToUpdate,
       success: res => {

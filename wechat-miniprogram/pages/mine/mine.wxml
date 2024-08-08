@@ -30,6 +30,22 @@
       </view>
     </view>
 
+    <!-- 功能 -->
+    <view class="block-container">
+      <view class="block-top">
+      </view>
+      <view class="function-container">
+        <view bindtap="gotoSportCenterPage" class="function-button">
+          <image src="/assets/sport_center.png" mode="scaleToFill" class="function-image" />
+          <text class="function-text">体育中心</text>
+        </view>
+        <view bindtap="gotoSecondAuthorityPage" class="function-button">
+          <image src="/assets/key.png" mode="scaleToFill" class="function-image" />
+          <text class="function-text">二级权限</text>
+        </view>
+      </view>
+    </view>
+
     <view class="block-container" wx:if="{{isPlayer || isCoach || isReferee}}">
       <view class="block-top">
         <view class="block-title">
@@ -305,6 +321,8 @@
       </view>
     </view>
 
+
+
     <!-- 球队管理员身份：邀请球员反馈 -->
     <!-- <view class="block-container" wx:if="{{isTeamManager}}">
       <view class="block-top" bindtap="toggleManageTeamInvitationPlayerInform">
@@ -367,5 +385,16 @@
         </scroll-view>
       </view>
     </view> -->
+  </view>
+
+  <view class="block-container">
+    <view class="block-top">
+      <view class="block-title">
+        反馈
+      </view>
+    </view>
+    <view class="block-main">
+      若您有遇到了任何bug或有改进意见，请加入qq群：831237517 进行反馈。
+    </view>
   </view>
 </scroll-view>

@@ -1,0 +1,44 @@
+.check-btn {
+  background-color: #3388d8; /* 按钮背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 5px 10px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 按钮圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  margin-bottom: 20rpx;
+  margin-right: 20rpx;
+  font-size: small;
+}
+
+.delete-btn {
+  background-color: #ff4d4f; /* 按钮背景颜色 */
+  color: white; /* 文字颜色 */
+  padding: 5px 10px; /* 按钮内边距 */
+  border: none; /* 去除按钮边框 */
+  border-radius: 5px; /* 按钮圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  margin-right: 20rpx;
+  font-size: small;
+}
+
+.function-container {
+  display: flex;
+}
+
+.function-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.function-image {
+  width: 90rpx;
+  height: 90rpx;
+  margin-bottom: 10rpx;
+}
+
+.function-text {
+  font-size: small;
+  color: #666;
+}

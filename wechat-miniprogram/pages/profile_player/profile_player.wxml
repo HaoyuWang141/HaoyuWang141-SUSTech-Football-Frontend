@@ -30,10 +30,10 @@
       <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
       <text class="function-text">教练主页</text>
     </view>
-    <view bindtap="gotoProfileRefereePage" class="function-button">
+    <!-- <view bindtap="gotoProfileRefereePage" class="function-button">
       <image src="/assets/referee.png" mode="scaleToFill" class="function-image" />
       <text class="function-text">裁判主页</text>
-    </view>
+    </view> -->
     <view bindtap="openJoinTeamModal" class="function-button" wx:if="{{playerId}}">
       <image src="/assets/statistic-team.png" mode="scaleToFill" class="function-image" />
       <text class="function-text">加入球队</text>

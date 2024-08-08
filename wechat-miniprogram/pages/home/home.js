@@ -352,7 +352,7 @@ Page({
   },
 
   gotoProfileRefereePage() {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/profile_player/profile_referee/profile_referee',
     })
   },

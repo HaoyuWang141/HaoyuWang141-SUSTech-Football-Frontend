@@ -359,7 +359,7 @@ Page({
     console.log('dataToUpdate->');
     console.log(dataToUpdate);
     wx.request({
-      url: URL + '/match/update?managerId=' + userId,
+      url: URL + '/match/update',
       method: 'PUT',
       data: dataToUpdate,
       success: res => {

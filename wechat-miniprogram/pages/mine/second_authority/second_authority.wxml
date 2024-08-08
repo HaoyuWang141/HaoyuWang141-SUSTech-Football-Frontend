@@ -1,0 +1,52 @@
+<!-- pages/management/management.wxml -->
+<view class="block-container">
+  <view class="block-space">
+    <view class="block-top">
+      <view class="block-title">引导</view>
+    </view>
+    <view class="block-main">
+      <view>
+        您的权限为二级权限，由南方科技大学体育中心授权。
+      </view>
+      <view style="margin-top: 40rpx;">
+        您的权限包含：球队、友谊赛、赛事的创建和管理，以及三级权限的授权。
+      </view>
+      <view style="margin-top: 40rpx;">
+        三级权限：可以创建并管理球队和友谊赛；不允许创建赛事。
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能 -->
+  <view class="function-container">
+    <view bindtap="gotoTeamsPage" class="function-button">
+      <image src="/assets/team.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">球队管理</text>
+    </view>
+    <view bindtap="gotoMatchesPage" class="function-button">
+      <image src="/assets/referee.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">友谊赛</text>
+    </view>
+    <view bindtap="gotoEventsPage" class="function-button">
+      <image src="/assets/event.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">赛事管理</text>
+    </view>
+  </view>
+  <view class="function-container">
+    <view bindtap="gotoThirdLevelAuthorityPage" class="function-button">
+      <image src="/assets/coach.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">三级权限</text>
+    </view>
+    <view bindtap="showChangePasswordModal" class="function-button">
+      <image src="/assets/password.png" mode="scaleToFill" class="function-image" />
+      <text class="function-text">更改密码</text>
+    </view>
+  </view>
+</view>
+
+<modal hidden="{{!isChangePasswordModalVisible}}" bindconfirm="updatePassword" bindcancel="closeModal">
+  <view class="modal-content">
+    <input placeholder="新密码" password="true" bindinput="onNewPasswordInput" value="{{newPassword}}" />
+    <input placeholder="重复输入" password="true" bindinput="onRepeatedPasswordInput" value="{{repatedPassword}}" />
+  </view>
+</modal>

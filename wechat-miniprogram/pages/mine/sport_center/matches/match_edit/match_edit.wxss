@@ -1,0 +1,165 @@
+/* pages/management/match_edit/match_edit.wxss */
+
+.section-header {
+  text-align: center;
+}
+
+.motto {
+  width: 80%;
+  height: 200rpx;
+}
+
+.match-card-container {
+  width: 98%;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  margin-left: 7rpx;
+  text-align: center;
+  justify-content: center;
+}
+
+.match-card {
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 20rpx 20rpx;
+  width: 95%;
+}
+
+.name {
+  display: block;
+  font-size: larger;
+  color: #666;
+  text-align: center;
+}
+
+.match-info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+}
+
+.teamname {
+  max-width: 150rpx;
+  white-space: nowrap;
+}
+
+.icon {
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.score {
+  font-size: larger;
+}
+
+.penalty {
+  font-size: x-small;
+}
+
+.time {
+  display: block;
+  text-align: center;
+  color: #666;
+  font-size: larger;
+}
+
+.info-container {
+  width: 95%;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  padding: 10rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  margin-left: 8rpx;
+}
+
+.title {
+  margin-left: 20rpx;  
+  margin-top: 20rpx;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  align-items: center;
+}
+
+.changeInfo-container {
+  margin: 10rpx;
+  padding: 20rpx;
+  width: 90%;
+  border-bottom: 1px solid rgb(202, 202, 202);
+  margin-top: 3%;
+}
+
+.team-container {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 100%;
+}
+
+.teammate-container {
+  margin-bottom: 5%;
+}
+
+.text {
+  margin: 3%;
+}
+
+.btn-container {
+  margin-left: 2%;
+  display: flex; /* 将按钮放置在同一行 */
+  justify-content: space-between; /* 让按钮分别靠左和靠右 */
+  margin-top: 5%; /* 上边距 */
+  margin-bottom: 5%;
+  width: 95%;
+}
+
+.confirm-btn{
+  border: none; /* 去除按钮边框 */
+  border-radius: 20px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #eb6c00; /* 确认修改按钮背景色 */
+  color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 45%;
+  margin-top: 20rpx;
+}
+
+.delete-btn {
+  border: none; /* 去除按钮边框 */
+  border-radius: 20px; /* 圆角 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 背景色过渡效果 */
+  background-color: #eb403a; /* 确认修改按钮背景色 */
+  color: white; /* 文字颜色 */
+  font-size: medium;
+  max-width: 45%;
+}
+
+.confirm-btn:hover{
+  background-color: #f3ae6d; /* 鼠标悬停时背景色变暗 */
+}
+
+.delete-btn:hover {
+  background-color: rgb(226, 84, 84); /* 鼠标悬停时背景色变暗 */
+}
+

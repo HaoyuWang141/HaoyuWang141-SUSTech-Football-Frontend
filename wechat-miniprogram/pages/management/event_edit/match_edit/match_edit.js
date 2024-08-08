@@ -378,7 +378,7 @@ Page({
       mask: true // 创建一个蒙层，防止用户操作
     });
     wx.request({
-      url: `${URL}/event/match/update?eventId=${this.data.eventId}&managerId=${userId}`,
+      url: `${URL}/event/match/update?eventId=${this.data.eventId}`,
       method: 'PUT', // 请求方法
       data: dataToUpdate, // 要发送的数据
       success: res => {

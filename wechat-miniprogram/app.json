@@ -54,7 +54,23 @@
     "pages/profile_player/profile_coach_notice/profile_coach_notice",
     "pages/management/team_notice/team_notice",
     "pages/news/news",
-    "pages/pub/team/retired_players/retired_players"
+    "pages/pub/team/retired_players/retired_players",
+    "pages/mine/sport_center/sport_center",
+    "pages/mine/sport_center_login/sport_center_login",
+    "pages/mine/sport_center/second_level_authority/second_level_authority",
+    "pages/mine/sport_center/matches/matches",
+    "pages/mine/sport_center/matches/match_new/match_new",
+    "pages/mine/sport_center/matches/match_edit/match_edit",
+    "pages/mine/sport_center/events/events",
+    "pages/mine/sport_center/teams/teams",
+    "pages/mine/second_authority_login/second_authority_login",
+    "pages/mine/second_authority/second_authority",
+    "pages/mine/second_authority/matches/matches",
+    "pages/mine/second_authority/matches/match_new/match_new",
+    "pages/mine/second_authority/matches/match_edit/match_edit",
+    "pages/mine/second_authority/events/events",
+    "pages/mine/second_authority/teams/teams",
+    "pages/mine/second_authority/third_level_authority/third_level_authority"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -91,6 +107,12 @@
         "selectedIconPath": "/assets/football_selected.png"
       },
       {
+        "text": "裁判",
+        "pagePath": "pages/profile_player/profile_referee/profile_referee",
+        "iconPath": "/assets/referee_no_selected.png",
+        "selectedIconPath": "/assets/referee.png"
+      },
+      {
         "text": "管理",
         "pagePath": "pages/management/management",
         "iconPath": "/assets/order.png",
@@ -101,12 +123,6 @@
         "pagePath": "pages/mine/mine",
         "iconPath": "/assets/mine.png",
         "selectedIconPath": "/assets/mine_selected.png"
-      },
-      {
-        "text": "开发",
-        "pagePath": "pages/development/development",
-        "iconPath": "/assets/develop.png",
-        "selectedIconPath": "/assets/develop_selected.png"
       }
     ]
   },
