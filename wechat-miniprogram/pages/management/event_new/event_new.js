@@ -268,7 +268,7 @@ Page({
       }
 
       // 构造要发送给后端的数据
-      const dataToUpdate = {
+      const dataToCreate = {
         name: this.data.name,
         description: this.data.description,
         stageList: stageList,
@@ -278,9 +278,9 @@ Page({
         mask: true
       })
       wx.request({
-        url: `${URL}/event/create?ownerId=${userId}&authorityLevel=${this.data.authorityLevel}&authorityId=${this.data.authorityLevel}`,
+        url: `${URL}/event/create?ownerId=${userId}&createAuthorityLevel=${this.data.authorityLevel}&createAuthorityId=${this.data.authorityId}`,
         method: 'POST',
-        data: dataToUpdate,
+        data: dataToCreate,
         success: res => {
           wx.hideLoading()
           console.log('event_new page: confirmCreate ->')

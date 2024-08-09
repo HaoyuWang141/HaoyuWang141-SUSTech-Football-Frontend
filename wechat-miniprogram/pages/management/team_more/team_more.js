@@ -1,13 +1,10 @@
-// pages/management/team_more/team_more.js
 const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
 
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
+    authorityId: 0,
     deleteTeamId: 0,
     teamList: [],
     isTeamManager: false,
@@ -29,70 +26,28 @@ Page({
     manageTeamInvitationPlayerInform: [],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {},
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  onLoad(options) {
+    this.setData({
+      authorityId: options.authorityId,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
     this.fetchData(userId)
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh() {
     this.fetchData(userId)
     wx.stopPullDownRefresh()
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
-
-  fetchData: function (userId) {
-    // 显示加载提示框，提示用户正在加载
+  fetchData(userId) {
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true
     });
 
     var that = this;
-    // 模拟网络请求
     wx.request({
       url: URL + '/user/getUserManageTeam?userId=' + userId,
       success(res) {
@@ -104,7 +59,6 @@ Page({
         }
         let teamList = res.data;
         let manageTeamNumber = res.data.length;
-        // 基本数据
         that.setData({
           teamList: res.data,
           isTeamManager: (res.data.length > 0) ? true : false,

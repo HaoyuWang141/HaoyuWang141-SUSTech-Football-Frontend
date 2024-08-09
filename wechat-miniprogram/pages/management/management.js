@@ -7,17 +7,19 @@ const {
 } = require("../../utils/timeFormatter")
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    hasThirdAuthority: false,
+    authorityId: 0,
     userId: Number,
     id: 0,
     teams: [],
     matches: [],
     events: [],
-    newEvent: { id: 'id', icon: '/assets/newplayer.png', name: '创建赛事'},
+    newEvent: {
+      id: 'id',
+      icon: '/assets/newplayer.png',
+      name: '创建赛事'
+    },
     manageEventIdList: [],
     manageEventNumber: 0,
     showManageEventInvitationTeamInform: false,
@@ -25,71 +27,59 @@ Page({
     manageEventInvitationTeamInform: [],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
+    appInstance.addToRequestQueue(this.fetchThirdAuthority)
     appInstance.addToRequestQueue(this.fetchData)
     appInstance.addToRequestQueue(this.fetchUserId)
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh() {
+    appInstance.addToRequestQueue(this.fetchThirdAuthority)
     appInstance.addToRequestQueue(this.fetchData)
     appInstance.addToRequestQueue(this.fetchUserId)
     wx.stopPullDownRefresh()
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
   fetchUserId(userId) {
     const that = this
     that.setData({
       userId: userId
     })
   },
-  fetchData: function (userId) {
+
+  fetchThirdAuthority(userId) {
+    const that = this
+    wx.request({
+      url: `${URL}/authority/check/third?userId=${userId}`,
+      method: "POST",
+      success(res) {
+        console.log("management page: fetchThirdAuthority ->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        let authorityId = res.data
+        console.log("third authority id: " + authorityId)
+        if (authorityId > 0) {
+          that.setData({
+            hasThirdAuthority: true,
+            authorityId: authorityId,
+          })
+        } else {
+          that.setData({
+            hasThirdAuthority: false,
+            authorityId: 0,
+          })
+        }
+      }
+    })
+  },
+
+  fetchData(userId) {
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -99,13 +89,12 @@ Page({
     wx.request({
       url: URL + '/user/getUserManageTeam?userId=' + userId,
       success(res) {
-        console.log("team->")
-        console.log(res.data)
+        console.log("teams->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
-       
+        console.log(res.data)
         that.setData({
           teams: res.data,
         });
@@ -121,6 +110,7 @@ Page({
     wx.request({
       url: URL + '/user/getUserManageMatch?userId=' + userId,
       success(res) {
+        console.log('matches->');
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
@@ -140,28 +130,27 @@ Page({
         that.setData({
           matches: matchList,
         });
-        console.log('matches->');
         console.log(that.data.matches);
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        wx.hideLoading();
       }
     });
 
+    // 本页面为三级权限管理页面，现在的设计不允许三级权限接触到Event的管理，故以下请求暂时移除。
+    return 
     wx.request({
       url: URL + '/user/getUserManageEvent?userId=' + userId,
       success(res) {
-        console.log("event->")
-        console.log(res.data)
+        console.log("events->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        console.log(res.data)
         let manageEventIdList = res.data;
         let manageEventNumber = res.data.length;
         that.setData({
@@ -173,22 +162,19 @@ Page({
         })
         for (let index = 0; index < manageEventNumber; index++) {
           const event = manageEventIdList[index];
-          console.log("event->")
-          console.log(event.eventId)
           that.fetchManageEventInvitationTeam(event.eventId);
         }
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
       },
       complete() {
-        // 无论请求成功还是失败都会执行
-        wx.hideLoading(); // 关闭加载提示框
+        wx.hideLoading();
       }
     });
   },
-  fetchManageEventInvitationTeam: function (eventId) {
+
+  fetchManageEventInvitationTeam(eventId) {
     const that = this
     wx.request({
       url: URL + '/event/team/getInvitations',
@@ -196,12 +182,12 @@ Page({
         eventId: eventId
       },
       success(res) {
-        console.log("mine page: fetch event invitations to team->")
-        console.log(res.data)
+        console.log("management page: fetch event invitations to team->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        console.log(res.data)
         that.formatManageEventInvitationTeam(res.data);
       },
       fail(err) {
@@ -236,44 +222,15 @@ Page({
     });
   },
 
-  gotoMatches: function(e) {
-    const dataset = e.currentTarget.dataset
+  gotoMatches: function (e) {
     wx.navigateTo({
-      url: '/pages/management/match_more/match_more?id=' + dataset.id,
+      url: `/pages/management/match_more/match_more?authorityLevel=3&authorityId=${this.data.authorityId}`,
     })
   },
 
-  gotoTeams: function(e) {
-    const dataset = e.currentTarget.dataset
+  gotoTeams: function (e) {
     wx.navigateTo({
-      url: '/pages/management/team_more/team_more?id=' + dataset.id,
-    })
-  },
-
-  gotoTeamPage: function(e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/pub/team/team?id=' + dataset.id,
-    })
-  },
-
-  gotoEditMatch: function(e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
-    })
-  },
-
-  gotoEditEvent: function(e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
-    })
-  },
-
-  gotoNewEvent() {
-    wx.navigateTo({
-      url: '/pages/management/event_new/event_new',
+      url: `/pages/management/team_more/team_more?authorityLevel=3&authorityId=${this.data.authorityId}`,
     })
   },
 
@@ -284,5 +241,30 @@ Page({
     })
   },
 
-})
+  gotoTeamPage: function (e) {
+    wx.navigateTo({
+      url: '/pages/pub/team/team',
+    })
+  },
 
+  // gotoEditMatch: function (e) {
+  //   const dataset = e.currentTarget.dataset
+  //   wx.navigateTo({
+  //     url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
+  //   })
+  // },
+
+  // gotoEditEvent: function (e) {
+  //   const dataset = e.currentTarget.dataset
+  //   wx.navigateTo({
+  //     url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
+  //   })
+  // },
+
+  // gotoNewEvent() {
+  //   wx.navigateTo({
+  //     url: '/pages/management/event_new/event_new',
+  //   })
+  // },
+
+})

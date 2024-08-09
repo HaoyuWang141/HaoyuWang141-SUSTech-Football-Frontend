@@ -7,11 +7,8 @@ const {
 } = require("../../../utils/timeFormatter")
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    authorityId: 0,
     userId: Number,
     matchList: Array,
     manageMatchNumber: 0,
@@ -32,11 +29,10 @@ Page({
     }
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
-
+    this.setData({
+      authorityId: options.authorityId,
+    })
   },
 
   /**
@@ -107,7 +103,7 @@ Page({
     wx.request({
       url: URL + '/user/getUserManageMatch?userId=' + userId,
       success(res) {
-        console.log("match->")
+        console.log("user manage matches->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
@@ -137,8 +133,6 @@ Page({
         })
         for (let index = 0; index < manageMatchNumber; index++) {
           const match = manageMatchIdList[index];
-          console.log("match->")
-          console.log(match.matchId)
           that.fetchManageMatchInvitationTeam(match.matchId);
         }
       },
@@ -167,7 +161,8 @@ Page({
       url: '/pages/management/match_new/match_new',
     })
   },
-  fetchManageMatchInvitationTeam: function (matchId) {
+
+  fetchManageMatchInvitationTeam(matchId) {
     const that = this
     wx.request({
       url: URL + '/match/team/getInvitations',
@@ -175,7 +170,7 @@ Page({
         matchId: matchId,
       },
       success(res) {
-        console.log("mine page: fetch match invitations to team->")
+        console.log("management/match_more page: fetch match invitations to team->")
         console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)

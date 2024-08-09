@@ -68,7 +68,6 @@
       </view>
     </view>
 
-
     <!-- 教练 -->
     <view class="block-container">
       <view class="block-top">
@@ -177,7 +176,6 @@
 <!-- modal: 邀请管理员 -->
 <modal hidden="{{modalHidden_inviteManager}}" bindconfirm="confirmInviteManager" bindcancel="cancelInviteManager">
   <view class="modal-content">
-    <text>请输入被邀请者的userId：</text>
     <input bindinput="inputManagerId" placeholder="输入 userId" type="number" />
   </view>
 </modal>

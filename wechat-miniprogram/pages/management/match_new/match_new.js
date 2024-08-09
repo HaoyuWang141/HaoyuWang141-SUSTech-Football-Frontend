@@ -3,16 +3,10 @@ const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
 const ANONYMITY = appInstance.globalData.ANONYMITY
-const {
-  formatTime,
-  splitDateTime
-} = require("../../../utils/timeFormatter")
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  authorityLevel: 0,
+  authorityId: 0,
   data: {
     date: '请选择日期',
     time: '请选择时间',
@@ -32,7 +26,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.setData({
+      authorityLevel: options.authorityLevel,
+      authorityId: options.authorityId,
+    })
   },
 
   /**
@@ -219,7 +216,7 @@ Page({
 
     let that = this
     wx.request({
-      url: URL + '/match/create?ownerId=' + userId,
+      url: `${URL}/match/create?ownerId=${userId}&authorityLevel=${this.data.authorityLevel}&authorityId=${this.data.authorityId}`,
       method: 'POST',
       data: {
         homeTeamId: homeTeamId,
