@@ -404,7 +404,7 @@ Page({
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
-            title: '删除失败，请重试',
+            title: '删除失败',
             icon: 'error',
           });
           return
@@ -422,9 +422,8 @@ Page({
       },
       fail(err) {
         console.log('请求失败', err);
-        // 可以显示失败的提示信息，或者做一些错误处理
         wx.showToast({
-          title: '删除失败，请重试',
+          title: '删除失败',
           icon: 'error',
         });
       },

@@ -21,7 +21,7 @@
       <image src="/assets/notice.png" mode="scaleToFill" class="function-image" />
       <text class="function-text">球队通知</text>
     </view>
-    <view bindtap="createNewTeam" class="function-button">
+    <view bindtap="createNewTeam" class="function-button" wx:if="{{authorityId>0}}">
       <image src="/assets/statistic-team.png" mode="scaleToFill" class="function-image" />
       <text class="function-text">新建球队</text>
     </view>
