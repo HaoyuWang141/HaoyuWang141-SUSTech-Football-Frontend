@@ -140,8 +140,6 @@ Page({
       }
     });
 
-    // 本页面为三级权限管理页面，现在的设计不允许三级权限接触到Event的管理，故以下请求暂时移除。
-    return 
     wx.request({
       url: URL + '/user/getUserManageEvent?userId=' + userId,
       success(res) {
@@ -254,12 +252,12 @@ Page({
   //   })
   // },
 
-  // gotoEditEvent: function (e) {
-  //   const dataset = e.currentTarget.dataset
-  //   wx.navigateTo({
-  //     url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
-  //   })
-  // },
+  gotoEditEvent: function (e) {
+    const dataset = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/management/event_edit/event_edit?id=' + dataset.id,
+    })
+  },
 
   // gotoNewEvent() {
   //   wx.navigateTo({
