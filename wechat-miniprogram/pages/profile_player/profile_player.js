@@ -204,10 +204,7 @@ Page({
   fetchPlayerEvents(playerId) {
     let that = this
     wx.request({
-      url: URL + '/player/event/getAll',
-      data: {
-        playerId: playerId,
-      },
+      url: `${URL}/player/event/getAll?playerId=${playerId}`,
       success(res) {
         console.log("profile player page: fetchPlayerEvents ->")
         if (res.statusCode != 200) {
