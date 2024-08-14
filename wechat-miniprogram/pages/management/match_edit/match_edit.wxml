@@ -1,93 +1,99 @@
 <!--pages/management/match_edit/match_edit.wxml-->
-<view class="container">
-  <view style="width: 99%;">
-    <view class="section-header">
-      <view style="background-color: white;">
-        <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
+<view class="section-header">
+  <view style="background-color: white;">
+    <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
+  </view>
+</view>
+
+
+<!-- 比赛信息卡片 -->
+<view class="match-card-container">
+  <view class="match-card">
+    <text class="time">{{strDate + ' ' + strTime}}</text>
+    <text class="name">{{name}}</text>
+    <view class="match-info-container">
+      <view class="team">
+        <image class="logo" src="{{homeTeamLogoUrl ? homeTeamLogoUrl : '/assets/newplayer.png'}}"></image>
+        <text class="teamname">{{homeTeamName ? homeTeamName : '主队'}}</text>
       </view>
-    </view>
-
-    <!-- 比赛信息卡片 -->
-    <view class="match-card-container">
-      <view class="match-card">
-        <text class="time">{{strDate + ' ' + strTime}}</text>
-        <text class="name">{{name}}</text>
-        <view class="match-info-container">
-          <view class="team">
-            <image class="icon" src="{{homeTeamLogoUrl ? homeTeamLogoUrl : '/assets/newplayer.png'}}" bindtap="inviteHomeTeam" data-id="{{matchId}}"></image>
-            <text class="teamname">{{homeTeamName ? homeTeamName : '主队'}}</text>
-          </view>
-          <view class="middle">
-            <block wx:if="{{hasBegun}}">
-              <text class="score">{{homeTeamScore}} - {{awayTeamScore}}</text>
-              <text class="penalty" wx:if="{{homeTeamScore === awayTeamScore}}">({{homeTeamPenalty}} - {{awayTeamPenalty}})</text>
-            </block>
-            <text class="not-begin" wx:else>未开始</text>
-          </view>
-          <view class="team">
-            <image class="icon" src="{{awayTeamLogoUrl ? awayTeamLogoUrl : '/assets/newplayer.png'}}" bindtap="inviteAwayTeam" data-id="{{matchId}}"></image>
-            <text class="teamname">{{awayTeamName ? awayTeamName : '客队'}}</text>
-          </view>
-        </view>
-      </view>
-    </view>
-
-    <view class="info-container">
-      <view class="block-top">
-        <view class="title">更改比赛信息</view>
-      </view>
-      <!-- 修改信息区域 -->
-      <view class="manage-info">
-        <!-- 比赛日期 -->
-        <picker class="changeInfo-container" mode="date" value="{{strDate}}" start="2024-01-01" bindchange="bindDateChange">
-          <text>比赛日期：</text>
-          <text>{{strDate}}</text>
-        </picker>
-
-        <!-- 比赛时间 -->
-        <picker class="changeInfo-container" mode="time" value="{{strTime}}" start="00:00" end="23:59" bindchange="bindTimeChange">
-          <text>比赛时间：</text>
-          <text>{{strTime}}</text>
-        </picker>
-
+      <view class="middle">
         <block wx:if="{{hasBegun}}">
-          <!-- 比分 -->
-          <picker class="changeInfo-container" bindchange="bindPickerChangeScore" range="{{array}}" mode="multiSelector">
-            <text>比分：</text>
-            <text>{{homeTeamScore}}</text>
-            <text> - </text>
-            <text>{{awayTeamScore}}</text>
-          </picker>
-          <block wx:if="{{homeTeamScore === awayTeamScore}}">
-            <!-- 点球比分 -->
-            <picker class="changeInfo-container" bindchange="bindPickerChangePenalty" range="{{array}}" mode="multiSelector">
-              <text>点球比分：</text>
-              <text>{{homeTeamPenalty}}</text>
-              <text> - </text>
-              <text>{{awayTeamPenalty}}</text>
-            </picker>
-          </block>
+          <text class="score">{{homeTeamScore}} - {{awayTeamScore}}</text>
+          <text class="penalty" wx:if="{{homeTeamScore == awayTeamScore  && homeTeamPenalty != 0 && awayTeamPenalty != 0}}">({{homeTeamPenalty}} - {{awayTeamPenalty}})</text>
         </block>
+        <text class="not-begin" wx:else>未开始</text>
       </view>
-
-      <!-- 修改按钮 -->
-      <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
-    </view>
-
-    <view class="block-container">
-      <view class="block-top">
-        <view class="block-title">裁判</view>
-      </view>
-      <view class="block-main">
-        <scroll-view scroll-y enable-flex>
-          <player-card-small name="邀请裁判" img="/assets/newplayer.png" bindtap="gotoInviteReferee" data-id="{{matchId}}"></player-card-small>
-          <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="gotoRefereePage" data-id="{{item.refereeId}}"></player-card-small>
-        </scroll-view>
+      <view class="team">
+        <image class="logo" src="{{awayTeamLogoUrl ? awayTeamLogoUrl : '/assets/newplayer.png'}}"></image>
+        <text class="teamname">{{awayTeamName ? awayTeamName : '客队'}}</text>
       </view>
     </view>
+  </view>
+</view>
 
-    <!-- 删除按钮 -->
-    <button class="delete-btn" bindtap="showCancelModal">取消比赛</button>
+<view class="info-container">
+  <view class="block-top">
+    <view class="title">更改比赛信息</view>
+  </view>
+  <!-- 修改信息区域 -->
+  <view class="manage-info">
+    <!-- 比赛日期 -->
+    <picker class="changeInfo-container" mode="date" value="{{strDate}}" start="2024-01-01" bindchange="bindDateChange">
+      <text>比赛日期：</text>
+      <text>{{strDate}}</text>
+    </picker>
+
+    <!-- 比赛时间 -->
+    <picker class="changeInfo-container" mode="time" value="{{strTime}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+      <text>比赛时间：</text>
+      <text>{{strTime}}</text>
+    </picker>
+
+    <!-- 比赛状态 -->
+    <picker class="changeInfo-container" bind:change="bindStatusChange" range="{{strStatusArray}}">
+      <text>比赛状态：</text>
+      <text>{{strStatus}}</text>
+    </picker>
+
+    <!-- 比分 -->
+    <picker class="changeInfo-container" bindchange="bindPickerChangeScore" range="{{array}}" mode="multiSelector">
+      <text>比分：</text>
+      <text>{{homeTeamScore}}</text>
+      <text> - </text>
+      <text>{{awayTeamScore}}</text>
+    </picker>
+    <!-- 点球比分 -->
+    <view class="changeInfo-container">
+      <picker bindchange="bindPickerChangePenalty" range="{{array}}" mode="multiSelector">
+        <text>点球比分：</text>
+        <text>{{homeTeamPenalty}}</text>
+        <text> - </text>
+        <text>{{awayTeamPenalty}}</text>
+      </picker>
+      <view class="remark"> 注：点球比分 0 - 0 意味无点球</view>
+    </view>
   </view>
 
+  <!-- 修改按钮 -->
+  <button class="confirm-btn" bindtap="showConfirmModal">确认修改</button>
 </view>
+
+<view class="block-container" style="margin: 0 20rpx; padding: 0 20rpz">
+  <view class="block-top">
+    <view class="block-title" style="font-size: large;">裁判</view>
+    <view class="block-more button-custom" bindtap="gotoInviteReferee" data-id="{{matchId}}">邀请裁判</view>
+  </view>
+  <view class="block-main">
+    <scroll-view scroll-y enable-flex>
+      <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}">
+        <view>
+          <image src="/assets/eye.png" class="icon icon_eye" bind:tap="gotoRefereePage" data-id="{{item.refereeId}}"></image>
+          <image src="/assets/delete.png" class="icon icon_delete" bind:tap="showDeleteRefereeModal" data-id="{{item.refereeId}}"></image>
+        </view>
+      </player-card-small>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 删除按钮 -->
+<button class="delete-btn" bindtap="showCancelModal">取消比赛</button>

@@ -77,9 +77,9 @@
         </view>
       </view>
       <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-        <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="manageCoach" data-id="{{index}}">
+        <player-card-small wx:for="{{coachList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}">
           <view>
-            <image src="/assets/eye.png" class="icon icon_eye" bind:tap="showCheckCoachModal" data-id="{{item.coachId}}"></image>
+            <image src="/assets/eye.png" class="icon icon_eye" bind:tap="gotoCoachPage" data-id="{{item.coachId}}"></image>
             <image src="/assets/delete.png" class="icon icon_delete" bind:tap="showDeleteCoachModal" data-id="{{item.coachId}}"></image>
           </view>
         </player-card-small>

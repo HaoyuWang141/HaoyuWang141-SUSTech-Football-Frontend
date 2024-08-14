@@ -183,7 +183,7 @@ Page({
     let homeTeamId = Number(this.data.homeTeam.teamId)
     let awayTeamId = Number(this.data.awayTeam.teamId)
 
-    if (!this.isValidDate(date) || !this.isValidTime(time) || homeTeamId <= 0 || homeTeamId == NaN || awayTeamId <= 0 || awayTeamId == NaN) {
+    if (!this.isValidDate(date) || !this.isValidTime(time) || homeTeamId < 0 || homeTeamId == NaN || awayTeamId < 0 || awayTeamId == NaN) {
       wx.showToast({
         title: "请填写所有数据",
         icon: "error",

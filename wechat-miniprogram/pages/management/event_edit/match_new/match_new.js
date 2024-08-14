@@ -141,6 +141,7 @@ Page({
         if (that.data.stageList.length === 1) {
           const tagNameList = that.data.stageList[0].tags.map(tag => tag.tagName);
           that.setData({
+            stage: stageNameList[0],
             tagNameList: tagNameList
           })
         }

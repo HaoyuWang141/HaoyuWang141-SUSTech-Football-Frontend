@@ -193,7 +193,7 @@ Page({
     let homeTeamId = Number(this.data.homeTeam.teamId)
     let awayTeamId = Number(this.data.awayTeam.teamId)
 
-    if (!this.isValidDate(date) || !this.isValidTime(time) || homeTeamId <= 0 || homeTeamId == NaN || awayTeamId <= 0 || awayTeamId == NaN) {
+    if (!this.isValidDate(date) || !this.isValidTime(time) || homeTeamId < 0 || homeTeamId == NaN || awayTeamId < 0 || awayTeamId == NaN) {
       wx.showToast({
         title: "请填写所有数据",
         icon: "error",
@@ -270,5 +270,12 @@ Page({
     // 正则表达式，匹配格式为 hh:mm
     var timeRegex = /^\d{2}:\d{2}$/;
     return timeRegex.test(timeStr);
+  },
+
+  gotoSetTeamPage(e) {
+    const type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: `./set_team/set_team?type=${type}`,
+    })
   },
 })

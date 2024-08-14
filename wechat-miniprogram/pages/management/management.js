@@ -265,4 +265,11 @@ Page({
   //   })
   // },
 
+  applyThirdAuthority() {
+    wx.showToast({
+      title: '目前未开放申请渠道，请联系管理员手动添加',
+      icon: 'none',
+      duration: 2000,
+    })
+  },
 })

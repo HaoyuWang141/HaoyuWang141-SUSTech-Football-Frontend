@@ -10,10 +10,7 @@
 }
 
 .match-card-container {
-  width: 98%;
-  margin-top: 20rpx;
-  margin-bottom: 20rpx;
-  margin-left: 7rpx;
+  margin: 0 20rpx 20rpx 20rpx;
   text-align: center;
   justify-content: center;
 }
@@ -51,7 +48,7 @@
   white-space: nowrap;
 }
 
-.icon {
+.logo {
   width: 150rpx;
   height: 150rpx;
 }
@@ -79,20 +76,17 @@
 }
 
 .info-container {
-  width: 95%;
   background-color: #fff;
   border-radius: 10rpx;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
-  padding: 10rpx;
-  margin-top: 20rpx;
-  margin-bottom: 20rpx;
-  margin-left: 8rpx;
+  padding: 10rpx 30rpx;
+  margin: 20rpx 20rpx;
 }
 
 .title {
   margin-left: 20rpx;  
   margin-top: 20rpx;
-  font-size: 16px;
+  font-size: large;
   font-weight: bold;
   color: #333;
   display: flex;
@@ -107,6 +101,12 @@
   width: 90%;
   border-bottom: 1px solid rgb(202, 202, 202);
   margin-top: 3%;
+}
+
+.remark {
+  margin-top: 20rpx;
+  font-size: small;
+  color: gray
 }
 
 .team-container {
@@ -153,6 +153,7 @@
   color: white; /* 文字颜色 */
   font-size: medium;
   max-width: 45%;
+  margin-top: 40rpx;
 }
 
 .confirm-btn:hover{
@@ -163,3 +164,24 @@
   background-color: rgb(226, 84, 84); /* 鼠标悬停时背景色变暗 */
 }
 
+.icon {
+  padding: 5rpx;
+  border-radius: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 5rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.icon_eye {
+  background-color: #eb6c00;
+}
+
+.icon_cloth {
+  background-color: #51b0d6;
+}
+
+.icon_delete {
+  background-color: red;
+}

@@ -42,10 +42,6 @@ Page({
     eventList: [],
     managerList: [],
     matchList: [],
-    isClickPlayerList: [],
-    selectPlayerId: 0,
-    isClickCoachList: [],
-    selectCoachId: 0,
     editPlayerModalHidden: true,
     newPlayerNumber: '',
     managerList: [],
@@ -53,9 +49,6 @@ Page({
     inviteManagerId: -1,
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
     this.setData({
       id: options.id
@@ -63,54 +56,13 @@ Page({
     this.fetchData(this.data.id);
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
     this.fetchData(this.data.id);
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh() {
     this.fetchData(this.data.id);
     wx.stopPullDownRefresh();
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
   },
 
   // 拉取数据
@@ -124,11 +76,11 @@ Page({
       url: URL + '/team/get?id=' + id,
       success(res) {
         console.log("team->")
-        console.log(res.data)
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           return
         }
+        console.log(res.data)
         that.setData({
           teamId: res.data.teamId,
           name: res.data.name,
@@ -145,40 +97,25 @@ Page({
           that.setData({
             captainId: res.data.captainId,
           });
+          that.fetchCaptain(res.data.captainId);
         }
       },
       fail(err) {
-        console.log('请求失败', err);
+        console.error('请求失败', err);
       },
       complete() {
-        if (that.data.isClickPlayerList.length < that.data.playerList.length) {
-          for (var i = 0; i < that.data.playerList.length; i++) {
-            that.data.isClickPlayerList.push({
-              isClicked: false
-            })
-          }
-        }
-        if (that.data.isClickCoachList.length < that.data.coachList.length) {
-          for (var i = 0; i < that.data.coachList.length; i++) {
-            that.data.isClickCoachList.push({
-              isClicked: false
-            })
-          }
-        }
-        that.fetchCaptain();
         wx.hideLoading();
       }
     });
   },
 
-  fetchCaptain() {
-    if (this.data.captainId === 0 || this.data.captainId === null) {
+  fetchCaptain(captainId) {
+    if (captainId <= 0 || captainId === null) {
       return;
     }
     var that = this;
-    // 模拟网络请求
     wx.request({
-      url: URL + '/player/get?id=' + that.data.captainId,
+      url: URL + '/player/get?id=' + captainId,
       success(res) {
         console.log("captain->")
         console.log(res.data)
@@ -376,7 +313,7 @@ Page({
     })
     let that = this
     wx.request({
-      url:  `${URL}/team/manager/invite?managerId=${managerId}&teamId=${teamId}`,
+      url: `${URL}/team/manager/invite?managerId=${managerId}&teamId=${teamId}`,
       method: 'POST',
       success: res => {
         wx.hideLoading()
@@ -406,75 +343,20 @@ Page({
     });
   },
 
-  // 引入模态框的通用方法
-  showModal: function (title, content, confirmText, confirmColor, cancelText, confirmCallback, cancelCallback) {
+  showDeletePlayerModal(e) {
+    const that = this
+    const playerId = e.currentTarget.dataset.id
     wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      confirmColor: confirmColor,
-      cancelText: cancelText,
-      success(res) {
-        if (res.confirm) {
-          confirmCallback();
-        } else if (res.cancel) {
-          cancelCallback();
-        }
-      }
-    });
-  },
-
-  showCheckPlayerModal (e) {
-    var that = this
-    const id = e.currentTarget.dataset.id
-    wx.showModal({
-      title: '确认查看',
-      content: '确定要查看该球员吗？',
+      title: '确认移除',
+      content: '确定要移除该球员吗？',
       confirmText: '确认',
+      confirmColor: 'red',
       cancelText: '取消',
       success(res) {
         if (res.confirm) {
-          that.gotoPlayerPage(id) // 点击确认时的回调函数
-        } else if (res.cancel) {
-          () => {} // 点击取消时的回调函数，这里不做任何操作
+          that.deletePlayer(playerId)
         }
       }
-    });
-  },
-
-  showDeletePlayerModal (e) {
-    const id = e.currentTarget.dataset.id
-    this.setData({
-      selectPlayerId: id
-    })
-    this.showModal(
-      '确认移除',
-      '确定要移除该球员吗？',
-      '确认',
-      'red',
-      '取消',
-      this.deletePlayer, // 点击确认时的回调函数
-      () => {} // 点击取消时的回调函数，这里不做任何操作
-    );
-  },
-
-  // 管理队员
-  managePlayer(e) {
-    const index = e.currentTarget.dataset.id;
-    const isClickPlayerList = this.data.isClickPlayerList;
-    const isClicked = isClickPlayerList[index].isClicked;
-    for (var i = 0; i < this.data.playerList.length; i++) {
-      isClickPlayerList[i].isClicked = false
-    }
-    if (isClicked == false) {
-      isClickPlayerList[index].isClicked = true;
-    } else {
-      isClickPlayerList[index].isClicked = false;
-    }
-    const selectPlayerId = this.data.playerList[index].playerId;
-    this.setData({
-      isClickPlayerList: isClickPlayerList,
-      selectPlayerId: selectPlayerId
     });
   },
 
@@ -509,49 +391,25 @@ Page({
           icon: "error",
         });
       },
-      complete() {
-        const isClickPlayerList = that.data.isClickPlayerList;
-        for (var i = 0; i < that.data.playerList.length; i++) {
-          isClickPlayerList[i].isClicked = false
-        }
-        that.setData({
-          isClickPlayerList: isClickPlayerList,
-          selectPlayerId: 0,
-        });
-      }
     });
   },
 
-  // 点击确认创建按钮，弹出确认修改模态框
-  showCheckCoachModal(e) {
-    var that = this
-    const id = e.currentTarget.dataset.id
+  // 删除教练模态框
+  showDeleteCoachModal(e) {
+    const that = this
+    const coachId = e.currentTarget.dataset.id
     wx.showModal({
-      title: '确认查看',
-      content: '确定要查看该教练吗？',
+      title: '确认移除',
+      content: '确定要移除该教练吗？',
       confirmText: '确认',
+      confirmColor: 'red',
       cancelText: '取消',
       success(res) {
         if (res.confirm) {
-          that.gotoCoachPage(id) // 点击确认时的回调函数
-        } else if (res.cancel) {
-          () => {} // 点击取消时的回调函数，这里不做任何操作
+          that.deleteCoach(coachId)
         }
       }
-    });
-  },
-
-  // 点击确认修改按钮，弹出确认修改模态框
-  showDeleteCoachModal() {
-    this.showModal(
-      '确认移除',
-      '确定要移除该教练吗？',
-      '确认',
-      'red',
-      '取消',
-      this.deleteCoach, // 点击确认时的回调函数
-      () => {} // 点击取消时的回调函数，这里不做任何操作
-    );
+    })
   },
 
   // 显示编辑球员号码模态框
@@ -621,34 +479,18 @@ Page({
     });
   },
 
-  manageCoach(e) {
-    const index = e.currentTarget.dataset.id;
-    const isClickCoachList = this.data.isClickCoachList;
-    const isClicked = isClickCoachList[index].isClicked;
-    for (var i = 0; i < this.data.coachList.length; i++) {
-      isClickCoachList[i].isClicked = false
-    }
-    if (isClicked == false) {
-      isClickCoachList[index].isClicked = true;
-    } else {
-      isClickCoachList[index].isClicked = false;
-    }
-    const selectCoachId = this.data.coachList[index].coachId;
-    this.setData({
-      isClickCoachList: isClickCoachList,
-      selectCoachId: selectCoachId
-    });
-  },
-
-  deleteCoach() {
+  deleteCoach(coachId) {
     var that = this;
-    // 模拟网络请求
+    wx.showLoading({
+      title: '删除中',
+      mask: true,
+    })
     wx.request({
-      url: URL + '/team/coach/delete?teamId=' + that.data.teamId + '&coachId=' + that.data.selectCoachId,
+      url: `${URL}/team/coach/delete?teamId=${that.data.teamId}&coachId=${coachId}`,
       method: 'DELETE',
       success(res) {
-        console.log("delete team coach->")
-        console.log(res.data)
+        wx.hideLoading()
+        console.log("/pages/management/team_edit/team_edit: deleteCoach ->")
         if (res.statusCode !== 200) {
           console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
           wx.showToast({
@@ -657,36 +499,25 @@ Page({
           });
           return
         }
-        const successMsg = res.data ? res.data : '删除成功';
+        console.log("删除成功")
         that.fetchData(that.data.id)
         wx.showToast({
-          title: successMsg,
+          title: '删除成功',
           icon: 'success',
         });
       },
       fail(err) {
-        // 请求失败的处理逻辑
+        wx.hideLoading()
         console.error('教练删除失败', err);
-        // 显示失败信息
         wx.showToast({
           title: '删除失败，请重试',
           icon: 'error',
         });
       },
-      complete() {
-        const isClickCoachList = that.data.isClickCoachList;
-        for (var i = 0; i < that.data.coachList.length; i++) {
-          isClickCoachList[i].isClicked = false
-        }
-        that.setData({
-          isClickCoachList: isClickCoachList,
-          selectCoachId: 0
-        });
-      }
     });
   },
 
-  gotoUserPage: function(e) {
+  gotoUserPage: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
       url: '/pages/pub/user/user?id=' + dataset.id,

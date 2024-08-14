@@ -35,7 +35,7 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">选择主队</text>
-        <text class="block-more button-custom" bind:tap="openinviteHomeTeamModal">选择</text>
+        <text class="block-more button-custom" bind:tap="gotoSetTeamPage" data-type="home">选择</text>
       </view>
       <view class="block-main">
         <view style="width: 100%; display: flex; align-items: center; justify-content: center;">
@@ -47,7 +47,7 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">选择客队</text>
-        <text class="block-more button-custom" bind:tap="openinviteAwayTeamModal">选择</text>
+        <text class="block-more button-custom" bind:tap="gotoSetTeamPage" data-type="away">选择</text>
       </view>
       <view class="block-main">
         <view style="width: 100%; display: flex; align-items: center; justify-content: center;">

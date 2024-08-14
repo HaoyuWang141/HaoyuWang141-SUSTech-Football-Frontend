@@ -10,7 +10,7 @@
       <block wx:if="{{hasBegun}}">
         <text class="group">{{group}}</text>
         <text class="score">{{score1}} - {{score2}}</text>
-        <text class="penalty" wx:if="{{score1 === score2  && penalty1 !== 0 && penalty2 !== 0}}">(点球 {{penalty1}} - {{penalty2}})</text>
+        <text class="penalty" wx:if="{{score1 == score2  && penalty1 != 0 && penalty2 != 0}}">(点球 {{penalty1}} - {{penalty2}})</text>
       </block>
       <text class="not-begin" wx:else>未开始</text>
     </view>

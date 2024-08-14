@@ -70,7 +70,8 @@
     "pages/mine/second_authority/matches/match_edit/match_edit",
     "pages/mine/second_authority/events/events",
     "pages/mine/second_authority/teams/teams",
-    "pages/mine/second_authority/third_level_authority/third_level_authority"
+    "pages/mine/second_authority/third_level_authority/third_level_authority",
+    "pages/mine/sport_center/matches/match_new/set_team/set_team"
   ],
   "window": {
     "navigationBarTextStyle": "white",

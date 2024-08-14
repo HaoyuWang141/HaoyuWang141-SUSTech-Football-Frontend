@@ -8,11 +8,8 @@ const {
 } = require("../../../utils/timeFormatter")
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    matchId: 0,
     hasBegun: false,
     strTimeInfo: '',
     strDate: '',
@@ -20,7 +17,6 @@ Page({
     name: '',
     tempHomeTeamId: 0,
     tempAwayTeamId: 0,
-    matchId: 0,
     time: '',
     homeTeam: [],
     awayTeam: [],
@@ -49,18 +45,17 @@ Page({
       matchTag: "",
       eventName: ""
     },
-    status: '',
     modalHidden: true, // 控制模态框显示隐藏
     array: [
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    ]
+    ],
+    status: '',
+    statusArray: ['PENDING', 'ONGOING', 'FINISHED'],
+    strStatus: '',
+    strStatusArray: ['未开始', '正在进行', '已结束'],
   },
 
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
     this.setData({
       matchId: options.id
@@ -68,65 +63,22 @@ Page({
     this.fetchData();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
     this.fetchData();
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh() {
     this.fetchData();
     wx.stopPullDownRefresh();
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
-
-  fetchData: function () {
-    // 显示加载提示框，提示用户正在加载
+  fetchData() {
     wx.showLoading({
       title: '加载中',
-      mask: true // 创建一个蒙层，防止用户操作
+      mask: true,
     });
 
     var that = this;
-    // 模拟网络请求
     wx.request({
       url: URL + '/match/get?id=' + that.data.matchId,
       success(res) {
@@ -139,6 +91,17 @@ Page({
         var date = new Date(res.data.time)
         let strTimeInfo = formatTime(date)
         let hasBegun = res.data.status != "PENDING"
+        let strStatus
+        switch (res.data.status) {
+          case "PENDING":
+            strStatus = "未开始"
+            break
+          case "ONGOING":
+            strStatus = "正在进行"
+            break
+          case "FINISHED":
+            strStatus = "已结束"
+        }
         let {
           strDate,
           strTime
@@ -167,7 +130,8 @@ Page({
           homeTeamPenalty: res.data.homeTeam.penalty,
           awayTeamPenalty: res.data.awayTeam.penalty,
           refereeList: res.data.refereeList,
-          status: res.data.status
+          status: res.data.status,
+          strStatus: strStatus
         });
       },
       fail(err) {
@@ -342,19 +306,14 @@ Page({
     });
     const dataToUpdate = {
       matchId: this.data.matchId,
-      time: this.data.time,
-      homeTeam: this.data.homeTeam,
-      awayTeam: this.data.awayTeam,
       homeTeamId: this.data.homeTeamId,
       awayTeamId: this.data.awayTeamId,
+      time: this.data.time,
+      status: this.data.status,
       homeTeamScore: this.data.homeTeamScore,
       awayTeamScore: this.data.awayTeamScore,
       homeTeamPenalty: this.data.homeTeamPenalty,
       awayTeamPenalty: this.data.awayTeamPenalty,
-      refereeList: this.data.refereeList,
-      matchPlayerActionList: this.data.matchPlayerActionList,
-      matchEvent: this.data.matchEvent,
-      status: this.data.status
     };
     console.log('dataToUpdate->');
     console.log(dataToUpdate);
@@ -439,21 +398,6 @@ Page({
     });
   },
 
-  // 处理邀请队伍
-  inviteHomeTeam: function (e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'hometeam-match',
-    })
-  },
-
-  inviteAwayTeam: function (e) {
-    const dataset = e.currentTarget.dataset
-    wx.navigateTo({
-      url: '/pages/management/invite/invite?id=' + dataset.id + '&type=' + 'awayteam-match',
-    })
-  },
-
   gotoInviteReferee: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
@@ -461,10 +405,81 @@ Page({
     })
   },
 
-  gotoRefereePage: function (e) {
+  bindStatusChange(e) {
+    const value = e.detail.value;
+    this.setData({
+      status: this.data.statusArray[value],
+      strStatus: this.data.strStatusArray[value],
+    })
+  },
+
+  showCheckRefereeModal(e) {
+    var that = this
     const id = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '确认查看',
+      content: '确定要查看该教练吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.gotoRefereePage(id)
+        } else if (res.cancel) {
+          () => {}
+        }
+      }
+    });
+  },
+
+  gotoRefereePage(e) {
+    const refereeId = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/pub/user/referee/referee?id=' + id,
+      url: '/pages/pub/user/referee/referee?id=' + refereeId,
+    })
+  },
+
+  showDeleteRefereeModal(e) {
+    const that = this
+    const refereeId = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '确认移除',
+      content: '确定要移除该教练吗？',
+      confirmText: '确认',
+      confirmColor: 'red',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm) {
+          that.deleteReferee(refereeId)
+        }
+      }
+    })
+  },
+
+  deleteReferee(refereeId) {
+    const matchId = this.data.matchId
+    const that = this
+    wx.showLoading({
+      title: '删除中',
+      mask: true,
+    })
+    wx.request({
+      url: `${URL}/match/referee/delete?matchId=${matchId}&refereeId=${refereeId}`,
+      method: 'DELETE',
+      success(res) {
+        console.log("/pages/management/match_edit: deleteReferee ->")
+        if (res.statusCode !== 200) {
+          console.log("请求失败，状态码为：" + res.statusCode + "; 错误信息为：" + res.data)
+          return
+        }
+        console.log("删除裁判成功")
+        that.fetchData()
+      },
+      fail(err) {
+        console.error(err)
+      },
+      complete() {
+        wx.hideLoading()
+      }
     })
   }
 
