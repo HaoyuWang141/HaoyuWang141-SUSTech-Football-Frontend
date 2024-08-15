@@ -38,7 +38,6 @@
 .name {
   display: block;
   font-size: larger;
-  color: #666;
   text-align: center;
 }
 
@@ -52,11 +51,20 @@
   display: flex;
   flex-direction: column;
   font-size: small;
+  margin: 0 20rpx;
 }
 
 .icon {
   width: 150rpx;
   height: 150rpx;
+}
+
+.team-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-width: 200rpx;
 }
 
 .middle {

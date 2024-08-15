@@ -3,16 +3,8 @@ const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
 const ANONYMITY = appInstance.globalData.ANONYMITY
-const {
-  formatTime,
-  splitDateTime
-} = require("../../../../../utils/timeFormatter")
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     date: '请选择日期',
     time: '请选择时间',
@@ -219,6 +211,14 @@ Page({
 
   // 处理提交信息修改
   confirmCreate(date, time, homeTeamId, awayTeamId) {
+    if (homeTeamId === awayTeamId) {
+      wx.showToast({
+        title: '两球队不能相同',
+        icon: 'none'
+      })
+      return
+    }
+
     wx.showLoading({
       title: '正在创建',
       mask: true,

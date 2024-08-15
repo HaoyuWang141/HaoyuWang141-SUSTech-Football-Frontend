@@ -68,7 +68,7 @@
 <view class="block-container">
   <view class="block-top">
     <text class="block-title">我的球队</text>
-    <text class="block-more" bind:tap="gotoTeamsPage" data-list="{{teamList}}" wx:if="{{teamList.length!=0}}">查看更多</text>
+    <text class="block-more" bind:tap="gotoPlayerTeamsPage" data-list="{{teamList}}" wx:if="{{teamList.length!=0}}">查看更多</text>
   </view>
   <view class="block-main">
     <view class="no-favorite" wx:if="{{teamList.length==0}}">您还未加入任何球队。</view>

@@ -272,11 +272,9 @@ Page({
     })
   },
 
-  gotoTeamsPage(e) {
-    let teamList = e.currentTarget.dataset.list ?? []
-    let teamIdList = teamList.map(team => team.teamId)
+  gotoPlayerTeamsPage(e) {
     wx.navigateTo({
-      url: '/pages/pub/teams/teams?idList=' + teamIdList,
+      url: `player_teams/player_teams?playerId=${this.data.playerId}`,
     })
   },
 

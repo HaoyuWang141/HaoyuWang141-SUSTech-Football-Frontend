@@ -21,10 +21,10 @@ Page({
     stageList: [],
     stageNameList: [],
     tagNameList: [],
-    tempHomeTeamId: 0,
-    tempAwayTeamId: 0,
-    homeTeamId: 0,
-    awayTeamId: 0,
+    tempHomeTeamId: -1,
+    tempAwayTeamId: -1,
+    homeTeamId: -1,
+    awayTeamId: -1,
     homeTeamName: "主队",
     awayTeamName: "客队",
     homeTeamLogoUrl: '/assets/newplayer.png',
@@ -261,9 +261,7 @@ Page({
       cancelText: '取消',
       success(res) {
         if (res.confirm) {
-          that.confirmCreate() // 点击确认时的回调函数
-        } else if (res.cancel) {
-          () => {} // 点击取消时的回调函数，这里不做任何操作
+          that.confirmCreate()
         }
       }
     })
@@ -271,6 +269,13 @@ Page({
 
   // 处理提交信息修改
   confirmCreate: function () {
+    if (this.data.homeTeamId === null || this.data.homeTeamId === -1 || this.data.awayTeamId === null || this.data.awayTeamId === -1 || this.data.stage === null || this.data.stage === "" || this.data.tag === null || this.data.tag === "") {
+      wx.showToast({
+        title: '信息未填全',
+        icon: 'none',
+      })
+      return
+    }
     var that = this;
     let sqlTimestamp = this.data.date + ' ' + this.data.time + ":00.000"; // 转换为 ISO 
     that.setData({

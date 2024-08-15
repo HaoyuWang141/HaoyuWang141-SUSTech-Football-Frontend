@@ -1,0 +1,15 @@
+<!--pages/management/match_new/set_homeTeam/set_homeTeam.wxml-->
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title">选择球队</text>
+  </view>
+  <view class="block-main">
+    <view>您可以查看所有的球队，点击选择目标球队。</view>
+  </view>
+</view>
+
+<view class="block-container">
+  <view class="block-main">
+    <team-card-small wx:for="{{teamList}}" wx:key="index" name="{{item.name}}" img="{{item.logoUrl}}" bindtap="selectTeam" data-id="{{item.teamId}}"></team-card-small>
+  </view>
+</view>

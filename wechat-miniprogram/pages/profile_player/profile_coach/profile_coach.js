@@ -25,21 +25,8 @@ Page({
     coachMatchInform: [],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {},
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
     app.addToRequestQueue(this.fetchCoachId)
     this.setData({
@@ -251,10 +238,8 @@ Page({
   },
 
   gotoTeamsPage(e) {
-    let teamList = e.currentTarget.dataset.list ?? []
-    let teamIdList = teamList.map(team => team.teamId)
     wx.navigateTo({
-      url: '/pages/pub/teams/teams?idList=' + teamIdList,
+      url: `coach_teams/coach_teams?coachId=${this.data.coachId}`,
     })
   },
 

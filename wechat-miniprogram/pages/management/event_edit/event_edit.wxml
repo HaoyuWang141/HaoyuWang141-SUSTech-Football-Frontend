@@ -52,15 +52,15 @@
         <view class="stage-container">
           <view wx:for="{{stageList}}" wx:key="name">
             <view class="button-custom" style="margin-top: 20rpx;">{{item.stageName}}</view>
-            <view wx:if="{{item.stageName == '小组赛' || item.stageName == '小组赛阶段'}}" class="select-tag" mode="selector">
+            <view wx:if="{{item.stageName == '小组赛' || item.stageName == '小组赛阶段'}}" class="select-tag">
               <text>小组总数：</text>
               <text>{{gNumber}}</text>
             </view>
-            <view wx:if="{{item.stageName == '淘汰赛' || item.stageName == '淘汰赛阶段'}}" class="select-tag" mode="selector">
+            <view wx:if="{{item.stageName == '淘汰赛' || item.stageName == '淘汰赛阶段'}}" class="select-tag">
               <text>出线队伍数：</text>
               <text>{{tNumber}}</text>
             </view>
-            <view wx:if="{{item.stageName == '联赛'}}" class="select-tag" mode="selector">
+            <view wx:if="{{item.stageName == '联赛'}}" class="select-tag">
               <text>联赛总轮数：</text>
               <text>{{tuNumber}}</text>
             </view>
@@ -122,13 +122,10 @@
       </view>
       <view class="block-main">
         <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-          <match-card-small name="创建比赛" team1="主队" team2="客队" icon1="/assets/newplayer.png" icon2="/assets/newplayer.png" time="2024-00-00 00:00" bind:tap="goToCreateMatch" data-id="{{eventId}}"> </match-card-small>
           <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="{{item.stage + ' ' + item.tag}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}"> </match-card-small>
         </scroll-view>
       </view>
     </view>
-
-
 
     <!-- 删除按钮 -->
     <button class="delete-btn" bindtap="showCancelModal">删除赛事</button>

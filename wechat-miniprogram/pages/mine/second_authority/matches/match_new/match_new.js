@@ -3,16 +3,8 @@ const appInstance = getApp()
 const URL = appInstance.globalData.URL
 const userId = appInstance.globalData.userId
 const ANONYMITY = appInstance.globalData.ANONYMITY
-const {
-  formatTime,
-  splitDateTime
-} = require("../../../../../utils/timeFormatter")
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     authorityId: 0,
     date: '请选择日期',
@@ -226,6 +218,14 @@ Page({
 
   // 处理提交信息修改
   confirmCreate(date, time, homeTeamId, awayTeamId) {
+    if (homeTeamId === awayTeamId) {
+      wx.showToast({
+        title: '两球队不能相同',
+        icon: 'none'
+      })
+      return
+    }
+
     wx.showLoading({
       title: '正在创建',
       mask: true,
@@ -277,5 +277,13 @@ Page({
     // 正则表达式，匹配格式为 hh:mm
     var timeRegex = /^\d{2}:\d{2}$/;
     return timeRegex.test(timeStr);
+  },
+
+  gotoSetTeamPage(e) {
+    const type = e.currentTarget.dataset.type
+    const authorityId = this.data.authorityId
+    wx.navigateTo({
+      url: `./set_team/set_team?type=${type}&authorityId=${authorityId}`,
+    })
   },
 })

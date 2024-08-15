@@ -26,6 +26,7 @@
   <view class="tab,{{activeIndex==1?'active':''}}" data-index="1" bindtap="switchTab">比赛</view>
   <view class="tab,{{activeIndex==2?'active':''}}" data-index="2" bindtap="switchTab">积分榜</view>
 </view>
+
 <view class="tab-content">
   <view wx:if="{{activeIndex == 0}}">
     <view class="block-container">
@@ -61,11 +62,11 @@
     <view class="block-container">
       <view class="block-top">
         <text class="block-title">比赛赛程</text>
-        <text class="block-more" bind:tap="gotoMatchesPage">查看更多</text>
+        <!-- <text class="block-more" bind:tap="gotoMatchesPage">查看更多</text> -->
       </view>
       <view class="block-main">
         <scroll-view scroll-x enable-flex style="flex-direction: row; white-space: nowrap;">
-          <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="" stage="" tag="" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
+          <match-card-small wx:for="{{matchList}}" wx:key="matchId" name="{{item.stage + ' ' + item.tag}}" team1="{{item.homeTeam.name}}" team2="{{item.awayTeam.name}}" icon1="{{item.homeTeam.logoUrl}}" icon2="{{item.awayTeam.logoUrl}}" score1="{{item.homeTeamScore}}" score2="{{item.awayTeamScore}}" penalty1="{{item.homeTeamPenalty}}" penalty2="{{item.awayTeamPenalty}}" time="{{item.strTime}}" hasBegun="{{item.hasBegun}}" bind:tap="gotoMatchPage" data-id="{{item.matchId}}" data-event="{{name}}"> </match-card-small>
         </scroll-view>
       </view>
     </view>

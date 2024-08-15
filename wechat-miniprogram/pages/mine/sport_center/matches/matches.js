@@ -81,7 +81,7 @@ Page({
   gotoEditMatch: function (e) {
     const dataset = e.currentTarget.dataset
     wx.navigateTo({
-      url: 'match_edit/match_edit?id=' + dataset.id,
+      url: '/pages/management/match_edit/match_edit?id=' + dataset.id,
     })
   },
 

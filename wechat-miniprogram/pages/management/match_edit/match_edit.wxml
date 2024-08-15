@@ -96,4 +96,6 @@
 </view>
 
 <!-- 删除按钮 -->
-<button class="delete-btn" bindtap="showCancelModal">取消比赛</button>
+<view style="padding: 40rpx 0">
+  <button class="delete-btn" bindtap="showCancelModal">取消比赛</button>
+</view>

@@ -52,7 +52,7 @@
 
 .tab-content {
   margin-top: 0;
-  padding: 0;
+  padding: 0 0 10rpx 0;
 }
 
 /* 激活状态的tab样式 */

@@ -60,18 +60,19 @@
     "pages/mine/sport_center/second_level_authority/second_level_authority",
     "pages/mine/sport_center/matches/matches",
     "pages/mine/sport_center/matches/match_new/match_new",
-    "pages/mine/sport_center/matches/match_edit/match_edit",
     "pages/mine/sport_center/events/events",
     "pages/mine/sport_center/teams/teams",
     "pages/mine/second_authority_login/second_authority_login",
     "pages/mine/second_authority/second_authority",
     "pages/mine/second_authority/matches/matches",
     "pages/mine/second_authority/matches/match_new/match_new",
-    "pages/mine/second_authority/matches/match_edit/match_edit",
     "pages/mine/second_authority/events/events",
     "pages/mine/second_authority/teams/teams",
     "pages/mine/second_authority/third_level_authority/third_level_authority",
-    "pages/mine/sport_center/matches/match_new/set_team/set_team"
+    "pages/mine/sport_center/matches/match_new/set_team/set_team",
+    "pages/mine/second_authority/matches/match_new/set_team/set_team",
+    "pages/profile_player/player_teams/player_teams",
+    "pages/profile_player/profile_coach/coach_teams/coach_teams"
   ],
   "window": {
     "navigationBarTextStyle": "white",

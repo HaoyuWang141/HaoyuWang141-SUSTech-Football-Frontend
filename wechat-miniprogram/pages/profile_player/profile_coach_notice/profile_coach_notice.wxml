@@ -23,7 +23,7 @@
     <view>点击邀请可选择接受或拒绝</view>
     <scroll-view scroll-y="true" style="height: {{showCoachInvitationInform ? '200px' : '0'}};" class="notification-box">
       <view class="invitation-item" wx:if="{{coachInvitationInform.length==0}}">
-        <text class="invitation-text">您还没有收到任何球队发出的邀请，但是您无法主动申请加入球队，您可以通过与球队管理员私聊，来让对方邀请您执教其球队</text>
+        <text class="invitation-text">您还没有收到任何球队发出的邀请。</text>
       </view>
       <view class="invitation-item" wx:for="{{coachInvitationInform}}" wx:key="index" bind:tap="showCoachTeamInvitationModal" data-id="{{item.id}}">
         <text class="invitation-text">{{item.content}}</text>

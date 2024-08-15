@@ -1,70 +1,70 @@
-<!--pages/management/event_edit/match_new/match_new.wxml-->
 <view class="block-container">
-
-  <view style="text-align: center;">赛事比赛创建</view>
-
-  <!-- 比赛信息卡片 -->
-  <view class="match-card-container">
-    <view class="match-card">
-      <text class="time">{{date  + ' ' + time}}</text>
-      <text class="name">{{stage===null?  '':stage}}{{' '}}{{tag===null? '':tag}}</text>
-      <view class="match-info-container">
-        <view class="team" bindtap="inviteHomeTeam" data-id="{{eventId}}">
-          <image class="icon" src="{{homeTeamLogoUrl}}"></image>
-          <text>{{homeTeamName}}</text>
-        </view>
-        <view class="middle">
-          <text class="not-begin">未开始</text>
-        </view>
-        <view class="team" bindtap="inviteAwayTeam" data-id="{{eventId}}">
-          <image class="icon" src="{{awayTeamLogoUrl}}"></image>
-          <text>{{awayTeamName}}</text>
-        </view>
-      </view>
-    </view>
+  <view class="block-top">
+    <text class="block-title">新建比赛</text>
   </view>
-
-  <view class="info-container">
-    <!-- 修改信息区域 -->
-    <view class="manage-info">
-      <!-- 比赛日期 -->
-      <picker class="changeInfo-container" mode="date" value="{{date}}" start="2024-01-01"  bindchange="bindDateChange">
-        <text>比赛日期：</text>
-        <text>{{date}}</text>
-      </picker>
-
-      <!-- 比赛时间 -->
-      <picker class="changeInfo-container" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
-        <text>比赛时间：</text>
-        <text>{{time}}</text>
-      </picker>
-
-      <view wx:if="{{stageList.length > 1}}">
-        <!-- 比赛阶段 -->
-        <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}"  bindchange="bindStageChange">
-          <text>比赛阶段：</text>
-          <text>{{stage}}</text>
-        </picker>
-
-        <!-- 比赛组别 -->
-        <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
-          <text>比赛组别：</text>
-          <text>{{tag}}</text>
-        </picker>
-      </view>
-
-      <view wx:if="{{stageList.length === 1}}">
-        <!-- 比赛轮数 -->
-        <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
-          <text>比赛轮数：</text>
-          <text>{{tag}}</text>
-        </picker>
+  <view class="block-main">
+    <!-- 比赛信息卡片 -->
+    <view class="match-card-container">
+      <view class="match-card">
+        <text class="name">{{stage===null? '':stage}}{{' '}}{{tag===null? '':tag}}</text>
+        <view class="match-info-container">
+          <view class="team" bindtap="inviteHomeTeam" data-id="{{eventId}}">
+            <image class="icon" src="{{homeTeamLogoUrl}}"></image>
+            <text class="team-name">{{homeTeamName}}</text>
+          </view>
+          <view class="middle">
+            <text class="not-begin">VS</text>
+          </view>
+          <view class="team" bindtap="inviteAwayTeam" data-id="{{eventId}}">
+            <image class="icon" src="{{awayTeamLogoUrl}}"></image>
+            <text class="team-name">{{awayTeamName}}</text>
+          </view>
+        </view>
       </view>
     </view>
 
-    <!-- 提交按钮 -->
-    <view class="btn-container">
-      <button class="confirm-btn" bindtap="showConfirmModal">确认创建</button>
+    <!-- 修改信息区域 -->
+    <view class="info-container">
+      <view class="manage-info">
+        <!-- 比赛日期 -->
+        <picker class="changeInfo-container" mode="date" value="{{date}}" start="2024-01-01" bindchange="bindDateChange">
+          <text>比赛日期：</text>
+          <text>{{date}}</text>
+        </picker>
+
+        <!-- 比赛时间 -->
+        <picker class="changeInfo-container" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+          <text>比赛时间：</text>
+          <text>{{time}}</text>
+        </picker>
+
+        <view wx:if="{{stageList.length > 1}}">
+          <!-- 比赛阶段 -->
+          <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}" bindchange="bindStageChange">
+            <text>比赛阶段：</text>
+            <text>{{stage}}</text>
+          </picker>
+
+          <!-- 比赛组别 -->
+          <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+            <text>比赛组别：</text>
+            <text>{{tag}}</text>
+          </picker>
+        </view>
+
+        <view wx:if="{{stageList.length === 1}}">
+          <!-- 比赛轮数 -->
+          <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+            <text>比赛轮数：</text>
+            <text>{{tag}}</text>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 提交按钮 -->
+      <view class="btn-container">
+        <button class="confirm-btn" bindtap="showConfirmModal">确认创建</button>
+      </view>
     </view>
   </view>
 </view>

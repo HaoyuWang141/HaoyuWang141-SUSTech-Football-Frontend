@@ -209,6 +209,14 @@ Page({
 
   // 处理提交信息修改
   confirmCreate(date, time, homeTeamId, awayTeamId) {
+    if (homeTeamId === awayTeamId) {
+      wx.showToast({
+        title: '两球队不能相同',
+        icon: 'none'
+      })
+      return
+    }
+
     wx.showLoading({
       title: '正在创建',
       mask: true,

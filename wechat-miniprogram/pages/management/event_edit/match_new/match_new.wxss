@@ -30,6 +30,7 @@
   display: flex;
   flex-direction: column;
   font-size: small;
+  margin: 0 20rpx;
 }
 
 .icon {
@@ -37,7 +38,17 @@
   height: 150rpx;
 }
 
+.team-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-width: 200rpx;
+}
+
 .middle {
+  font-size: large;
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,13 +87,19 @@
   margin-top: 3%;
 }
 
-.confirm-btn{
-  border: none; /* 去除按钮边框 */
-  border-radius: 20px; /* 圆角 */
-  cursor: pointer; /* 鼠标样式 */
-  transition: background-color 0.3s ease; /* 背景色过渡效果 */
-  background-color: #eb6c00; /* 确认修改按钮背景色 */
-  color: white; /* 文字颜色 */
+.confirm-btn {
+  border: none;
+  /* 去除按钮边框 */
+  border-radius: 20px;
+  /* 圆角 */
+  cursor: pointer;
+  /* 鼠标样式 */
+  transition: background-color 0.3s ease;
+  /* 背景色过渡效果 */
+  background-color: #eb6c00;
+  /* 确认修改按钮背景色 */
+  color: white;
+  /* 文字颜色 */
   font-size: medium;
   max-width: 50%;
   margin-top: 5%;

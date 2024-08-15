@@ -1,21 +1,17 @@
-<!--pages/management/event_edit/match_edit/match_edit.wxml-->
-<view class="container">
-  <view style="width: 99%;">
-    <view class="section-header">
-      <view style="background-color: white;">
-        <image src="/assets/sustech-motto.png" mode="aspectFit" class="motto" />
-      </view>
+<view class="block-container">
+  <view class="block-top">
+    <text class="block-title"></text>
+    <view class="block-more">
     </view>
-
-    <!-- 比赛信息卡片 -->
+  </view>
+  <view class="block-main">
     <view class="match-card-container">
       <view class="match-card">
-        <text class="time">{{strDate + ' ' + strTime}}</text>
         <text class="name">{{stage===null? '':stage}}{{' '}}{{tag===null? '':tag}}</text>
         <view class="match-info-container">
           <view class="team">
             <image class="icon" src="{{homeTeam.logoUrl ? homeTeam.logoUrl : '/assets/newplayer.png'}}"></image>
-            <text>{{homeTeam.name ? homeTeam.name : '主队'}}</text>
+            <text class="team-name">{{homeTeam.name ? homeTeam.name : '主队'}}</text>
           </view>
           <view class="middle">
             <block wx:if="{{hasBegun}}">
@@ -26,7 +22,7 @@
           </view>
           <view class="team">
             <image class="icon" src="{{awayTeam.logoUrl ? awayTeam.logoUrl : '/assets/newplayer.png'}}"></image>
-            <text>{{awayTeam.name ? awayTeam.name : '客队'}}</text>
+            <text class="team-name">{{awayTeam.name ? awayTeam.name : '客队'}}</text>
           </view>
         </view>
       </view>
@@ -50,22 +46,22 @@
         </picker>
 
         <!-- <view wx:if="{{stageList.length > 1}}"> -->
-          <!-- 比赛阶段 -->
-          <!-- <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}" bindchange="bindStageChange">
+        <!-- 比赛阶段 -->
+        <!-- <picker class="changeInfo-container" mode="selector" range="{{stageNameList}}" bindchange="bindStageChange">
             <text>比赛阶段：</text>
             <text>{{stage}}</text>
           </picker> -->
 
-          <!-- 比赛组别 -->
-          <!-- <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+        <!-- 比赛组别 -->
+        <!-- <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
             <text>比赛组别：</text>
             <text>{{tag}}</text>
           </picker> -->
         <!-- </view> -->
 
         <!-- <view wx:if="{{stageList.length === 1}}"> -->
-          <!-- 比赛轮数 -->
-          <!-- <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
+        <!-- 比赛轮数 -->
+        <!-- <picker class="changeInfo-container" mode="selector" range="{{tagNameList}}" bindchange="bindTagChange">
             <text>比赛轮数：</text>
             <text>{{tag}}</text>
           </picker> -->
@@ -105,14 +101,15 @@
     <view class="block-container">
       <view class="block-top">
         <view class="block-title">设置比赛裁判</view>
+        <view class="block-more button-custom" bindtap="gotoInviteReferee" data-matchId="{{matchId}}" data-eventId="{{eventId}}">邀请裁判</view>
       </view>
       <view class="block-main">
         <scroll-view scroll-y enable-flex>
-          <player-card-small name="邀请裁判" img="/assets/newplayer.png" bindtap="gotoInviteReferee" data-matchId="{{matchId}}" data-eventId="{{eventId}}"></player-card-small>
           <player-card-small wx:for="{{refereeList}}" wx:key="index" name="{{item.name}}" img="{{item.photoUrl}}" bindtap="gotoRefereePage" data-id="{{item.refereeId}}"></player-card-small>
         </scroll-view>
       </view>
     </view>
+
     <!-- 删除按钮 -->
     <button class="delete-btn" bindtap="showCancelModal">取消比赛</button>
   </view>
