@@ -240,8 +240,9 @@ Page({
   },
 
   gotoTeamPage: function (e) {
+    const teamId = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/pub/team/team',
+      url: `/pages/pub/team/team?id=${teamId}`,
     })
   },
 

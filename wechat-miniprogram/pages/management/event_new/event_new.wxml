@@ -8,16 +8,16 @@
         <image src="{{icon}}" mode="scaleToFill" class="image"></image>
       </view>
       <view class="text-container">
-        <input class="text" bindinput="inputEventName" placeholder="请输入赛事名称（20字以内）" style="flex: 1;"></input>
+        <input class="text" bindinput="inputEventName" placeholder="请输入赛事简称（20字以内）" style="flex: 1;"></input>
       </view>
     </view> 
   </view>
 
   <view class="block-space">
     <view class="discription-container">
-      <text style="margin-left: 3%;">赛事简介</text>
+      <text style="margin-left: 3%;">赛事名称</text>
       <view class="description-content">
-        <textarea class="description" bindinput="inputEventDes" placeholder="请输入赛事简介"></textarea>
+        <textarea class="description" bindinput="inputEventDes" placeholder="请输入赛事完整名称及其他介绍"></textarea>
       </view>
     </view>
   </view>
